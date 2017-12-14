@@ -23,12 +23,14 @@ class MPMapUtil : public MPBaseUtil
     void setMapUtil(std::shared_ptr<MPL::SubVoxelMapUtil> map_util);
     ///Get linked voxels
     vec_Vec3f getLinkedNodes() const;
-    ///Remove affected nodes
+    ///Update tree according to the new blocked nodes
     vec_Vec3f updateBlockedNodes(const vec_Vec3i& pns);
+    ///Update tree according to the new cleared nodes
     vec_Vec3f updateClearedNodes(const vec_Vec3i& pns);
 
   protected:
     std::shared_ptr<MPL::VoxelMapUtil> map_util_;
+    /// Linked map that records voxel and primitives passed through it
     mutable linkedHashMap lhm_;
 };
 

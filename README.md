@@ -45,7 +45,7 @@ Vel | Acc | Jrk | Snp
 `use_pos = true` | `use_pos = true` | `use_pos = true` | `use_pos = true`
 `use_vel = false` | `use_vel = true` | `use_vel = true` | `use_vel = true`
 `use_acc = false` | `use_acc = false` | `use_acc = true` | `use_acc = true`
-`use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = false`
+`use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = true`
 
 
 After setting up start and goal states, a planning thread can be started as:
