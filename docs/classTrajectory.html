@@ -169,7 +169,7 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
 </div><div class="memdoc">
 
 <p>Evaluate state at t, return false if fails to evaluate. </p>
-<p>The failure cases involve: 1) t is out of scope; 2) lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_11.png"/> has no solution </p>
+<p>If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation; The failure case is when lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_11.png"/> has no solution </p>
 
 </div>
 </div>

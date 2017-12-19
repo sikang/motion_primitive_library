@@ -255,7 +255,7 @@ bool Trajectory::scale(decimal_t ri, decimal_t rf) {
   return true;
 }
 
-bool Trajectory::evaluate(decimal_t time, Waypoint &p) const{
+bool Trajectory::evaluate(decimal_t time, Waypoint &p) const {
   decimal_t tau = lambda_.getTau(time);
   if(tau < 0)
     tau = 0;

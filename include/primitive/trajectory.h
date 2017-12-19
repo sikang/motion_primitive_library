@@ -77,7 +77,8 @@ class Trajectory {
     /**
      * @brief Evaluate state at t, return false if fails to evaluate
      *
-     * The failure cases involve: 1) t is out of scope; 2) lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution
+     * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
+     * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution
      */ 
     bool evaluate(decimal_t t, Waypoint &p) const;
     /**
