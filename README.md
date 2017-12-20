@@ -6,13 +6,13 @@
 
 ## Compilation
 
-A) Simple cmake (set USE_ROS to OFF)
+A) Simple cmake (set USE\_ROS to OFF)
 ```sh
 mkdir build && cd build && cmake .. && make
 ```
 
 
-B) Using CATKIN with ROS (set USE_ROS to ON)
+B) Using CATKIN with ROS (set USE\_ROS to ON)
 ```sh
 $ mv motion_primitive_library ~/catkin_ws/src
 $ cd ~/catkin_ws & catkin_make -DCMAKE_BUILD_TYPE=Release
@@ -108,7 +108,7 @@ The output is stored in `output.jpg` in the current folder (grey dots show the e
 
 
 ## Doxygen
-For more details, please refer to https://sikang.github.io/motion_primitive_library/
+For more details, please refer to https://sikang.github.io/motion\_primitive\_library/
 
-## ROS Warapper
-We also write the interface with ROS for planning using this library, [`mpl_ros`](https://github.com/sikang/mpl_ros.git)
+## ROS Wrapper
+The interface with ROS for planning using this library can be found in [`mpl_ros`](https://github.com/sikang/mpl_ros.git)
