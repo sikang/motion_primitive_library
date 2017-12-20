@@ -103,7 +103,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a8e778e2fea8a431094753ef09b86c3d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a point is in free space. <br /></td></tr>
 <tr class="separator:a8e778e2fea8a431094753ef09b86c3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14fb95b87153636d1f34a3a834f5b914"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__map.html#a14fb95b87153636d1f34a3a834f5b914">is_free</a> (const <a class="el" href="classPrimitive.html">Primitive</a> &amp;pr) const</td></tr>
-<tr class="memdesc:a14fb95b87153636d1f34a3a834f5b914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a primitive is in free space.  <a href="#a14fb95b87153636d1f34a3a834f5b914">More...</a><br /></td></tr>
+<tr class="memdesc:a14fb95b87153636d1f34a3a834f5b914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the primitive is in free space.  <a href="#a14fb95b87153636d1f34a3a834f5b914">More...</a><br /></td></tr>
 <tr class="separator:a14fb95b87153636d1f34a3a834f5b914"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa01f25b506bb2e5af18046673ef87d43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__map.html#aa01f25b506bb2e5af18046673ef87d43">get_succ</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;curr, std::vector&lt; <a class="el" href="structWaypoint.html">Waypoint</a> &gt; &amp;succ, std::vector&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> &gt; &amp;succ_idx, std::vector&lt; double &gt; &amp;succ_cost, std::vector&lt; int &gt; &amp;action_idx) const</td></tr>
 <tr class="memdesc:aa01f25b506bb2e5af18046673ef87d43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get successor.  <a href="#aa01f25b506bb2e5af18046673ef87d43">More...</a><br /></td></tr>
@@ -260,7 +260,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>t_max_</b> = -1</td
 double&#160;</td><td class="memItemRight" valign="bottom"><b>dt_</b> = 1.0</td></tr>
 <tr class="separator:abf7c0ad06bbb55d346d822c52af51a26 inherit pub_attribs_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93c9a2bd16fefabc99ee2aee1bc2d445 inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a93c9a2bd16fefabc99ee2aee1bc2d445"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>ds_</b> = 0.01</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>ds_</b> = 0.0001</td></tr>
 <tr class="separator:a93c9a2bd16fefabc99ee2aee1bc2d445 inherit pub_attribs_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a4985a02d526c38b4e823b4e6815136 inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a8a4985a02d526c38b4e823b4e6815136"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>dv_</b> = 0.001</td></tr>
@@ -391,8 +391,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </table>
 </div><div class="memdoc">
 
-<p>Check if a primitive is in free space. </p>
-<p>We sample n (default as 5) points along a primitive, and check each point for collision </p>
+<p>Check if the primitive is in free space. </p>
+<p>We sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map. </p>
 
 <p>Reimplemented from <a class="el" href="classMPL_1_1env__base.html#a20ec1d3bd97b56dc5dcd04fa39d79e8f">MPL::env_base</a>.</p>
 

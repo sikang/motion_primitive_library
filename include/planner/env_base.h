@@ -70,8 +70,6 @@ class env_base
       //If in acceleration control space
       if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
          goal.use_pos && goal.use_vel && goal.use_acc && !goal.use_jrk) {
-     // if(state.use_pos && state.use_vel && state.use_acc &&
-       //  goal.use_pos && goal.use_vel && goal.use_acc) {
  
         const Vec3f dp = goal.pos - state.pos;
         const Vec3f v0 = state.vel;
@@ -92,18 +90,12 @@ class env_base
         ts.push_back(t_bar);
         decimal_t min_cost = std::numeric_limits<decimal_t>::max();
         for(auto t: ts) {
-          //printf("t: %f ", t);
           if(t < t_bar)
            continue;
           decimal_t cost = a*t-c/t-d/2/t/t-e/3/t/t/t-f/4/t/t/t/t-g/5/t/t/t/t/t;
           if(cost < min_cost) 
             min_cost = cost;
         }
-        //printf("-----------\n");
-        //if(ts.empty())
-          //printf("wrong! no root found!\n");
-        //printf("cost: %f, t: %f. t_bar: %f\n", min_cost, t_star, t_bar);
-
         return min_cost;
       }
 
@@ -462,7 +454,7 @@ class env_base
     double j_max_ = -1;
     double t_max_ = -1;
     double dt_ = 1.0;
-    double ds_ = 0.01, dv_ = 0.001, da_ = 0.01, dj_ = 0.01;
+    double ds_ = 0.0001, dv_ = 0.001, da_ = 0.01, dj_ = 0.01;
 
     ///Array of constant control input
     vec_Vec3f U_;

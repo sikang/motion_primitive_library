@@ -51,9 +51,9 @@ class env_map : public env_base
     }
 
     /**
-     * @brief Check if a primitive is in free space
+     * @brief Check if the primitive is in free space
      *
-     * We sample n (default as 5) points along a primitive, and check each point for collision
+     * We sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map.
      */
     bool is_free(const Primitive& pr) const {
       double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
@@ -101,7 +101,7 @@ class env_map : public env_base
         Primitive pr(curr, U_[i], dt_);
         Waypoint tn = pr.evaluate(dt_);
         if(pr.valid_vel(v_max_) && pr.valid_acc(a_max_) && pr.valid_jrk(j_max_)) {
-         tn.use_pos = curr.use_pos;
+          tn.use_pos = curr.use_pos;
           tn.use_vel = curr.use_vel;
           tn.use_acc = curr.use_acc;
           tn.use_jrk = curr.use_jrk;
@@ -112,13 +112,13 @@ class env_map : public env_base
           //double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: 1000;
           succ_cost.push_back(cost);
           action_idx.push_back(i);
-       }
+        }
       }
 
       /*
-      if ((goal_outside_ && map_util_->isOutSide(pn)) ||
+         if ((goal_outside_ && map_util_->isOutSide(pn)) ||
          (t_max_ > 0 && curr.t >= t_max_ && !succ.empty())) {
-        succ.push_back(goal_node_);
+         succ.push_back(goal_node_);
         succ_idx.push_back(state_to_idx(goal_node_));
         succ_cost.push_back(get_heur(curr));
         action_idx.push_back(-1); // -1 indicates directly connection to the goal 

@@ -64,7 +64,7 @@ int main(int argc, char ** argv){
   planner->setW(10); // Set dt for each primitive
   planner->setMaxNum(-1); // Set maximum allowed states
   planner->setU(1, false);// 2D discretization with 1
-  planner->setTol(1, 1, 1); // Tolerance for goal region
+  planner->setTol(0.5, 1, 1); // Tolerance for goal region
 
   // Planning
   Timer time(true);
