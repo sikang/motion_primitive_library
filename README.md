@@ -108,7 +108,7 @@ The output is stored in `output.jpg` in the current folder (grey dots show the e
 
 
 ## Doxygen
-For more details, please refer to https://sikang.github.io/motion\_primitive\_library/
+For more details, please refer to [Doxygen](https://sikang.github.io/motion_primitive_library).
 
 ## ROS Wrapper
-The interface with ROS for planning using this library can be found in [`mpl_ros`](https://github.com/sikang/mpl_ros.git)
+The interface with ROS for planning using this library can be found in [`mpl_ros`](https://github.com/sikang/mpl_ros.git).
