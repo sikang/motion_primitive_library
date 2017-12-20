@@ -456,7 +456,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
       ENV.forward_action( currNode_ptr->coord, action_idx, pr );
       prs.push_back(pr);
       sss_ptr->best_child_.push_back(currNode_ptr);
-      if(verbose_) {
+      if(0 && verbose_) {
         std::cout << currNode_ptr->t << std::endl;
         printf("action id: %d, action dt: %f\n", action_idx, pr.t());
       }

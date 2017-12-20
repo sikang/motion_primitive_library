@@ -56,12 +56,11 @@ planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity
 planner->setAmax(1.0); // Set max acceleration 
 planner->setJmax(1.0); // Set max jerk
-planner->setUmax(1.0); // Set max control input
+planner->setUmax(0.5); // Set max control input
 planner->setDt(1.0); // Set dt for each primitive
 planner->setW(10); // Set dt for each primitive
 planner->setMaxNum(-1); // Set maximum allowed states
 planner->setU(1, false);// 2D discretization with 1
-planner->setMode(start); // Set effort degree
 planner->setTol(1, 1, 1); // Tolerance for goal region
 
 
@@ -76,6 +75,10 @@ Run following command:
 ```sh
 $ ./build/test_planner_2d ../data/corridor.yaml
 ```
+or
+```sh
+$ rosrun motion_primitive_library test_planner_2d /PATH/TO/MPL/data/corridor.yaml
+```
 You should see following messages if it works properly:
 ```sh
 [MPPlanner] PLANNER VERBOSE ON
@@ -87,16 +90,17 @@ You should see following messages if it works properly:
 [MPBaseUtil] set dt: 1.000000
 [MPBaseUtil] set w: 10.000000
 [MPBaseUtil] set max num: -1
-[MPBaseUtil] set effort in acc
 [MPBaseUtil] set tol_dis: 1.000000
 [MPBaseUtil] set tol_vel: 1.000000
 [MPBaseUtil] set tol_acc: 1.000000
 start pos: [2.500000, -3.500000, 0.000000], vel: [0.000000, 0.000000, 0.000000], acc: [0.000000, 0.000000, 0.000000]
 goal pos: [37.000000, 2.500000, 0.000000], vel: [0.000000, 0.000000, 0.000000], acc: [0.000000, 0.000000, 0.000000]
-MP Planner takes: 87.000000 ms
-MP Planner expanded states: 4033
+[MPBaseUtil] set effort in acc
+...
+MP Planner takes: 105.000000 ms
+MP Planner expanded states: 4007
 Total time T: 35.000000
-Total J:  J(0) = 36.000000, J(1) = 2.250000, J(2) = 0.000000, J(3) = 0.000000
+Total J:  J(0) = 36.416667, J(1) = 2.750000, J(2) = 0.000000, J(3) = 0.000000
 ```
 
 ## Doxygen

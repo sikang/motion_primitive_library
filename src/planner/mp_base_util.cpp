@@ -56,29 +56,6 @@ void MPBaseUtil::setU(const vec_Vec3f& U) {
   ENV_->set_U(U);
 }
 
-void MPBaseUtil::setMode(const Waypoint& p) {
-  if(p.use_pos && p.use_vel && p.use_acc && p.use_jrk) {
-    ENV_->set_wi(3);
-    if(planner_verbose_)
-      printf("[MPBaseUtil] set effort in snap\n");
-  }
-  else if(p.use_pos && p.use_vel && p.use_acc && !p.use_jrk) {
-   ENV_->set_wi(2);
-    if(planner_verbose_)
-      printf("[MPBaseUtil] set effort in jrk\n");
-  }
-  else if(p.use_pos && p.use_vel && !p.use_acc && !p.use_jrk) {
-    ENV_->set_wi(1);
-    if(planner_verbose_)
-      printf("[MPBaseUtil] set effort in acc\n");
-  }
-  else if(p.use_pos && !p.use_vel && !p.use_acc && !p.use_jrk) {
-    ENV_->set_wi(0);
-    if(planner_verbose_)
-      printf("[MPBaseUtil] set effort in vel\n");
-  }
-}
-
 void MPBaseUtil::setVmax(decimal_t v_max) {
   ENV_->set_v_max(v_max);
   if(planner_verbose_)
@@ -204,7 +181,7 @@ void MPBaseUtil::getSubStateSpace(int id) {
   sss_ptr_->getSubStateSpace(id);
 }
 
-bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal, bool replan) {
+bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
   if(planner_verbose_) {
     printf("start pos: [%f, %f, %f], vel: [%f, %f, %f], acc: [%f, %f, %f]\n",
         start.pos(0), start.pos(1), start.pos(2),
@@ -220,12 +197,40 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal, bool replan) 
     printf(ANSI_COLOR_RED "[MPPlanner] start is not free!" ANSI_COLOR_RESET "\n");
     return false;
   }
- 
+
+  if(start.use_pos && start.use_vel && start.use_acc && start.use_jrk) {
+    ENV_->set_wi(3);
+    if(planner_verbose_)
+      printf("[MPBaseUtil] set effort in snap\n");
+  }
+  else if(start.use_pos && start.use_vel && start.use_acc && !start.use_jrk) {
+    ENV_->set_wi(2);
+    if(planner_verbose_)
+      printf("[MPBaseUtil] set effort in jrk\n");
+  }
+  else if(start.use_pos && start.use_vel && !start.use_acc && !start.use_jrk) {
+    ENV_->set_wi(1);
+    if(planner_verbose_)
+      printf("[MPBaseUtil] set effort in acc\n");
+  }
+  else if(start.use_pos && !start.use_vel && !start.use_acc && !start.use_jrk) {
+    ENV_->set_wi(0);
+    if(planner_verbose_)
+      printf("[MPBaseUtil] set effort in vel\n");
+  }
+
+
   std::unique_ptr<MPL::GraphSearch> planner_ptr(new MPL::GraphSearch(true));
 
-  if(!replan) {
-    printf(ANSI_COLOR_CYAN "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
+  // If use A*, reset the state space 
+  if(!use_lpastar_) 
     sss_ptr_.reset(new MPL::StateSpace(epsilon_));
+  else {
+    // If use LPA*, reset the state space only at the initial planning
+    if(!initialized()) {
+      printf(ANSI_COLOR_CYAN "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
+      sss_ptr_.reset(new MPL::StateSpace(epsilon_));
+    }
   }
 
   ENV_->set_goal(goal);

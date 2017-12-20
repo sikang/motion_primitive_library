@@ -70,15 +70,17 @@ class MPBaseUtil
     void setU(int n, bool use_3d);
     ///Set U 
     void setU(const vec_Vec3f& U);
-    ///Set effort degree
-    void setMode(const Waypoint& p);
     ///Set tolerance in geometric and dynamic spaces
     void setTol(decimal_t tol_dis, decimal_t tol_vel, decimal_t tol_acc = 0.0);
-   /**
+    /**
      * @brief Planning thread
-     * @param replan default as false, such that plan from scratch; set to be true, the planner reuses the state space for planning
+     * @param start start waypoint
+     * @param goal goal waypoint
+     *
+     * The start waypoint 
+     * The goal waypoint is the center of the goal region, the planner cannot find the trajectory hit the excat goal state due to discretization;
      */
-    virtual bool plan(const Waypoint &start, const Waypoint &goal, bool replan = false);
+    bool plan(const Waypoint &start, const Waypoint &goal);
 
   protected:
     ///Env class

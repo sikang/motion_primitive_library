@@ -39,7 +39,7 @@ int main(int argc, char ** argv){
   start.acc = Vec3f::Zero(); 
   start.jrk = Vec3f::Zero(); 
   start.use_pos = true;
-  start.use_vel = true;
+  start.use_vel = false;
   start.use_acc = false; 
   start.use_jrk = false; 
 
@@ -59,19 +59,63 @@ int main(int argc, char ** argv){
   planner->setVmax(1.0); // Set max velocity
   planner->setAmax(1.0); // Set max acceleration 
   planner->setJmax(1.0); // Set max jerk
-  planner->setUmax(0.5); // Set max control input
+  planner->setUmax(1.0); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
   planner->setW(10); // Set dt for each primitive
   planner->setMaxNum(-1); // Set maximum allowed states
   planner->setU(1, false);// 2D discretization with 1
   planner->setTol(1, 1, 1); // Tolerance for goal region
 
+
   // Planning
-  Timer time(true);
+  Timer time1(true);
+  planner->plan(start, goal); // Plan from start to goal
+  double dt = time1.Elapsed().count();
+  printf("MP Planner prior takes: %f ms\n", dt);
+  printf("MP Planner prior expanded states: %zu\n", planner->getCloseSet().size());
+
+  Trajectory prior_traj = planner->getTraj();
+  printf("Total time T: %f\n", prior_traj.getTotalTime());
+  printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
+      prior_traj.J(0), prior_traj.J(1), prior_traj.J(2), prior_traj.J(3));
+ 
+  start.use_pos = true;
+  start.use_vel = true;
+  start.use_acc = true; 
+  start.use_jrk = false; 
+
+  /*
+  goal.use_pos = start.use_pos;
+  goal.use_vel = start.use_vel;
+  goal.use_acc = start.use_acc;
+  goal.use_jrk = start.use_jrk;
+  */
+
+
+  int alpha = 0;
+  planner.reset(new MPMapUtil(true)); // Declare a mp planner using voxel map
+  planner->setMapUtil(map_util); // Set collision checking function
+  planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
+  planner->setVmax(1.0); // Set max velocity
+  planner->setAmax(1.0); // Set max acceleration 
+  planner->setJmax(1.0); // Set max jerk
+  planner->setUmax(0.5); // Set max control input
+  planner->setDt(1.0); // Set dt for each primitive
+  planner->setW(10); // Set dt for each primitive
+  planner->setMaxNum(-1); // Set maximum allowed states
+  planner->setU(1, false);// 2D discretization with 1
+  planner->setTol(1, 1, 1); // Tolerance for goal region
+  planner->setAlpha(alpha);
+  planner->setPriorTrajectory(prior_traj);
+
+
+  // Planning
+  Timer time2(true);
   bool valid = planner->plan(start, goal); // Plan from start to goal
-  double dt = time.Elapsed().count();
+  dt = time2.Elapsed().count();
   printf("MP Planner takes: %f ms\n", dt);
   printf("MP Planner expanded states: %zu\n", planner->getCloseSet().size());
+
 
 #if VISUALIZE
   // Plot the result in image
@@ -116,11 +160,25 @@ int main(int argc, char ** argv){
   if(valid) {
     Trajectory traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
-    printf("Total time T: %f\n", total_t);
-    printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
+    printf("Refined total time T: %f\n", total_t);
+    printf("Refined total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
         traj.J(0), traj.J(1), traj.J(2), traj.J(3));
+
+    printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t + traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));
     int num = 1000; // number of points on trajectory to draw
     imageSource->SetDrawColor(0.0, 0.0, 0.0);
+    for(int i = 0; i < num -1 ; i ++) {
+      const decimal_t t1 = i * prior_traj.getTotalTime() / num; 
+      const decimal_t t2 = (i + 1) * prior_traj.getTotalTime() / num; 
+      Waypoint w1, w2;
+      prior_traj.evaluate(t1, w1);
+      prior_traj.evaluate(t2, w2);
+      const Vec3i p1 = map_util->floatToInt(w1.pos);
+      const Vec3i p2 = map_util->floatToInt(w2.pos);
+      imageSource->FillTube(p1[0], p1[1], p2[0], p2[1], 1);
+    }
+
+    imageSource->SetDrawColor(255.0, 0.0, 255.0);
     for(int i = 0; i < num -1 ; i ++) {
       const decimal_t t1 = i * total_t / num; 
       const decimal_t t2 = (i + 1) * total_t / num; 
@@ -131,6 +189,7 @@ int main(int argc, char ** argv){
       const Vec3i p2 = map_util->floatToInt(w2.pos);
       imageSource->FillTube(p1[0], p1[1], p2[0], p2[1], 2);
     }
+
 
   }
 

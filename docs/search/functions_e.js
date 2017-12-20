@@ -28,7 +28,6 @@ var searchData=
   ['setmap',['setMap',['../classMPL_1_1MapUtilBase.html#a818f2235f18fbdb3720ed06658a04149',1,'MPL::MapUtilBase::setMap()'],['../classMPL_1_1SubVoxelMapUtil.html#ab619774a342d220f01f164f90dd88c28',1,'MPL::SubVoxelMapUtil::setMap()'],['../classMPCloudUtil.html#a303f17a791f422204c33191f90a3828c',1,'MPCloudUtil::setMap()']]],
   ['setmaputil',['setMapUtil',['../classMPMapUtil.html#a0384f13ee684e0be0e5f59df1a8002ae',1,'MPMapUtil::setMapUtil(std::shared_ptr&lt; MPL::VoxelMapUtil &gt; map_util)'],['../classMPMapUtil.html#a4973d596240a75783445ee5cda491f4e',1,'MPMapUtil::setMapUtil(std::shared_ptr&lt; MPL::SubVoxelMapUtil &gt; map_util)']]],
   ['setmaxnum',['setMaxNum',['../classMPBaseUtil.html#a38122fae7d17f4529a7000e10d29d3cf',1,'MPBaseUtil']]],
-  ['setmode',['setMode',['../classMPBaseUtil.html#a466fa038a5efc40386d7df83187092dd',1,'MPBaseUtil']]],
   ['setpriortrajectory',['setPriorTrajectory',['../classMPBaseUtil.html#a3740584cb5214a8eb5ee8bb25fb70136',1,'MPBaseUtil']]],
   ['settmax',['setTmax',['../classMPBaseUtil.html#a830e57da55e98f5c75225b624283d3e7',1,'MPBaseUtil']]],
   ['settol',['setTol',['../classMPBaseUtil.html#ae3fa1886d1d5d75ca5f4e73948761a04',1,'MPBaseUtil']]],

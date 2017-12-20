@@ -83,3 +83,6 @@ target_link_libraries(mp_cloud_util primitive ${PCL_LIBRARIES})
 add_executable(test_planner_2d test/test_planner_2d.cpp)
 target_link_libraries(test_planner_2d mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES} ${VTK_LIBRARIES})
 
+add_executable(test_planner_2d_prior_traj test/test_planner_2d_prior_traj.cpp)
+target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES} ${VTK_LIBRARIES})
+
