@@ -9,28 +9,27 @@
 #include <primitive/primitive.h>
 #include <unordered_map>
 #include <collision_checking/voxel_map_util.h>
-#include <collision_checking/sub_voxel_map_util.h>
 
 namespace MPL {
 
-/**
- * @brief Voxel map environment
- */
-class env_map : public env_base
-{
-  ///Lookup table for voxels
-  using lookUpTable = std::unordered_map<Key, vec_Vec3i>;
+  /**
+   * @brief Voxel map environment
+   */
+  class env_map : public env_base
+  {
+    ///Lookup table for voxels
+    using lookUpTable = std::unordered_map<Key, vec_Vec3i>;
 
 
-  public:
+    public:
+    lookUpTable collision_checking_table_;
+
     std::shared_ptr<VoxelMapUtil> map_util_;
 
     ///Constructor with map util as input
     env_map(std::shared_ptr<VoxelMapUtil> map_util)
       : map_util_(map_util)
     {}
-
-    ~env_map() {}
 
     ///Set goal state
     void set_goal(const Waypoint& goal) {
@@ -53,16 +52,16 @@ class env_map : public env_base
     /**
      * @brief Check if the primitive is in free space
      *
-     * We sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map.
+     * Sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map.
      */
     bool is_free(const Primitive& pr) const {
       double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
       int n = std::ceil(max_v * pr.t() / map_util_->getRes());
       std::vector<Waypoint> pts = pr.sample(n);
-      for(const auto& pt: pts){
+      for(const auto& pt: pts) {
         Vec3i pn = map_util_->floatToInt(pt.pos);
         if(map_util_->isOccupied(pn) ||
-           (!goal_outside_ && map_util_->isOutSide(pn)))
+            (!goal_outside_ && map_util_->isOutSide(pn)))
           return false;
       }
 
@@ -119,20 +118,19 @@ class env_map : public env_base
          if ((goal_outside_ && map_util_->isOutSide(pn)) ||
          (t_max_ > 0 && curr.t >= t_max_ && !succ.empty())) {
          succ.push_back(goal_node_);
-        succ_idx.push_back(state_to_idx(goal_node_));
-        succ_cost.push_back(get_heur(curr));
-        action_idx.push_back(-1); // -1 indicates directly connection to the goal 
-        printf("connect to the goal, curr t: %f!\n", curr.t);
-        //curr.print();
+         succ_idx.push_back(state_to_idx(goal_node_));
+         succ_cost.push_back(get_heur(curr));
+         action_idx.push_back(-1); // -1 indicates directly connection to the goal 
+         printf("connect to the goal, curr t: %f!\n", curr.t);
+      //curr.print();
       }
       */
 
 
     }
 
-    lookUpTable collision_checking_table_;
 
-};
+  };
 }
 
 

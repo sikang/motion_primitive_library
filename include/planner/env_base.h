@@ -63,6 +63,7 @@ class env_base
       return cal_heur(state, goal_node);
     }
 
+    /// calculate the cost from state to goal
     double cal_heur(const Waypoint& state, const Waypoint& goal) const
     {
       //return 0;

@@ -121,7 +121,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:aa85f1858e00de899de7a6156e834adcd inherit pub_methods_classMPL_1_1env__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heuristic function.  <a href="classMPL_1_1env__base.html#aa85f1858e00de899de7a6156e834adcd">More...</a><br /></td></tr>
 <tr class="separator:aa85f1858e00de899de7a6156e834adcd inherit pub_methods_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40f8e0357978c51b88c55feb84e58ee7 inherit pub_methods_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a40f8e0357978c51b88c55feb84e58ee7"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>cal_heur</b> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;state, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal) const</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a40f8e0357978c51b88c55feb84e58ee7">cal_heur</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;state, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal) const</td></tr>
+<tr class="memdesc:a40f8e0357978c51b88c55feb84e58ee7 inherit pub_methods_classMPL_1_1env__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the cost from state to goal <br /></td></tr>
 <tr class="separator:a40f8e0357978c51b88c55feb84e58ee7 inherit pub_methods_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6734c7621ec2a67aae7a3fc3f5e3fc1 inherit pub_methods_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="af6734c7621ec2a67aae7a3fc3f5e3fc1"></a>
 <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#af6734c7621ec2a67aae7a3fc3f5e3fc1">state_to_idx</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;state) const</td></tr>
@@ -212,12 +213,12 @@ virtual <a class="el" href="data__type_8h.html#a47ddb28a89d8b9f6aaa729f91e61dbec
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aa1e517e817c54a85fade109018d0a080"><td class="memItemLeft" align="right" valign="top"><a id="aa1e517e817c54a85fade109018d0a080"></a>
-std::shared_ptr&lt; <a class="el" href="classMPL_1_1VoxelMapUtil.html">VoxelMapUtil</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>map_util_</b></td></tr>
-<tr class="separator:aa1e517e817c54a85fade109018d0a080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a838f7ad7434873ffbe87a440792b8e6d"><td class="memItemLeft" align="right" valign="top"><a id="a838f7ad7434873ffbe87a440792b8e6d"></a>
 <a class="el" href="classMPL_1_1env__map.html#af543cf8a2b9e85aa3c403a2c707cb8cf">lookUpTable</a>&#160;</td><td class="memItemRight" valign="bottom"><b>collision_checking_table_</b></td></tr>
 <tr class="separator:a838f7ad7434873ffbe87a440792b8e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1e517e817c54a85fade109018d0a080"><td class="memItemLeft" align="right" valign="top"><a id="aa1e517e817c54a85fade109018d0a080"></a>
+std::shared_ptr&lt; <a class="el" href="classMPL_1_1VoxelMapUtil.html">VoxelMapUtil</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>map_util_</b></td></tr>
+<tr class="separator:aa1e517e817c54a85fade109018d0a080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classMPL_1_1env__base"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classMPL_1_1env__base')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classMPL_1_1env__base.html">MPL::env_base</a></td></tr>
 <tr class="memitem:a68a937d8be935d88d15dbc46d7b51b0c inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a68a937d8be935d88d15dbc46d7b51b0c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>goal_outside_</b></td></tr>
@@ -392,7 +393,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div><div class="memdoc">
 
 <p>Check if the primitive is in free space. </p>
-<p>We sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map. </p>
+<p>Sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map. </p>
 
 <p>Reimplemented from <a class="el" href="classMPL_1_1env__base.html#a20ec1d3bd97b56dc5dcd04fa39d79e8f">MPL::env_base</a>.</p>
 
