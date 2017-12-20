@@ -13,10 +13,6 @@ void MPMapUtil::setMapUtil(std::shared_ptr<VoxelMapUtil> map_util) {
   map_util_ = map_util;
 }
 
-void MPMapUtil::setMapUtil(std::shared_ptr<SubVoxelMapUtil> map_util) {
-  ENV_.reset(new MPL::env_map(map_util));
-}
-
 vec_Vec3f MPMapUtil::getLinkedNodes() const {
   lhm_.clear();
   vec_Vec3f linked_pts;

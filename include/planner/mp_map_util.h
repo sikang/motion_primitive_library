@@ -19,8 +19,6 @@ class MPMapUtil : public MPBaseUtil
     MPMapUtil(bool verbose);
     ///Set map util
     void setMapUtil(std::shared_ptr<MPL::VoxelMapUtil> map_util);
-    ///Set sub map util
-    void setMapUtil(std::shared_ptr<MPL::SubVoxelMapUtil> map_util);
     ///Get linked voxels
     vec_Vec3f getLinkedNodes() const;
     ///Update tree according to the new blocked nodes
