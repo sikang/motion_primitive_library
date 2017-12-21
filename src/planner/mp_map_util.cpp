@@ -39,7 +39,8 @@ vec_Vec3f MPMapUtil::getLinkedNodes() const {
     }
   }
 
-  printf("number of linked_pts: %zu\n", linked_pts.size());
+  if(planner_verbose_)
+    printf("number of linked_pts: %zu\n", linked_pts.size());
   return linked_pts;
 }
 
@@ -57,7 +58,9 @@ vec_Vec3f MPMapUtil::updateBlockedNodes(const vec_Vec3i& blocked_pns) {
       }
     }
   }
-  printf("number of blocked nodes: %zu\n", pts.size());
+
+  if(planner_verbose_)
+    printf("number of blocked nodes: %zu\n", pts.size());
 
   sss_ptr_->increaseCost(blocked_nodes);
   return pts;
@@ -77,7 +80,9 @@ vec_Vec3f MPMapUtil::updateClearedNodes(const vec_Vec3i& cleared_pns) {
       }
     }
   }
-  printf("number of cleared nodes: %zu\n", pts.size());
+  
+  if(planner_verbose_)
+    printf("number of cleared nodes: %zu\n", pts.size());
 
   sss_ptr_->decreaseCost(cleared_nodes, *ENV_);
   return pts;
