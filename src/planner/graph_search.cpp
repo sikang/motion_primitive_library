@@ -334,7 +334,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx,
   while(sss_ptr->pq.top().first < std::min(goalNode_ptr->g, goalNode_ptr->rhs) || goalNode_ptr->rhs != goalNode_ptr->g)
   {
     expand_iteration++;
-    // get element with smallest cost
+    // Get element with smallest cost
     currNode_ptr = sss_ptr->pq.top().second;     
     /*
     printf("[%d] expand, t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
@@ -456,13 +456,22 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
       ENV.forward_action( currNode_ptr->coord, action_idx, pr );
       prs.push_back(pr);
       sss_ptr->best_child_.push_back(currNode_ptr);
-      if(0 && verbose_) {
+      if(verbose_) {
         std::cout << currNode_ptr->t << std::endl;
         printf("action id: %d, action dt: %f\n", action_idx, pr.t());
       }
     }
-    else 
+    else {
+      if(verbose_) {
+        printf(ANSI_COLOR_RED "Trace back failure, the number of predecessors is %zu: \n", currNode_ptr->pred_hashkey.size());
+        for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
+          Key key = currNode_ptr->pred_hashkey[i];
+          printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i, sss_ptr->hm[key]->g, currNode_ptr->pred_action_cost[i]);
+        }
+      }
+
       break;
+    }
     if(currNode_ptr->hashkey == start_idx)
       break;
   }
