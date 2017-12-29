@@ -16,7 +16,7 @@ var searchData=
   ['getpolyhedra',['getPolyhedra',['../classMPCloudUtil.html#a6e0992436c35fa6013d0d5f908db8796',1,'MPCloudUtil']]],
   ['getres',['getRes',['../classMPL_1_1MapUtilBase.html#a58aae164dcfc96d689743efe5e2038ff',1,'MPL::MapUtilBase']]],
   ['getsegst',['getSegsT',['../classTrajectory.html#a13c112898c1f72e8a27fc67b3cdef211',1,'Trajectory']]],
-  ['getsubstatespace',['getSubStateSpace',['../classMPBaseUtil.html#a7b9ae838af2bcfeb27d963275ed7887f',1,'MPBaseUtil']]],
+  ['getsubstatespace',['getSubStateSpace',['../structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17',1,'MPL::StateSpace::getSubStateSpace()'],['../classMPBaseUtil.html#a7b9ae838af2bcfeb27d963275ed7887f',1,'MPBaseUtil::getSubStateSpace()']]],
   ['gettotaltime',['getTotalTime',['../classPolyTraj.html#a6855a989ddf5ad5d922e69f7cf7440dd',1,'PolyTraj::getTotalTime()'],['../classTrajectory.html#ad1e100ce61c43876dbe3fa66b4bf3f3f',1,'Trajectory::getTotalTime()']]],
   ['gettraj',['getTraj',['../classMPBaseUtil.html#aad2dff2616a3d212fc3a22c5cabcf3a8',1,'MPBaseUtil']]],
   ['gettrajectory',['getTrajectory',['../classPolySolver.html#a0ba6ebeaf03052445baa1702ef531988',1,'PolySolver']]],

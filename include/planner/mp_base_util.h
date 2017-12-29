@@ -42,6 +42,9 @@ class MPBaseUtil
      */
     void getSubStateSpace(int id);
 
+    ///Check tree validation
+    void checkValidation();
+
     ///Set max vel in each axis
     void setLPAstar(bool use_lpastar);
     ///Set max vel in each axis

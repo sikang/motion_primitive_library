@@ -105,19 +105,19 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ac469f005b0bd9eccdf4b379519e3143e"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a></td></tr>
 <tr class="memdesc:ac469f005b0bd9eccdf4b379519e3143e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for node.  <a href="#ac469f005b0bd9eccdf4b379519e3143e">More...</a><br /></td></tr>
 <tr class="separator:ac469f005b0bd9eccdf4b379519e3143e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae25392099da7ae52dcdb3ae0d08d03f3"><td class="memTemplParams" colspan="2"><a id="ae25392099da7ae52dcdb3ae0d08d03f3"></a>
-template&lt;class state &gt; </td></tr>
-<tr class="memitem:ae25392099da7ae52dcdb3ae0d08d03f3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ae25392099da7ae52dcdb3ae0d08d03f3">hashMap</a> = std::unordered_map&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, std::shared_ptr&lt; state &gt; &gt;</td></tr>
-<tr class="memdesc:ae25392099da7ae52dcdb3ae0d08d03f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
-<tr class="separator:ae25392099da7ae52dcdb3ae0d08d03f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af10a63545f5d7e532249379196d7f84c"><td class="memTemplParams" colspan="2"><a id="af10a63545f5d7e532249379196d7f84c"></a>
 template&lt;class state &gt; </td></tr>
 <tr class="memitem:af10a63545f5d7e532249379196d7f84c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#af10a63545f5d7e532249379196d7f84c">priorityQueue</a> = boost::heap::d_ary_heap&lt; std::pair&lt; double, std::shared_ptr&lt; state &gt; &gt;, boost::heap::mutable_&lt; true &gt;, boost::heap::arity&lt; 2 &gt;, boost::heap::compare&lt; <a class="el" href="structMPL_1_1compare__pair.html">compare_pair</a>&lt; state &gt; &gt; &gt;</td></tr>
 <tr class="memdesc:af10a63545f5d7e532249379196d7f84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define priority queue. <br /></td></tr>
 <tr class="separator:af10a63545f5d7e532249379196d7f84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="memItemLeft" align="right" valign="top"><a id="a3801daa412c74da0b8ccb3ecfb4ec19f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>StatePtr</b> = std::shared_ptr&lt; <a class="el" href="structMPL_1_1State.html">State</a> &gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="structMPL_1_1State.html">State</a> &gt;</td></tr>
+<tr class="memdesc:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare StatePtr. <br /></td></tr>
 <tr class="separator:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="memItemLeft" align="right" valign="top"><a id="a34b3b7a82c7de69f67e26f5f2e18a8a6"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a> = std::unordered_map&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &gt;</td></tr>
+<tr class="memdesc:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
+<tr class="separator:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The base class is provided by considering both 2D and 3D maps </p><dl class="params"><dt>Parameters</dt><dd>

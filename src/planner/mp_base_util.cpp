@@ -177,8 +177,12 @@ vec_Vec3f MPBaseUtil::getExpandedNodes() const {
   return ENV_->expanded_nodes_;
 }
 
-void MPBaseUtil::getSubStateSpace(int id) {
-  sss_ptr_->getSubStateSpace(id);
+void MPBaseUtil::getSubStateSpace(int time_step) {
+  sss_ptr_->getSubStateSpace(time_step);
+}
+
+void MPBaseUtil::checkValidation() {
+  sss_ptr_->checkValidation();
 }
 
 bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
@@ -217,6 +221,13 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
     ENV_->set_wi(0);
     if(planner_verbose_)
       printf("[MPBaseUtil] set effort in vel\n");
+  }
+  else {
+    if(planner_verbose_) {
+      printf(ANSI_COLOR_RED "[MPBaseUtil] fail to set effort, pos/vel/acc/jrk --> %d/%d/%d/%d\n" ANSI_COLOR_RESET,
+          start.use_pos, start.use_vel, start.use_acc, start.use_jrk);
+    }
+    return false;
   }
 
 

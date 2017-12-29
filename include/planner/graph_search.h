@@ -38,10 +38,6 @@ namespace MPL
     }
   };  
 
-  ///Define hashmap type
-  template <class state>
-  using hashMap = std::unordered_map<Key, std::shared_ptr<state> >;
-
   ///Define priority queue
   template <class state>
   using priorityQueue = boost::heap::d_ary_heap<std::pair<double,std::shared_ptr<state>>, boost::heap::mutable_<true>, boost::heap::arity<2>, boost::heap::compare< compare_pair<state> >>;
@@ -63,38 +59,55 @@ namespace MPL
 
     // pointer to heap location
     typename priorityQueue<State>::handle_type heapkey;
-    
+
     // plan data
     double g = std::numeric_limits<double>::infinity();
     double rhs = std::numeric_limits<double>::infinity();
     double h;
     bool iterationopened = false;
     bool iterationclosed = false;
-    
+
     State( Key hashkey, const Waypoint& coord )
       : hashkey(hashkey), coord(coord)//, parent(nullptr)
     {}
 
- };
+  };
 
+  ///Declare StatePtr
   using StatePtr = std::shared_ptr<State>;
   
+  ///Define hashmap type
+  using hashMap = std::unordered_map<Key, StatePtr>;
+
   ///State space
   struct StateSpace
   {
+    ///Priority queue, open set
     priorityQueue<State> pq;
-    hashMap<State> hm;
+    ///Hashmap, stores all the nodes
+    hashMap hm;
+    ///Heuristic weight, default as 1
     double eps;
+    ///Execution time for each primitive
     double dt;
+    ///The best trajectory from previous plan
+    std::vector<StatePtr> best_child_;
+    ///Goal node, initialized as null by default
+    StatePtr goalNode_ptr_ = nullptr;
 
+    ///Simple constructor
     StateSpace(double eps = 1): eps(eps){}
-    void getSubStateSpace(int id =1);
+    /**
+     * @brief Get the subtree
+     * @param time_step indicates the root of the subtree (best_child_[time_step])
+     */
+    void getSubStateSpace(int time_step);
+    ///Increase the cost of actions 
     void increaseCost(std::vector<std::pair<Key, int> > states);
     void decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV);
-    void updateNode(StatePtr currNode_ptr);
+    void updateNode(StatePtr& currNode_ptr);
 
-    std::vector<std::shared_ptr<State>> best_child_;
-    StatePtr goalNode_ptr = nullptr;
+    void checkValidation();
   };
 
   
@@ -109,7 +122,7 @@ namespace MPL
       /**
        * @brief Simple empty constructor
        *
-       * @param verbose enable print out infos, default is set to False
+       * @param verbose enable print out debug infos, default is set to False
        */
       GraphSearch(bool verbose = false) : verbose_(verbose) {};
 
@@ -142,6 +155,7 @@ namespace MPL
     private:
       ///Recover trajectory 
       Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> sss_ptr, const env_base& ENV, const Key& start_idx);
+      ///Verbose flag
       bool verbose_ = false;
  
  };
