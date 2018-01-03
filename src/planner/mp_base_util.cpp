@@ -110,18 +110,19 @@ std::vector<Primitive> MPBaseUtil::getValidPrimitives() const {
    if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
-        if(!sss_ptr_->hm[key] || std::isinf(it.second->pred_action_cost[i]))
+        //if(!sss_ptr_->hm[key] || std::isinf(it.second->pred_action_cost[i])) 
+        if(std::isinf(it.second->pred_action_cost[i])) 
           continue;
         Primitive pr;
         ENV_->forward_action( sss_ptr_->hm[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
       }
     }
- 
   }
 
-  printf("number of states in hm: %zu, number of valid prs: %zu\n", 
-      sss_ptr_->hm.size(), prs.size());
+  if(planner_verbose_)
+    printf("number of states in hm: %zu, number of valid prs: %zu\n", 
+        sss_ptr_->hm.size(), prs.size());
  
   return prs;
 }
@@ -132,8 +133,6 @@ std::vector<Primitive> MPBaseUtil::getAllPrimitives() const {
     if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
-        if(!sss_ptr_->hm[key])
-          continue;
         Primitive pr;
         ENV_->forward_action( sss_ptr_->hm[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
@@ -142,8 +141,10 @@ std::vector<Primitive> MPBaseUtil::getAllPrimitives() const {
   }
 
 
-  printf("number of states in hm: %zu, number of prs: %zu\n", 
-      sss_ptr_->hm.size(), prs.size());
+  if(planner_verbose_) 
+    printf("number of states in hm: %zu, number of prs: %zu\n", 
+        sss_ptr_->hm.size(), prs.size());
+
   return prs;
 }
 

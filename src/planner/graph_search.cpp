@@ -115,13 +115,13 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
       StatePtr& child_ptr = sss_ptr->hm[ succ_idx[s] ];
       if( !child_ptr )
       {
-	child_ptr = std::make_shared<State>(State(succ_idx[s], succ_coord[s]) );
-	child_ptr->t = currNode_ptr->t + ENV.dt_;
-	child_ptr->h = ENV.get_heur( child_ptr->coord, child_ptr->t); 
-	child_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
-        child_ptr->pred_action_id.push_back(succ_act_idx[s]);
-        child_ptr->pred_action_cost.push_back(succ_cost[s]);
+        child_ptr = std::make_shared<State>(State(succ_idx[s], succ_coord[s]) );
+        child_ptr->t = currNode_ptr->t + ENV.dt_;
+        child_ptr->h = ENV.get_heur( child_ptr->coord, child_ptr->t); 
       }
+      child_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
+      child_ptr->pred_action_id.push_back(succ_act_idx[s]);
+      child_ptr->pred_action_cost.push_back(succ_cost[s]);
 
       // store the hashkey
       currNode_ptr->succ_hashkey[succ_act_idx[s]] = succ_idx[s];
@@ -133,9 +133,9 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
 
       if( tentative_gval < child_ptr->g )
       {
-	child_ptr->pred_hashkey.front() = currNode_ptr->hashkey;  // Assign new parent
-	child_ptr->pred_action_id.front() = succ_act_idx[s];
-	child_ptr->pred_action_cost.front() = succ_cost[s];
+	//child_ptr->pred_hashkey.front() = currNode_ptr->hashkey;  // Assign new parent
+	//child_ptr->pred_action_id.front() = succ_act_idx[s];
+	//child_ptr->pred_action_cost.front() = succ_cost[s];
 	child_ptr->t = currNode_ptr->t + ENV.dt_;
 	child_ptr->g = tentative_gval;    // Update gval
 
@@ -433,7 +433,7 @@ void StateSpace::getSubStateSpace(int time_step) {
 
 
 void StateSpace::increaseCost(std::vector<std::pair<Key, int> > states) {
-  //goalNode_ptr = nullptr;
+  //goalNode_ptr_ = nullptr;
   if(states.empty())
     return;
   for(const auto& affected_node: states) {
@@ -448,7 +448,7 @@ void StateSpace::increaseCost(std::vector<std::pair<Key, int> > states) {
 }
 
 void StateSpace::decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV) {
-  //goalNode_ptr = nullptr;
+  //goalNode_ptr_ = nullptr;
   if(states.empty())
     return;
   for(const auto& affected_node: states) {
