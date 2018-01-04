@@ -70,14 +70,15 @@ namespace MPL {
 
     /**
      * @brief Get successor
+     *
      * @param curr The node to expand
      * @param succ The array stores valid successors
      * @param succ_idx The array stores successors' Key
      * @param succ_cost The array stores cost along valid edges
      * @param action_idx The array stores corresponding idx of control for each successor
      *
-     * When goal is outside, extra step is needed for finding optimal trajectory
-     * Here we use Heuristic function and multiply with 2
+     * When goal is outside, extra step is needed for finding optimal trajectory.
+     * We use J(0) to break tie, the weight of J(0) should be small enough.
      */
     void get_succ( const Waypoint& curr, 
         std::vector<Waypoint>& succ,
@@ -107,8 +108,8 @@ namespace MPL {
 
           succ.push_back(tn);
           succ_idx.push_back(state_to_idx(tn));
-          double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: std::numeric_limits<double>::infinity();
-          //double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: 1000;
+          //double cost = is_free(pr) ? 0.01 * pr.J(0) + pr.J(wi_) + w_*dt_: std::numeric_limits<double>::infinity();
+          double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: 1000;
           succ_cost.push_back(cost);
           action_idx.push_back(i);
         }

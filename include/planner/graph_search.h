@@ -32,7 +32,7 @@ namespace MPL
       if( (p1.first >= p2.first - 0.000001) && (p1.first <= p2.first + 0.000001) )
       {
         // if equal compare gvals
-        return std::min(p1.second->g, p1.second->rhs) > std::min(p2.second->g, p2.second->rhs);
+        return std::min(p1.second->g, p1.second->rhs) < std::min(p2.second->g, p2.second->rhs);
       }
       return p1.first > p2.first;
     }
@@ -93,7 +93,9 @@ namespace MPL
     ///The best trajectory from previous plan
     std::vector<StatePtr> best_child_;
     ///Goal node, initialized as null by default
-    StatePtr goalNode_ptr_ = nullptr;
+    StatePtr goalNode_ptr_;
+    ///Internal flag to trigger goal reset 
+    bool need_to_reset_goal_ = false;
 
     ///Simple constructor
     StateSpace(double eps = 1): eps(eps){}

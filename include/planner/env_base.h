@@ -229,28 +229,34 @@ class env_base
         return (w_ + 1) * (state.pos - goal.pos).norm();
       else
         return w_*(state.pos - goal.pos).norm() / v_max_;
-   }
+    }
+
+    ///Replace the original cast function
+    inline Vec3i round(const Vec3f& vec, double res) const {
+      return Vec3i(std::round(vec(0) / res),
+          std::round(vec(1) / res),
+          std::round(vec(2) / res));
+    }
 
     ///Genegrate Key from state
-    Key state_to_idx(const Waypoint& state) const
-    {
-      Vec3i pi = (state.pos/ds_).cast<int>();
+    Key state_to_idx(const Waypoint& state) const {
+      Vec3i pi = round(state.pos, ds_);
       if(state.use_pos && state.use_vel && !state.use_acc ) {
-        Vec3i vi = (state.vel/dv_).cast<int>();
+        Vec3i vi = round(state.vel, dv_);
       return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
         std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2));
       }
       else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk) {
-        Vec3i vi = (state.vel/dv_).cast<int>();
-        Vec3i ai = (state.acc/da_).cast<int>();
+        Vec3i vi = round(state.vel, dv_);
+        Vec3i ai = round(state.acc, da_);
         return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
           std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2)) + "-" +
           std::to_string(ai(0)) + "-" + std::to_string(ai(1)) + "-" + std::to_string(ai(2));
       }
       else if(state.use_pos && state.use_vel && state.use_acc && state.use_jrk) {
-        Vec3i vi = (state.vel/dv_).cast<int>();
-        Vec3i ai = (state.acc/da_).cast<int>();
-        Vec3i ji = (state.jrk/dj_).cast<int>();
+        Vec3i vi = round(state.vel, dv_);
+        Vec3i ai = round(state.acc, da_);
+        Vec3i ji = round(state.jrk, dj_);
         return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
           std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2)) + "-" +
           std::to_string(ai(0)) + "-" + std::to_string(ai(1)) + "-" + std::to_string(ai(2)) + "-" +
@@ -455,7 +461,7 @@ class env_base
     double j_max_ = -1;
     double t_max_ = -1;
     double dt_ = 1.0;
-    double ds_ = 0.0001, dv_ = 0.001, da_ = 0.01, dj_ = 0.01;
+    double ds_ = 0.01, dv_ = 0.01, da_ = 0.01, dj_ = 0.01;
 
     ///Array of constant control input
     vec_Vec3f U_;
