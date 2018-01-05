@@ -18,7 +18,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
     double min_g = std::numeric_limits<double>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key key = currNode_ptr->pred_hashkey[i];
-      std::cout << "action id: " << currNode_ptr->pred_action_id[i] << " parent g: " << ss_ptr->hm_[key]->g << " action cost: " << currNode_ptr->pred_action_cost[i] << " parent key: " <<key << std::endl;
+      //std::cout << "action id: " << currNode_ptr->pred_action_id[i] << " parent g: " << ss_ptr->hm_[key]->g << " action cost: " << currNode_ptr->pred_action_cost[i] << " parent key: " <<key << std::endl;
       if(min_rhs > ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
         min_rhs = ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i];
         min_g = ss_ptr->hm_[key]->g;
@@ -296,7 +296,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     expand_iteration++;
     // Get element with smallest cost
     currNode_ptr = ss_ptr->pq_.top().second;     
-    if(currNode_ptr->t > 7) {
+    if(0) {
       printf("[%d] expand:\n", expand_iteration);
       printf("currNode: t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
           currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, ss_ptr->pq_.top().first);
@@ -415,11 +415,13 @@ void StateSpace::checkValidation(const hashMap& hm) {
     }
   }
 
+  /*
   for(const auto& it: pq_) {
     if(it.second->t >= 9)
       printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n" ANSI_COLOR_RESET,
           it.second->t, it.second->g, it.second->rhs, it.second->h);
   }
+  */
 
   // Check rhs and g value of close set
   printf("Check rhs and g value of closeset\n");
@@ -538,9 +540,8 @@ void StateSpace::getSubStateSpace(int time_step) {
 
   pq_.clear();
   for(auto& it: hm_) 
-    if(it.second->iterationopened && !it.second->iterationclosed)
+    if(it.second->iterationopened && !it.second->iterationclosed) 
       it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
-
 }
 
 
@@ -601,8 +602,6 @@ inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
     currNode_ptr->rhs = std::numeric_limits<double>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key pred_key = currNode_ptr->pred_hashkey[i];
-      //if(!hm_[pred_key])
-        //continue;
       if(currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
         currNode_ptr->rhs = hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
         currNode_ptr->t = hm_[pred_key]->t + dt_;
@@ -623,10 +622,6 @@ inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
     currNode_ptr->heapkey = pq_.push( std::make_pair(fval, currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
-    
-    //printf("t: %f, curr g: %f, rhs: %f, h: %f, f: %f\n", 
-    //    currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, fval);
- 
   }
 }
 
