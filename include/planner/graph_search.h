@@ -98,7 +98,7 @@ namespace MPL
     StatePtr goalNode_ptr_;
     ///Internal flag to trigger goal reset 
     bool need_to_reset_goal_ = false;
-    double start_rhs_ = 0;
+    bool reached_goal_ = false;
 
     ///Simple constructor
     StateSpace(double eps = 1): eps_(eps){}

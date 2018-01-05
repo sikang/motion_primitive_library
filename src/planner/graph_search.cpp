@@ -259,6 +259,8 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
       printf(ANSI_COLOR_GREEN "Start is inside goal region!\n" ANSI_COLOR_RESET);
     return 0;
   }
+
+  ss_ptr->reached_goal_ = false;
   
   // Initialize start node
   StatePtr currNode_ptr = ss_ptr->hm_[start_key];
@@ -294,15 +296,22 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     expand_iteration++;
     // Get element with smallest cost
     currNode_ptr = ss_ptr->pq_.top().second;     
-    if(0 && expand_iteration < 2) {
+    if(currNode_ptr->t > 7) {
       printf("[%d] expand:\n", expand_iteration);
       printf("currNode: t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
           currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, ss_ptr->pq_.top().first);
-      printf("goalNode: g: %f, rhs: %f\n", goalNode_ptr->g, goalNode_ptr->rhs);
     }
 
     ss_ptr->pq_.pop(); 
     currNode_ptr->iterationclosed = true; // Add to closed list
+
+    if(currNode_ptr->g > currNode_ptr->rhs) 
+      currNode_ptr->g = currNode_ptr->rhs;
+    else {
+      currNode_ptr->g = std::numeric_limits<double>::infinity();
+      ss_ptr->updateNode(currNode_ptr);
+    }
+
 
     // Get successors
     std::vector<Waypoint> succ_coord;
@@ -315,7 +324,6 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     currNode_ptr->succ_action_id.resize(succ_coord.size());
     currNode_ptr->succ_action_cost.resize(succ_coord.size());
 
-    std::vector<StatePtr> nodes_ptr;
     // Process successors
     for( unsigned s = 0; s < succ_coord.size(); ++s )
     {
@@ -348,34 +356,24 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
         succNode_ptr->pred_action_id[id] = succ_act_id[s];
       }
 
-      nodes_ptr.push_back(succNode_ptr);
+      ss_ptr->updateNode(succNode_ptr);
     }
 
-    if(currNode_ptr->g > currNode_ptr->rhs) 
-      currNode_ptr->g = currNode_ptr->rhs;
-    else {
-      currNode_ptr->g = std::numeric_limits<double>::infinity();
-      nodes_ptr.push_back(currNode_ptr);
-    }
-
-    // If maximum time reached, terminate!
-    if((max_t > 0 && currNode_ptr->t >= max_t && !std::isinf(currNode_ptr->rhs))) {
-      if(verbose_)
-        printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_t);
-      goalNode_ptr = currNode_ptr;
-      //break;
-    }
 
     // If goal reached, terminate!
-    if(ENV.is_goal(currNode_ptr->coord)) {
+    if(ENV.is_goal(currNode_ptr->coord)) 
+      goalNode_ptr = currNode_ptr;
+
+    // If maximum time reached, terminate!
+    if(max_t > 0 && currNode_ptr->t >= max_t) {
       if(verbose_)
-        printf(ANSI_COLOR_GREEN "Allocate Goal !!!!!!\n\n" ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_t);
+
+      printf("currNode: t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
+          currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, ss_ptr->pq_.top().first);
+
       goalNode_ptr = currNode_ptr;
     }
-
-    for(auto& it: nodes_ptr)
-      ss_ptr->updateNode(it);
-
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -398,8 +396,14 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
 
+  if(ENV.is_goal(goalNode_ptr->coord)) {
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
+    ss_ptr->reached_goal_ = true;
+  }
   // Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
+
   return goalNode_ptr->g;
 }
 
@@ -408,14 +412,13 @@ void StateSpace::checkValidation(const hashMap& hm) {
   for(const auto& it: hm) {
     if(!it.second) {
       std::cout << "error!!! null element at key: " << it.first << std::endl;
-      /*
-      for(unsigned int i = 0; i < it.second->succ_hashkey.size(); i++) {
-        Key key = it.second->succ_hashkey[i];
-        if(!hm[key]) 
-          std::cout << "error!!! null succ at key :" << key << std::endl;
-      }
-      */
     }
+  }
+
+  for(const auto& it: pq_) {
+    if(it.second->t >= 9)
+      printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n" ANSI_COLOR_RESET,
+          it.second->t, it.second->g, it.second->rhs, it.second->h);
   }
 
   // Check rhs and g value of close set
@@ -455,6 +458,10 @@ void StateSpace::checkValidation(const hashMap& hm) {
 void StateSpace::getSubStateSpace(int time_step) {
   if(best_child_.empty())
     return;
+  if(reached_goal_)
+    need_to_reset_goal_ = false;
+  else
+    need_to_reset_goal_ = true;
 
   StatePtr currNode_ptr = best_child_[time_step];
   currNode_ptr->pred_action_cost.clear();
@@ -462,17 +469,17 @@ void StateSpace::getSubStateSpace(int time_step) {
   currNode_ptr->pred_hashkey.clear();
   currNode_ptr->t = 0;
 
-  start_rhs_ = currNode_ptr->rhs;
   for(auto& it: hm_) {
     it.second->g = std::numeric_limits<double>::infinity();
     it.second->rhs = std::numeric_limits<double>::infinity();
     it.second->pred_action_cost.clear();
     it.second->pred_action_id.clear();
     it.second->pred_hashkey.clear();
+    it.second->t = 0;
   }
 
-  currNode_ptr->g = start_rhs_;
-  currNode_ptr->rhs = start_rhs_;
+  currNode_ptr->g = 0;
+  currNode_ptr->rhs = 0;
 
   hashMap new_hm;
   priorityQueue<State> epq;
@@ -487,12 +494,8 @@ void StateSpace::getSubStateSpace(int time_step) {
       StatePtr& succNode_ptr = new_hm[succ_key];
       if(!succNode_ptr) {
         succNode_ptr = hm_[succ_key];
+        succNode_ptr->t = currNode_ptr->t + dt_;
         succNode_ptr->epq_opened = false;
-      }
-
-      if(!succNode_ptr) {
-        std::cout << "error!!! null succNode_ptr" << std::endl;
-        std::cout << "succ_key: " << succ_key << std::endl;
       }
 
       int id = -1;
@@ -538,7 +541,6 @@ void StateSpace::getSubStateSpace(int time_step) {
     if(it.second->iterationopened && !it.second->iterationclosed)
       it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
 
-  //checkValidation(hm_);
 }
 
 
@@ -593,17 +595,17 @@ void StateSpace::decreaseCost(std::vector<std::pair<Key, int> > states, const en
 
 inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
   //printf("update node at t: %f, rhs: %f\n", currNode_ptr->t, currNode_ptr->rhs);
-  double parent_t = currNode_ptr->t - dt_;
   // if currNode is not start, update its rhs
-  if(currNode_ptr->rhs != start_rhs_) {
+  // start rhs is assumed to be 0
+  if(currNode_ptr->rhs != 0) {
     currNode_ptr->rhs = std::numeric_limits<double>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key pred_key = currNode_ptr->pred_hashkey[i];
-      if(!hm_[pred_key])
-        continue;
+      //if(!hm_[pred_key])
+        //continue;
       if(currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
         currNode_ptr->rhs = hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
-        parent_t = hm_[pred_key]->t;
+        currNode_ptr->t = hm_[pred_key]->t + dt_;
       }
     }
   }
@@ -615,13 +617,12 @@ inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
   }
 
   // if currNode's g value is not equal to its rhs, put it into openset
-  //if(currNode_ptr->g != currNode_ptr->rhs || !currNode_ptr->iterationopened) {
+  // if(currNode_ptr->g != currNode_ptr->rhs || !currNode_ptr->iterationopened) {
   if(currNode_ptr->g != currNode_ptr->rhs) {
     double fval = calculateKey(currNode_ptr);
     currNode_ptr->heapkey = pq_.push( std::make_pair(fval, currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
-    currNode_ptr->t = parent_t + dt_;
     
     //printf("t: %f, curr g: %f, rhs: %f, h: %f, f: %f\n", 
     //    currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, fval);
