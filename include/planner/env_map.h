@@ -78,7 +78,7 @@ namespace MPL {
      * @param action_idx The array stores corresponding idx of control for each successor
      *
      * When goal is outside, extra step is needed for finding optimal trajectory.
-     * We use J(0) to break tie, the weight of J(0) should be small enough.
+     * Only return the primitive satisfies valid dynamic constriants (include the one hits obstacles).
      */
     void get_succ( const Waypoint& curr, 
         std::vector<Waypoint>& succ,
@@ -97,9 +97,11 @@ namespace MPL {
       if(map_util_->isOutSide(pn))
         return;
 
-      for(int i = 0; i < (int)U_.size(); i++) {
+      for(unsigned int i = 0; i < U_.size(); i++) {
         Primitive pr(curr, U_[i], dt_);
         Waypoint tn = pr.evaluate(dt_);
+        if(tn == curr)
+          continue;
         if(pr.valid_vel(v_max_) && pr.valid_acc(a_max_) && pr.valid_jrk(j_max_)) {
           tn.use_pos = curr.use_pos;
           tn.use_vel = curr.use_vel;
@@ -109,7 +111,7 @@ namespace MPL {
           succ.push_back(tn);
           succ_idx.push_back(state_to_idx(tn));
           //double cost = is_free(pr) ? 0.01 * pr.J(0) + pr.J(wi_) + w_*dt_: std::numeric_limits<double>::infinity();
-          double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: 1000;
+          double cost = is_free(pr) ? pr.J(wi_) + w_*dt_: std::numeric_limits<double>::infinity();
           succ_cost.push_back(cost);
           action_idx.push_back(i);
         }

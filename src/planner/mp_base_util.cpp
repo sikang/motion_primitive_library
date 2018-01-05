@@ -106,15 +106,15 @@ void MPBaseUtil::setTol(decimal_t tol_dis, decimal_t tol_vel, decimal_t tol_acc)
 
 std::vector<Primitive> MPBaseUtil::getValidPrimitives() const { 
   std::vector<Primitive> prs;
-  for(const auto& it: sss_ptr_->hm) {
+  for(const auto& it: sss_ptr_->hm_) {
    if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
-        //if(!sss_ptr_->hm[key] || std::isinf(it.second->pred_action_cost[i])) 
+        //if(!sss_ptr_->hm_[key] || std::isinf(it.second->pred_action_cost[i])) 
         if(std::isinf(it.second->pred_action_cost[i])) 
           continue;
         Primitive pr;
-        ENV_->forward_action( sss_ptr_->hm[key]->coord, it.second->pred_action_id[i], pr );
+        ENV_->forward_action( sss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
       }
     }
@@ -122,19 +122,19 @@ std::vector<Primitive> MPBaseUtil::getValidPrimitives() const {
 
   if(planner_verbose_)
     printf("number of states in hm: %zu, number of valid prs: %zu\n", 
-        sss_ptr_->hm.size(), prs.size());
+        sss_ptr_->hm_.size(), prs.size());
  
   return prs;
 }
 
 std::vector<Primitive> MPBaseUtil::getAllPrimitives() const { 
   std::vector<Primitive> prs;
-  for(const auto& it: sss_ptr_->hm) {
+  for(const auto& it: sss_ptr_->hm_) {
     if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
         Primitive pr;
-        ENV_->forward_action( sss_ptr_->hm[key]->coord, it.second->pred_action_id[i], pr );
+        ENV_->forward_action( sss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
       }
     }
@@ -143,7 +143,7 @@ std::vector<Primitive> MPBaseUtil::getAllPrimitives() const {
 
   if(planner_verbose_) 
     printf("number of states in hm: %zu, number of prs: %zu\n", 
-        sss_ptr_->hm.size(), prs.size());
+        sss_ptr_->hm_.size(), prs.size());
 
   return prs;
 }
@@ -167,7 +167,7 @@ vec_Vec3f MPBaseUtil::getOpenSet() const {
 
 vec_Vec3f MPBaseUtil::getCloseSet() const {
   vec_Vec3f ps;
-  for(const auto& it: sss_ptr_->hm) {
+  for(const auto& it: sss_ptr_->hm_) {
     if(it.second && it.second->iterationclosed)
       ps.push_back(it.second->coord.pos);
   }
@@ -183,7 +183,7 @@ void MPBaseUtil::getSubStateSpace(int time_step) {
 }
 
 void MPBaseUtil::checkValidation() {
-  sss_ptr_->checkValidation();
+  sss_ptr_->checkValidation(sss_ptr_->hm_);
 }
 
 bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {

@@ -6,7 +6,7 @@ using namespace MPL;
 
 /**************************** Recover Trajectory ***************************/
 
-Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<StateSpace> sss_ptr, const env_base& ENV, const Key& start_idx) {
+Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<StateSpace> sss_ptr, const env_base& ENV, const Key& start_key) {
   // Recover trajectory
   std::vector<Primitive> prs;
   while( !currNode_ptr->pred_hashkey.empty())
@@ -18,16 +18,16 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
     double min_g = std::numeric_limits<double>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key key = currNode_ptr->pred_hashkey[i];
-      std::cout << "action id: " << currNode_ptr->pred_action_id[i] << " parent g: " << sss_ptr->hm[key]->g << " action cost: " << currNode_ptr->pred_action_cost[i] << " parent key: " <<key << std::endl;
-      if(min_rhs > sss_ptr->hm[key]->g + currNode_ptr->pred_action_cost[i]) {
-        min_rhs = sss_ptr->hm[key]->g + currNode_ptr->pred_action_cost[i];
-        min_g = sss_ptr->hm[key]->g;
+      std::cout << "action id: " << currNode_ptr->pred_action_id[i] << " parent g: " << sss_ptr->hm_[key]->g << " action cost: " << currNode_ptr->pred_action_cost[i] << " parent key: " <<key << std::endl;
+      if(min_rhs > sss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
+        min_rhs = sss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i];
+        min_g = sss_ptr->hm_[key]->g;
         min_id = i;
       }
       else if(!std::isinf(currNode_ptr->pred_action_cost[i]) &&
-          min_rhs == sss_ptr->hm[key]->g + currNode_ptr->pred_action_cost[i]) {
-        if(min_g < sss_ptr->hm[key]->g) {
-          min_g = sss_ptr->hm[key]->g;
+          min_rhs == sss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
+        if(min_g < sss_ptr->hm_[key]->g) {
+          min_g = sss_ptr->hm_[key]->g;
           min_id = i;
         }
       }
@@ -36,7 +36,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
     if(min_id >= 0) {
       Key key = currNode_ptr->pred_hashkey[min_id];
       int action_idx = currNode_ptr->pred_action_id[min_id];
-      currNode_ptr = sss_ptr->hm[key];
+      currNode_ptr = sss_ptr->hm_[key];
       Primitive pr;
       ENV.forward_action( currNode_ptr->coord, action_idx, pr );
       prs.push_back(pr);
@@ -52,13 +52,14 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
         printf(ANSI_COLOR_RED "Trace back failure, the number of predecessors is %zu: \n", currNode_ptr->pred_hashkey.size());
         for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
           Key key = currNode_ptr->pred_hashkey[i];
-          printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i, sss_ptr->hm[key]->g, currNode_ptr->pred_action_cost[i]);
+          printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i, sss_ptr->hm_[key]->g, currNode_ptr->pred_action_cost[i]);
         }
       }
 
       break;
     }
-    if(currNode_ptr->hashkey == start_idx)
+
+    if(currNode_ptr->hashkey == start_key)
       break;
   }
 
@@ -71,22 +72,21 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
 
 /********************************* Astar  **************************************/
 
-double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
+double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
     const env_base& ENV, std::shared_ptr<StateSpace> sss_ptr, 
     Trajectory& traj, int max_expand, double max_t)
 {
-  traj.segs.clear();
   sss_ptr->best_child_.clear();
   // Check if done
   if( ENV.is_goal(start_coord) )
     return 0;
   
   // Initialize start node
-  StatePtr currNode_ptr = sss_ptr->hm[start_idx];
+  StatePtr currNode_ptr = sss_ptr->hm_[start_key];
   if(sss_ptr->pq.empty()) {
     if(verbose_) 
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr = std::make_shared<State>(State(start_idx, start_coord));
+    currNode_ptr = std::make_shared<State>(State(start_key, start_coord));
     currNode_ptr->t = 0;
     currNode_ptr->g = 0;
     currNode_ptr->h = ENV.get_heur(start_coord, currNode_ptr->t);
@@ -94,7 +94,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
     currNode_ptr->heapkey = sss_ptr->pq.push( std::make_pair(fval, currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
-    sss_ptr->hm[start_idx] = currNode_ptr;
+    sss_ptr->hm_[start_key] = currNode_ptr;
   }
 
   int expand_iteration = 0;
@@ -108,35 +108,33 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
 
     // Get successors
     std::vector<Waypoint> succ_coord;
-    std::vector<MPL::Key> succ_idx;
+    std::vector<MPL::Key> succ_key;
     std::vector<double> succ_cost;
-    std::vector<int> succ_act_idx;
+    std::vector<int> succ_act_id;
 
-    ENV.get_succ( currNode_ptr->coord, succ_coord, succ_idx, succ_cost, succ_act_idx);
-    currNode_ptr->succ_hashkey.resize(ENV.U_.size(), Key());
-    currNode_ptr->succ_action_cost.resize(ENV.U_.size(), std::numeric_limits<double>::infinity());
+    ENV.get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
 
-    // Process successors
+    // Process successors (satisfy dynamic constraints but might hit obstacles)
     for( unsigned s = 0; s < succ_coord.size(); ++s )
     {
+      // If the primitive is occupied, skip
+      if(std::isinf(succ_cost[s]))
+        continue;
+ 
       // Get child
-      StatePtr& succNode_ptr = sss_ptr->hm[ succ_idx[s] ];
+      StatePtr& succNode_ptr = sss_ptr->hm_[ succ_key[s] ];
       if( !succNode_ptr )
       {
-        succNode_ptr = std::make_shared<State>(State(succ_idx[s], succ_coord[s]) );
+        succNode_ptr = std::make_shared<State>(State(succ_key[s], succ_coord[s]) );
         succNode_ptr->t = currNode_ptr->t + ENV.dt_;
         succNode_ptr->h = ENV.get_heur( succNode_ptr->coord, succNode_ptr->t); 
         /*
          * Comment this block if build multiple connected graph
         succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
-        succNode_ptr->pred_action_id.push_back(succ_act_idx[s]);
+        succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
         succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
         */
       }
-      
-      // If successor is equal to the current node, skip
-      if(succNode_ptr->hashkey == currNode_ptr->hashkey)
-        continue;
 
       /**
        * Comment following if build single connected graph
@@ -151,23 +149,19 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
       if(id == -1) {
         succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
         succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
-        succNode_ptr->pred_action_id.push_back(succ_act_idx[s]);
+        succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
       }
       else {
         succNode_ptr->pred_action_cost[id] = succ_cost[s];
-        succNode_ptr->pred_action_id[id] = succ_act_idx[s];
+        succNode_ptr->pred_action_id[id] = succ_act_id[s];
       }
       /**
        * 
        */
 
 
-      // store the hashkey
-      currNode_ptr->succ_hashkey[succ_act_idx[s]] = succ_idx[s];
-      currNode_ptr->succ_action_cost[succ_act_idx[s]] = succ_cost[s];
-
-      //see if we can improve the value of succstate
-      //taking into account the cost of action
+      // see if we can improve the value of successor
+      // taking into account the cost of action
       double tentative_gval = currNode_ptr->g + succ_cost[s];
 
       if( tentative_gval < succNode_ptr->g )
@@ -175,7 +169,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
         /**
          * Comment this block if build multiple connected graph
 	succNode_ptr->pred_hashkey.front() = currNode_ptr->hashkey;  // Assign new parent
-	succNode_ptr->pred_action_id.front() = succ_act_idx[s];
+	succNode_ptr->pred_action_id.front() = succ_act_id[s];
 	succNode_ptr->pred_action_cost.front() = succ_cost[s];
         */
 	succNode_ptr->t = currNode_ptr->t + ENV.dt_;
@@ -243,54 +237,60 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_idx,
   }
 
   if(verbose_) {
-    double fval = std::min(currNode_ptr->g, currNode_ptr->rhs) + sss_ptr->eps * currNode_ptr->h;
+    double fval = currNode_ptr->g + sss_ptr->eps * currNode_ptr->h;
     printf(ANSI_COLOR_GREEN "currNode key: %f, g: %f!\n" ANSI_COLOR_RESET, fval, currNode_ptr->g);
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
 
-  double pcost = currNode_ptr->g;
-  traj = recoverTraj(currNode_ptr, sss_ptr, ENV, start_idx);
-
-  return pcost;
+  traj = recoverTraj(currNode_ptr, sss_ptr, ENV, start_key);
+  return currNode_ptr->g;
 }
 
 /********************************* LPAstar  **************************************/
 
-double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx, 
+double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key, 
     const env_base& ENV, std::shared_ptr<StateSpace> sss_ptr, 
     Trajectory& traj, int max_expand, double max_t)
 {
-  traj.segs.clear();
   sss_ptr->best_child_.clear();
   // Check if done
-  if( ENV.is_goal(start_coord) )
+  if( ENV.is_goal(start_coord) ) {
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "Start is inside goal region!\n" ANSI_COLOR_RESET);
     return 0;
+  }
   
   // Initialize start node
-  StatePtr currNode_ptr = sss_ptr->hm[start_idx];
+  StatePtr currNode_ptr = sss_ptr->hm_[start_key];
   if(sss_ptr->pq.empty()) {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr = std::make_shared<State>(State(start_idx, start_coord));
+    currNode_ptr = std::make_shared<State>(State(start_key, start_coord));
     currNode_ptr->t = 0;
     currNode_ptr->g = std::numeric_limits<double>::infinity();
     currNode_ptr->rhs = 0;
     currNode_ptr->h = ENV.get_heur(start_coord, currNode_ptr->t);
-    double fval = std::min(currNode_ptr->g, currNode_ptr->rhs) + sss_ptr->eps * currNode_ptr->h;
-    currNode_ptr->heapkey = sss_ptr->pq.push( std::make_pair(fval, currNode_ptr));
+    currNode_ptr->heapkey = sss_ptr->pq.push( std::make_pair(sss_ptr->calculateKey(currNode_ptr), currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
-    sss_ptr->hm[start_idx] = currNode_ptr;
+    sss_ptr->hm_[start_key] = currNode_ptr;
   }
   // Initialize null goal node
-  if(sss_ptr->need_to_reset_goal_) 
+  if(sss_ptr->need_to_reset_goal_) {
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
     sss_ptr->goalNode_ptr_ = nullptr;
-  StatePtr goalNode_ptr = sss_ptr->goalNode_ptr_;
+  }
+
+  StatePtr& goalNode_ptr = sss_ptr->goalNode_ptr_;
   if(!goalNode_ptr) {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "Initialize goal!\n" ANSI_COLOR_RESET);
     goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
     sss_ptr->need_to_reset_goal_ = false;
+  }
+  else {
+    printf("goalNode: g: %f, rhs: %f\n", goalNode_ptr->g, goalNode_ptr->rhs);
   }
 
   int expand_iteration = 0;
@@ -299,43 +299,42 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx,
     expand_iteration++;
     // Get element with smallest cost
     currNode_ptr = sss_ptr->pq.top().second;     
-    /*
-    printf("[%d] expand, t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
-        expand_iteration, currNode_ptr->t,
-        currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, sss_ptr->pq.top().first);
-        */
+    if(0 && expand_iteration < 2) {
+      printf("[%d] expand:\n", expand_iteration);
+      printf("currNode: t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
+          currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, sss_ptr->pq.top().first);
+      printf("goalNode: g: %f, rhs: %f\n", goalNode_ptr->g, goalNode_ptr->rhs);
+    }
 
     sss_ptr->pq.pop(); 
     currNode_ptr->iterationclosed = true; // Add to closed list
 
     // Get successors
     std::vector<Waypoint> succ_coord;
-    std::vector<MPL::Key> succ_idx;
+    std::vector<MPL::Key> succ_key;
     std::vector<double> succ_cost;
-    std::vector<int> succ_act_idx;
+    std::vector<int> succ_act_id;
 
-    ENV.get_succ( currNode_ptr->coord, succ_coord, succ_idx, succ_cost, succ_act_idx);
-    currNode_ptr->succ_hashkey.resize(ENV.U_.size(), Key());
-    currNode_ptr->succ_action_cost.resize(ENV.U_.size(), std::numeric_limits<double>::infinity());
+    ENV.get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
+    currNode_ptr->succ_hashkey.resize(succ_coord.size());
+    currNode_ptr->succ_action_id.resize(succ_coord.size());
+    currNode_ptr->succ_action_cost.resize(succ_coord.size());
 
     std::vector<StatePtr> nodes_ptr;
     // Process successors
     for( unsigned s = 0; s < succ_coord.size(); ++s )
     {
       // Get child
-      StatePtr& succNode_ptr = sss_ptr->hm[ succ_idx[s] ];
+      StatePtr& succNode_ptr = sss_ptr->hm_[ succ_key[s] ];
       if( !(succNode_ptr) ) {
-        succNode_ptr = std::make_shared<State>(State(succ_idx[s], succ_coord[s]) );
+        succNode_ptr = std::make_shared<State>(State(succ_key[s], succ_coord[s]) );
         succNode_ptr->h = ENV.get_heur( succNode_ptr->coord, currNode_ptr->t + ENV.dt_);   // compute heuristic        
       }
 
-      // If successor is equal to the current node, skip
-      if(succNode_ptr->hashkey == currNode_ptr->hashkey)
-        continue;
-
       // store the hashkey
-      currNode_ptr->succ_hashkey[succ_act_idx[s]] = succ_idx[s];
-      currNode_ptr->succ_action_cost[succ_act_idx[s]] = succ_cost[s];
+      currNode_ptr->succ_hashkey[s] = succ_key[s];
+      currNode_ptr->succ_action_id[s] = succ_act_id[s];
+      currNode_ptr->succ_action_cost[s] = succ_cost[s];
 
       int id = -1;
       for(unsigned int i = 0; i < succNode_ptr->pred_hashkey.size(); i++) {
@@ -347,11 +346,11 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx,
       if(id == -1) {
         succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
         succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
-        succNode_ptr->pred_action_id.push_back(succ_act_idx[s]);
+        succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
       }
       else {
         succNode_ptr->pred_action_cost[id] = succ_cost[s];
-        succNode_ptr->pred_action_id[id] = succ_act_idx[s];
+        succNode_ptr->pred_action_id[id] = succ_act_id[s];
       }
 
       nodes_ptr.push_back(succNode_ptr);
@@ -371,15 +370,16 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx,
       break;
     }
 
-    for(auto& it: nodes_ptr)
-      sss_ptr->updateNode(it);
-
     // If goal reached, terminate!
     if(ENV.is_goal(currNode_ptr->coord)) {
       if(verbose_)
-        printf(ANSI_COLOR_GREEN "Goal Reached!!!!!!\n\n" ANSI_COLOR_RESET);
-      break;
+        printf(ANSI_COLOR_GREEN "Allocate Goal !!!!!!\n\n" ANSI_COLOR_RESET);
+      goalNode_ptr = currNode_ptr;
     }
+
+    for(auto& it: nodes_ptr)
+      sss_ptr->updateNode(it);
+
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -398,42 +398,63 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_idx,
 
   if(verbose_) {
     //printf(ANSI_COLOR_GREEN "topKey: %f, goal g: %f, rhs: %f!\n" ANSI_COLOR_RESET, sss_ptr->pq.top().first, goalNode_ptr->g, goalNode_ptr->rhs);
-    double fval = std::min(currNode_ptr->g, currNode_ptr->rhs) + sss_ptr->eps * currNode_ptr->h;
-    printf(ANSI_COLOR_GREEN "currNode key: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET, fval, currNode_ptr->g, currNode_ptr->rhs);
+    double fval = std::min(goalNode_ptr->g, goalNode_ptr->rhs) + sss_ptr->eps * goalNode_ptr->h;
+    printf(ANSI_COLOR_GREEN "goalNode key: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET, fval, goalNode_ptr->g, goalNode_ptr->rhs);
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
 
-  if(currNode_ptr->iterationclosed && expand_iteration == 0 && sss_ptr->goalNode_ptr_) {
-    printf(ANSI_COLOR_GREEN "Recover directly!\n" ANSI_COLOR_RESET);
-    currNode_ptr = sss_ptr->goalNode_ptr_;
-  }
-  else {
-    currNode_ptr->g = std::numeric_limits<double>::infinity();
-    sss_ptr->updateNode(currNode_ptr);
-  }
-
-  sss_ptr->goalNode_ptr_ = currNode_ptr;
   // Recover trajectory
-  double pcost = currNode_ptr->g;
-  traj = recoverTraj(currNode_ptr, sss_ptr, ENV, start_idx);
-  return pcost;  
+  traj = recoverTraj(goalNode_ptr, sss_ptr, ENV, start_key);
+  return goalNode_ptr->g;
 }
 
-void StateSpace::checkValidation() {
-  for(auto& it: hm) {
-    if(it.second) {
+void StateSpace::checkValidation(const hashMap& hm) {
+  // Check if there is null element in succ graph
+  for(const auto& it: hm) {
+    if(!it.second) {
+      std::cout << "error!!! null element at key: " << it.first << std::endl;
+      /*
       for(unsigned int i = 0; i < it.second->succ_hashkey.size(); i++) {
         Key key = it.second->succ_hashkey[i];
-        if(key.empty())
-          continue;
-        StatePtr& succNode_ptr = hm[key];
-        if(!succNode_ptr) 
+        if(!hm[key]) 
           std::cout << "error!!! null succ at key :" << key << std::endl;
       }
+      */
     }
-    else 
-      std::cout << "error!!! null element at key: " << it.first << std::endl;
   }
+
+  // Check rhs and g value of close set
+  printf("Check rhs and g value of closeset\n");
+  int close_cnt = 0;
+  for(const auto& it: hm) {
+    if(it.second->iterationopened && it.second->iterationclosed) {
+      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      close_cnt ++;
+    }
+  }
+ 
+  // Check rhs and g value of open set
+  printf("Check rhs and g value of openset\n");
+  int open_cnt = 0;
+  for(const auto& it: hm) {
+    if(it.second->iterationopened && !it.second->iterationclosed) {
+      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      open_cnt ++;
+    }
+  }
+
+  // Check rhs and g value of null set
+  printf("Check rhs and g value of nullset\n");
+  int null_cnt = 0;
+  for(const auto& it: hm) {
+    if(!it.second->iterationopened) {
+      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      null_cnt ++;
+    }
+  }
+
+  printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", 
+      hm.size(), open_cnt, close_cnt, null_cnt);
 } 
 
 void StateSpace::getSubStateSpace(int time_step) {
@@ -446,76 +467,83 @@ void StateSpace::getSubStateSpace(int time_step) {
   currNode_ptr->pred_hashkey.clear();
   currNode_ptr->t = 0;
 
-  hashMap new_hm;
-  priorityQueue<State> epq;
-  currNode_ptr->heapkey = epq.push(std::make_pair(currNode_ptr->g, currNode_ptr));
-
-  double init_g = currNode_ptr->g;
-  for(auto& it: hm) {
-    if(!it.second) {
-      std::cout << "error!!! null element at key: " << it.first << std::endl;
-      it.second = goalNode_ptr_;
-    }
+  start_rhs_ = currNode_ptr->rhs;
+  for(auto& it: hm_) {
     it.second->g = std::numeric_limits<double>::infinity();
     it.second->rhs = std::numeric_limits<double>::infinity();
-    it.second->iterationopened = false;
-    //it.second->iterationclosed = 0;
     it.second->pred_action_cost.clear();
     it.second->pred_action_id.clear();
     it.second->pred_hashkey.clear();
   }
 
-  currNode_ptr->g = init_g;
+  currNode_ptr->g = start_rhs_;
+  currNode_ptr->rhs = start_rhs_;
+
+  hashMap new_hm;
+  priorityQueue<State> epq;
+  currNode_ptr->heapkey = epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
+  new_hm[currNode_ptr->hashkey] = currNode_ptr;
+
   while(!epq.empty()) {
+    currNode_ptr = epq.top().second; epq.pop();
     for(unsigned int i = 0; i < currNode_ptr->succ_hashkey.size(); i++) {
-      Key key = currNode_ptr->succ_hashkey[i];
-      if(key.empty() || key == currNode_ptr->hashkey)
-        continue;
-      StatePtr& succNode_ptr = hm[key];
+      Key succ_key = currNode_ptr->succ_hashkey[i];
+
+      StatePtr& succNode_ptr = new_hm[succ_key];
       if(!succNode_ptr) {
-        std::cout << "error!!! null succNode_ptr" << std::endl;
-        std::cout << "key: " << key << std::endl;
+        succNode_ptr = hm_[succ_key];
+        succNode_ptr->epq_opened = false;
       }
 
-      succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
-      succNode_ptr->pred_action_cost.push_back(currNode_ptr->succ_action_cost[i]);
-      succNode_ptr->pred_action_id.push_back(i);
+      if(!succNode_ptr) {
+        std::cout << "error!!! null succNode_ptr" << std::endl;
+        std::cout << "succ_key: " << succ_key << std::endl;
+      }
 
-      double tentative_gval = currNode_ptr->g + currNode_ptr->succ_action_cost[i];
+      int id = -1;
+      for(unsigned int i = 0; i < succNode_ptr->pred_hashkey.size(); i++) {
+        if(succNode_ptr->pred_hashkey[i] == currNode_ptr->hashkey) {
+          id = i;
+          break;
+        }
+      }
+      if(id == -1) {
+        succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
+        succNode_ptr->pred_action_cost.push_back(currNode_ptr->succ_action_cost[i]);
+        succNode_ptr->pred_action_id.push_back(currNode_ptr->succ_action_id[i]);
+      }
 
-      if(tentative_gval < succNode_ptr->g || !succNode_ptr->iterationopened) {
+      double tentative_rhs = currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
+
+      if(tentative_rhs < succNode_ptr->rhs) {
         succNode_ptr->t = currNode_ptr->t + dt;
-        succNode_ptr->g = tentative_gval;
-        if( succNode_ptr->iterationopened)
+        succNode_ptr->rhs = tentative_rhs;
+        if(succNode_ptr->epq_opened) // if succ exists in epq, update epq
         {
-          (*succNode_ptr->heapkey).first = tentative_gval;     // update heap element
+          (*succNode_ptr->heapkey).first = succNode_ptr->rhs;     // update heap element
           epq.increase( succNode_ptr->heapkey );       // update heap
         }
         else {
-          succNode_ptr->heapkey = epq.push( std::make_pair(tentative_gval, succNode_ptr) );
-          succNode_ptr->iterationopened = true;
+          // if the node is in original closeset, add to epq
+          if(succNode_ptr->iterationclosed) {
+            succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
+            succNode_ptr->heapkey = epq.push( std::make_pair(succNode_ptr->rhs, succNode_ptr) );
+            succNode_ptr->epq_opened = true;
+          }
         }
       }
     }
 
-    currNode_ptr = epq.top().second; epq.pop();
-    new_hm[currNode_ptr->hashkey] = currNode_ptr;
   }
 
-  hm = new_hm;
+  hm_ = new_hm;
 
   pq.clear();
-  for(auto& it: hm) {
-    if(!it.second->iterationclosed) {
-      it.second->heapkey = pq.push( std::make_pair(it.second->g + eps * it.second->h, it.second) );
-      it.second->iterationopened = true;
-      it.second->rhs = it.second->g;
-      it.second->g = std::numeric_limits<double>::infinity();
-    }
-  }
+  for(auto& it: hm_) 
+    if(it.second->iterationopened && !it.second->iterationclosed)
+      it.second->heapkey = pq.push( std::make_pair(calculateKey(it.second), it.second) );
 
-  need_to_reset_goal_ = true;
-  //goalNode_ptr_ = nullptr;
+  //checkValidation(hm_);
 }
 
 
@@ -524,12 +552,22 @@ void StateSpace::increaseCost(std::vector<std::pair<Key, int> > states) {
     return;
   need_to_reset_goal_ = true;
   for(const auto& affected_node: states) {
-    int id = affected_node.second;
-    hm[affected_node.first]->pred_action_cost[id] = std::numeric_limits<double>::infinity();
-    updateNode(hm[affected_node.first]);
-    Key parent_key = hm[affected_node.first]->pred_hashkey[id];
-    int succ_act_id = hm[affected_node.first]->pred_action_id[id];
-    hm[parent_key]->succ_action_cost[succ_act_id] = std::numeric_limits<double>::infinity();
+    //update edge
+    StatePtr& succNode_ptr = hm_[affected_node.first];
+    int i = affected_node.second; // i-th pred
+    if(!std::isinf(succNode_ptr->pred_action_cost[i])) {
+      succNode_ptr->pred_action_cost[i] = std::numeric_limits<double>::infinity();
+      updateNode(succNode_ptr);
+
+      Key parent_key = succNode_ptr->pred_hashkey[i];
+      int succ_act_id = hm_[affected_node.first]->pred_action_id[i];
+      for(unsigned int i = 0; i < hm_[parent_key]->succ_action_id.size(); i++) {
+        if(succ_act_id == hm_[parent_key]->succ_action_id[i]) {
+          hm_[parent_key]->succ_action_cost[i] = std::numeric_limits<double>::infinity();
+          break;
+        }
+      }
+    }
   }
 }
 
@@ -540,14 +578,20 @@ void StateSpace::decreaseCost(std::vector<std::pair<Key, int> > states, const en
   need_to_reset_goal_ = true;
   for(const auto& affected_node: states) {
     int id = affected_node.second;
-    Key parent_key = hm[affected_node.first]->pred_hashkey[id];
+    Key parent_key = hm_[affected_node.first]->pred_hashkey[id];
     Primitive pr;
-    ENV.forward_action( hm[parent_key]->coord, hm[affected_node.first]->pred_action_id[id], pr );
+    ENV.forward_action( hm_[parent_key]->coord, hm_[affected_node.first]->pred_action_id[id], pr );
     if(ENV.is_free(pr)) {
-      hm[affected_node.first]->pred_action_cost[id] = pr.J(ENV.wi_) + ENV.w_*ENV.dt_;
-      updateNode(hm[affected_node.first]);
-      int succ_act_id = hm[affected_node.first]->pred_action_id[id];
-      hm[parent_key]->succ_action_cost[succ_act_id] = hm[affected_node.first]->pred_action_cost[id];
+      hm_[affected_node.first]->pred_action_cost[id] = pr.J(ENV.wi_) + ENV.w_*ENV.dt_;
+      updateNode(hm_[affected_node.first]);
+      int succ_act_id = hm_[affected_node.first]->pred_action_id[id];
+      for(unsigned int i = 0; i < hm_[parent_key]->succ_action_id.size(); i++) {
+        if(succ_act_id == hm_[parent_key]->succ_action_id[i]) {
+          hm_[parent_key]->succ_action_cost[i] = hm_[affected_node.first]->pred_action_cost[id];
+          break;
+        }
+      }
+
     }
   }
 }
@@ -556,15 +600,15 @@ void StateSpace::updateNode(StatePtr& currNode_ptr) {
   //printf("update node at t: %f, rhs: %f\n", currNode_ptr->t, currNode_ptr->rhs);
   double parent_t = currNode_ptr->t - dt;
   // if currNode is not start, update its rhs
-  if(currNode_ptr->rhs != 0) {
+  if(currNode_ptr->rhs != start_rhs_) {
     currNode_ptr->rhs = std::numeric_limits<double>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key pred_key = currNode_ptr->pred_hashkey[i];
-      if(!hm[pred_key])
+      if(!hm_[pred_key])
         continue;
-      if(currNode_ptr->rhs > hm[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
-        currNode_ptr->rhs = hm[pred_key]->g + currNode_ptr->pred_action_cost[i];
-        parent_t = hm[pred_key]->t;
+      if(currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
+        currNode_ptr->rhs = hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
+        parent_t = hm_[pred_key]->t;
       }
     }
   }
@@ -578,8 +622,7 @@ void StateSpace::updateNode(StatePtr& currNode_ptr) {
   // if currNode's g value is not equal to its rhs, put it into openset
   //if(currNode_ptr->g != currNode_ptr->rhs || !currNode_ptr->iterationopened) {
   if(currNode_ptr->g != currNode_ptr->rhs) {
-    double fval = std::min(currNode_ptr->g, currNode_ptr->rhs) + eps * currNode_ptr->h;
-
+    double fval = calculateKey(currNode_ptr);
     currNode_ptr->heapkey = pq.push( std::make_pair(fval, currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
@@ -589,7 +632,10 @@ void StateSpace::updateNode(StatePtr& currNode_ptr) {
     //    currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, fval);
  
   }
+}
 
+inline double StateSpace::calculateKey(const StatePtr& node) {
+  return std::min(node->g, node->rhs) + eps * node->h;
 }
 
 

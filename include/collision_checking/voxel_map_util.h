@@ -25,12 +25,14 @@ public:
     printf("   val_unknown: [%d]\n", val_unknown);
   }
 
-  Vec3f intToFloat(const Vec3i &pp) {
+  inline Vec3f intToFloat(const Vec3i &pp) {
     return (pp.cast<decimal_t>() + Vec3f::Constant(0.5)) * res_ + origin_d_;
   }
 
-  Vec3i floatToInt(const Vec3f &pt) {
-    return ((pt - origin_d_) / res_).cast<int>();
+  inline Vec3i floatToInt(const Vec3f &pt) {
+    return Vec3i(std::round((pt(0)-origin_d_(0))/res_),
+        std::round((pt(1)-origin_d_(1))/res_),
+        std::round((pt(2)-origin_d_(2))/res_));
   }
 
   bool isOutSide(const Vec3i &pn) {

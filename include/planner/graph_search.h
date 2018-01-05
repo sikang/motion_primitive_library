@@ -51,6 +51,7 @@ namespace MPL
     double t;
     // hashkey of successors
     std::vector<Key> succ_hashkey;
+    std::vector<int> succ_action_id;
     std::vector<double> succ_action_cost;
     // hashkey of predicessors
     std::vector<Key> pred_hashkey;
@@ -66,6 +67,7 @@ namespace MPL
     double h;
     bool iterationopened = false;
     bool iterationclosed = false;
+    bool epq_opened = false;
 
     State( Key hashkey, const Waypoint& coord )
       : hashkey(hashkey), coord(coord)//, parent(nullptr)
@@ -85,7 +87,7 @@ namespace MPL
     ///Priority queue, open set
     priorityQueue<State> pq;
     ///Hashmap, stores all the nodes
-    hashMap hm;
+    hashMap hm_;
     ///Heuristic weight, default as 1
     double eps;
     ///Execution time for each primitive
@@ -96,6 +98,7 @@ namespace MPL
     StatePtr goalNode_ptr_;
     ///Internal flag to trigger goal reset 
     bool need_to_reset_goal_ = false;
+    double start_rhs_ = 0;
 
     ///Simple constructor
     StateSpace(double eps = 1): eps(eps){}
@@ -109,7 +112,8 @@ namespace MPL
     void decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV);
     void updateNode(StatePtr& currNode_ptr);
 
-    void checkValidation();
+    void checkValidation(const hashMap& hm);
+    double calculateKey(const StatePtr& node);
   };
 
   
