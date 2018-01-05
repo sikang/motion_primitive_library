@@ -16,14 +16,14 @@ void MPMapUtil::setMapUtil(std::shared_ptr<VoxelMapUtil>& map_util) {
 vec_Vec3f MPMapUtil::getLinkedNodes() const {
   lhm_.clear();
   vec_Vec3f linked_pts;
-  for(const auto& it: sss_ptr_->hm_) {
+  for(const auto& it: ss_ptr_->hm_) {
     if(!it.second)
       continue;
     //check pred array
     for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
       Key key = it.second->pred_hashkey[i];
       Primitive pr;
-      ENV_->forward_action( sss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
+      ENV_->forward_action( ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
       double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
       int n = std::ceil(max_v * pr.t() / map_util_->getRes());
       int prev_id = -1;
@@ -54,7 +54,7 @@ vec_Vec3f MPMapUtil::updateBlockedNodes(const vec_Vec3i& blocked_pns) {
     if(search != lhm_.end()) {
       for(const auto& node: lhm_[id]) {
         blocked_nodes.push_back(node);
-        pts.push_back(sss_ptr_->hm_[node.first]->coord.pos);
+        pts.push_back(ss_ptr_->hm_[node.first]->coord.pos);
       }
     }
   }
@@ -62,7 +62,7 @@ vec_Vec3f MPMapUtil::updateBlockedNodes(const vec_Vec3i& blocked_pns) {
   if(planner_verbose_)
     printf("number of blocked nodes: %zu\n", pts.size());
 
-  sss_ptr_->increaseCost(blocked_nodes);
+  ss_ptr_->increaseCost(blocked_nodes);
   return pts;
 }
 
@@ -76,7 +76,7 @@ vec_Vec3f MPMapUtil::updateClearedNodes(const vec_Vec3i& cleared_pns) {
     if(search != lhm_.end()) {
       for(const auto& node: lhm_[id]) {
         cleared_nodes.push_back(node);
-        pts.push_back(sss_ptr_->hm_[node.first]->coord.pos);
+        pts.push_back(ss_ptr_->hm_[node.first]->coord.pos);
       }
     }
   }
@@ -84,6 +84,6 @@ vec_Vec3f MPMapUtil::updateClearedNodes(const vec_Vec3i& cleared_pns) {
   if(planner_verbose_)
     printf("number of cleared nodes: %zu\n", pts.size());
 
-  sss_ptr_->decreaseCost(cleared_nodes, *ENV_);
+  ss_ptr_->decreaseCost(cleared_nodes, *ENV_);
   return pts;
 }

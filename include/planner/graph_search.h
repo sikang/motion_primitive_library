@@ -85,13 +85,13 @@ namespace MPL
   struct StateSpace
   {
     ///Priority queue, open set
-    priorityQueue<State> pq;
+    priorityQueue<State> pq_;
     ///Hashmap, stores all the nodes
     hashMap hm_;
     ///Heuristic weight, default as 1
-    double eps;
+    double eps_;
     ///Execution time for each primitive
-    double dt;
+    double dt_;
     ///The best trajectory from previous plan
     std::vector<StatePtr> best_child_;
     ///Goal node, initialized as null by default
@@ -101,7 +101,8 @@ namespace MPL
     double start_rhs_ = 0;
 
     ///Simple constructor
-    StateSpace(double eps = 1): eps(eps){}
+    StateSpace(double eps = 1): eps_(eps){}
+
     /**
      * @brief Get the subtree
      * @param time_step indicates the root of the subtree (best_child_[time_step])
@@ -112,8 +113,9 @@ namespace MPL
     void decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV);
     void updateNode(StatePtr& currNode_ptr);
 
-    void checkValidation(const hashMap& hm);
     double calculateKey(const StatePtr& node);
+
+    void checkValidation(const hashMap& hm);
   };
 
   
@@ -138,12 +140,12 @@ namespace MPL
        * @param start_coord start state
        * @param start_idx index for the start state 
        * @param ENV object of `env_base' class
-       * @param sss_ptr workspace input
+       * @param ss_ptr workspace input
        * @param traj output trajectory
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double Astar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> sss_ptr, 
+      double Astar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> ss_ptr, 
           Trajectory& traj, int max_expand = -1, double max_t = 0);
       /**
        * @brief Lifelong Planning Astar graph search
@@ -151,16 +153,16 @@ namespace MPL
        * @param start_coord start state
        * @param start_idx index for the start state 
        * @param ENV object of `env_base' class
-       * @param sss_ptr workspace input
+       * @param ss_ptr workspace input
        * @param traj output trajectory
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double LPAstar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> sss_ptr, 
+      double LPAstar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> ss_ptr, 
           Trajectory& traj, int max_expand = -1, double max_t = 0);
     private:
       ///Recover trajectory 
-      Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> sss_ptr, const env_base& ENV, const Key& start_idx);
+      Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> ss_ptr, const env_base& ENV, const Key& start_idx);
       ///Verbose flag
       bool verbose_ = false;
  

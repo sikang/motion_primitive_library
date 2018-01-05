@@ -7,7 +7,7 @@ MPBaseUtil::MPBaseUtil() {
 }
 
 bool MPBaseUtil::initialized() {
-  return !(sss_ptr_ == nullptr);
+  return !(ss_ptr_ == nullptr);
 }
 
 void MPBaseUtil::setLPAstar(bool use_lpastar) {
@@ -106,15 +106,15 @@ void MPBaseUtil::setTol(decimal_t tol_dis, decimal_t tol_vel, decimal_t tol_acc)
 
 std::vector<Primitive> MPBaseUtil::getValidPrimitives() const { 
   std::vector<Primitive> prs;
-  for(const auto& it: sss_ptr_->hm_) {
+  for(const auto& it: ss_ptr_->hm_) {
    if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
-        //if(!sss_ptr_->hm_[key] || std::isinf(it.second->pred_action_cost[i])) 
+        //if(!ss_ptr_->hm_[key] || std::isinf(it.second->pred_action_cost[i])) 
         if(std::isinf(it.second->pred_action_cost[i])) 
           continue;
         Primitive pr;
-        ENV_->forward_action( sss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
+        ENV_->forward_action( ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
       }
     }
@@ -122,19 +122,19 @@ std::vector<Primitive> MPBaseUtil::getValidPrimitives() const {
 
   if(planner_verbose_)
     printf("number of states in hm: %zu, number of valid prs: %zu\n", 
-        sss_ptr_->hm_.size(), prs.size());
+        ss_ptr_->hm_.size(), prs.size());
  
   return prs;
 }
 
 std::vector<Primitive> MPBaseUtil::getAllPrimitives() const { 
   std::vector<Primitive> prs;
-  for(const auto& it: sss_ptr_->hm_) {
+  for(const auto& it: ss_ptr_->hm_) {
     if(it.second && !it.second->pred_hashkey.empty()) {
       for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
         Key key = it.second->pred_hashkey[i];
         Primitive pr;
-        ENV_->forward_action( sss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
+        ENV_->forward_action( ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
         prs.push_back(pr);
       }
     }
@@ -143,7 +143,7 @@ std::vector<Primitive> MPBaseUtil::getAllPrimitives() const {
 
   if(planner_verbose_) 
     printf("number of states in hm: %zu, number of prs: %zu\n", 
-        sss_ptr_->hm_.size(), prs.size());
+        ss_ptr_->hm_.size(), prs.size());
 
   return prs;
 }
@@ -160,14 +160,14 @@ Trajectory MPBaseUtil::getTraj() const {
 
 vec_Vec3f MPBaseUtil::getOpenSet() const {
   vec_Vec3f ps;
-  for(const auto& it: sss_ptr_->pq)
+  for(const auto& it: ss_ptr_->pq_)
     ps.push_back(it.second->coord.pos);
   return ps;
 }
 
 vec_Vec3f MPBaseUtil::getCloseSet() const {
   vec_Vec3f ps;
-  for(const auto& it: sss_ptr_->hm_) {
+  for(const auto& it: ss_ptr_->hm_) {
     if(it.second && it.second->iterationclosed)
       ps.push_back(it.second->coord.pos);
   }
@@ -179,11 +179,11 @@ vec_Vec3f MPBaseUtil::getExpandedNodes() const {
 }
 
 void MPBaseUtil::getSubStateSpace(int time_step) {
-  sss_ptr_->getSubStateSpace(time_step);
+  ss_ptr_->getSubStateSpace(time_step);
 }
 
 void MPBaseUtil::checkValidation() {
-  sss_ptr_->checkValidation(sss_ptr_->hm_);
+  ss_ptr_->checkValidation(ss_ptr_->hm_);
 }
 
 bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
@@ -236,12 +236,12 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
 
   // If use A*, reset the state space 
   if(!use_lpastar_) 
-    sss_ptr_.reset(new MPL::StateSpace(epsilon_));
+    ss_ptr_.reset(new MPL::StateSpace(epsilon_));
   else {
     // If use LPA*, reset the state space only at the initial planning
     if(!initialized()) {
       printf(ANSI_COLOR_CYAN "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
-      sss_ptr_.reset(new MPL::StateSpace(epsilon_));
+      ss_ptr_.reset(new MPL::StateSpace(epsilon_));
     }
   }
 
@@ -249,11 +249,11 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
 
   ENV_->expanded_nodes_.clear();
 
-  sss_ptr_->dt = ENV_->get_dt();
+  ss_ptr_->dt_ = ENV_->get_dt();
   if(use_lpastar_)
-    planner_ptr->LPAstar(start, ENV_->state_to_idx(start), *ENV_, sss_ptr_, traj_, max_num_, max_t_);
+    planner_ptr->LPAstar(start, ENV_->state_to_idx(start), *ENV_, ss_ptr_, traj_, max_num_, max_t_);
   else
-    planner_ptr->Astar(start, ENV_->state_to_idx(start), *ENV_, sss_ptr_, traj_, max_num_, max_t_);
+    planner_ptr->Astar(start, ENV_->state_to_idx(start), *ENV_, ss_ptr_, traj_, max_num_, max_t_);
 
   if (traj_.segs.empty()) {
     if(planner_verbose_)

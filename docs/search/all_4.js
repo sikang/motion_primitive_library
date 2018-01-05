@@ -8,7 +8,7 @@ var searchData=
   ['env_5fcloud_2eh',['env_cloud.h',['../env__cloud_8h.html',1,'']]],
   ['env_5fmap',['env_map',['../classMPL_1_1env__map.html',1,'MPL::env_map'],['../classMPL_1_1env__map.html#a2d565231c989641b3495e33ca0b5baf1',1,'MPL::env_map::env_map()']]],
   ['env_5fmap_2eh',['env_map.h',['../env__map_8h.html',1,'']]],
-  ['eps',['eps',['../structMPL_1_1StateSpace.html#a851619f39142ee287580f17a59e85fda',1,'MPL::StateSpace']]],
+  ['eps_5f',['eps_',['../structMPL_1_1StateSpace.html#a364c9942e6a22c0e5b94a4fe1f9f9a5f',1,'MPL::StateSpace']]],
   ['epsilon_5f',['epsilon_',['../classMPBaseUtil.html#a532897035738c4d196ecd73c751ad5bd',1,'MPBaseUtil']]],
   ['evaluate',['evaluate',['../classPolyTraj.html#a8663ff214c668df3e05bf0be49f775d4',1,'PolyTraj::evaluate()'],['../classPrimitive1D.html#aa0d13c98c000a492a0a67ff517a013a5',1,'Primitive1D::evaluate()'],['../classPrimitive.html#a0d263bca7ef33d0f343fd94fee0bc6ce',1,'Primitive::evaluate()'],['../classTrajectory.html#a4e22aeb1c664fe36c6921f0c42687dbc',1,'Trajectory::evaluate()']]],
   ['expanded_5fnodes_5f',['expanded_nodes_',['../classMPL_1_1env__base.html#a2e920048a984a5f0deeec48cee24aeaa',1,'MPL::env_base']]],

@@ -124,6 +124,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a40f8e0357978c51b88c55feb84e58ee7">cal_heur</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;state, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal) const</td></tr>
 <tr class="memdesc:a40f8e0357978c51b88c55feb84e58ee7 inherit pub_methods_classMPL_1_1env__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the cost from state to goal <br /></td></tr>
 <tr class="separator:a40f8e0357978c51b88c55feb84e58ee7 inherit pub_methods_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f46837c1699ca5177104ae978d20ddb inherit pub_methods_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a7f46837c1699ca5177104ae978d20ddb"></a>
+<a class="el" href="data__type_8h.html#ae912524491a09326ef25e4e4781c965f">Vec3i</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a7f46837c1699ca5177104ae978d20ddb">round</a> (const <a class="el" href="data__type_8h.html#a6a51054135436e5d0a4529dc0054ae0a">Vec3f</a> &amp;vec, double res) const</td></tr>
+<tr class="memdesc:a7f46837c1699ca5177104ae978d20ddb inherit pub_methods_classMPL_1_1env__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the original cast function. <br /></td></tr>
+<tr class="separator:a7f46837c1699ca5177104ae978d20ddb inherit pub_methods_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6734c7621ec2a67aae7a3fc3f5e3fc1 inherit pub_methods_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="af6734c7621ec2a67aae7a3fc3f5e3fc1"></a>
 <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#af6734c7621ec2a67aae7a3fc3f5e3fc1">state_to_idx</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;state) const</td></tr>
 <tr class="memdesc:af6734c7621ec2a67aae7a3fc3f5e3fc1 inherit pub_methods_classMPL_1_1env__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Genegrate Key from state. <br /></td></tr>
@@ -261,10 +265,10 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>t_max_</b> = -1</td
 double&#160;</td><td class="memItemRight" valign="bottom"><b>dt_</b> = 1.0</td></tr>
 <tr class="separator:abf7c0ad06bbb55d346d822c52af51a26 inherit pub_attribs_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93c9a2bd16fefabc99ee2aee1bc2d445 inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a93c9a2bd16fefabc99ee2aee1bc2d445"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>ds_</b> = 0.0001</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>ds_</b> = 0.01</td></tr>
 <tr class="separator:a93c9a2bd16fefabc99ee2aee1bc2d445 inherit pub_attribs_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a4985a02d526c38b4e823b4e6815136 inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a8a4985a02d526c38b4e823b4e6815136"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>dv_</b> = 0.001</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>dv_</b> = 0.01</td></tr>
 <tr class="separator:a8a4985a02d526c38b4e823b4e6815136 inherit pub_attribs_classMPL_1_1env__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a975a616c1e7ae43f1d92ba4f8baf7975 inherit pub_attribs_classMPL_1_1env__base"><td class="memItemLeft" align="right" valign="top"><a id="a975a616c1e7ae43f1d92ba4f8baf7975"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>da_</b> = 0.01</td></tr>
@@ -362,7 +366,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
   </table>
   </dd>
 </dl>
-<p>When goal is outside, extra step is needed for finding optimal trajectory Here we use Heuristic function and multiply with 2 </p>
+<p>When goal is outside, extra step is needed for finding optimal trajectory. Only return the primitive satisfies valid dynamic constriants (include the one hits obstacles). </p>
 
 <p>Reimplemented from <a class="el" href="classMPL_1_1env__base.html#add85a24c2e7bcdbcfde00c80fee083d3">MPL::env_base</a>.</p>
 

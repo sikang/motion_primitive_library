@@ -89,7 +89,7 @@ class MPBaseUtil
     ///Env class
     std::unique_ptr<MPL::env_base> ENV_;
     ///Planner workspace
-    std::shared_ptr<MPL::StateSpace> sss_ptr_;
+    std::shared_ptr<MPL::StateSpace> ss_ptr_;
     ///Intermediate nodes in optimal trajectory
     std::vector<Waypoint> ws_;
     ///Optimal trajectory

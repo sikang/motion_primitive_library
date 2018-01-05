@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['planner_5fverbose_5f',['planner_verbose_',['../classMPBaseUtil.html#ad52514a4b1f772cec7bbf571d05d8b86',1,'MPBaseUtil']]],
-  ['pq',['pq',['../structMPL_1_1StateSpace.html#aec2426ff4e96e29f35879ddbd50ed59b',1,'MPL::StateSpace']]],
-  ['prior_5ftraj_5f',['prior_traj_',['../classMPL_1_1env__base.html#a6ac77c8b3520b26b344b061c04affd70',1,'MPL::env_base']]]
+  ['need_5fto_5freset_5fgoal_5f',['need_to_reset_goal_',['../structMPL_1_1StateSpace.html#a34a915b565f2fcf6527d08a5001a39a5',1,'MPL::StateSpace']]]
 ];

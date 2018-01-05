@@ -81,7 +81,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a19cbedb06cdf410402d88e7489b726"><td class="memItemLeft" align="right" valign="top"><a id="a2a19cbedb06cdf410402d88e7489b726"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726">StateSpace</a> (double <a class="el" href="structMPL_1_1StateSpace.html#a851619f39142ee287580f17a59e85fda">eps</a>=1)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726">StateSpace</a> (double eps=1)</td></tr>
 <tr class="memdesc:a2a19cbedb06cdf410402d88e7489b726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor. <br /></td></tr>
 <tr class="separator:a2a19cbedb06cdf410402d88e7489b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86fc56247c5f39249f673f546c795e17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17">getSubStateSpace</a> (int time_step)</td></tr>
@@ -97,36 +97,46 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>decreaseCost</b> (std
 <tr class="memitem:adc6c9c08d50314a503c2990ddec08cac"><td class="memItemLeft" align="right" valign="top"><a id="adc6c9c08d50314a503c2990ddec08cac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>updateNode</b> (<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;currNode_ptr)</td></tr>
 <tr class="separator:adc6c9c08d50314a503c2990ddec08cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39e5f09cfc8c0f75d4e0190689922237"><td class="memItemLeft" align="right" valign="top"><a id="a39e5f09cfc8c0f75d4e0190689922237"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>checkValidation</b> ()</td></tr>
-<tr class="separator:a39e5f09cfc8c0f75d4e0190689922237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732b0ab1c4e7983bc2cedce156fee088"><td class="memItemLeft" align="right" valign="top"><a id="a732b0ab1c4e7983bc2cedce156fee088"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>calculateKey</b> (const <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;node)</td></tr>
+<tr class="separator:a732b0ab1c4e7983bc2cedce156fee088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa63137b1428c7f45fc9ead45dd76223a"><td class="memItemLeft" align="right" valign="top"><a id="aa63137b1428c7f45fc9ead45dd76223a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>checkValidation</b> (const <a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a> &amp;hm)</td></tr>
+<tr class="separator:aa63137b1428c7f45fc9ead45dd76223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aec2426ff4e96e29f35879ddbd50ed59b"><td class="memItemLeft" align="right" valign="top"><a id="aec2426ff4e96e29f35879ddbd50ed59b"></a>
-<a class="el" href="namespaceMPL.html#af10a63545f5d7e532249379196d7f84c">priorityQueue</a>&lt; <a class="el" href="structMPL_1_1State.html">State</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#aec2426ff4e96e29f35879ddbd50ed59b">pq</a></td></tr>
-<tr class="memdesc:aec2426ff4e96e29f35879ddbd50ed59b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue, open set. <br /></td></tr>
-<tr class="separator:aec2426ff4e96e29f35879ddbd50ed59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f005fe594bd5fab35218250a36d9250"><td class="memItemLeft" align="right" valign="top"><a id="a2f005fe594bd5fab35218250a36d9250"></a>
-<a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2f005fe594bd5fab35218250a36d9250">hm</a></td></tr>
-<tr class="memdesc:a2f005fe594bd5fab35218250a36d9250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashmap, stores all the nodes. <br /></td></tr>
-<tr class="separator:a2f005fe594bd5fab35218250a36d9250"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a851619f39142ee287580f17a59e85fda"><td class="memItemLeft" align="right" valign="top"><a id="a851619f39142ee287580f17a59e85fda"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a851619f39142ee287580f17a59e85fda">eps</a></td></tr>
-<tr class="memdesc:a851619f39142ee287580f17a59e85fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heuristic weight, default as 1. <br /></td></tr>
-<tr class="separator:a851619f39142ee287580f17a59e85fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98d6a7779e5d5565014c831f717232da"><td class="memItemLeft" align="right" valign="top"><a id="a98d6a7779e5d5565014c831f717232da"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a98d6a7779e5d5565014c831f717232da">dt</a></td></tr>
-<tr class="memdesc:a98d6a7779e5d5565014c831f717232da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution time for each primitive. <br /></td></tr>
-<tr class="separator:a98d6a7779e5d5565014c831f717232da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e927ed61a08000cd08e9ac173b43aa0"><td class="memItemLeft" align="right" valign="top"><a id="a6e927ed61a08000cd08e9ac173b43aa0"></a>
+<a class="el" href="namespaceMPL.html#af10a63545f5d7e532249379196d7f84c">priorityQueue</a>&lt; <a class="el" href="structMPL_1_1State.html">State</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a6e927ed61a08000cd08e9ac173b43aa0">pq_</a></td></tr>
+<tr class="memdesc:a6e927ed61a08000cd08e9ac173b43aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue, open set. <br /></td></tr>
+<tr class="separator:a6e927ed61a08000cd08e9ac173b43aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c68115861ade046645134b1895e8892"><td class="memItemLeft" align="right" valign="top"><a id="a2c68115861ade046645134b1895e8892"></a>
+<a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2c68115861ade046645134b1895e8892">hm_</a></td></tr>
+<tr class="memdesc:a2c68115861ade046645134b1895e8892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashmap, stores all the nodes. <br /></td></tr>
+<tr class="separator:a2c68115861ade046645134b1895e8892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="memItemLeft" align="right" valign="top"><a id="a364c9942e6a22c0e5b94a4fe1f9f9a5f"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a364c9942e6a22c0e5b94a4fe1f9f9a5f">eps_</a></td></tr>
+<tr class="memdesc:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heuristic weight, default as 1. <br /></td></tr>
+<tr class="separator:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a851fa88109bc8b7aca459bcfd6e875e7"><td class="memItemLeft" align="right" valign="top"><a id="a851fa88109bc8b7aca459bcfd6e875e7"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a851fa88109bc8b7aca459bcfd6e875e7">dt_</a></td></tr>
+<tr class="memdesc:a851fa88109bc8b7aca459bcfd6e875e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution time for each primitive. <br /></td></tr>
+<tr class="separator:a851fa88109bc8b7aca459bcfd6e875e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97d81e646b21836176325076dbe30fac"><td class="memItemLeft" align="right" valign="top"><a id="a97d81e646b21836176325076dbe30fac"></a>
 std::vector&lt; <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a97d81e646b21836176325076dbe30fac">best_child_</a></td></tr>
 <tr class="memdesc:a97d81e646b21836176325076dbe30fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">The best trajectory from previous plan. <br /></td></tr>
 <tr class="separator:a97d81e646b21836176325076dbe30fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e0c8534fb0c3f6df6869b9bce455e22"><td class="memItemLeft" align="right" valign="top"><a id="a4e0c8534fb0c3f6df6869b9bce455e22"></a>
-<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a4e0c8534fb0c3f6df6869b9bce455e22">goalNode_ptr_</a> = nullptr</td></tr>
+<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a4e0c8534fb0c3f6df6869b9bce455e22">goalNode_ptr_</a></td></tr>
 <tr class="memdesc:a4e0c8534fb0c3f6df6869b9bce455e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Goal node, initialized as null by default. <br /></td></tr>
 <tr class="separator:a4e0c8534fb0c3f6df6869b9bce455e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34a915b565f2fcf6527d08a5001a39a5"><td class="memItemLeft" align="right" valign="top"><a id="a34a915b565f2fcf6527d08a5001a39a5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a34a915b565f2fcf6527d08a5001a39a5">need_to_reset_goal_</a> = false</td></tr>
+<tr class="memdesc:a34a915b565f2fcf6527d08a5001a39a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal flag to trigger goal reset. <br /></td></tr>
+<tr class="separator:a34a915b565f2fcf6527d08a5001a39a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66e5712bcfae2374169742fa42dc3166"><td class="memItemLeft" align="right" valign="top"><a id="a66e5712bcfae2374169742fa42dc3166"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>start_rhs_</b> = 0</td></tr>
+<tr class="separator:a66e5712bcfae2374169742fa42dc3166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>
