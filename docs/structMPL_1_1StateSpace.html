@@ -92,16 +92,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stru
 <tr class="memdesc:aec702feb974ce324c6a56abaa5e280e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the cost of actions. <br /></td></tr>
 <tr class="separator:aec702feb974ce324c6a56abaa5e280e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5458159188d6d4bbc244b3f25f3a673e"><td class="memItemLeft" align="right" valign="top"><a id="a5458159188d6d4bbc244b3f25f3a673e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>decreaseCost</b> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const <a class="el" href="classMPL_1_1env__base.html">env_base</a> &amp;ENV)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a5458159188d6d4bbc244b3f25f3a673e">decreaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const <a class="el" href="classMPL_1_1env__base.html">env_base</a> &amp;ENV)</td></tr>
+<tr class="memdesc:a5458159188d6d4bbc244b3f25f3a673e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrease the cost of actions. <br /></td></tr>
 <tr class="separator:a5458159188d6d4bbc244b3f25f3a673e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc6c9c08d50314a503c2990ddec08cac"><td class="memItemLeft" align="right" valign="top"><a id="adc6c9c08d50314a503c2990ddec08cac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateNode</b> (<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;currNode_ptr)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#adc6c9c08d50314a503c2990ddec08cac">updateNode</a> (<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;currNode_ptr)</td></tr>
+<tr class="memdesc:adc6c9c08d50314a503c2990ddec08cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the node in the graph. <br /></td></tr>
 <tr class="separator:adc6c9c08d50314a503c2990ddec08cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a732b0ab1c4e7983bc2cedce156fee088"><td class="memItemLeft" align="right" valign="top"><a id="a732b0ab1c4e7983bc2cedce156fee088"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>calculateKey</b> (const <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;node)</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a732b0ab1c4e7983bc2cedce156fee088">calculateKey</a> (const <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;node)</td></tr>
+<tr class="memdesc:a732b0ab1c4e7983bc2cedce156fee088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the fval as min(rhs, g) + h. <br /></td></tr>
 <tr class="separator:a732b0ab1c4e7983bc2cedce156fee088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa63137b1428c7f45fc9ead45dd76223a"><td class="memItemLeft" align="right" valign="top"><a id="aa63137b1428c7f45fc9ead45dd76223a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>checkValidation</b> (const <a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a> &amp;hm)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#aa63137b1428c7f45fc9ead45dd76223a">checkValidation</a> (const <a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a> &amp;hm)</td></tr>
+<tr class="memdesc:aa63137b1428c7f45fc9ead45dd76223a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function to check if the graph is valid. <br /></td></tr>
 <tr class="separator:aa63137b1428c7f45fc9ead45dd76223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -134,9 +138,14 @@ std::vector&lt; <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecf
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a34a915b565f2fcf6527d08a5001a39a5">need_to_reset_goal_</a> = false</td></tr>
 <tr class="memdesc:a34a915b565f2fcf6527d08a5001a39a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal flag to trigger goal reset. <br /></td></tr>
 <tr class="separator:a34a915b565f2fcf6527d08a5001a39a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e5712bcfae2374169742fa42dc3166"><td class="memItemLeft" align="right" valign="top"><a id="a66e5712bcfae2374169742fa42dc3166"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>start_rhs_</b> = 0</td></tr>
-<tr class="separator:a66e5712bcfae2374169742fa42dc3166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7355596f527e35f3460ad22bf2bcca88"><td class="memItemLeft" align="right" valign="top"><a id="a7355596f527e35f3460ad22bf2bcca88"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a7355596f527e35f3460ad22bf2bcca88">reached_goal_</a> = false</td></tr>
+<tr class="memdesc:a7355596f527e35f3460ad22bf2bcca88"><td class="mdescLeft">&#160;</td><td class="mdescRight">If previous plan reached the goal, set to be True, else False. <br /></td></tr>
+<tr class="separator:a7355596f527e35f3460ad22bf2bcca88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="memItemLeft" align="right" valign="top"><a id="a2677cd76471ec9d9ca3d4cc1db31f714"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2677cd76471ec9d9ca3d4cc1db31f714">max_t_</a> = std::numeric_limits&lt;double&gt;::infinity()</td></tr>
+<tr class="memdesc:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum time of the valid trajectories. <br /></td></tr>
+<tr class="separator:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>

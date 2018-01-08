@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['segs',['segs',['../classTrajectory.html#a86463591d1de80f857bc707b63341ec7',1,'Trajectory']]],
-  ['ss_5fptr_5f',['ss_ptr_',['../classMPBaseUtil.html#a17c57d1e61aada97e7a378a910656f28',1,'MPBaseUtil']]]
+  ['reached_5fgoal_5f',['reached_goal_',['../structMPL_1_1StateSpace.html#a7355596f527e35f3460ad22bf2bcca88',1,'MPL::StateSpace']]]
 ];

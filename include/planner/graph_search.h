@@ -98,7 +98,10 @@ namespace MPL
     StatePtr goalNode_ptr_;
     ///Internal flag to trigger goal reset 
     bool need_to_reset_goal_ = false;
+    ///If previous plan reached the goal, set to be True, else False
     bool reached_goal_ = false;
+    ///Maximum time of the valid trajectories
+    double max_t_ = std::numeric_limits<double>::infinity();
 
     ///Simple constructor
     StateSpace(double eps = 1): eps_(eps){}
@@ -110,11 +113,15 @@ namespace MPL
     void getSubStateSpace(int time_step);
     ///Increase the cost of actions 
     void increaseCost(std::vector<std::pair<Key, int> > states);
+    ///Decrease the cost of actions
     void decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV);
+    ///Update the node in the graph
     void updateNode(StatePtr& currNode_ptr);
 
+    ///Calculate the fval as min(rhs, g) + h
     double calculateKey(const StatePtr& node);
 
+    ///Internal function to check if the graph is valid
     void checkValidation(const hashMap& hm);
   };
 

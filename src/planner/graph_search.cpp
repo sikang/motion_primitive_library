@@ -209,11 +209,8 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
     } 
 
     // If goal reached, abort!
-    if(ENV.is_goal(currNode_ptr->coord)) {
-      if(verbose_)
-        printf(ANSI_COLOR_GREEN "Goal Reached!!!!!!\n\n" ANSI_COLOR_RESET);
+    if(ENV.is_goal(currNode_ptr->coord)) 
       break;
-    }
 
     // If maximum time reached, abort!
     if(max_t > 0 && currNode_ptr->t >= max_t && !std::isinf(currNode_ptr->g)) {
@@ -238,9 +235,16 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
 
   if(verbose_) {
     double fval = ss_ptr->calculateKey(currNode_ptr);
-    printf(ANSI_COLOR_GREEN "currNode key: %f, g: %f!\n" ANSI_COLOR_RESET, fval, currNode_ptr->g);
+    printf(ANSI_COLOR_GREEN "goalNode fval: %f, g: %f!\n" ANSI_COLOR_RESET, fval, currNode_ptr->g);
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
+
+  if(ENV.is_goal(currNode_ptr->coord)) {
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
+    ss_ptr->reached_goal_ = true;
+  }
+ 
 
   traj = recoverTraj(currNode_ptr, ss_ptr, ENV, start_key);
   return currNode_ptr->g;
@@ -261,7 +265,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   }
 
   ss_ptr->reached_goal_ = false;
-  
+  ss_ptr->max_t_ = max_t > 0 ? max_t : std::numeric_limits<double>::infinity();
   // Initialize start node
   StatePtr currNode_ptr = ss_ptr->hm_[start_key];
   if(ss_ptr->pq_.empty()) {
@@ -363,15 +367,10 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     // If goal reached, terminate!
     if(ENV.is_goal(currNode_ptr->coord)) 
       goalNode_ptr = currNode_ptr;
-
     // If maximum time reached, terminate!
-    if(max_t > 0 && currNode_ptr->t >= max_t) {
+    else if(max_t > 0 && currNode_ptr->t >= max_t) {
       if(verbose_)
         printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_t);
-
-      printf("currNode: t: %f, g: %f, rhs: %f, h: %f, fval: %f\n", 
-          currNode_ptr->t, currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h, ss_ptr->pq_.top().first);
-
       goalNode_ptr = currNode_ptr;
     }
 
@@ -390,12 +389,15 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     }
   }
 
+ 
+  // Report value of goal
   if(verbose_) {
-    printf(ANSI_COLOR_GREEN "goalNode key: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET, 
+    printf(ANSI_COLOR_GREEN "goalNode fval: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET, 
         ss_ptr->calculateKey(goalNode_ptr), goalNode_ptr->g, goalNode_ptr->rhs);
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
 
+  // Check if the goal is reached, if reached, set the flag to be True
   if(ENV.is_goal(goalNode_ptr->coord)) {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
@@ -490,6 +492,15 @@ void StateSpace::getSubStateSpace(int time_step) {
 
   while(!epq.empty()) {
     currNode_ptr = epq.top().second; epq.pop();
+    // If reached maximum time, reopen it and clear successors array
+    if(currNode_ptr->t >= max_t_) {
+      currNode_ptr->iterationclosed = false;
+      currNode_ptr->g = std::numeric_limits<double>::infinity();
+      currNode_ptr->succ_hashkey.clear();
+      currNode_ptr->succ_action_cost.clear();
+      currNode_ptr->succ_action_id.clear();
+    }
+
     for(unsigned int i = 0; i < currNode_ptr->succ_hashkey.size(); i++) {
       Key succ_key = currNode_ptr->succ_hashkey[i];
 
@@ -539,9 +550,11 @@ void StateSpace::getSubStateSpace(int time_step) {
   hm_ = new_hm;
 
   pq_.clear();
-  for(auto& it: hm_) 
-    if(it.second->iterationopened && !it.second->iterationclosed) 
-      it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
+  for(auto& it: hm_) {
+    if(it.second->iterationopened && !it.second->iterationclosed) {
+        it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
+    }
+  }
 }
 
 
@@ -580,7 +593,7 @@ void StateSpace::decreaseCost(std::vector<std::pair<Key, int> > states, const en
     Primitive pr;
     ENV.forward_action( hm_[parent_key]->coord, hm_[affected_node.first]->pred_action_id[id], pr );
     if(ENV.is_free(pr)) {
-      hm_[affected_node.first]->pred_action_cost[id] = pr.J(ENV.wi_) + ENV.w_*ENV.dt_;
+      hm_[affected_node.first]->pred_action_cost[id] = pr.J(ENV.wi_) + ENV.w_*dt_;
       updateNode(hm_[affected_node.first]);
       int succ_act_id = hm_[affected_node.first]->pred_action_id[id];
       for(unsigned int i = 0; i < hm_[parent_key]->succ_action_id.size(); i++) {
