@@ -105,8 +105,6 @@ namespace MPL
     StatePtr goalNode_ptr_;
     ///Internal flag to trigger goal reset 
     bool need_to_reset_goal_ = false;
-    ///If previous plan reached the goal, set to be True, else False
-    bool reached_goal_ = false;
     ///Maximum time of the valid trajectories
     double max_t_ = std::numeric_limits<double>::infinity();
 
@@ -115,9 +113,11 @@ namespace MPL
 
     /**
      * @brief Get the subtree
-     * @param time_step indicates the root of the subtree (best_child_[time_step])
+     * @param time_step indicates the root of the subtree (best_child_[time_step-1])
+     * @param ENV pointer of `env_base' class
+     * @param goal if changed, use new goal to calculate heuristic
      */
-    void getSubStateSpace(int time_step);
+    void getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV, const Waypoint& goal);
     ///Increase the cost of actions 
     std::vector<Primitive> increaseCost(std::vector<std::pair<Key, int> > states, const std::shared_ptr<env_base>& ENV);
     ///Decrease the cost of actions

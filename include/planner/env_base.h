@@ -34,11 +34,11 @@ class env_base
     ///Check if hit the goal region
     bool is_goal(const Waypoint& state) const
     {
-      bool goaled = (state.pos - goal_node_.pos).lpNorm<Eigen::Infinity>() < tol_dis;
+      bool goaled = (state.pos - goal_node_.pos).lpNorm<Eigen::Infinity>() <= tol_dis;
       if(goaled && goal_node_.use_vel) 
-        goaled = (state.vel - goal_node_.vel).lpNorm<Eigen::Infinity>() < tol_vel;
+        goaled = (state.vel - goal_node_.vel).lpNorm<Eigen::Infinity>() <= tol_vel;
       if(goaled && goal_node_.use_acc) 
-        goaled = (state.acc - goal_node_.acc).lpNorm<Eigen::Infinity>() < tol_acc;
+        goaled = (state.acc - goal_node_.acc).lpNorm<Eigen::Infinity>() <= tol_acc;
      return goaled;
     }
 

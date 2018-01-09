@@ -84,9 +84,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726">StateSpace</a> (double eps=1)</td></tr>
 <tr class="memdesc:a2a19cbedb06cdf410402d88e7489b726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor. <br /></td></tr>
 <tr class="separator:a2a19cbedb06cdf410402d88e7489b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86fc56247c5f39249f673f546c795e17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17">getSubStateSpace</a> (int time_step)</td></tr>
-<tr class="memdesc:a86fc56247c5f39249f673f546c795e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subtree.  <a href="#a86fc56247c5f39249f673f546c795e17">More...</a><br /></td></tr>
-<tr class="separator:a86fc56247c5f39249f673f546c795e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9eb316f0219f9db7badf433c33edd48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#aa9eb316f0219f9db7badf433c33edd48">getSubStateSpace</a> (int time_step, std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal)</td></tr>
+<tr class="memdesc:aa9eb316f0219f9db7badf433c33edd48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subtree.  <a href="#aa9eb316f0219f9db7badf433c33edd48">More...</a><br /></td></tr>
+<tr class="separator:aa9eb316f0219f9db7badf433c33edd48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1716ae56fb26029a6b7335a959588be7"><td class="memItemLeft" align="right" valign="top"><a id="a1716ae56fb26029a6b7335a959588be7"></a>
 std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a1716ae56fb26029a6b7335a959588be7">increaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV)</td></tr>
 <tr class="memdesc:a1716ae56fb26029a6b7335a959588be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the cost of actions. <br /></td></tr>
@@ -138,10 +138,6 @@ std::vector&lt; <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecf
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a34a915b565f2fcf6527d08a5001a39a5">need_to_reset_goal_</a> = false</td></tr>
 <tr class="memdesc:a34a915b565f2fcf6527d08a5001a39a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal flag to trigger goal reset. <br /></td></tr>
 <tr class="separator:a34a915b565f2fcf6527d08a5001a39a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7355596f527e35f3460ad22bf2bcca88"><td class="memItemLeft" align="right" valign="top"><a id="a7355596f527e35f3460ad22bf2bcca88"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a7355596f527e35f3460ad22bf2bcca88">reached_goal_</a> = false</td></tr>
-<tr class="memdesc:a7355596f527e35f3460ad22bf2bcca88"><td class="mdescLeft">&#160;</td><td class="mdescRight">If previous plan reached the goal, set to be True, else False. <br /></td></tr>
-<tr class="separator:a7355596f527e35f3460ad22bf2bcca88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="memItemLeft" align="right" valign="top"><a id="a2677cd76471ec9d9ca3d4cc1db31f714"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2677cd76471ec9d9ca3d4cc1db31f714">max_t_</a> = std::numeric_limits&lt;double&gt;::infinity()</td></tr>
 <tr class="memdesc:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum time of the valid trajectories. <br /></td></tr>
@@ -150,8 +146,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86fc56247c5f39249f673f546c795e17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86fc56247c5f39249f673f546c795e17">&#9670;&nbsp;</a></span>getSubStateSpace()</h2>
+<a id="aa9eb316f0219f9db7badf433c33edd48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9eb316f0219f9db7badf433c33edd48">&#9670;&nbsp;</a></span>getSubStateSpace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,8 +156,24 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
           <td class="memname">void StateSpace::getSubStateSpace </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>time_step</em></td><td>)</td>
+          <td class="paramname"><em>time_step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>ENV</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>goal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -169,7 +181,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>Get the subtree. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time_step</td><td>indicates the root of the subtree (best_child_[time_step]) </td></tr>
+    <tr><td class="paramname">time_step</td><td>indicates the root of the subtree (best_child_[time_step-1]) </td></tr>
+    <tr><td class="paramname">ENV</td><td>pointer of `env_base' class </td></tr>
+    <tr><td class="paramname">goal</td><td>if changed, use new goal to calculate heuristic </td></tr>
   </table>
   </dd>
 </dl>

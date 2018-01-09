@@ -39,8 +39,6 @@ vec_Vec3f MPMapUtil::getLinkedNodes() const {
     }
   }
 
-  if(planner_verbose_)
-    printf("number of linked_pts: %zu\n", linked_pts.size());
   return linked_pts;
 }
 

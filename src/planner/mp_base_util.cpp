@@ -148,8 +148,6 @@ std::vector<Primitive> MPBaseUtil::getAllPrimitives() const {
   return prs;
 }
 
-
-
 std::vector<Waypoint> MPBaseUtil::getWs() const {
   return ws_; 
 }
@@ -178,8 +176,8 @@ vec_Vec3f MPBaseUtil::getExpandedNodes() const {
   return ENV_->expanded_nodes_;
 }
 
-void MPBaseUtil::getSubStateSpace(int time_step) {
-  ss_ptr_->getSubStateSpace(time_step);
+void MPBaseUtil::getSubStateSpace(int time_step, const Waypoint& goal) {
+  ss_ptr_->getSubStateSpace(time_step, ENV_, goal);
 }
 
 void MPBaseUtil::checkValidation() {

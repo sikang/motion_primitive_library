@@ -28,24 +28,23 @@ struct Waypoint {
   std::shared_ptr<Waypoint> parent;
   ///Print all the useful attributes
   void print() const {
-   if(use_pos)
-      std::cout << "pos: " << pos.transpose() << std::endl;
-    if(use_vel)
-      std::cout << "vel: " << vel.transpose() << std::endl;
-    if(use_acc)
-      std::cout << "acc: " << acc.transpose() << std::endl;
-    if(use_jrk)
-      std::cout << "jrk: " << jrk.transpose() << std::endl;
-    if(!use_pos && !use_vel && !use_acc && !use_jrk)
-      std::cout << "Nothing is used!" << std::endl;
+    std::cout << "pos: " << pos.transpose() << std::endl;
+    std::cout << "vel: " << vel.transpose() << std::endl;
+    std::cout << "acc: " << acc.transpose() << std::endl;
+    std::cout << "jrk: " << jrk.transpose() << std::endl;
   }
 
   ///Check if two waypoints are equivalent
-  bool operator==(const Waypoint& n){
+  bool operator==(const Waypoint& n) {
     return this->pos == n.pos &&
       this->vel == n.vel &&
       this->acc == n.acc &&
       this->jrk == n.jrk;
+  }
+
+  ///Check if two waypoints are inequivalent
+  bool operator!=(const Waypoint& n) {
+    return !(*this==n);
   }
 };
 
