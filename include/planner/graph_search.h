@@ -45,20 +45,26 @@ namespace MPL
   ///Lattice of the graph in graph search
   struct State
   {
-    // location data
-    Key hashkey;
-    Waypoint coord;                            // discrete coordinates of this node
+    /// hash key in the hashmap
+    Key hashkey; // discrete coordinates of this node
+    /// state
+    Waypoint coord; 
+    /// minimum arrival time
     double t;
-    // hashkey of successors
+    /// hashkey of successors
     std::vector<Key> succ_hashkey;
+    /// action id of successors
     std::vector<int> succ_action_id;
+    /// action cost of successors
     std::vector<double> succ_action_cost;
-    // hashkey of predicessors
+    /// hashkey of predecessors
     std::vector<Key> pred_hashkey;
+    /// action id of predecessors
     std::vector<int> pred_action_id;
+    /// action cost of predecessors
     std::vector<double> pred_action_cost;
 
-    // pointer to heap location
+    /// pointer to heap location
     typename priorityQueue<State>::handle_type heapkey;
 
     // plan data
@@ -69,8 +75,9 @@ namespace MPL
     bool iterationclosed = false;
     bool epq_opened = false;
 
+    /// Simple constructor
     State( Key hashkey, const Waypoint& coord )
-      : hashkey(hashkey), coord(coord)//, parent(nullptr)
+      : hashkey(hashkey), coord(coord)
     {}
 
   };
@@ -112,9 +119,9 @@ namespace MPL
      */
     void getSubStateSpace(int time_step);
     ///Increase the cost of actions 
-    void increaseCost(std::vector<std::pair<Key, int> > states);
+    std::vector<Primitive> increaseCost(std::vector<std::pair<Key, int> > states, const std::shared_ptr<env_base>& ENV);
     ///Decrease the cost of actions
-    void decreaseCost(std::vector<std::pair<Key, int> > states, const env_base& ENV);
+    std::vector<Primitive> decreaseCost(std::vector<std::pair<Key, int> > states, const std::shared_ptr<env_base>& ENV);
     ///Update the node in the graph
     void updateNode(StatePtr& currNode_ptr);
 
@@ -145,31 +152,34 @@ namespace MPL
        * @brief Astar graph search
        *
        * @param start_coord start state
-       * @param start_idx index for the start state 
+       * @param start_key key of the start state 
        * @param ENV object of `env_base' class
        * @param ss_ptr workspace input
        * @param traj output trajectory
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double Astar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> ss_ptr, 
+      double Astar(const Waypoint& start_coord, Key start_key,
+          const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
           Trajectory& traj, int max_expand = -1, double max_t = 0);
       /**
        * @brief Lifelong Planning Astar graph search
        *
        * @param start_coord start state
-       * @param start_idx index for the start state 
+       * @param start_key key of the start state 
        * @param ENV object of `env_base' class
        * @param ss_ptr workspace input
        * @param traj output trajectory
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double LPAstar(const Waypoint& start_coord, Key start_idx, const env_base& ENV, std::shared_ptr<StateSpace> ss_ptr, 
+      double LPAstar(const Waypoint& start_coord, Key start_key, 
+          const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
           Trajectory& traj, int max_expand = -1, double max_t = 0);
     private:
       ///Recover trajectory 
-      Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> ss_ptr, const env_base& ENV, const Key& start_idx);
+      Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> ss_ptr, 
+          const std::shared_ptr<env_base>& ENV, const Key& start_idx);
       ///Verbose flag
       bool verbose_ = false;
  

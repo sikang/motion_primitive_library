@@ -21,14 +21,25 @@ class MPMapUtil : public MPBaseUtil
     void setMapUtil(std::shared_ptr<MPL::VoxelMapUtil>& map_util);
     ///Get linked voxels
     vec_Vec3f getLinkedNodes() const;
-    ///Update tree according to the new blocked nodes
-    vec_Vec3f updateBlockedNodes(const vec_Vec3i& pns);
-    ///Update tree according to the new cleared nodes
-    vec_Vec3f updateClearedNodes(const vec_Vec3i& pns);
+    /**
+     * @brief Update edge costs according to the new blocked nodes
+     * @param pns the new occupied voxels 
+     *
+     * The function returns affected primitives for debug purpose
+     */
+    std::vector<Primitive> updateBlockedNodes(const vec_Vec3i& pns);
+    /**
+     * @brief Update edge costs according to the new cleared nodes
+     * @param pns the new cleared voxels 
+     *
+     * The function returns affected primitives for debug purpose
+     */
+    std::vector<Primitive> updateClearedNodes(const vec_Vec3i& pns);
 
   protected:
+    ///Map util
     std::shared_ptr<MPL::VoxelMapUtil> map_util_;
-    /// Linked map that records voxel and primitives passed through it
+    ///Linked table that records voxel and corresponding primitives passed through it
     mutable linkedHashMap lhm_;
 };
 

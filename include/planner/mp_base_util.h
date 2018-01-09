@@ -87,7 +87,7 @@ class MPBaseUtil
 
   protected:
     ///Env class
-    std::unique_ptr<MPL::env_base> ENV_;
+    std::shared_ptr<MPL::env_base> ENV_;
     ///Planner workspace
     std::shared_ptr<MPL::StateSpace> ss_ptr_;
     ///Intermediate nodes in optimal trajectory

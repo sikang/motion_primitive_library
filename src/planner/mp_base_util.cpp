@@ -251,9 +251,9 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
 
   ss_ptr_->dt_ = ENV_->get_dt();
   if(use_lpastar_)
-    planner_ptr->LPAstar(start, ENV_->state_to_idx(start), *ENV_, ss_ptr_, traj_, max_num_, max_t_);
+    planner_ptr->LPAstar(start, ENV_->state_to_idx(start), ENV_, ss_ptr_, traj_, max_num_, max_t_);
   else
-    planner_ptr->Astar(start, ENV_->state_to_idx(start), *ENV_, ss_ptr_, traj_, max_num_, max_t_);
+    planner_ptr->Astar(start, ENV_->state_to_idx(start), ENV_, ss_ptr_, traj_, max_num_, max_t_);
 
   if (traj_.segs.empty()) {
     if(planner_verbose_)

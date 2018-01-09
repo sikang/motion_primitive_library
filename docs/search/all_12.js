@@ -38,10 +38,13 @@ var searchData=
   ['setw',['setW',['../classMPBaseUtil.html#abdf706d4f4fd96e5dc5fbf384b2d724a',1,'MPBaseUtil']]],
   ['solve',['solve',['../classPolySolver.html#a70681eea721175289facc422d186b97d',1,'PolySolver::solve()'],['../math_8h.html#a981120793ddb8cdf9ce466e8c2e70e4b',1,'solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e):&#160;math.cpp'],['../math_8h.html#af81382faed5667c02f3f447c3eefd064',1,'solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e, decimal_t f, decimal_t g):&#160;math.cpp']]],
   ['ss_5fptr_5f',['ss_ptr_',['../classMPBaseUtil.html#a17c57d1e61aada97e7a378a910656f28',1,'MPBaseUtil']]],
-  ['state',['State',['../structMPL_1_1State.html',1,'MPL']]],
+  ['state',['State',['../structMPL_1_1State.html',1,'MPL::State'],['../structMPL_1_1State.html#ae7b62764764fba2c70f650e2fad263e9',1,'MPL::State::State()']]],
   ['state_5fto_5fidx',['state_to_idx',['../classMPL_1_1env__base.html#af6734c7621ec2a67aae7a3fc3f5e3fc1',1,'MPL::env_base']]],
   ['stateptr',['StatePtr',['../namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f',1,'MPL']]],
   ['statespace',['StateSpace',['../structMPL_1_1StateSpace.html',1,'MPL::StateSpace'],['../structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726',1,'MPL::StateSpace::StateSpace()']]],
   ['sub_5fvoxel_5fmap_5futil_2eh',['sub_voxel_map_util.h',['../sub__voxel__map__util_8h.html',1,'']]],
-  ['subvoxelmaputil',['SubVoxelMapUtil',['../classMPL_1_1SubVoxelMapUtil.html',1,'MPL']]]
+  ['subvoxelmaputil',['SubVoxelMapUtil',['../classMPL_1_1SubVoxelMapUtil.html',1,'MPL']]],
+  ['succ_5faction_5fcost',['succ_action_cost',['../structMPL_1_1State.html#a5f58bce76c7e56d2ff86f07f4e6b7d62',1,'MPL::State']]],
+  ['succ_5faction_5fid',['succ_action_id',['../structMPL_1_1State.html#a2ae11d78551ec7a3642b21bfe6f91500',1,'MPL::State']]],
+  ['succ_5fhashkey',['succ_hashkey',['../structMPL_1_1State.html#a6f88c1d60ce6c298d31b649ab93fc677',1,'MPL::State']]]
 ];

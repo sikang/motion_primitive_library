@@ -36,6 +36,7 @@ var searchData=
   ['setvmax',['setVmax',['../classMPBaseUtil.html#a2a1e0029563fdde423907e81a53200d6',1,'MPBaseUtil']]],
   ['setw',['setW',['../classMPBaseUtil.html#abdf706d4f4fd96e5dc5fbf384b2d724a',1,'MPBaseUtil']]],
   ['solve',['solve',['../classPolySolver.html#a70681eea721175289facc422d186b97d',1,'PolySolver::solve()'],['../math_8h.html#a981120793ddb8cdf9ce466e8c2e70e4b',1,'solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e):&#160;math.cpp'],['../math_8h.html#af81382faed5667c02f3f447c3eefd064',1,'solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e, decimal_t f, decimal_t g):&#160;math.cpp']]],
+  ['state',['State',['../structMPL_1_1State.html#ae7b62764764fba2c70f650e2fad263e9',1,'MPL::State']]],
   ['state_5fto_5fidx',['state_to_idx',['../classMPL_1_1env__base.html#af6734c7621ec2a67aae7a3fc3f5e3fc1',1,'MPL::env_base']]],
   ['statespace',['StateSpace',['../structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726',1,'MPL::StateSpace']]]
 ];

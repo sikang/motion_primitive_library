@@ -9,5 +9,6 @@ var searchData=
   ['coeffs',['coeffs',['../classPrimitive.html#adeedc55773c4d16548a9a12478124b97',1,'Primitive']]],
   ['compare_5fpair',['compare_pair',['../structMPL_1_1compare__pair.html',1,'MPL']]],
   ['compp',['compP',['../data__utils_8h.html#a494c6b874530e84bdc083ff30a614e36',1,'data_utils.h']]],
+  ['coord',['coord',['../structMPL_1_1State.html#a6d4f397972a0c7c06256cf0ad206de14',1,'MPL::State']]],
   ['cubic',['cubic',['../math_8h.html#af270499b7f6d6b2bb04528b3d46adec3',1,'math.cpp']]]
 ];
