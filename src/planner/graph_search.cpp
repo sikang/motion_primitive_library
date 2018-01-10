@@ -265,7 +265,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   ss_ptr->max_t_ = max_t > 0 ? max_t : std::numeric_limits<double>::infinity();
   // Initialize start node
   StatePtr currNode_ptr = ss_ptr->hm_[start_key];
-  if(ss_ptr->pq_.empty()) {
+  if(!currNode_ptr) {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
     currNode_ptr = std::make_shared<State>(State(start_key, start_coord));
