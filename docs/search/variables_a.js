@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['segs',['segs',['../classTrajectory.html#a86463591d1de80f857bc707b63341ec7',1,'Trajectory']]],
-  ['ss_5fptr_5f',['ss_ptr_',['../classMPBaseUtil.html#a17c57d1e61aada97e7a378a910656f28',1,'MPBaseUtil']]],
-  ['succ_5faction_5fcost',['succ_action_cost',['../structMPL_1_1State.html#a5f58bce76c7e56d2ff86f07f4e6b7d62',1,'MPL::State']]],
-  ['succ_5faction_5fid',['succ_action_id',['../structMPL_1_1State.html#a2ae11d78551ec7a3642b21bfe6f91500',1,'MPL::State']]],
-  ['succ_5fhashkey',['succ_hashkey',['../structMPL_1_1State.html#a6f88c1d60ce6c298d31b649ab93fc677',1,'MPL::State']]]
+  ['t',['t',['../structMPL_1_1State.html#a9fed616d0edfaf224b28e3e950b6298b',1,'MPL::State']]],
+  ['t_5f',['t_',['../classPrimitive.html#addf18cdf875316f9c28f95f5d34e8484',1,'Primitive']]],
+  ['taus',['taus',['../classTrajectory.html#ade771595933ca25ab668bf01bf98d569',1,'Trajectory']]],
+  ['total_5ft_5f',['total_t_',['../classTrajectory.html#a1b0a281aec27c849837512b4753ccf03',1,'Trajectory']]],
+  ['traj_5f',['traj_',['../classMPBaseUtil.html#ac4a0b20f7730a9d194d0416f3dea1133',1,'MPBaseUtil']]],
+  ['trajs_5f',['trajs_',['../classPrimitive.html#adb08c85bb9ae72ac3151d6e00b32a173',1,'Primitive']]],
+  ['ts',['Ts',['../classTrajectory.html#a3c66152bb9ecb9cff63309db2c365c32',1,'Trajectory']]]
 ];

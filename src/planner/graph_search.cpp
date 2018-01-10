@@ -278,22 +278,20 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     currNode_ptr->iterationclosed = false;
     ss_ptr->hm_[start_key] = currNode_ptr;
   }
-  // Initialize null goal node
-  if(ss_ptr->need_to_reset_goal_) {
-    if(verbose_)
-      printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
-    ss_ptr->goalNode_ptr_ = nullptr;
-  }
-
+  // Initialize goal node
   StatePtr& goalNode_ptr = ss_ptr->goalNode_ptr_;
   if(!goalNode_ptr) {
     goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-    ss_ptr->need_to_reset_goal_ = false;
+    printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
+  }
+  else if(!ENV->is_goal(goalNode_ptr->coord)) {
+    goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
+    printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
   }
 
-
   int expand_iteration = 0;
-  while(ss_ptr->pq_.top().first < std::min(goalNode_ptr->g, goalNode_ptr->rhs) || goalNode_ptr->rhs != goalNode_ptr->g)
+  //while(ss_ptr->pq_.top().first < std::min(goalNode_ptr->g, goalNode_ptr->rhs) || goalNode_ptr->rhs != goalNode_ptr->g)
+  while(ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) || goalNode_ptr->rhs != goalNode_ptr->g)
   {
     expand_iteration++;
     // Get element with smallest cost
@@ -327,7 +325,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
       StatePtr& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
       if( !(succNode_ptr) ) {
         succNode_ptr = std::make_shared<State>(State(succ_key[s], succ_coord[s]) );
-        succNode_ptr->h = ENV->get_heur( succNode_ptr->coord, currNode_ptr->t + ENV->dt_);   // compute heuristic        
+        succNode_ptr->h = ENV->get_heur(succNode_ptr->coord, currNode_ptr->t + ENV->dt_);   // compute heuristic        
       }
 
       // store the hashkey
@@ -355,16 +353,12 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
       ss_ptr->updateNode(succNode_ptr);
     }
 
-
     // If goal reached, terminate!
     if(ENV->is_goal(currNode_ptr->coord)) 
       goalNode_ptr = currNode_ptr;
     // If maximum time reached, terminate!
-    else if(max_t > 0 && currNode_ptr->t >= max_t) {
-      if(verbose_)
-        printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_t);
-      goalNode_ptr = currNode_ptr;
-    }
+    else if(max_t > 0 && currNode_ptr->t >= max_t) 
+     goalNode_ptr = currNode_ptr;
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -391,22 +385,23 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
 
-  // If no expansion, recover from the goal directly
-  if(expand_iteration == 0) 
-    currNode_ptr = goalNode_ptr;
 
   // Check if the goal is reached, if reached, set the flag to be True
-  if(ENV->is_goal(currNode_ptr->coord)) {
+  if(ENV->is_goal(goalNode_ptr->coord)) {
     if(verbose_) {
       //currNode_ptr->coord.print();
       //ENV->goal_node_.print();
       printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
     }
   }
+  else {
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
+  }
   // Recover trajectory
-  traj = recoverTraj(currNode_ptr, ss_ptr, ENV, start_key);
+  traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
 
-  return currNode_ptr->g;
+  return goalNode_ptr->g;
 }
 
 void StateSpace::checkValidation(const hashMap& hm) {
@@ -464,9 +459,6 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
 
   if(best_child_.empty())
     return;
-  
-  if(!ENV->is_goal(best_child_.back()->coord)) 
-    need_to_reset_goal_ = true;
 
   StatePtr currNode_ptr = best_child_[time_step-1];
   currNode_ptr->pred_action_cost.clear();
@@ -588,9 +580,6 @@ std::vector<Primitive> StateSpace::increaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
-  if(!prs.empty())
-    need_to_reset_goal_ = true;
-
   return prs;
 }
 
@@ -619,14 +608,10 @@ std::vector<Primitive> StateSpace::decreaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
-  if(!prs.empty())
-    need_to_reset_goal_ = true;
- 
   return prs;
 }
 
 inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
-  //printf("update node at t: %f, rhs: %f\n", currNode_ptr->t, currNode_ptr->rhs);
   // if currNode is not start, update its rhs
   // start rhs is assumed to be 0
   if(currNode_ptr->rhs != 0) {

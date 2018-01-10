@@ -103,8 +103,6 @@ namespace MPL
     std::vector<StatePtr> best_child_;
     ///Goal node, initialized as null by default
     StatePtr goalNode_ptr_;
-    ///Internal flag to trigger goal reset 
-    bool need_to_reset_goal_ = false;
     ///Maximum time of the valid trajectories
     double max_t_ = std::numeric_limits<double>::infinity();
 
