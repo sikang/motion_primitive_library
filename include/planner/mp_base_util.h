@@ -38,7 +38,7 @@ class MPBaseUtil
     vec_Vec3f getExpandedNodes() const;
     /**
      * @brief Prune state space
-     * @param time_step set the root of state space to be the waypoint on the best trajectory at best_child_[time_step-1]
+     * @param time_step set the root of state space to be the waypoint on the best trajectory at best_child_[time_step]
      * @param goal used to calculate new heuristics
      */
     void getSubStateSpace(int time_step, const Waypoint& goal);

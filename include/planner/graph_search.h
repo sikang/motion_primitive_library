@@ -111,7 +111,7 @@ namespace MPL
 
     /**
      * @brief Get the subtree
-     * @param time_step indicates the root of the subtree (best_child_[time_step-1])
+     * @param time_step indicates the root of the subtree (best_child_[time_step])
      * @param ENV pointer of `env_base' class
      * @param goal if changed, use new goal to calculate heuristic
      */

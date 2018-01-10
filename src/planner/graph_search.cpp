@@ -60,8 +60,10 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
       break;
     }
 
-    if(currNode_ptr->hashkey == start_key)
+    if(currNode_ptr->hashkey == start_key) {
+      ss_ptr->best_child_.push_back(currNode_ptr);
       break;
+    }
   }
 
   std::reverse(prs.begin(), prs.end());
@@ -460,7 +462,11 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
   if(best_child_.empty())
     return;
 
-  StatePtr currNode_ptr = best_child_[time_step-1];
+
+  bool goal_changed = ENV->goal_node_ != new_goal;
+    
+
+  StatePtr currNode_ptr = best_child_[time_step];
   currNode_ptr->pred_action_cost.clear();
   currNode_ptr->pred_action_id.clear();
   currNode_ptr->pred_hashkey.clear();
@@ -473,6 +479,9 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
     it.second->pred_action_id.clear();
     it.second->pred_hashkey.clear();
     it.second->t = 0;
+    // If goal changed, recalculate the heuristic
+    if(goal_changed )
+      it.second->h = ENV->get_heur(it.second->coord, it.second->t);
   }
 
   currNode_ptr->g = 0;
@@ -542,14 +551,10 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
 
   hm_ = new_hm;
 
-  bool goal_changed = ENV->goal_node_ != new_goal;
   pq_.clear();
   for(auto& it: hm_) {
     if(it.second->iterationopened && !it.second->iterationclosed) {
-      // If goal changed, recalculate the heuristic
-      if(goal_changed)
-        it.second->h = ENV->get_heur(it.second->coord, it.second->t);
-      it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
+     it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
     }
   }
 }
