@@ -463,7 +463,6 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
     return;
 
 
-  bool goal_changed = ENV->goal_node_ != new_goal;
     
 
   StatePtr currNode_ptr = best_child_[time_step];
@@ -479,10 +478,7 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
     it.second->pred_action_id.clear();
     it.second->pred_hashkey.clear();
     it.second->t = 0;
-    // If goal changed, recalculate the heuristic
-    if(goal_changed )
-      it.second->h = ENV->get_heur(it.second->coord, it.second->t);
-  }
+ }
 
   currNode_ptr->g = 0;
   currNode_ptr->rhs = 0;
@@ -550,9 +546,14 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
   }
 
   hm_ = new_hm;
+  bool goal_changed = ENV->goal_node_ != new_goal;
 
   pq_.clear();
   for(auto& it: hm_) {
+    // If goal changed, recalculate the heuristic
+    if(goal_changed )
+      it.second->h = ENV->get_heur(it.second->coord, it.second->t);
+ 
     if(it.second->iterationopened && !it.second->iterationclosed) {
      it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
     }
