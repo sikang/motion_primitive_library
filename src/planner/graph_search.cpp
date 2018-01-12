@@ -348,18 +348,15 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
         succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
       }
       else {
-        succNode_ptr->pred_action_cost[id] = succ_cost[s];
-        succNode_ptr->pred_action_id[id] = succ_act_id[s];
+        //succNode_ptr->pred_action_cost[id] = succ_cost[s];
+        //succNode_ptr->pred_action_id[id] = succ_act_id[s];
       }
 
       ss_ptr->updateNode(succNode_ptr);
     }
 
-    // If goal reached, terminate!
-    if(ENV->is_goal(currNode_ptr->coord)) 
-      goalNode_ptr = currNode_ptr;
-    // If maximum time reached, terminate!
-    else if(max_t > 0 && currNode_ptr->t >= max_t) 
+    // If goal reached or maximum time reached, terminate!
+    if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t >= max_t) )
      goalNode_ptr = currNode_ptr;
 
     // If maximum expansion reached, abort!
