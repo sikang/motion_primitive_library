@@ -141,22 +141,9 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
       /**
        * Comment following if build single connected graph
        */
-      int id = -1;
-      for(unsigned int i = 0; i < succNode_ptr->pred_hashkey.size(); i++) {
-        if(succNode_ptr->pred_hashkey[i] == currNode_ptr->hashkey) {
-          id = i;
-          break;
-        }
-      }
-      if(id == -1) {
-        succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
-        succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
-        succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
-      }
-      else {
-        succNode_ptr->pred_action_cost[id] = succ_cost[s];
-        succNode_ptr->pred_action_id[id] = succ_act_id[s];
-      }
+      succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
+      succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
+      succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
       /**
        * 
        */
@@ -192,14 +179,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
 	  (*succNode_ptr->heapkey).first = fval;     // update heap element
 	  //ss_ptr->pq.update(succNode_ptr->heapkey);
 	  ss_ptr->pq_.increase( succNode_ptr->heapkey );       // update heap
-	}
-	// if currently in CLOSED
-	else if( succNode_ptr->iterationopened && succNode_ptr->iterationclosed)
-	{
-	  printf(ANSI_COLOR_RED "ASTAR ERROR!\n" ANSI_COLOR_RESET);
-	  // succNode_ptr->heapkey = ss_ptr->pq_.push( std::make_pair(fval,succNode_ptr) );
-	  // succNode_ptr->iterationopened = ss_ptr->searchiteration;
-	  // succNode_ptr->iterationclosed = 0;
+	  //printf(ANSI_COLOR_RED "ASTAR ERROR!\n" ANSI_COLOR_RESET);
 	}
 	else // new node, add to heap
 	{
@@ -453,14 +433,10 @@ void StateSpace::checkValidation(const hashMap& hm) {
       hm.size(), open_cnt, close_cnt, null_cnt);
 } 
 
-void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV, const Waypoint& new_goal) {
-  ENV->set_goal(new_goal);
+void StateSpace::getSubStateSpace(int time_step) {
 
   if(best_child_.empty())
     return;
-
-
-    
 
   StatePtr currNode_ptr = best_child_[time_step];
   currNode_ptr->pred_action_cost.clear();
@@ -500,11 +476,8 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
       Key succ_key = currNode_ptr->succ_hashkey[i];
 
       StatePtr& succNode_ptr = new_hm[succ_key];
-      if(!succNode_ptr) {
+      if(!succNode_ptr) 
         succNode_ptr = hm_[succ_key];
-        succNode_ptr->t = currNode_ptr->t + dt_;
-        succNode_ptr->epq_opened = false;
-      }
 
       int id = -1;
       for(unsigned int i = 0; i < succNode_ptr->pred_hashkey.size(); i++) {
@@ -524,18 +497,9 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
       if(tentative_rhs < succNode_ptr->rhs) {
         succNode_ptr->t = currNode_ptr->t + dt_;
         succNode_ptr->rhs = tentative_rhs;
-        if(succNode_ptr->epq_opened) // if succ exists in epq, update epq
-        {
-          (*succNode_ptr->heapkey).first = succNode_ptr->rhs;     // update heap element
-          epq.increase( succNode_ptr->heapkey );       // update heap
-        }
-        else {
-          // if the node is in original closeset, add to epq
-          if(succNode_ptr->iterationclosed) {
-            succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
-            succNode_ptr->heapkey = epq.push( std::make_pair(succNode_ptr->rhs, succNode_ptr) );
-            succNode_ptr->epq_opened = true;
-          }
+        if(succNode_ptr->iterationclosed) {
+          succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
+          succNode_ptr->heapkey = epq.push( std::make_pair(succNode_ptr->rhs, succNode_ptr) );
         }
       }
     }
@@ -543,17 +507,20 @@ void StateSpace::getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV,
   }
 
   hm_ = new_hm;
-  bool goal_changed = ENV->goal_node_ != new_goal;
-
   pq_.clear();
   for(auto& it: hm_) {
-    // If goal changed, recalculate the heuristic
-    if(goal_changed )
-      it.second->h = ENV->get_heur(it.second->coord, it.second->t);
- 
-    if(it.second->iterationopened && !it.second->iterationclosed) {
+    if(it.second->iterationopened && !it.second->iterationclosed) 
      it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
-    }
+  }
+}
+
+void StateSpace::updateGoal(std::shared_ptr<env_base>& ENV, const Waypoint& new_goal) {
+  if(ENV->goal_node_ == new_goal)
+    return;
+  ENV->set_goal(new_goal);
+  for(auto& it: hm_) {
+    // If goal changed, recalculate the heuristic
+      it.second->h = ENV->get_heur(it.second->coord, it.second->t);
   }
 }
 

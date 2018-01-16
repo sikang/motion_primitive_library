@@ -73,7 +73,6 @@ namespace MPL
     double h;
     bool iterationopened = false;
     bool iterationclosed = false;
-    bool epq_opened = false;
 
     /// Simple constructor
     State( Key hashkey, const Waypoint& coord )
@@ -112,10 +111,15 @@ namespace MPL
     /**
      * @brief Get the subtree
      * @param time_step indicates the root of the subtree (best_child_[time_step])
+    */
+    void getSubStateSpace(int time_step);
+    
+    /**
+     * @brief Update goal
      * @param ENV pointer of `env_base' class
      * @param goal if changed, use new goal to calculate heuristic
      */
-    void getSubStateSpace(int time_step, std::shared_ptr<env_base>& ENV, const Waypoint& goal);
+    void updateGoal(std::shared_ptr<env_base>& ENV, const Waypoint& goal);
     ///Increase the cost of actions 
     std::vector<Primitive> increaseCost(std::vector<std::pair<Key, int> > states, const std::shared_ptr<env_base>& ENV);
     ///Decrease the cost of actions

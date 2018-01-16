@@ -176,8 +176,12 @@ vec_Vec3f MPBaseUtil::getExpandedNodes() const {
   return ENV_->expanded_nodes_;
 }
 
-void MPBaseUtil::getSubStateSpace(int time_step, const Waypoint& goal) {
-  ss_ptr_->getSubStateSpace(time_step, ENV_, goal);
+void MPBaseUtil::getSubStateSpace(int time_step) {
+  ss_ptr_->getSubStateSpace(time_step);
+}
+
+void MPBaseUtil::updateGoal(const Waypoint& goal) {
+  ss_ptr_->updateGoal(ENV_, goal);
 }
 
 void MPBaseUtil::checkValidation() {

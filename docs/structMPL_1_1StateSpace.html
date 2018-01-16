@@ -84,9 +84,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726">StateSpace</a> (double eps=1)</td></tr>
 <tr class="memdesc:a2a19cbedb06cdf410402d88e7489b726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor. <br /></td></tr>
 <tr class="separator:a2a19cbedb06cdf410402d88e7489b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9eb316f0219f9db7badf433c33edd48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#aa9eb316f0219f9db7badf433c33edd48">getSubStateSpace</a> (int time_step, std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal)</td></tr>
-<tr class="memdesc:aa9eb316f0219f9db7badf433c33edd48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subtree.  <a href="#aa9eb316f0219f9db7badf433c33edd48">More...</a><br /></td></tr>
-<tr class="separator:aa9eb316f0219f9db7badf433c33edd48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86fc56247c5f39249f673f546c795e17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17">getSubStateSpace</a> (int time_step)</td></tr>
+<tr class="memdesc:a86fc56247c5f39249f673f546c795e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subtree.  <a href="#a86fc56247c5f39249f673f546c795e17">More...</a><br /></td></tr>
+<tr class="separator:a86fc56247c5f39249f673f546c795e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46fd32cc167689fa75539dd9fcf924da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a46fd32cc167689fa75539dd9fcf924da">updateGoal</a> (std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal)</td></tr>
+<tr class="memdesc:a46fd32cc167689fa75539dd9fcf924da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update goal.  <a href="#a46fd32cc167689fa75539dd9fcf924da">More...</a><br /></td></tr>
+<tr class="separator:a46fd32cc167689fa75539dd9fcf924da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1716ae56fb26029a6b7335a959588be7"><td class="memItemLeft" align="right" valign="top"><a id="a1716ae56fb26029a6b7335a959588be7"></a>
 std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a1716ae56fb26029a6b7335a959588be7">increaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV)</td></tr>
 <tr class="memdesc:a1716ae56fb26029a6b7335a959588be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the cost of actions. <br /></td></tr>
@@ -142,8 +145,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa9eb316f0219f9db7badf433c33edd48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9eb316f0219f9db7badf433c33edd48">&#9670;&nbsp;</a></span>getSubStateSpace()</h2>
+<a id="a86fc56247c5f39249f673f546c795e17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86fc56247c5f39249f673f546c795e17">&#9670;&nbsp;</a></span>getSubStateSpace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,11 +155,31 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
           <td class="memname">void StateSpace::getSubStateSpace </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>time_step</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>time_step</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the subtree. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time_step</td><td>indicates the root of the subtree (best_child_[time_step]) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a46fd32cc167689fa75539dd9fcf924da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46fd32cc167689fa75539dd9fcf924da">&#9670;&nbsp;</a></span>updateGoal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateSpace::updateGoal </td>
+          <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>ENV</em>, </td>
         </tr>
@@ -174,10 +197,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
       </table>
 </div><div class="memdoc">
 
-<p>Get the subtree. </p>
+<p>Update goal. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">time_step</td><td>indicates the root of the subtree (best_child_[time_step]) </td></tr>
     <tr><td class="paramname">ENV</td><td>pointer of `env_base' class </td></tr>
     <tr><td class="paramname">goal</td><td>if changed, use new goal to calculate heuristic </td></tr>
   </table>
