@@ -306,8 +306,13 @@ Waypoint Primitive::evaluate(decimal_t t) const {
 std::vector<Waypoint> Primitive::sample(int N) const {
   std::vector<Waypoint> ps;
   decimal_t dt = t_ / N;
+  /*
   for(decimal_t t = 0; t <= t_; t+= dt)
       ps.push_back(evaluate(t));
+      */
+  for(int i = 0; i <= N; i ++)
+      ps.push_back(evaluate(i*dt));
+ 
   return ps;
 }
 

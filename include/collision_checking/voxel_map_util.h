@@ -26,7 +26,8 @@ public:
   }
 
   inline Vec3f intToFloat(const Vec3i &pp) {
-    return (pp.cast<decimal_t>() + Vec3f::Constant(0.5)) * res_ + origin_d_;
+    //return (pp.cast<decimal_t>() + Vec3f::Constant(0.5)) * res_ + origin_d_;
+    return pp.cast<decimal_t>() * res_ + origin_d_;
   }
 
   inline Vec3i floatToInt(const Vec3f &pt) {

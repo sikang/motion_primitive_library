@@ -25,7 +25,7 @@ vec_Vec3f MPMapUtil::getLinkedNodes() const {
       Primitive pr;
       ENV_->forward_action( ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
       double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
-      int n = std::ceil(max_v * pr.t() / map_util_->getRes());
+      int n = 1.0 * std::ceil(max_v * pr.t() / map_util_->getRes());
       int prev_id = -1;
       std::vector<Waypoint> ws = pr.sample(n);
       for(const auto& w: ws) {
