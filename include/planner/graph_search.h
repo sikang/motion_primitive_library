@@ -100,8 +100,6 @@ namespace MPL
     double dt_;
     ///The best trajectory from previous plan
     std::vector<StatePtr> best_child_;
-    ///Goal node, initialized as null by default
-    StatePtr goalNode_ptr_;
     ///Maximum time of the valid trajectories
     double max_t_ = std::numeric_limits<double>::infinity();
 

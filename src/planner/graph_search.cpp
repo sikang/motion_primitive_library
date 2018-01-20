@@ -261,14 +261,18 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     ss_ptr->hm_[start_key] = currNode_ptr;
   }
   // Initialize goal node
-  StatePtr& goalNode_ptr = ss_ptr->goalNode_ptr_;
-  if(!goalNode_ptr) {
+  //StatePtr& goalNode_ptr = ss_ptr->goalNode_ptr_;
+  StatePtr goalNode_ptr;
+  if(ss_ptr->best_child_.empty()) {
     goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
     printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
   }
-  else if(!ENV->is_goal(goalNode_ptr->coord)) {
-    goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-    printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
+  else {
+    goalNode_ptr = ss_ptr->best_child_.back();
+    if(!ENV->is_goal(goalNode_ptr->coord)) {
+      goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
+      printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
+    }
   }
 
   int expand_iteration = 0;

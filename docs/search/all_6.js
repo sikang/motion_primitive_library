@@ -24,7 +24,6 @@ var searchData=
   ['getws',['getWs',['../classMPBaseUtil.html#ae9f6683380b22548a1d1136319ff463e',1,'MPBaseUtil']]],
   ['goal_5fnode_5f',['goal_node_',['../classMPL_1_1env__base.html#a42222f6c6f6c69d977e3cfe549d8aa76',1,'MPL::env_base']]],
   ['goal_5foutside',['goal_outside',['../classMPL_1_1env__base.html#a18d8dfe720dafe2fde2d4e2acef00d33',1,'MPL::env_base']]],
-  ['goalnode_5fptr_5f',['goalNode_ptr_',['../structMPL_1_1StateSpace.html#a4e0c8534fb0c3f6df6869b9bce455e22',1,'MPL::StateSpace']]],
   ['graph_5fsearch_2eh',['graph_search.h',['../graph__search_8h.html',1,'']]],
   ['graphsearch',['GraphSearch',['../classMPL_1_1GraphSearch.html',1,'MPL::GraphSearch'],['../classMPL_1_1GraphSearch.html#a32b762065c805a769d55c64c662d4fc5',1,'MPL::GraphSearch::GraphSearch()']]]
 ];
