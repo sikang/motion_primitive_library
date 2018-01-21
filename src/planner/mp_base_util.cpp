@@ -172,6 +172,15 @@ vec_Vec3f MPBaseUtil::getCloseSet() const {
   return ps;
 }
 
+vec_Vec3f MPBaseUtil::getNullSet() const {
+  vec_Vec3f ps;
+  for(const auto& it: ss_ptr_->hm_) {
+    if(it.second && !it.second->iterationopened)
+      ps.push_back(it.second->coord.pos);
+  }
+  return ps;
+}
+
 vec_Vec3f MPBaseUtil::getExpandedNodes() const {
   return ENV_->expanded_nodes_;
 }

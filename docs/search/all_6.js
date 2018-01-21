@@ -11,6 +11,7 @@ var searchData=
   ['getindex',['getIndex',['../classMPL_1_1MapUtilBase.html#af75ee4a39fde320876c37f52050ef3f3',1,'MPL::MapUtilBase::getIndex()'],['../classMPL_1_1VoxelMapUtil.html#a5061722661d22fd8f615fd98c5708914',1,'MPL::VoxelMapUtil::getIndex()']]],
   ['getlinkednodes',['getLinkedNodes',['../classMPMapUtil.html#a4776ce09a542593304569ac76aca59e9',1,'MPMapUtil']]],
   ['getmap',['getMap',['../classMPL_1_1MapUtilBase.html#ad121768e086ec3d31e49cba615709ffc',1,'MPL::MapUtilBase']]],
+  ['getnullset',['getNullSet',['../classMPBaseUtil.html#a27f2b3f2f59f24d9815aca58466cccac',1,'MPBaseUtil']]],
   ['getopenset',['getOpenSet',['../classMPBaseUtil.html#abd774b351f528f9257db3f5876c77471',1,'MPBaseUtil']]],
   ['getorigin',['getOrigin',['../classMPL_1_1MapUtilBase.html#ab61c6dcb2b2a1a7345c79c67c3b4c338',1,'MPL::MapUtilBase']]],
   ['getpolyhedra',['getPolyhedra',['../classMPCloudUtil.html#a6e0992436c35fa6013d0d5f908db8796',1,'MPCloudUtil']]],

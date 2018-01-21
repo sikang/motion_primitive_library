@@ -12,8 +12,10 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
   std::vector<Primitive> prs;
   while( !currNode_ptr->pred_hashkey.empty())
   {
-    if(verbose_)
+    if(verbose_) {
       std::cout << "t: " << currNode_ptr->t << " --> " << currNode_ptr->t - ss_ptr->dt_ << std::endl;
+      printf("g: %f, rhs: %f, opened: %d, closed: %d\n", currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->iterationopened, currNode_ptr->iterationclosed);
+    }
     ss_ptr->best_child_.push_back(currNode_ptr);
     int min_id = -1;
     double min_rhs = std::numeric_limits<double>::infinity();
@@ -44,7 +46,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
       prs.push_back(pr);
       if(verbose_) {
         //std::cout << "parent t: " << currNode_ptr->t << " key: " << key << std::endl;
-        printf("Take action id: %d,  action cost: J: [%f, %f, %f]\n", action_idx, pr.J(0), pr.J(1), pr.J(2));
+        //printf("Take action id: %d,  action cost: J: [%f, %f, %f]\n", action_idx, pr.J(0), pr.J(1), pr.J(2));
         //print_coeffs(pr);
       }
     }
@@ -423,7 +425,7 @@ void StateSpace::checkValidation(const hashMap& hm) {
   int close_cnt = 0;
   for(const auto& it: hm) {
     if(it.second->iterationopened && it.second->iterationclosed) {
-      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
       close_cnt ++;
     }
   }
@@ -433,7 +435,7 @@ void StateSpace::checkValidation(const hashMap& hm) {
   int open_cnt = 0;
   for(const auto& it: hm) {
     if(it.second->iterationopened && !it.second->iterationclosed) {
-      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
       open_cnt ++;
     }
   }
@@ -443,7 +445,7 @@ void StateSpace::checkValidation(const hashMap& hm) {
   int null_cnt = 0;
   for(const auto& it: hm) {
     if(!it.second->iterationopened) {
-      //printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
       null_cnt ++;
     }
   }
@@ -534,6 +536,8 @@ void StateSpace::getSubStateSpace(int time_step) {
     if(it.second->iterationopened && !it.second->iterationclosed) 
       it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
   }
+
+  //checkValidation(hm_);
 }
 
 void StateSpace::updateGoal(std::shared_ptr<env_base>& ENV, const Waypoint& new_goal) {

@@ -30,11 +30,13 @@ class MPBaseUtil
     std::vector<Primitive> getValidPrimitives() const;
     ///Get expanded primitives
     std::vector<Primitive> getAllPrimitives() const;
-    ///Get ps in open set
+    ///Get points in open set
     vec_Vec3f getOpenSet() const;
-    ///Get ps in close set
+    ///Get points in close set
     vec_Vec3f getCloseSet() const;
-    ///Get expanded node
+    ///Get points neither in open nor close set
+    vec_Vec3f getNullSet() const;
+    ///Get expanded points, for A* it should be the same as the close set
     vec_Vec3f getExpandedNodes() const;
     /**
      * @brief Prune state space
