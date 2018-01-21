@@ -480,22 +480,18 @@ void StateSpace::getSubStateSpace(int time_step) {
   currNode_ptr->heapkey = epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
   new_hm[currNode_ptr->hashkey] = currNode_ptr;
 
+  const double max_t = max_t_ - (time_step - 1) * dt_;
   while(!epq.empty()) {
     currNode_ptr = epq.top().second; epq.pop();
-    /*
-    // If reached maximum time, reopen it and clear successors array
-    if(currNode_ptr->t >= max_t_) {
-      printf("reach max time!!!! %f\n\n\n\n", currNode_ptr->t);
+
+    if(currNode_ptr->t >= max_t) {
       currNode_ptr->iterationclosed = false;
       currNode_ptr->g = std::numeric_limits<double>::infinity();
+      currNode_ptr->succ_coord.clear();
       currNode_ptr->succ_hashkey.clear();
       currNode_ptr->succ_action_cost.clear();
       currNode_ptr->succ_action_id.clear();
-      continue;
     }
-    //else
-      //currNode_ptr->iterationclosed = true;
-      */
 
     for(unsigned int i = 0; i < currNode_ptr->succ_hashkey.size(); i++) {
       Key succ_key = currNode_ptr->succ_hashkey[i];
@@ -526,6 +522,7 @@ void StateSpace::getSubStateSpace(int time_step) {
           succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
           succNode_ptr->heapkey = epq.push( std::make_pair(succNode_ptr->rhs, succNode_ptr) );
         }
+
       }
     }
 
@@ -535,7 +532,7 @@ void StateSpace::getSubStateSpace(int time_step) {
   pq_.clear();
   for(auto& it: hm_) {
     if(it.second->iterationopened && !it.second->iterationclosed) 
-     it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
+      it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
   }
 }
 
