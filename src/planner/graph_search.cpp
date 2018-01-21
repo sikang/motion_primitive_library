@@ -244,7 +244,10 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     return 0;
   }
 
+
+  // set Tmax in ss_ptr
   ss_ptr->max_t_ = max_t > 0 ? max_t : std::numeric_limits<double>::infinity();
+
   // Initialize start node
   StatePtr currNode_ptr = ss_ptr->hm_[start_key];
   if(!currNode_ptr) {
@@ -260,23 +263,23 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     currNode_ptr->iterationclosed = false;
     ss_ptr->hm_[start_key] = currNode_ptr;
   }
+
   // Initialize goal node
-  //StatePtr& goalNode_ptr = ss_ptr->goalNode_ptr_;
   StatePtr goalNode_ptr;
   if(ss_ptr->best_child_.empty()) {
     goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-    printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_GREEN "Initialize goal!\n" ANSI_COLOR_RESET);
   }
   else {
     goalNode_ptr = ss_ptr->best_child_.back();
-    if(!ENV->is_goal(goalNode_ptr->coord)) {
+    // If it is close to goal or the trajectory is blocked, reset goal
+    if(!ENV->is_goal(goalNode_ptr->coord) && ss_ptr->isBlocked()) {
       goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
       printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
     }
   }
 
   int expand_iteration = 0;
-  //while(ss_ptr->pq_.top().first < std::min(goalNode_ptr->g, goalNode_ptr->rhs) || goalNode_ptr->rhs != goalNode_ptr->g)
   while(ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) || goalNode_ptr->rhs != goalNode_ptr->g)
   {
     expand_iteration++;
@@ -285,6 +288,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     ss_ptr->pq_.pop(); 
     currNode_ptr->iterationclosed = true; // Add to closed list
 
+
     if(currNode_ptr->g > currNode_ptr->rhs) 
       currNode_ptr->g = currNode_ptr->rhs;
     else {
@@ -292,20 +296,24 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
       ss_ptr->updateNode(currNode_ptr);
     }
 
-
     // Get successors
-    std::vector<Waypoint> succ_coord;
-    std::vector<MPL::Key> succ_key;
-    std::vector<double> succ_cost;
-    std::vector<int> succ_act_id;
+    std::vector<Waypoint> succ_coord = currNode_ptr->succ_coord;
+    std::vector<MPL::Key> succ_key = currNode_ptr->succ_hashkey;
+    std::vector<double> succ_cost = currNode_ptr->succ_action_cost;
+    std::vector<int> succ_act_id = currNode_ptr->succ_action_id;
 
-    ENV->get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
-    currNode_ptr->succ_hashkey.resize(succ_coord.size());
-    currNode_ptr->succ_action_id.resize(succ_coord.size());
-    currNode_ptr->succ_action_cost.resize(succ_coord.size());
+    bool explored = false;
+    if(currNode_ptr->succ_hashkey.empty()) {
+      explored= true;
+      ENV->get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
+      currNode_ptr->succ_coord.resize(succ_coord.size());
+      currNode_ptr->succ_hashkey.resize(succ_coord.size());
+      currNode_ptr->succ_action_id.resize(succ_coord.size());
+      currNode_ptr->succ_action_cost.resize(succ_coord.size());
+    }
 
     // Process successors
-    for( unsigned s = 0; s < succ_coord.size(); ++s )
+    for( unsigned s = 0; s < succ_key.size(); ++s )
     {
       // Get child
       StatePtr& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
@@ -315,9 +323,12 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
       }
 
       // store the hashkey
-      currNode_ptr->succ_hashkey[s] = succ_key[s];
-      currNode_ptr->succ_action_id[s] = succ_act_id[s];
-      currNode_ptr->succ_action_cost[s] = succ_cost[s];
+      if(explored) {
+        currNode_ptr->succ_coord[s] = succ_coord[s];
+        currNode_ptr->succ_hashkey[s] = succ_key[s];
+        currNode_ptr->succ_action_id[s] = succ_act_id[s];
+        currNode_ptr->succ_action_cost[s] = succ_cost[s];
+      }
 
       int id = -1;
       for(unsigned int i = 0; i < succNode_ptr->pred_hashkey.size(); i++) {
@@ -341,7 +352,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
     // If goal reached or maximum time reached, terminate!
     if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t >= max_t) )
-     goalNode_ptr = currNode_ptr;
+      goalNode_ptr = currNode_ptr;
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -380,7 +391,11 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   else {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
+    
+    goalNode_ptr->g = std::numeric_limits<double>::infinity();
+    ss_ptr->updateNode(goalNode_ptr);
   }
+
   // Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
 
@@ -467,14 +482,20 @@ void StateSpace::getSubStateSpace(int time_step) {
 
   while(!epq.empty()) {
     currNode_ptr = epq.top().second; epq.pop();
+    /*
     // If reached maximum time, reopen it and clear successors array
     if(currNode_ptr->t >= max_t_) {
+      printf("reach max time!!!! %f\n\n\n\n", currNode_ptr->t);
       currNode_ptr->iterationclosed = false;
       currNode_ptr->g = std::numeric_limits<double>::infinity();
       currNode_ptr->succ_hashkey.clear();
       currNode_ptr->succ_action_cost.clear();
       currNode_ptr->succ_action_id.clear();
+      continue;
     }
+    //else
+      //currNode_ptr->iterationclosed = true;
+      */
 
     for(unsigned int i = 0; i < currNode_ptr->succ_hashkey.size(); i++) {
       Key succ_key = currNode_ptr->succ_hashkey[i];
@@ -614,6 +635,15 @@ inline void StateSpace::updateNode(StatePtr& currNode_ptr) {
     currNode_ptr->iterationclosed = false;
   }
 }
+
+bool StateSpace::isBlocked() {
+  for(const auto& ptr: best_child_) {
+    if(ptr->g != ptr->rhs)
+      return true;
+  }
+  return false;
+}
+
 
 inline double StateSpace::calculateKey(const StatePtr& node) {
   return std::min(node->g, node->rhs) + eps_ * node->h;

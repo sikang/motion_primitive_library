@@ -41,7 +41,8 @@ namespace MPL
   ///Define priority queue
   template <class state>
   using priorityQueue = boost::heap::d_ary_heap<std::pair<double,std::shared_ptr<state>>, boost::heap::mutable_<true>, boost::heap::arity<2>, boost::heap::compare< compare_pair<state> >>;
-  
+
+ 
   ///Lattice of the graph in graph search
   struct State
   {
@@ -51,6 +52,8 @@ namespace MPL
     Waypoint coord; 
     /// minimum arrival time
     double t;
+    /// coordinates of successors
+    std::vector<Waypoint> succ_coord;
     /// hashkey of successors
     std::vector<Key> succ_hashkey;
     /// action id of successors
@@ -128,6 +131,8 @@ namespace MPL
     ///Calculate the fval as min(rhs, g) + h
     double calculateKey(const StatePtr& node);
 
+    ///Check if the trajectory is blocked by new obstacle
+    bool isBlocked();
     ///Internal function to check if the graph is valid
     void checkValidation(const hashMap& hm);
   };
