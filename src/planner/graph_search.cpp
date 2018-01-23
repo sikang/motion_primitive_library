@@ -1,6 +1,7 @@
 #include <planner/graph_search.h>
 #include <planner/env_base.h>
 #include <primitive/primitive_util.h>
+#include <chrono>                          // std::chrono
 
 using namespace MPL;
 
@@ -229,6 +230,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
   }
  
 
+  ss_ptr->expand_iteration_ = expand_iteration;
   traj = recoverTraj(currNode_ptr, ss_ptr, ENV, start_key);
   return currNode_ptr->g;
 }
@@ -270,16 +272,11 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   StatePtr goalNode_ptr;
   if(ss_ptr->best_child_.empty()) {
     goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-    printf(ANSI_COLOR_GREEN "Initialize goal!\n" ANSI_COLOR_RESET);
+    if(verbose_)
+      printf(ANSI_COLOR_GREEN "Initialize goal!\n" ANSI_COLOR_RESET);
   }
-  else {
+  else 
     goalNode_ptr = ss_ptr->best_child_.back();
-    // If it is close to goal or the trajectory is blocked, reset goal
-    if(!ENV->is_goal(goalNode_ptr->coord) && ss_ptr->isBlocked()) {
-      goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-      printf(ANSI_COLOR_GREEN "Reset goal!\n" ANSI_COLOR_RESET);
-    }
-  }
 
   int expand_iteration = 0;
   while(ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) || goalNode_ptr->rhs != goalNode_ptr->g)
@@ -398,9 +395,14 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     ss_ptr->updateNode(goalNode_ptr);
   }
 
+  //auto start = std::chrono::high_resolution_clock::now();
   // Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
+  
+  //std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
+  //printf("time for recovering: %f, expand: %d\n", elapsed_seconds.count(), expand_iteration);
 
+  ss_ptr->expand_iteration_ = expand_iteration;
   return goalNode_ptr->g;
 }
 

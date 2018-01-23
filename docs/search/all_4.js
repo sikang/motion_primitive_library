@@ -11,6 +11,7 @@ var searchData=
   ['eps_5f',['eps_',['../structMPL_1_1StateSpace.html#a364c9942e6a22c0e5b94a4fe1f9f9a5f',1,'MPL::StateSpace']]],
   ['epsilon_5f',['epsilon_',['../classMPBaseUtil.html#a532897035738c4d196ecd73c751ad5bd',1,'MPBaseUtil']]],
   ['evaluate',['evaluate',['../classPolyTraj.html#a8663ff214c668df3e05bf0be49f775d4',1,'PolyTraj::evaluate()'],['../classPrimitive1D.html#aa0d13c98c000a492a0a67ff517a013a5',1,'Primitive1D::evaluate()'],['../classPrimitive.html#a0d263bca7ef33d0f343fd94fee0bc6ce',1,'Primitive::evaluate()'],['../classTrajectory.html#a4e22aeb1c664fe36c6921f0c42687dbc',1,'Trajectory::evaluate()']]],
+  ['expand_5fiteration_5f',['expand_iteration_',['../structMPL_1_1StateSpace.html#ae6060523e8ae45f726b60cb1b4e0886d',1,'MPL::StateSpace']]],
   ['expanded_5fnodes_5f',['expanded_nodes_',['../classMPL_1_1env__base.html#a2e920048a984a5f0deeec48cee24aeaa',1,'MPL::env_base']]],
   ['extrema_5facc',['extrema_acc',['../classPrimitive1D.html#a00a5b5014236f4ca0ba6d35ae17e7db5',1,'Primitive1D']]],
   ['extrema_5fjrk',['extrema_jrk',['../classPrimitive1D.html#ad14e37d4e0643c64a373e348296981e6',1,'Primitive1D']]],

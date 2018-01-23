@@ -185,6 +185,10 @@ vec_Vec3f MPBaseUtil::getExpandedNodes() const {
   return ENV_->expanded_nodes_;
 }
 
+int MPBaseUtil::getExpandedNum() const {
+  return ss_ptr_->expand_iteration_;
+}
+
 void MPBaseUtil::getSubStateSpace(int time_step) {
   ss_ptr_->getSubStateSpace(time_step);
 }
@@ -243,7 +247,7 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
   }
 
 
-  std::unique_ptr<MPL::GraphSearch> planner_ptr(new MPL::GraphSearch(true));
+  std::unique_ptr<MPL::GraphSearch> planner_ptr(new MPL::GraphSearch(planner_verbose_));
 
   // If use A*, reset the state space 
   if(!use_lpastar_) 
@@ -251,7 +255,8 @@ bool MPBaseUtil::plan(const Waypoint &start, const Waypoint &goal) {
   else {
     // If use LPA*, reset the state space only at the initial planning
     if(!initialized()) {
-      printf(ANSI_COLOR_CYAN "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
+      if(planner_verbose_)
+        printf(ANSI_COLOR_CYAN "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
       ss_ptr_.reset(new MPL::StateSpace(epsilon_));
     }
   }

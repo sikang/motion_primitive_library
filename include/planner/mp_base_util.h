@@ -38,6 +38,8 @@ class MPBaseUtil
     vec_Vec3f getNullSet() const;
     ///Get expanded points, for A* it should be the same as the close set
     vec_Vec3f getExpandedNodes() const;
+    ///Get number of expanded nodes
+    int getExpandedNum() const;
     /**
      * @brief Prune state space
      * @param time_step set the root of state space to be the waypoint on the best trajectory at best_child_[time_step]

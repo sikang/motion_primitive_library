@@ -11,7 +11,6 @@
 #include <limits>                         // std::numeric_limits
 #include <vector>                         // std::vector
 #include <unordered_map>                  // std::unordered_map
-#include <array>                          // std::array
 #include <primitive/trajectory.h>
 
 namespace MPL
@@ -29,10 +28,10 @@ namespace MPL
     bool operator()(const std::pair<double,std::shared_ptr<state>>& p1, 
                     const std::pair<double,std::shared_ptr<state>>& p2) const
     {
-      if( (p1.first >= p2.first - 0.000001) && (p1.first <= p2.first + 0.000001) )
+      if( p1.first == p2.first )
       {
         // if equal compare gvals
-        return std::min(p1.second->g, p1.second->rhs) < std::min(p2.second->g, p2.second->rhs);
+        return std::min(p1.second->g, p1.second->rhs) > std::min(p2.second->g, p2.second->rhs);
       }
       return p1.first > p2.first;
     }
@@ -105,6 +104,8 @@ namespace MPL
     std::vector<StatePtr> best_child_;
     ///Maximum time of the valid trajectories
     double max_t_ = std::numeric_limits<double>::infinity();
+    ///Number of expansion iteration
+    int expand_iteration_ = 0;
 
     ///Simple constructor
     StateSpace(double eps = 1): eps_(eps){}
@@ -181,7 +182,8 @@ namespace MPL
       double LPAstar(const Waypoint& start_coord, Key start_key, 
           const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
           Trajectory& traj, int max_expand = -1, double max_t = 0);
-    private:
+
+   private:
       ///Recover trajectory 
       Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> ss_ptr, 
           const std::shared_ptr<env_base>& ENV, const Key& start_idx);
