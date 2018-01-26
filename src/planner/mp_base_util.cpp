@@ -10,6 +10,10 @@ bool MPBaseUtil::initialized() {
   return !(ss_ptr_ == nullptr);
 }
 
+void MPBaseUtil::reset() {
+  ss_ptr_ = nullptr;
+}
+
 void MPBaseUtil::setLPAstar(bool use_lpastar) {
   use_lpastar_ =  use_lpastar;
   if(use_lpastar_)

@@ -143,13 +143,11 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
 
       /**
        * Comment following if build single connected graph
-       */
+       * */
       succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
       succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
       succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
-      /**
-       * 
-       */
+       //*/
 
 
       // see if we can improve the value of successor
@@ -269,15 +267,11 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   }
 
   // Initialize goal node
-  StatePtr goalNode_ptr;
-  if(ss_ptr->best_child_.empty()) {
-    goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-    if(verbose_)
-      printf(ANSI_COLOR_GREEN "Initialize goal!\n" ANSI_COLOR_RESET);
-  }
-  else 
-    goalNode_ptr = ss_ptr->best_child_.back();
+  StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
+  //if(!ss_ptr->best_child_.empty()) 
+    //goalNode_ptr = ss_ptr->best_child_.back();
 
+  std::vector<StatePtr> state_goback_;
   int expand_iteration = 0;
   while(ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) || goalNode_ptr->rhs != goalNode_ptr->g)
   {
@@ -350,8 +344,11 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     }
 
     // If goal reached or maximum time reached, terminate!
-    if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t >= max_t) )
+    if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t == max_t) ) {
+      state_goback_.push_back(currNode_ptr);
       goalNode_ptr = currNode_ptr;
+      continue;
+    }
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -382,20 +379,19 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   // Check if the goal is reached, if reached, set the flag to be True
   if(ENV->is_goal(goalNode_ptr->coord)) {
     if(verbose_) {
-      //currNode_ptr->coord.print();
-      //ENV->goal_node_.print();
       printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
     }
-  }
-  else {
-    if(verbose_)
-      printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
-    
-    goalNode_ptr->g = std::numeric_limits<double>::infinity();
-    ss_ptr->updateNode(goalNode_ptr);
+    else {
+      if(verbose_)
+        printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
+      for(auto & it: state_goback_) {
+        it->g = std::numeric_limits<double>::infinity();
+        ss_ptr->updateNode(it);
+      }
+    }
   }
 
-  //auto start = std::chrono::high_resolution_clock::now();
+ //auto start = std::chrono::high_resolution_clock::now();
   // Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
   

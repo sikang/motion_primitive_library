@@ -54,6 +54,8 @@ class MPBaseUtil
     ///Check tree validation
     void checkValidation();
 
+    ///Reset state space
+    void reset();
     ///Set max vel in each axis
     void setLPAstar(bool use_lpastar);
     ///Set max vel in each axis
