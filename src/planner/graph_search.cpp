@@ -268,10 +268,9 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
   // Initialize goal node
   StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-  //if(!ss_ptr->best_child_.empty()) 
-    //goalNode_ptr = ss_ptr->best_child_.back();
+  if(!ss_ptr->best_child_.empty()) 
+    goalNode_ptr = ss_ptr->best_child_.back();
 
-  std::vector<StatePtr> state_goback_;
   int expand_iteration = 0;
   while(ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) || goalNode_ptr->rhs != goalNode_ptr->g)
   {
@@ -335,20 +334,13 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
         succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
         succNode_ptr->pred_action_id.push_back(succ_act_id[s]);
       }
-      else {
-        //succNode_ptr->pred_action_cost[id] = succ_cost[s];
-        //succNode_ptr->pred_action_id[id] = succ_act_id[s];
-      }
 
       ss_ptr->updateNode(succNode_ptr);
     }
 
     // If goal reached or maximum time reached, terminate!
-    if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t == max_t) ) {
-      state_goback_.push_back(currNode_ptr);
+    if(ENV->is_goal(currNode_ptr->coord) || (max_t > 0 && currNode_ptr->t == max_t) ) 
       goalNode_ptr = currNode_ptr;
-      continue;
-    }
 
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
@@ -366,7 +358,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   }
 
  
-  // Report value of goal
+  //***** Report value of goal
   if(verbose_) {
     printf(ANSI_COLOR_GREEN "goalNode fval: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET, 
         ss_ptr->calculateKey(goalNode_ptr), goalNode_ptr->g, goalNode_ptr->rhs);
@@ -376,23 +368,16 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   }
 
 
-  // Check if the goal is reached, if reached, set the flag to be True
-  if(ENV->is_goal(goalNode_ptr->coord)) {
-    if(verbose_) {
+  //****** Check if the goal is reached, if reached, set the flag to be True
+  if(verbose_) {
+    if(ENV->is_goal(goalNode_ptr->coord)) 
       printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
-    }
-    else {
-      if(verbose_)
-        printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
-      for(auto & it: state_goback_) {
-        it->g = std::numeric_limits<double>::infinity();
-        ss_ptr->updateNode(it);
-      }
-    }
+    else 
+      printf(ANSI_COLOR_GREEN "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET, goalNode_ptr->t);
   }
 
- //auto start = std::chrono::high_resolution_clock::now();
-  // Recover trajectory
+  // auto start = std::chrono::high_resolution_clock::now();
+  //****** Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
   
   //std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
@@ -403,7 +388,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 }
 
 void StateSpace::checkValidation(const hashMap& hm) {
-  // Check if there is null element in succ graph
+  //****** Check if there is null element in succ graph
   for(const auto& it: hm) {
     if(!it.second) {
       std::cout << "error!!! null element at key: " << it.first << std::endl;
@@ -418,7 +403,7 @@ void StateSpace::checkValidation(const hashMap& hm) {
   }
   */
 
-  // Check rhs and g value of close set
+  //****** Check rhs and g value of close set
   printf("Check rhs and g value of closeset\n");
   int close_cnt = 0;
   for(const auto& it: hm) {
@@ -453,7 +438,6 @@ void StateSpace::checkValidation(const hashMap& hm) {
 } 
 
 void StateSpace::getSubStateSpace(int time_step) {
-
   if(best_child_.empty())
     return;
 
@@ -470,7 +454,7 @@ void StateSpace::getSubStateSpace(int time_step) {
     it.second->pred_action_id.clear();
     it.second->pred_hashkey.clear();
     it.second->t = 0;
- }
+  }
 
   currNode_ptr->g = 0;
   currNode_ptr->rhs = 0;
@@ -534,6 +518,8 @@ void StateSpace::getSubStateSpace(int time_step) {
     if(it.second->iterationopened && !it.second->iterationclosed) 
       it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
   }
+
+  best_child_.clear();
 
   //checkValidation(hm_);
 }
