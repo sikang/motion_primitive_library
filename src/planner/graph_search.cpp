@@ -268,7 +268,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
   // Initialize goal node
   StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-  if(!ss_ptr->best_child_.empty()) 
+  if(!ss_ptr->best_child_.empty() && ENV->is_goal(ss_ptr->best_child_.back()->coord)) 
     goalNode_ptr = ss_ptr->best_child_.back();
 
   int expand_iteration = 0;
@@ -464,11 +464,10 @@ void StateSpace::getSubStateSpace(int time_step) {
   currNode_ptr->heapkey = epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
   new_hm[currNode_ptr->hashkey] = currNode_ptr;
 
-  const double max_t = max_t_ - (time_step - 1) * dt_;
   while(!epq.empty()) {
     currNode_ptr = epq.top().second; epq.pop();
 
-    if(currNode_ptr->t >= max_t) {
+    if(currNode_ptr->t == max_t_) {
       currNode_ptr->iterationclosed = false;
       currNode_ptr->g = std::numeric_limits<double>::infinity();
       currNode_ptr->succ_coord.clear();
@@ -519,8 +518,6 @@ void StateSpace::getSubStateSpace(int time_step) {
       it.second->heapkey = pq_.push( std::make_pair(calculateKey(it.second), it.second) );
   }
 
-  best_child_.clear();
-
   //checkValidation(hm_);
 }
 
@@ -560,6 +557,7 @@ std::vector<Primitive> StateSpace::increaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
+  best_child_.clear();
   return prs;
 }
 
@@ -588,6 +586,7 @@ std::vector<Primitive> StateSpace::decreaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
+  best_child_.clear();
   return prs;
 }
 
