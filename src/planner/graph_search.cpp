@@ -557,7 +557,6 @@ std::vector<Primitive> StateSpace::increaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
-  best_child_.clear();
   return prs;
 }
 
@@ -586,7 +585,6 @@ std::vector<Primitive> StateSpace::decreaseCost(std::vector<std::pair<Key, int> 
     }
   }
 
-  best_child_.clear();
   return prs;
 }
 

@@ -20,5 +20,6 @@ var searchData=
   ['print_5fcoeffs',['print_coeffs',['../primitive__util_8h.html#a6a19aeb51fc7f9a191f0fff0398fe351',1,'primitive_util.cpp']]],
   ['print_5fmax',['print_max',['../primitive__util_8h.html#a97ad0b9667c934402eb9fc1aa2cf9d70',1,'primitive_util.cpp']]],
   ['prior_5ftraj_5f',['prior_traj_',['../classMPL_1_1env__base.html#a6ac77c8b3520b26b344b061c04affd70',1,'MPL::env_base']]],
-  ['priorityqueue',['priorityQueue',['../namespaceMPL.html#af10a63545f5d7e532249379196d7f84c',1,'MPL']]]
+  ['priorityqueue',['priorityQueue',['../namespaceMPL.html#af10a63545f5d7e532249379196d7f84c',1,'MPL']]],
+  ['prs_5f',['prs_',['../classPrimitive.html#a78ffa023da2d325d034e08b6929cc97d',1,'Primitive']]]
 ];

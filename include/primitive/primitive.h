@@ -120,7 +120,7 @@ class Primitive1D {
      */
     std::vector<decimal_t> extrema_jrk(decimal_t t) const;
  
-  private:
+  public:
     /**@brief Coefficients*/
     Vec6f c;
 };
@@ -210,8 +210,9 @@ class Primitive {
  protected:
   ///Duration
   decimal_t t_;
+ public:
   ///By default, primitive class contains three 1D primitive
-  Primitive1D trajs_[3];
+  Primitive1D prs_[3];
 };
 
 

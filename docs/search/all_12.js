@@ -14,7 +14,6 @@ var searchData=
   ['traj_5f',['traj_',['../classMPBaseUtil.html#ac4a0b20f7730a9d194d0416f3dea1133',1,'MPBaseUtil']]],
   ['trajectory',['Trajectory',['../classTrajectory.html',1,'Trajectory'],['../classTrajectory.html#aa340ba80f1f4d1aa39f19f069d5d8089',1,'Trajectory::Trajectory()'],['../classTrajectory.html#adac628485b1435285343ad23d418771e',1,'Trajectory::Trajectory(const std::vector&lt; Primitive &gt; &amp;trajs)']]],
   ['trajectory_2eh',['trajectory.h',['../trajectory_8h.html',1,'']]],
-  ['trajs_5f',['trajs_',['../classPrimitive.html#adb08c85bb9ae72ac3151d6e00b32a173',1,'Primitive']]],
   ['transform_5fvec',['transform_vec',['../data__utils_8h.html#ac3745ddcc3002193bbcd5caab64cd1df',1,'data_utils.h']]],
   ['transform_5fvec3',['transform_vec3',['../data__utils_8h.html#a79960a9e7c7bad6ec5641ed1729ad8d0',1,'data_utils.h']]],
   ['ts',['Ts',['../classTrajectory.html#a3c66152bb9ecb9cff63309db2c365c32',1,'Trajectory']]]

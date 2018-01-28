@@ -141,7 +141,7 @@ Primitive::Primitive(const vec_E<Vec6f>& cs, decimal_t t) : t_(t)
 {
   // Constructor from coeffs
   for(int i = 0; i < 3; i++)
-    trajs_[i] = Primitive1D(cs[i]);
+    prs_[i] = Primitive1D(cs[i]);
 }
 
 
@@ -151,20 +151,20 @@ Primitive::Primitive(const Waypoint& p, const Vec3f& u, decimal_t t) : t_(t)
     for(int i = 0; i < 3; i++) {
       Vec4f vec;
       vec << p.pos(i), p.vel(i), p.acc(i), p.jrk(i);
-      trajs_[i] = Primitive1D(vec, u(i));
+      prs_[i] = Primitive1D(vec, u(i));
     }
   }
   else if(p.use_acc) {
    for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(Vec3f(p.pos(i), p.vel(i), p.acc(i)), u(i));
+      prs_[i] = Primitive1D(Vec3f(p.pos(i), p.vel(i), p.acc(i)), u(i));
   }
   else if(p.use_vel) {
     for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(Vec2f(p.pos(i), p.vel(i)), u(i));
+      prs_[i] = Primitive1D(Vec2f(p.pos(i), p.vel(i)), u(i));
   }
   else if(p.use_pos) {
     for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(p.pos(i), u(i));
+      prs_[i] = Primitive1D(p.pos(i), u(i));
   }
   else
     printf("Null Primitive using control!\n");
@@ -178,21 +178,21 @@ Primitive::Primitive(const Waypoint& p1, const Waypoint& p2, decimal_t t) :
   if(p1.use_pos && p1.use_vel && p1.use_acc && !p1.use_jrk &&
      p2.use_pos && p2.use_vel && p2.use_acc && !p2.use_jrk) {
     for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(p1.pos(i), p1.vel(i), p1.acc(i),
+      prs_[i] = Primitive1D(p1.pos(i), p1.vel(i), p1.acc(i),
                               p2.pos(i), p2.vel(i), p2.acc(i), t_);
   }
   // Use vel only
   else if(p1.use_pos && p1.use_vel && !p1.use_acc && !p1.use_jrk &&
           p2.use_pos && p2.use_vel && !p2.use_acc && !p2.use_jrk) {
     for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(p1.pos(i), p1.vel(i),
+      prs_[i] = Primitive1D(p1.pos(i), p1.vel(i),
                               p2.pos(i), p2.vel(i), t_);
   }
   // Use pos only
   else if(p1.use_pos && !p1.use_vel && !p1.use_acc && !p1.use_jrk &&
           p2.use_pos && !p2.use_vel && !p2.use_acc && !p2.use_jrk) {
     for(int i = 0; i < 3; i++)
-      trajs_[i] = Primitive1D(p1.pos(i), p2.pos(i), t_);
+      prs_[i] = Primitive1D(p1.pos(i), p2.pos(i), t_);
   }
   // Null
   else {
@@ -203,14 +203,14 @@ Primitive::Primitive(const Waypoint& p1, const Waypoint& p2, decimal_t t) :
 }
 
 decimal_t Primitive::max_vel(int k) const {
-  std::vector<decimal_t> ts = trajs_[k].extrema_vel(t_);
-  Vec4f p1 = trajs_[k].evaluate(0);
-  Vec4f p2 = trajs_[k].evaluate(t_);
+  std::vector<decimal_t> ts = prs_[k].extrema_vel(t_);
+  Vec4f p1 = prs_[k].evaluate(0);
+  Vec4f p2 = prs_[k].evaluate(t_);
   decimal_t max_v = std::max(fabs(p1(1)), fabs(p2(1)));
 
   for(const auto &it: ts) {
     if(it > 0 && it < t_){
-      Vec4f p3 = trajs_[k].evaluate(it);
+      Vec4f p3 = prs_[k].evaluate(it);
       if(fabs(p3(1)) > max_v)
         max_v = fabs(p3(1));
     }
@@ -219,14 +219,14 @@ decimal_t Primitive::max_vel(int k) const {
 }
 
 decimal_t Primitive::max_acc(int k) const {
-  std::vector<decimal_t> ts = trajs_[k].extrema_acc(t_);
-  Vec4f p1 = trajs_[k].evaluate(0);
-  Vec4f p2 = trajs_[k].evaluate(t_);
+  std::vector<decimal_t> ts = prs_[k].extrema_acc(t_);
+  Vec4f p1 = prs_[k].evaluate(0);
+  Vec4f p2 = prs_[k].evaluate(t_);
   decimal_t max_a = std::max(fabs(p1(2)), fabs(p2(2)));
 
   for(const auto &it: ts) {
     if(it > 0 && it < t_){
-      Vec4f p3 = trajs_[k].evaluate(it);
+      Vec4f p3 = prs_[k].evaluate(it);
       if(fabs(p3(2)) > max_a)
         max_a = fabs(p3(2));
     }
@@ -236,14 +236,14 @@ decimal_t Primitive::max_acc(int k) const {
 }
 
 decimal_t Primitive::max_jrk(int k) const {
-  std::vector<decimal_t> ts = trajs_[k].extrema_jrk(t_);
-  Vec4f p1 = trajs_[k].evaluate(0);
-  Vec4f p2 = trajs_[k].evaluate(t_);
+  std::vector<decimal_t> ts = prs_[k].extrema_jrk(t_);
+  Vec4f p1 = prs_[k].evaluate(0);
+  Vec4f p2 = prs_[k].evaluate(t_);
   decimal_t max_j = std::max(fabs(p1(3)), fabs(p2(3)));
 
   for(const auto &it: ts) {
     if(it > 0 && it < t_){
-      Vec4f p3 = trajs_[k].evaluate(it);
+      Vec4f p3 = prs_[k].evaluate(it);
       if(fabs(p3(3)) > max_j)
         max_j = fabs(p3(3));
     }
@@ -293,7 +293,7 @@ bool Primitive::valid_jrk(decimal_t mj) const {
 Waypoint Primitive::evaluate(decimal_t t) const {
   Waypoint p;
   for(int j = 0; j < 3; j++) {
-    Vec4f d = trajs_[j].evaluate(t);
+    Vec4f d = prs_[j].evaluate(t);
     p.pos(j) = d(0);
     p.vel(j) = d(1);
     p.acc(j) = d(2);
@@ -316,20 +316,20 @@ std::vector<Waypoint> Primitive::sample(int N) const {
   return ps;
 }
 
-Primitive1D Primitive::traj(int k) const { return trajs_[k]; }
+Primitive1D Primitive::traj(int k) const { return prs_[k]; }
 
 decimal_t Primitive::t() const { return t_; }
 
 decimal_t Primitive::J(int i) const {
-  return trajs_[0].J(t_, i)+trajs_[1].J(t_, i)+trajs_[2].J(t_, i);
+  return prs_[0].J(t_, i)+prs_[1].J(t_, i)+prs_[2].J(t_, i);
 }
 
 
 vec_E<Vec6f> Primitive::coeffs() const {
   vec_E<Vec6f> cs;
-  cs.push_back(trajs_[0].coeff());
-  cs.push_back(trajs_[1].coeff());
-  cs.push_back(trajs_[2].coeff());
+  cs.push_back(prs_[0].coeff());
+  cs.push_back(prs_[1].coeff());
+  cs.push_back(prs_[2].coeff());
 
   return cs;
 }
