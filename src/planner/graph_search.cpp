@@ -268,7 +268,8 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
   // Initialize goal node
   StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-  if(!ss_ptr->best_child_.empty() && ENV->is_goal(ss_ptr->best_child_.back()->coord)) 
+  //if(!ss_ptr->best_child_.empty() && ENV->is_goal(ss_ptr->best_child_.back()->coord)) 
+  if(!ss_ptr->best_child_.empty() && ss_ptr->best_child_.back()->t >= max_t) 
     goalNode_ptr = ss_ptr->best_child_.back();
 
   int expand_iteration = 0;

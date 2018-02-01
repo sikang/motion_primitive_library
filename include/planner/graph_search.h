@@ -72,7 +72,7 @@ namespace MPL
     // plan data
     double g = std::numeric_limits<double>::infinity();
     double rhs = std::numeric_limits<double>::infinity();
-    double h;
+    double h = std::numeric_limits<double>::infinity();
     bool iterationopened = false;
     bool iterationclosed = false;
 
