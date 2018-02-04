@@ -10,3 +10,4 @@
 \form#9:$J(t, i) = \int_0^t |p^{(i+1)}(t)|^2dt$
 \form#10:$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$
 \form#11:$t = \lambda(\tau)^{-1}$
+\form#12:$Ax \leq b$
