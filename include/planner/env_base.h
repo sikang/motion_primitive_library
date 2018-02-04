@@ -49,6 +49,8 @@ class env_base
      */
     double get_heur(const Waypoint& state, double t) const
     {
+      if(goal_node_ == state) 
+        return 0;
       Waypoint goal_node = goal_node_;
       t += alpha_ * dt_;
       if(!prior_traj_.segs.empty() && t < prior_traj_.getTotalTime()) {

@@ -100,7 +100,7 @@ namespace MPL {
       for(unsigned int i = 0; i < U_.size(); i++) {
         Primitive pr(curr, U_[i], dt_);
         Waypoint tn = pr.evaluate(dt_);
-        if(tn == curr)
+        if(tn == curr) 
           continue;
         if(pr.valid_vel(v_max_) && pr.valid_acc(a_max_) && pr.valid_jrk(j_max_)) {
           tn.use_pos = curr.use_pos;

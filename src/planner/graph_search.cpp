@@ -15,7 +15,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
   {
     if(verbose_) {
       std::cout << "t: " << currNode_ptr->t << " --> " << currNode_ptr->t - ss_ptr->dt_ << std::endl;
-      printf("g: %f, rhs: %f, opened: %d, closed: %d\n", currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->iterationopened, currNode_ptr->iterationclosed);
+      printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs, currNode_ptr->h);
     }
     ss_ptr->best_child_.push_back(currNode_ptr);
     int min_id = -1;
@@ -158,11 +158,11 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
       {
         /**
          * Comment this block if build multiple connected graph
-	succNode_ptr->pred_hashkey.front() = currNode_ptr->hashkey;  // Assign new parent
-	succNode_ptr->pred_action_id.front() = succ_act_id[s];
-	succNode_ptr->pred_action_cost.front() = succ_cost[s];
-        */
-	succNode_ptr->t = currNode_ptr->t + ENV->dt_;
+         succNode_ptr->pred_hashkey.front() = currNode_ptr->hashkey;  // Assign new parent
+         succNode_ptr->pred_action_id.front() = succ_act_id[s];
+         succNode_ptr->pred_action_cost.front() = succ_cost[s];
+         */
+        succNode_ptr->t = currNode_ptr->t + ENV->dt_;
 	succNode_ptr->g = tentative_gval;    // Update gval
 
 	double fval = succNode_ptr->g + (ss_ptr->eps_) * succNode_ptr->h;
@@ -268,7 +268,6 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
   // Initialize goal node
   StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-  //if(!ss_ptr->best_child_.empty() && ENV->is_goal(ss_ptr->best_child_.back()->coord)) 
   if(!ss_ptr->best_child_.empty() && (ss_ptr->best_child_.back()->t >= max_t ||ENV->is_goal(ss_ptr->best_child_.back()->coord)))
     goalNode_ptr = ss_ptr->best_child_.back();
 
@@ -387,56 +386,6 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   ss_ptr->expand_iteration_ = expand_iteration;
   return goalNode_ptr->g;
 }
-
-void StateSpace::checkValidation(const hashMap& hm) {
-  //****** Check if there is null element in succ graph
-  for(const auto& it: hm) {
-    if(!it.second) {
-      std::cout << "error!!! null element at key: " << it.first << std::endl;
-    }
-  }
-
-  /*
-  for(const auto& it: pq_) {
-    if(it.second->t >= 9)
-      printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n" ANSI_COLOR_RESET,
-          it.second->t, it.second->g, it.second->rhs, it.second->h);
-  }
-  */
-
-  //****** Check rhs and g value of close set
-  printf("Check rhs and g value of closeset\n");
-  int close_cnt = 0;
-  for(const auto& it: hm) {
-    if(it.second->iterationopened && it.second->iterationclosed) {
-      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
-      close_cnt ++;
-    }
-  }
- 
-  // Check rhs and g value of open set
-  printf("Check rhs and g value of openset\n");
-  int open_cnt = 0;
-  for(const auto& it: hm) {
-    if(it.second->iterationopened && !it.second->iterationclosed) {
-      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
-      open_cnt ++;
-    }
-  }
-
-  // Check rhs and g value of null set
-  printf("Check rhs and g value of nullset\n");
-  int null_cnt = 0;
-  for(const auto& it: hm) {
-    if(!it.second->iterationopened) {
-      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
-      null_cnt ++;
-    }
-  }
-
-  printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", 
-      hm.size(), open_cnt, close_cnt, null_cnt);
-} 
 
 void StateSpace::getSubStateSpace(int time_step) {
   if(best_child_.empty())
@@ -632,3 +581,52 @@ inline double StateSpace::calculateKey(const StatePtr& node) {
   return std::min(node->g, node->rhs) + eps_ * node->h;
 }
 
+
+void StateSpace::checkValidation(const hashMap& hm) {
+  //****** Check if there is null element in succ graph
+  for(const auto& it: hm) {
+    if(!it.second) 
+      std::cout << "error!!! null element at key: " << it.first << std::endl;
+  }
+
+  /*
+  for(const auto& it: pq_) {
+    if(it.second->t >= 9)
+      printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n" ANSI_COLOR_RESET,
+          it.second->t, it.second->g, it.second->rhs, it.second->h);
+  }
+  */
+
+  //****** Check rhs and g value of close set
+  printf("Check rhs and g value of closeset\n");
+  int close_cnt = 0;
+  for(const auto& it: hm) {
+    if(it.second->iterationopened && it.second->iterationclosed) {
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      close_cnt ++;
+    }
+  }
+ 
+  // Check rhs and g value of open set
+  printf("Check rhs and g value of openset\n");
+  int open_cnt = 0;
+  for(const auto& it: hm) {
+    if(it.second->iterationopened && !it.second->iterationclosed) {
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      open_cnt ++;
+    }
+  }
+
+  // Check rhs and g value of null set
+  printf("Check rhs and g value of nullset\n");
+  int null_cnt = 0;
+  for(const auto& it: hm) {
+    if(!it.second->iterationopened) {
+      printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
+      null_cnt ++;
+    }
+  }
+
+  printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", 
+      hm.size(), open_cnt, close_cnt, null_cnt);
+} 

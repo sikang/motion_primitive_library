@@ -32,14 +32,29 @@ struct Waypoint {
     std::cout << "vel: " << vel.transpose() << std::endl;
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
+    std::cout << "use_pos: " << use_pos << std::endl;
+    std::cout << "use_vel: " << use_vel << std::endl;
+    std::cout << "use_acc: " << use_acc << std::endl;
+    std::cout << "use_jrk: " << use_jrk << std::endl;
   }
 
   ///Check if two waypoints are equivalent
-  bool operator==(const Waypoint& n) {
+  bool operator==(const Waypoint& n) const {
+    /*
     return this->pos == n.pos &&
       this->vel == n.vel &&
       this->acc == n.acc &&
       this->jrk == n.jrk;
+      */
+    if((this->use_pos || n.use_pos) && this->pos != n.pos)
+      return false;
+    if((this->use_vel || n.use_vel) && this->vel != n.vel)
+      return false;
+    if((this->use_acc || n.use_acc) && this->acc != n.acc)
+      return false;
+    if((this->use_jrk || n.use_jrk) && this->jrk != n.jrk)
+      return false;
+    return true;
   }
 
   ///Check if two waypoints are inequivalent

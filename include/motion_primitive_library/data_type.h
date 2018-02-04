@@ -95,26 +95,32 @@ typedef std::pair<Mat3f, Vec3f> Ellipsoid;
 ///Vector of Ellipsoids
 typedef vec_E<Ellipsoid> vec_Ellipsoid;
 
+///Pair of linear equality constraints in 3D <A, b> as: \f$Ax \leq b\f$
 typedef std::pair<MatD3f, VecDf> LinearConstraint3f; // Ax <= b
+///Vector of LinearConstraint3f
 typedef vec_E<LinearConstraint3f> vec_LinearConstraint3f;
 
 
+///Face class
 class Face {
   public:
     Vec3f p;
     Vec3f n;
     bool pass;
 
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    //EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     Face(Vec3f _p, Vec3f _n):
       p(_p), n(_n), pass(true) {}
     Face(Vec3f _p, Vec3f _n, bool _pass):
       p(_p), n(_n), pass(_pass) {}
 };
 
+///Polyhedron, consists of faces
 typedef vec_E<Face> Polyhedron; // composed by planes with form (p, n)
+///Vector of Polyhedron
 typedef vec_E<Polyhedron> Polyhedra;
 
+///Extreme points of a polyhedron
 typedef vec_E<vec_Vec3f> BoundVec3f; // compose by extreme points
 
 #endif
