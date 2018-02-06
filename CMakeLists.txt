@@ -22,14 +22,6 @@ IF(USE_ROS)
   LIST(APPEND LINK_LIBS ${catkin_LIBRARIES})
 ENDIF()
 
-FIND_PACKAGE(VTK REQUIRED)
-
-IF(NOT VTK_FOUND)
-  MESSAGE(STATUS "VTK was not found")
-ELSE()
-  INCLUDE(${VTK_USE_FILE})
-  MESSAGE(STATUS "VTK was found")
-ENDIF()
 
 FIND_PACKAGE(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
@@ -52,8 +44,6 @@ IF(YAMLCPP_FOUND)
 ELSE()
   MESSAGE(FATAL_ERROR "Could not find yaml-cpp.")
 ENDIF()
-
-
 
 add_library(primitive src/primitive/primitive.cpp
   src/primitive/primitive_util.cpp
@@ -85,8 +75,8 @@ target_link_libraries(mp_cloud_util primitive ${PCL_LIBRARIES})
 
 
 add_executable(test_planner_2d test/test_planner_2d.cpp)
-target_link_libraries(test_planner_2d mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES} ${VTK_LIBRARIES})
+target_link_libraries(test_planner_2d mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(test_planner_2d_prior_traj test/test_planner_2d_prior_traj.cpp)
-target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES} ${VTK_LIBRARIES})
+target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 

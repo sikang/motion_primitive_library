@@ -3,12 +3,9 @@
 #include <collision_checking/voxel_map_util.h>
 #include <planner/mp_map_util.h>
 
-#define VISUALIZE 1
-#if VISUALIZE
-#include <vtkSmartPointer.h>
-#include <vtkImageCanvasSource2D.h>
-#include <vtkJPEGWriter.h> 
-#endif
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
 
 using namespace MPL;
 
@@ -64,7 +61,7 @@ int main(int argc, char ** argv){
   planner->setW(10); // Set dt for each primitive
   planner->setMaxNum(-1); // Set maximum allowed states
   planner->setU(1, false);// 2D discretization with 1
-  planner->setTol(0.5, 1, 1); // Tolerance for goal region
+  planner->setTol(0.2, 0.1, 1); // Tolerance for goal region
 
   // Planning
   Timer time(true);
@@ -73,71 +70,83 @@ int main(int argc, char ** argv){
   printf("MP Planner takes: %f ms\n", dt);
   printf("MP Planner expanded states: %zu\n", planner->getCloseSet().size());
 
-#if VISUALIZE
-  // Plot the result in image
+  // Plot the result in svg image
   const Vec3i dim = reader.dim();
-  const Vec3i startI = map_util->floatToInt(start.pos);
-  const Vec3i goalI= map_util->floatToInt(goal.pos);
-  std::string outputFilename = "output.jpg"; 
-  // Create a 100x100 image to save into the jpeg file
-  int extent[6] = { 0, dim(0), 0, dim(1), 0, 0 };
-  vtkSmartPointer<vtkImageCanvasSource2D> imageSource =
-    vtkSmartPointer<vtkImageCanvasSource2D>::New();
-  imageSource->SetExtent( extent );
-  imageSource->SetScalarTypeToUnsignedChar(); // vtkJPEGWriter only accepts unsigned char input
-  imageSource->SetNumberOfScalarComponents( 3 ); // 3 color channels: Red, Green and Blue
+  typedef boost::geometry::model::d2::point_xy<double> point_2d;
+  // Declare a stream and an SVG mapper
+  std::ofstream svg("output.svg");
+  boost::geometry::svg_mapper<point_2d> mapper(svg, 1000, 1000);
 
-  // Fill the whole image with a white background
-  imageSource->SetDrawColor( 255, 255, 255 );
-  imageSource->FillBox( extent[0], extent[1], extent[2], extent[3] );
+  // Draw the canvas
+  boost::geometry::model::polygon<point_2d> bound;
+  const double origin_x = reader.origin()(0);
+  const double origin_y = reader.origin()(1);
+  const double range_x = reader.dim()(0) * reader.resolution();
+  const double range_y = reader.dim()(1) * reader.resolution();
+  std::vector<point_2d> points;
+  points.push_back(point_2d(origin_x, origin_y));
+  points.push_back(point_2d(origin_x, origin_y+range_y));
+  points.push_back(point_2d(origin_x+range_x, origin_y+range_y));
+  points.push_back(point_2d(origin_x+range_x, origin_y));
+  points.push_back(point_2d(origin_x, origin_y));
+  boost::geometry::assign_points(bound, points);
+  boost::geometry::correct(bound);
 
-  imageSource->SetDrawColor(127.0, 127.0, 127.0);
+  mapper.add(bound);
+  mapper.map(bound, "fill-opacity:1.0;fill:rgb(255,255,255);stroke:rgb(0,0,0);stroke-width:2"); // White
+
+  // Draw start and goal
+  point_2d start_pt, goal_pt;
+  boost::geometry::assign_values(start_pt, start.pos(0), start.pos(1));
+  mapper.add(start_pt);
+  mapper.map(start_pt, "fill-opacity:1.0;fill:rgb(255,0,0);", 10); // Red
+  boost::geometry::assign_values(goal_pt, goal.pos(0), goal.pos(1));
+  mapper.add(goal_pt);
+  mapper.map(goal_pt, "fill-opacity:1.0;fill:rgb(255,0,0);", 10); // Red
+
+
+
+  // Draw the obstacles
   for(int x = 0; x < dim(0); x ++) {
     for(int y = 0; y < dim(1); y ++) {
       if(!map_util->isFree(Vec3i(x, y, 0))) {
-        imageSource->DrawPoint(x, y);
+        Vec3f pt = map_util->intToFloat(Vec3i(x, y, 0));
+        point_2d a;
+        boost::geometry::assign_values(a, pt(0), pt(1));
+        mapper.add(a);
+        mapper.map(a, "fill-opacity:1.0;fill:rgb(0,0,0);", 1);
       }
     }
   }
 
-  imageSource->SetDrawColor(0.0, 127.0, 255.0);
-  imageSource->DrawCircle(startI[0], startI[1], 5);
-
-  imageSource->SetDrawColor(255.0, 0.0, 0.0);
-  imageSource->DrawCircle(goalI[0], goalI[1], 5);
-
-  //Plot expended states
+  // Draw expended states
   for(const auto& pt: planner->getCloseSet()) {
-    imageSource->SetDrawColor(155.0, 155.0, 155.0);
-    const Vec3i pi = map_util->floatToInt(pt);
-    imageSource->DrawCircle(pi[0], pi[1], 2);
+    point_2d a;
+    boost::geometry::assign_values(a, pt(0), pt(1));
+    mapper.add(a);
+    mapper.map(a, "fill-opacity:1.0;fill:rgb(100,100,200);", 2); // Blue
   }
 
+
+  // Draw the trajectory
   if(valid) {
     Trajectory traj = planner->getTraj();
-    decimal_t total_t = traj.getTotalTime();
+    double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
     printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
         traj.J(0), traj.J(1), traj.J(2), traj.J(3));
-    int num = 1000; // number of points on trajectory to draw
-    imageSource->SetDrawColor(0.0, 0.0, 0.0);
-    for(int i = 0; i < num -1 ; i ++) {
-      const decimal_t t1 = i * total_t / num; 
-      const decimal_t t2 = (i + 1) * total_t / num; 
-      Waypoint w1, w2;
-      traj.evaluate(t1, w1);
-      traj.evaluate(t2, w2);
-      const Vec3i p1 = map_util->floatToInt(w1.pos);
-      const Vec3i p2 = map_util->floatToInt(w2.pos);
-      imageSource->FillTube(p1[0], p1[1], p2[0], p2[1], 2);
+    int num = 100; // number of points on trajectory to draw
+    const double dt = total_t / num; 
+    boost::geometry::model::linestring<point_2d> line;
+    for(double t = 0; t <= total_t; t += dt) {
+      Waypoint w;
+      traj.evaluate(t, w);
+      line.push_back(point_2d(w.pos(0), w.pos(1)));
     }
-
+    mapper.add(line);
+    mapper.map(line, "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
   }
-
-#endif
-
-
-  vtkSmartPointer<vtkJPEGWriter> writer = vtkSmartPointer<vtkJPEGWriter>::New();  writer->SetFileName( outputFilename.c_str() );  writer->SetInputConnection( imageSource->GetOutputPort() );  writer->Write();
+ 
 
   return 0;
 }

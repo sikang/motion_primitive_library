@@ -61,7 +61,7 @@ planner->setDt(1.0); // Set dt for each primitive
 planner->setW(10); // Set weight of time 
 planner->setMaxNum(-1); // Set maximum allowed number of expanded nodes (-1 means no limitation)
 planner->setU(1, false);// 2D discretization with 1
-planner->setTol(0.5, 1, 1); // Tolerance for goal region (pos=0.5, vel=1, acc=1 accordingly)
+planner->setTol(0.2, 0.1, 1); // Tolerance for goal region (pos=0.2, vel=0.1, acc=1 accordingly)
 
 bool valid = planner->plan(start, goal); // Plan from start to goal
 ```
@@ -86,25 +86,30 @@ You should see following messages if it works properly:
 [MPBaseUtil] set dt: 1.000000
 [MPBaseUtil] set w: 10.000000
 [MPBaseUtil] set max num: -1
-[MPBaseUtil] set tol_dis: 0.500000
-[MPBaseUtil] set tol_vel: 1.000000
+[MPBaseUtil] set tol_dis: 0.200000
+[MPBaseUtil] set tol_vel: 0.100000
 [MPBaseUtil] set tol_acc: 1.000000
 start pos: [2.500000, -3.500000, 0.000000], vel: [0.000000, 0.000000, 0.000000], acc: [0.000000, 0.000000, 0.000000]
 goal pos: [37.000000, 2.500000, 0.000000], vel: [0.000000, 0.000000, 0.000000], acc: [0.000000, 0.000000, 0.000000]
 [MPBaseUtil] set effort in acc
-Start new node!
-MaxExpandTime [0.000000] Reached!!!!!!
+Start from new node!
+goalNode fval: 373.000000, g: 373.000000!
+Expand [6901] nodes!
+Reached Goal !!!!!!
 
-currNode key: 369.617292, g: 362.750000, rhs: inf!
-Expand [5781] nodes!
-MP Planner takes: 148.000000 ms
-MP Planner expanded states: 5781
-Total time T: 36.000000
-Total J:  J(0) = 36.666667, J(1) = 2.750000, J(2) = 0.000000, J(3) = 0.000000
+...
+
+MP Planner takes: 183.000000 ms
+MP Planner expanded states: 6901
+Total time T: 37.000000
+Total J:  J(0) = 40.250000, J(1) = 3.000000, J(2) = 0.000000, J(3) = 0.000000
 ```
 
-The output is stored in `output.jpg` in the current folder (grey dots show the expended nodes, blue and red circles indicate start and goal):
-![Visualization](./data/output.jpg)
+The output image is stored as `output.svg` in the current folder (blue dots show the expended states, red circles indicate start and goal):
+![Visualization](./data/example1.png). 
+
+It is recommended to visualize the svg in web browser: for example, `firefox output.svg`.
+
 
 
 ## Doxygen
