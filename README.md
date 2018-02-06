@@ -71,11 +71,12 @@ bool valid = planner->plan(start, goal); // Plan from start to goal
 ```
 
 ## Test
-Run following command:
+#### Example1 (simple planning):
+Run following command for test a 2D planning in a given map:
 ```sh
 $ ./build/devel/lib/test_planner_2d ../data/corridor.yaml
 ```
-or
+or with ROS
 ```sh
 $ rosrun motion_primitive_library test_planner_2d /PATH/TO/MPL/data/corridor.yaml
 ```
@@ -113,6 +114,21 @@ The output image is stored as `output.svg` in the current folder (blue dots show
 ![Visualization](./data/example1.png). 
 
 It is recommended to visualize the svg in web browser: for example, `firefox output.svg`.
+
+#### Example2 (planning with a prior trajectory):
+Run following command for test a 2D planning, it first finds a trajector in low dimensional space (acceleration-driven), then it uses the planned trajectory to refine for a trajectory in high dimensional space (jerk-driven):
+```sh
+$ ./build/devel/lib/test_planner_2d_prior_traj ../data/corridor.yaml
+```
+or with ROS
+```sh
+$ rosrun motion_primitive_library test_planner_2d_prior_traj /PATH/TO/MPL/data/corridor.yaml
+```
+The output image is stored as `output.svg` in the current folder (blue dots show the expended states, red circles indicate start and goal, the black curve is the prior trajectory):
+![Visualization](./data/example2.png). 
+
+It is recommended to visualize the svg in web browser: for example, `firefox output.svg`.
+
 
 
 
