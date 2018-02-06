@@ -5,6 +5,10 @@
   - Enable maximum allowed time for searching
 
 ## Compilation
+Prerequisite:
+  - `Boost`
+  - [`PCL`](http://pointclouds.org/)
+  - [`Eigen`](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
 A) Simple cmake (set USE\_ROS to OFF)
 ```sh
