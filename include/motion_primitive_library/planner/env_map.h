@@ -31,19 +31,6 @@ namespace MPL {
       : map_util_(map_util)
     {}
 
-    ///Set goal state
-    void set_goal(const Waypoint& goal) {
-      goal_node_ = goal;
-
-      const Vec3i goal_int = map_util_->floatToInt(goal_node_.pos);
-      if (map_util_->isOutSide(goal_int)) {
-        printf(ANSI_COLOR_GREEN "goal out side! " ANSI_COLOR_RESET "\n");
-        goal_outside_ = true;
-      }
-      else
-        goal_outside_ = false;
-    }
-
     ///Check if a point is in free space
     bool is_free(const Vec3f& pt) const {
       return map_util_->isFree(map_util_->floatToInt(pt));
@@ -60,8 +47,7 @@ namespace MPL {
       std::vector<Waypoint> pts = pr.sample(n);
       for(const auto& pt: pts) {
         Vec3i pn = map_util_->floatToInt(pt.pos);
-        if(map_util_->isOccupied(pn) ||
-            (!goal_outside_ && map_util_->isOutSide(pn)))
+        if(map_util_->isOccupied(pn) || map_util_->isOutSide(pn))
           return false;
       }
 

@@ -65,8 +65,8 @@ Vel | Acc | Jrk | Snp
 
 After setting up start and goal states, a planning thread can be started as:
 ```
-std::unique\_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
-planner->setMapUtil(map\_util); // Set collision checking function
+std::unique_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
+planner->setMapUtil(map_util); // Set collision checking function
 planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity
 planner->setAmax(1.0); // Set max acceleration 

@@ -13,7 +13,3 @@ void MPCloudUtil::setMap(const vec_Vec3f& obs, decimal_t r, const Vec3f& ori, co
   ENV_.reset(new MPL::env_cloud(obs, r, ori, dim));
 }
 
-Polyhedra MPCloudUtil::getPolyhedra() {
-  return ENV_->polyhedra();
-}
-

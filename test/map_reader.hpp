@@ -1,10 +1,23 @@
+/**
+ * @file map_reader.h
+ * @brief a yaml file reader
+ */
+
 #include <yaml-cpp/yaml.h>
 #include <iostream>
 #include <fstream>
 
+/**
+ * @brief yamp map reader
+ */
 template <class Ti, class Tf>
 class MapReader {
   public:
+    /**
+     * @brief Simple constructor
+     * @param file the yaml file name (with path)
+     * @param verbose enable printing if true, default as false
+     */
     MapReader(const std::string& file, bool verbose = false) {
       try {
         YAML::Node config = YAML::LoadFile(file);
@@ -42,16 +55,25 @@ class MapReader {
       }
     }
 
+    ///Check if a map is loaded successfully
     bool exist() { return exist_; }
+    ///Get the map origin 
     Tf origin() { return origin_; }
+    ///Get the map dimension
     Ti dim() { return dim_; }
+    ///Get the map resolution
     double resolution() { return resolution_; }
+    ///Get the map entity
     std::vector<signed char> data() { return data_; }
   private:
+    ///Map origin, float type
     Tf origin_;
+    ///Map dimension, int type
     Ti dim_;
+    ///Map resolution, float type
     double resolution_;
+    ///Map entity, vector of `signed char`
     std::vector<signed char> data_;
-
+    ///Flag of the map exsistence
     bool exist_ = false;
 };

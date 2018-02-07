@@ -3,8 +3,6 @@
  * @brief state space class for graph search
  */
 
-
-
 #include <boost/heap/d_ary_heap.hpp>      // boost::heap::d_ary_heap
 #include <memory>                         // std::shared_ptr
 #include <limits>                         // std::numeric_limits
@@ -67,10 +65,15 @@ namespace MPL
     typename priorityQueue<State>::handle_type heapkey;
 
     // plan data
+    /// start-to-state g value
     double g = std::numeric_limits<double>::infinity();
+    /// rhs value based on g value
     double rhs = std::numeric_limits<double>::infinity();
+    /// heuristic cost
     double h = std::numeric_limits<double>::infinity();
+    /// label check if the state has been in the open set
     bool iterationopened = false;
+    /// label check if the state has been closed
     bool iterationclosed = false;
 
     /// Simple constructor

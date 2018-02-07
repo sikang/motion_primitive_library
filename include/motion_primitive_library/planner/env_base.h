@@ -368,7 +368,9 @@ class env_base
     }
 
     ///Set goal state
-    virtual void set_goal(const Waypoint& state) {}
+    void set_goal(const Waypoint& state) {
+      goal_node_ = state;
+    }
 
     ///Print out params
     void info() {
@@ -429,41 +431,39 @@ class env_base
       action_idx.push_back(0);
     }
 
-    ///Flag shows that if the goal is outside map
-    bool goal_outside() {
-      return goal_outside_;
-    }
-
-    ///Copy polyhedra
-    virtual Polyhedra polyhedra() {
-      return Polyhedra();
-    }
-
-    virtual vec_Ellipsoid ellipsoids() {
-      return vec_Ellipsoid();
-    }
-
-    //if true, goal is outside
-    bool goal_outside_;
-    //weight of time cost
+    ///weight of time cost
     double w_ = 10; 
     ///order of derivatives for effort
     int wi_; 
-    //heuristic time offset
+    ///heuristic time offset
     int alpha_ = 0;
 
-    //tolerance of goal region
+    ///tolerance of position for goal region
     double tol_dis = 1.0;
+    ///tolerance of velocity for goal region
     double tol_vel = 1.0;
+    ///tolerance of acceleration for goal region
     double tol_acc = 1.0;
-    //max control input
+    ///max control input
     double u_max_;
+    ///max velocity
     double v_max_ = -1;
+    ///max acceleration
     double a_max_ = -1;
+    ///max jerk
     double j_max_ = -1;
+    ///max execution time
     double t_max_ = -1;
+    ///duration of primitive
     double dt_ = 1.0;
-    double ds_ = 0.01, dv_ = 0.01, da_ = 0.01, dj_ = 0.01;
+    ///grid size in position
+    double ds_ = 0.01;
+    ///grid size in velocity
+    double dv_ = 0.01;
+    ///grid size in acceleration
+    double da_ = 0.01;
+    ///grid size in jerk
+    double dj_ = 0.01;
 
     ///Array of constant control input
     vec_Vec3f U_;

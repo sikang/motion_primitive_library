@@ -15,17 +15,17 @@
  * State includes position, velocity and acceleration in \f$R^3\f$
  */
 struct Waypoint {
-  Vec3f pos; 
-  Vec3f vel;
-  Vec3f acc;
-  Vec3f jrk;
+  Vec3f pos; ///<position in \f$\mathbb{R}^3\f$
+  Vec3f vel; ///<velocity in \f$\mathbb{R}^3\f$
+  Vec3f acc; ///<acceleration in \f$\mathbb{R}^3\f$
+  Vec3f jrk; ///<jerk in \f$\mathbb{R}^3\f$
+
 
   bool use_pos = false;///<If true, attribute pos will be used in primitive generation
   bool use_vel = false;///<If true, attribute vel will be used in primitive generation 
   bool use_acc = false;///<If true, attribute acc will be used in primitive generation 
   bool use_jrk = false;///<If true, attribute jrk will be used in primitive generation 
 
-  std::shared_ptr<Waypoint> parent;
   ///Print all the useful attributes
   void print() const {
     std::cout << "pos: " << pos.transpose() << std::endl;
@@ -57,7 +57,7 @@ struct Waypoint {
     return true;
   }
 
-  ///Check if two waypoints are inequivalent
+  ///Check if two waypoints are not equivalent
   bool operator!=(const Waypoint& n) {
     return !(*this==n);
   }

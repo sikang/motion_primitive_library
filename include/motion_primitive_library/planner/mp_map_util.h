@@ -1,6 +1,6 @@
 /**
  * @file mp_map_util.h
- * @brief motion primitive map util
+ * @brief motion planning map util
  */
 #include <motion_primitive_library/planner/env_map.h>
 #include <motion_primitive_library/planner/mp_base_util.h>

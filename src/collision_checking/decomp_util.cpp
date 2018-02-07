@@ -1,7 +1,7 @@
 #include <motion_primitive_library/collision_checking/decomp_util.h>
 
-DecompUtil::DecompUtil(decimal_t r): r_(r) {
-  axe_ = Vec3f(r_, r_, 0.1);
+DecompUtil::DecompUtil(decimal_t r, decimal_t h) {
+  axe_ = Vec3f(r, r, h);
 }
 
 void DecompUtil::set_region(const Vec3f& ori, const Vec3f& dim) {
@@ -18,8 +18,8 @@ void DecompUtil::set_region(const Vec3f& ori, const Vec3f& dim) {
 
 Polyhedra DecompUtil::polyhedra() {
   Polyhedra polys;
-  if(Vs_)
-    polys.push_back(*Vs_);
+  if(!Vs_.empty())
+    polys.push_back(Vs_);
   return polys;
 }
 
@@ -40,9 +40,9 @@ PCLPointCloud DecompUtil::toPCL(const vec_Vec3f &obs)
 
 void DecompUtil::setObstacles(const vec_Vec3f& obs) { 
   obs_.clear();
-  if(Vs_) {
+  if(!Vs_.empty()) {
     for(const auto&it: obs) {
-      if(insidePolyhedron(it, *Vs_))
+      if(insidePolyhedron(it, Vs_))
         obs_.push_back(it);
     }
   }
@@ -54,10 +54,10 @@ void DecompUtil::setObstacles(const vec_Vec3f& obs) {
 
 
 bool DecompUtil::isFree(const Primitive& pr) {
-  if(Vs_) {
+  if(!Vs_.empty()) {
     std::vector<Waypoint> ps = pr.sample(2);
     for(const auto& it: ps) {
-      if(!insidePolyhedron(it.pos, *Vs_))
+      if(!insidePolyhedron(it.pos, Vs_))
         return false;
     }
   }
@@ -66,7 +66,7 @@ bool DecompUtil::isFree(const Primitive& pr) {
   vec_Ellipsoid Es = sample_ellipsoids(pr, axe_, n);
 
   for(const auto& E: Es) {
-    float radius = r_;
+    float radius = axe_(0);
     pcl::PointXYZ searchPoint;
     std::vector<int> pointIdxRadiusSearch;
     std::vector<float> pointRadiusSquaredDistance;

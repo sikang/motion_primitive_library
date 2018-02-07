@@ -12,7 +12,7 @@
 namespace MPL {
 
 /**
- * @brief Voxel map environment
+ * @brief Point cloud environment
  */
 class env_cloud : public env_base
 {
@@ -33,9 +33,7 @@ class env_cloud : public env_base
 
     ///Set goal state
     void set_goal(const Waypoint& goal) {
-      goal_node_ = goal;
-      goal_outside_ = false;
-    }
+   }
 
     ///Check if a point is in free space
     bool is_free(const Vec3f& pt) const {
@@ -94,10 +92,7 @@ class env_cloud : public env_base
         //return;
     }
 
-    Polyhedra polyhedra() {
-      return map_util_->polyhedra();
-    }
-
+   
 };
 }
 
