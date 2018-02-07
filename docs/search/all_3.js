@@ -9,5 +9,6 @@ var searchData=
   ['dilate',['dilate',['../classMPL_1_1MapUtilBase.html#acddbef0e07c44224201d97f81271b671',1,'MPL::MapUtilBase::dilate()'],['../classMPL_1_1VoxelMapUtil.html#ab154e3d6eb588ce103f6e574cfe42975',1,'MPL::VoxelMapUtil::dilate()']]],
   ['dilate_5fneighbor_5f',['dilate_neighbor_',['../classMPL_1_1MapUtilBase.html#adddd683bedcd861183d90aacb41a29c7',1,'MPL::MapUtilBase']]],
   ['dilating',['dilating',['../classMPL_1_1MapUtilBase.html#a5abf340db18f862e456f3dc87187e374',1,'MPL::MapUtilBase::dilating()'],['../classMPL_1_1VoxelMapUtil.html#a36031719898262d05f6d49b0fb93f6af',1,'MPL::VoxelMapUtil::dilating()']]],
+  ['dim_5f',['dim_',['../classMPL_1_1MapUtilBase.html#a646bddffd162ddbafb4d6a986db62b2b',1,'MPL::MapUtilBase']]],
   ['dt_5f',['dt_',['../structMPL_1_1StateSpace.html#a851fa88109bc8b7aca459bcfd6e875e7',1,'MPL::StateSpace']]]
 ];

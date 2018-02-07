@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MRSL Motion Primitive Library: include/planner/graph_search.h File Reference</title>
+<title>MRSL Motion Primitive Library: include/motion_primitive_library/planner/graph_search.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,14 +60,13 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_5ce3a4a1d7c1f042b8d063088af8a52a.html">planner</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_6ea5cccc45df222b5b88fc52944702b9.html">motion_primitive_library</a></li><li class="navelem"><a class="el" href="dir_89aa034ade8aefdfa76289753065bb1d.html">planner</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">graph_search.h File Reference</div>  </div>
 </div><!--header-->
@@ -75,26 +74,13 @@ $(function() {
 
 <p>backend of graph search, implemetation of A* and Lifelong Planning A*  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;boost/heap/d_ary_heap.hpp&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;limits&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &lt;<a class="el" href="trajectory_8h_source.html">primitive/trajectory.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;motion_primitive_library/planner/state_space.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="trajectory_8h_source.html">motion_primitive_library/primitive/trajectory.h</a>&gt;</code><br />
 </div>
 <p><a href="graph__search_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1compare__pair.html">MPL::compare_pair&lt; state &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heap element comparison.  <a href="structMPL_1_1compare__pair.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1State.html">MPL::State</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lattice of the graph in graph search.  <a href="structMPL_1_1State.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html">MPL::StateSpace</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space.  <a href="structMPL_1_1StateSpace.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html">MPL::GraphSearch</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classMPL_1_1GraphSearch.html" title="GraphSearch class. ">GraphSearch</a> class.  <a href="classMPL_1_1GraphSearch.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,22 +89,6 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceMPL"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html">MPL</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:af10a63545f5d7e532249379196d7f84c"><td class="memTemplParams" colspan="2"><a id="af10a63545f5d7e532249379196d7f84c"></a>
-template&lt;class state &gt; </td></tr>
-<tr class="memitem:af10a63545f5d7e532249379196d7f84c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#af10a63545f5d7e532249379196d7f84c">MPL::priorityQueue</a> = boost::heap::d_ary_heap&lt; std::pair&lt; double, std::shared_ptr&lt; state &gt; &gt;, boost::heap::mutable_&lt; true &gt;, boost::heap::arity&lt; 2 &gt;, boost::heap::compare&lt; compare_pair&lt; state &gt; &gt; &gt;</td></tr>
-<tr class="memdesc:af10a63545f5d7e532249379196d7f84c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define priority queue. <br /></td></tr>
-<tr class="separator:af10a63545f5d7e532249379196d7f84c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="memItemLeft" align="right" valign="top"><a id="a3801daa412c74da0b8ccb3ecfb4ec19f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">MPL::StatePtr</a> = std::shared_ptr&lt; State &gt;</td></tr>
-<tr class="memdesc:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare StatePtr. <br /></td></tr>
-<tr class="separator:a3801daa412c74da0b8ccb3ecfb4ec19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="memItemLeft" align="right" valign="top"><a id="a34b3b7a82c7de69f67e26f5f2e18a8a6"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">MPL::hashMap</a> = std::unordered_map&lt; Key, StatePtr &gt;</td></tr>
-<tr class="memdesc:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
-<tr class="separator:a34b3b7a82c7de69f67e26f5f2e18a8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>backend of graph search, implemetation of A* and Lifelong Planning A* </p>
