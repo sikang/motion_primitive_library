@@ -197,10 +197,6 @@ void MPBaseUtil::getSubStateSpace(int time_step) {
   ss_ptr_->getSubStateSpace(time_step);
 }
 
-void MPBaseUtil::updateGoal(const Waypoint& goal) {
-  ss_ptr_->updateGoal(ENV_, goal);
-}
-
 void MPBaseUtil::checkValidation() {
   ss_ptr_->checkValidation(ss_ptr_->hm_);
 }

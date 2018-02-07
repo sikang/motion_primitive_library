@@ -11,8 +11,6 @@
 
 namespace MPL
 {
-  ///Declare `env' class
-  class env_base;
 
   /**
    * @brief GraphSearch class

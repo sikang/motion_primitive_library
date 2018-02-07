@@ -15,11 +15,12 @@
 mkdir build && cd build && cmake .. && make
 ```
 
-##### B) Using CATKIN
+##### B) Using Catkin (not recognizable by catkin\_make)
 ```sh
 $ mv motion_primitive_library ~/catkin_ws/src
-$ cd ~/catkin_ws & catkin_make -DCMAKE_BUILD_TYPE=Release
+$ cd ~/catkin_ws & catkin_make_isolated -DCMAKE_BUILD_TYPE=Release
 ```
+
 ##### Include in other projects:
 To link this lib properly, add following in the `CMakeLists.txt` 
 ```
@@ -63,9 +64,9 @@ Vel | Acc | Jrk | Snp
 
 
 After setting up start and goal states, a planning thread can be started as:
-```c++
-std::unique_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
-planner->setMapUtil(map_util); // Set collision checking function
+```
+std::unique\_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
+planner->setMapUtil(map\_util); // Set collision checking function
 planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity
 planner->setAmax(1.0); // Set max acceleration 

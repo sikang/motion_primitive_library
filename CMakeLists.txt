@@ -21,9 +21,6 @@ include_directories(${EIGEN3_INCLUDE_DIR} include)
 
 IF(YAMLCPP_FOUND)
   MESSAGE(STATUS "Found yaml-cpp.")
-  #MESSAGE("YAMLCPP_INCLUDE_DIRS: ${YAMLCPP_INCLUDE_DIRS}")
-  #MESSAGE("YAMLCPP_LIBRARIES: ${YAMLCPP_LIBRARIES}")
-  #MESSAGE("YAMLCPP_LIBRARY_DIRS: ${YAMLCPP_LIBRARY_DIRS}")
 ELSE()
   MESSAGE(FATAL_ERROR "Could not find yaml-cpp.")
 ENDIF()
@@ -37,17 +34,18 @@ add_library(poly_solver src/primitive/poly_solver.cpp
   src/primitive/poly_traj.cpp)
 target_link_libraries(poly_solver primitive)
 
-add_library(mp_map_util src/planner/mp_map_util.cpp
+add_library(mp_base_util 
   src/planner/mp_base_util.cpp
-  src/planner/graph_search.cpp)
-target_link_libraries(mp_map_util primitive)
+  src/planner/graph_search.cpp
+  src/planner/state_space.cpp)
+target_link_libraries(mp_base_util primitive)
 
+add_library(mp_map_util src/planner/mp_map_util.cpp)
+target_link_libraries(mp_map_util primitive mp_base_util)
 
 add_library(mp_cloud_util src/planner/mp_cloud_util.cpp
-  src/planner/mp_base_util.cpp
-  src/collision_checking/decomp_util.cpp
-  src/planner/graph_search.cpp)
-target_link_libraries(mp_cloud_util primitive ${PCL_LIBRARIES})
+  src/collision_checking/decomp_util.cpp)
+target_link_libraries(mp_cloud_util primitive mp_base_util ${PCL_LIBRARIES})
 
 
 #add_library(mp_sfc_util src/planner/mp_sfc_util.cpp
@@ -66,7 +64,7 @@ target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS primitive poly_solver mp_map_util mp_cloud_util
+install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util
   RUNTIME DESTINATION bin                                                                               
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

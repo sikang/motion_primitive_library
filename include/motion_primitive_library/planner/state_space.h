@@ -4,16 +4,12 @@
 #include <vector>                         // std::vector
 #include <unordered_map> // std::unordered_map
 #include <motion_primitive_library/primitive/primitive.h> 
+#include <motion_primitive_library/planner/env_base.h> 
 
 namespace MPL
 {
-  ///Declare `env' class
-  class env_base;
-
-
   ///Key for hashmap
   typedef std::string Key;
-  
 
   ///Heap element comparison
   template <class state>
