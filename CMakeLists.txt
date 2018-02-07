@@ -6,22 +6,8 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-deprecated-declarations")
-set(USE_ROS TRUE)
 
-IF(USE_ROS)
-  MESSAGE(STATUS "Compile with ROS.")
-  # roslib cmake_modules
-  FIND_PACKAGE(catkin REQUIRED COMPONENTS roscpp)
-  catkin_package(
-    DEPENDS EIGEN3
-    CATKIN_DEPENDS
-    INCLUDE_DIRS include
-    LIBRARIES primitive poly_solver mp_map_util mp_cloud_util
-    )
-  INCLUDE_DIRECTORIES(${catkin_INCLUDE_DIRS})
-  LIST(APPEND LINK_LIBS ${catkin_LIBRARIES})
-ENDIF()
-
+set(BUILD_SHARED_LIBS ON)
 
 FIND_PACKAGE(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
@@ -29,12 +15,9 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 FIND_PACKAGE(Eigen3 REQUIRED)
-#FIND_PACKAGE(OpenCV REQUIRED )
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(YAMLCPP REQUIRED yaml-cpp)
-#FIND_PACKAGE( Boost COMPONENTS filesystem system REQUIRED )
 include_directories(${EIGEN3_INCLUDE_DIR} include)
-#include_directories(${EIGEN3_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS} include)
 
 IF(YAMLCPP_FOUND)
   MESSAGE(STATUS "Found yaml-cpp.")
@@ -80,3 +63,13 @@ target_link_libraries(test_planner_2d mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_L
 add_executable(test_planner_2d_prior_traj test/test_planner_2d_prior_traj.cpp)
 target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 
+install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
+  DESTINATION "share/${PROJECT_NAME}/cmake")
+
+install(TARGETS primitive poly_solver mp_map_util mp_cloud_util
+  RUNTIME DESTINATION bin                                                                               
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION include/${PROJECT_NAME})

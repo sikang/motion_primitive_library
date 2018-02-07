@@ -2,8 +2,8 @@
  * @file mp_map_util.h
  * @brief motion primitive map util
  */
-#include <planner/env_map.h>
-#include <planner/mp_base_util.h>
+#include <motion_primitive_library/planner/env_map.h>
+#include <motion_primitive_library/planner/mp_base_util.h>
 
 using linkedHashMap = std::unordered_map<int, std::vector<std::pair<MPL::Key, int>>>;
 /**

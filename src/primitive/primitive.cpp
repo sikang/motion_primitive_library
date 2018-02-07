@@ -1,4 +1,4 @@
-#include <primitive/primitive.h>
+#include <motion_primitive_library/primitive/primitive.h>
 
 //******* Primitive 1D Base Class ***********
 Primitive1D::Primitive1D() {}

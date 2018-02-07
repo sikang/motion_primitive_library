@@ -11,7 +11,7 @@
 #include <Eigen/Core>
 #include <Eigen/StdVector>
 #include <Eigen/LU>
-#include <primitive/poly_traj.h>
+#include <motion_primitive_library/primitive/poly_traj.h>
 
 /**
  * @brief Trajectory generator back-end class

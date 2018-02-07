@@ -5,9 +5,9 @@
 
 #ifndef ENV_CLOUD_H
 #define ENV_CLOUD_H
-#include <planner/env_base.h>
-#include <primitive/primitive.h>
-#include <collision_checking/decomp_util.h>
+#include <motion_primitive_library/planner/env_base.h>
+#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/collision_checking/decomp_util.h>
 
 namespace MPL {
 

@@ -1,4 +1,4 @@
-#include <primitive/poly_solver.h>
+#include <motion_primitive_library/primitive/poly_solver.h>
 
 PolySolver::PolySolver(unsigned int smooth_derivative_order,
                        unsigned int minimize_derivative)

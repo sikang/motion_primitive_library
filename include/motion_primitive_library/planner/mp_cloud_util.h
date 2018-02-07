@@ -2,8 +2,8 @@
  * @file mp_cloud_util.h
  * @brief motion primitive cloud util
  */
-#include <planner/env_cloud.h>
-#include <planner/mp_base_util.h>
+#include <motion_primitive_library/planner/env_cloud.h>
+#include <motion_primitive_library/planner/mp_base_util.h>
 
 /**
  * @brief Motion primitive planner using point cloud

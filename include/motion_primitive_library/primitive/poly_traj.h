@@ -5,7 +5,7 @@
 #ifndef POLY_TRAJ_H
 #define POLY_TRAJ_H
 
-#include <primitive/primitive.h>
+#include <motion_primitive_library/primitive/primitive.h>
 #include <deque>
 
 /**

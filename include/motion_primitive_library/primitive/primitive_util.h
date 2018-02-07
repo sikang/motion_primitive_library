@@ -5,8 +5,8 @@
 #ifndef PRIMITIVE_UTIL_H
 #define PRIMITIVE_UTIL_H
 
-#include <primitive/primitive.h>
-#include <primitive/trajectory.h>
+#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/primitive/trajectory.h>
 
 ///Print all coefficients in primitive p
 void print_coeffs(const Primitive& p);

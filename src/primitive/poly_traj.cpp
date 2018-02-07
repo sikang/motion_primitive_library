@@ -1,4 +1,4 @@
-#include <primitive/poly_traj.h>
+#include <motion_primitive_library/primitive/poly_traj.h>
 
 PolyTraj::PolyTraj() {}
 

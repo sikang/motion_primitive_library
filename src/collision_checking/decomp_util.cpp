@@ -1,4 +1,4 @@
-#include <collision_checking/decomp_util.h>
+#include <motion_primitive_library/collision_checking/decomp_util.h>
 
 DecompUtil::DecompUtil(decimal_t r): r_(r) {
   axe_ = Vec3f(r_, r_, 0.1);

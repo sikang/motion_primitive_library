@@ -5,8 +5,8 @@
 #ifndef MPL_MAP_UTIL_BASE_H
 #define MPL_MAP_UTIL_BASE_H
 
-#include <stack>
-#include <motion_primitive_library/data_type.h>
+//#include <stack>
+#include <motion_primitive_library/common/data_type.h>
 
 /**
  * @biref The base class is provided by considering both 2D and 3D maps
@@ -108,10 +108,13 @@ public:
   virtual void dilate(decimal_t r, decimal_t h) = 0;
 
 protected:
+  ///Resolution
   decimal_t res_;
+  ///Origin, float type
   Tf origin_d_;
+  ///Dimension, int type
   Ti dim_;
-
+  ///Map entity
   Tmap map_;
 
   ///Pre-computed vector of neighboring cells for dilating

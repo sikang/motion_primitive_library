@@ -1,26 +1,36 @@
-# MRSL Motion Primitive Library for quadrotor v0.3
+# MRSL Motion Primitive Library for quadrotor v0.4
 ==================================
 ## New Feature
-  - Add Lifelong Planning Astar to handle replanning in dynamical environments
-  - Enable maximum allowed time for searching
+  - Add incremental trajectory planning
+  - Fix many small bugs in previous version
 
 ## Compilation
-Prerequisite:
+#### Prerequisite:
   - `Boost`
   - [`PCL`](http://pointclouds.org/)
   - [`Eigen`](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
-A) Simple cmake (set USE\_ROS to OFF)
+##### A) Simple cmake
 ```sh
 mkdir build && cd build && cmake .. && make
 ```
 
-
-B) Using CATKIN with ROS (set USE\_ROS to ON)
+##### B) Using CATKIN
 ```sh
 $ mv motion_primitive_library ~/catkin_ws/src
 $ cd ~/catkin_ws & catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
+##### Include in other projects:
+To link this lib properly, add following in the `CMakeLists.txt` 
+```
+find_package(motion_primitive_library REQUIRED)
+include_directories(${MOTION_PRIMITIVE_LIBRARY_INCLUDE_DIRS})
+...
+add_executable(test_xxx src/test_xxx.cpp)
+target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
+
+```
+
 
 
 ## Example Usage

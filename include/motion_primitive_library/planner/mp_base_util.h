@@ -1,6 +1,6 @@
 /**
  * @file mp_base_util.h
- * @brief base class for mp_planner
+ * @brief base class for motion planning
  *
  * Base classes for planning
  */
@@ -8,12 +8,12 @@
 #ifndef MP_BASE_UTIL_H
 #define MP_BASE_UTIL_H
 
-#include <planner/graph_search.h>
-#include <planner/env_base.h>
+#include <motion_primitive_library/planner/graph_search.h>
+#include <motion_primitive_library/planner/env_base.h>
 
 
 /**
- * @brief Motion primitive base util class
+ * @brief Motion planning base util class
  */
 class MPBaseUtil
 {

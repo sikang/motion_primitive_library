@@ -4,8 +4,8 @@
  */
 #ifndef SFC_UTIL_H
 #define SFC_UTIL_H
-#include <primitive/primitive.h>
-#include <primitive/primitive_util.h>
+#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/primitive/primitive_util.h>
 #include <pcl/kdtree/kdtree_flann.h>
 
 #include <boost/make_shared.hpp>

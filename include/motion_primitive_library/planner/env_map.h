@@ -5,10 +5,10 @@
 
 #ifndef ENV_MP_H
 #define ENV_MP_H
-#include <planner/env_base.h>
-#include <primitive/primitive.h>
+#include <motion_primitive_library/planner/env_base.h>
+#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/collision_checking/voxel_map_util.h>
 #include <unordered_map>
-#include <collision_checking/voxel_map_util.h>
 
 namespace MPL {
 

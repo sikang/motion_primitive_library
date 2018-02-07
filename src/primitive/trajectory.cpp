@@ -1,4 +1,5 @@
-#include <primitive/trajectory.h>
+#include <motion_primitive_library/primitive/trajectory.h>
+
 bool VirtualPointComp (VirtualPoint i, VirtualPoint j) { return (i.t<j.t); }
 
 //********** Lambda Seg ****************

@@ -7,7 +7,7 @@
 #ifndef TRAJECTORY_H
 #define TRAJECTORY_H
 
-#include <primitive/primitive.h>
+#include <motion_primitive_library/primitive/primitive.h>
 
 /**
  * @biref Used for scaling, ignored for most case

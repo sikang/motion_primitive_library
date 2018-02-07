@@ -1,4 +1,4 @@
-#include <primitive/math.h>
+#include <motion_primitive_library/primitive/math.h>
 
 /* **************************************************************** */
 std::vector<decimal_t> quad(decimal_t b, decimal_t c, decimal_t d) {

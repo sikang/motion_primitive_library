@@ -8,8 +8,8 @@
 
 #include <memory>
 #include <vector>
-#include <primitive/primitive.h>
-#include <primitive/trajectory.h>
+#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/primitive/trajectory.h>
 
 namespace MPL {
   

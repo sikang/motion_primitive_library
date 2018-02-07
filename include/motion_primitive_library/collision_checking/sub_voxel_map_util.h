@@ -6,7 +6,7 @@
 #ifndef MPL_SUB_VOXEL_MAP_UTIL_H
 #define MPL_SUB_VOXEL_MAP_UTIL_H
 
-#include <collision_checking/voxel_map_util.h>
+#include <motion_primitive_library/collision_checking/voxel_map_util.h>
 
 namespace MPL {
 class SubVoxelMapUtil : public VoxelMapUtil {

@@ -7,7 +7,7 @@
     if n >= 5, using Eigen Polynomials solver which is slower but correct.
     */
 #pragma once
-#include <motion_primitive_library/data_type.h>
+#include <motion_primitive_library/common/data_type.h>
 #include <unsupported/Eigen/Polynomials>
 #include <iostream>
 

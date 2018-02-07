@@ -1,7 +1,7 @@
 #include "timer.hpp"
 #include "map_reader.hpp"
-#include <collision_checking/voxel_map_util.h>
-#include <planner/mp_map_util.h>
+#include <motion_primitive_library/collision_checking/voxel_map_util.h>
+#include <motion_primitive_library/planner/mp_map_util.h>
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>

@@ -6,7 +6,7 @@
 #ifndef MPL_VOXEL_MAP_UTIL_H
 #define MPL_VOXEL_MAP_UTIL_H
 
-#include <collision_checking/map_util_base.h>
+#include <motion_primitive_library/collision_checking/map_util_base.h>
 
 namespace MPL {
 class VoxelMapUtil : public MapUtilBase<Vec3i, Vec3f, std::vector<signed char>> {
@@ -93,7 +93,7 @@ public:
     */
   }
 
- vec_Vec3f getFreeCloud() {
+  vec_Vec3f getFreeCloud() {
     vec_Vec3f cloud;
     Vec3i n;
     for (n(0) = 0; n(0) < dim_(0); n(0)++) {

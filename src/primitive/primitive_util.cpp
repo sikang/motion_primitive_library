@@ -1,4 +1,4 @@
-#include <primitive/primitive_util.h>
+#include <motion_primitive_library/primitive/primitive_util.h>
 
 void print_coeffs(const Primitive& p) {
   printf("coeffs: t = %f\n", p.t());
