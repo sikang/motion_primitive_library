@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MRSL Motion Primitive Library
-   &#160;<span id="projectnumber">0.3</span>
+   &#160;<span id="projectnumber">0.4</span>
    </div>
    <div id="projectbrief">A motion primitive library for generating trajectory for mobile robots</div>
   </td>
@@ -67,20 +67,19 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classDecompUtil.html">DecompUtil</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>axe_</b> (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classDecompUtil.html#acd50f6f5ec5952d0b47ed350194e5f47">DecompUtil</a>(decimal_t r=0)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>insideEllipsoid</b>(const Ellipsoid &amp;E, const vec_Vec3f &amp;O) (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#aeafc448eabc0774680e316d9ab892782">axe_</a></td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classDecompUtil.html#a7c42982259ffd9404d430f11102501af">DecompUtil</a>(decimal_t r, decimal_t h=0.1)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#a6d8699b5fefce36a43f5f5013136eddb">insideEllipsoid</a>(const Ellipsoid &amp;E, const vec_Vec3f &amp;O)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classDecompUtil.html#a6047f9036992d27f5769697b02f2ad49">insidePolyhedron</a>(const Vec3f &amp;pt, const Polyhedron &amp;Vs)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#a0d54bc0180088d4339cf754b5288a5bd">isFree</a>(const Primitive &amp;pr)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>kdtree_</b> (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>obs_</b> (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classDecompUtil.html#aa51d341296662c5bb05e6e8f9a501678">kdtree_</a></td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#af2e3033920ba7ccee4e4e0c9aa75540a">obs_</a></td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classDecompUtil.html#a2d6f9eeb5dc43f6de3bec69a0d9f0c09">polyhedra</a>()</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>r_</b> (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>set_region</b>(const Vec3f &amp;ori, const Vec3f &amp;dim) (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setObstacles</b>(const vec_Vec3f &amp;obs) (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classDecompUtil.html#aee70de96e74159e6af61681a41da5d1c">toPCL</a>(const vec_Vec3f &amp;obs)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>virtual_wall</b>(const Vec3f &amp;pos) (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>Vs_</b> (defined in <a class="el" href="classDecompUtil.html">DecompUtil</a>)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#a5c5790c39aafee964213ad353521c8a3">set_region</a>(const Vec3f &amp;ori, const Vec3f &amp;dim)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classDecompUtil.html#a7df54ef30f4efe5ce1198c9b6eeea813">setObstacles</a>(const vec_Vec3f &amp;obs)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#aee70de96e74159e6af61681a41da5d1c">toPCL</a>(const vec_Vec3f &amp;obs)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classDecompUtil.html#a461c30e5d07a9eb08155981789a07195">virtual_wall</a>(const Vec3f &amp;pos)</td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classDecompUtil.html#a85eb977460ea8ed0c69e5464e2b09540">Vs_</a></td><td class="entry"><a class="el" href="classDecompUtil.html">DecompUtil</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

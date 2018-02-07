@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['env_5f',['ENV_',['../classMPBaseUtil.html#af5434db754ad459a4a836bb0073e8a0c',1,'MPBaseUtil']]],
-  ['eps_5f',['eps_',['../structMPL_1_1StateSpace.html#a364c9942e6a22c0e5b94a4fe1f9f9a5f',1,'MPL::StateSpace']]],
-  ['epsilon_5f',['epsilon_',['../classMPBaseUtil.html#a532897035738c4d196ecd73c751ad5bd',1,'MPBaseUtil']]],
-  ['expand_5fiteration_5f',['expand_iteration_',['../structMPL_1_1StateSpace.html#ae6060523e8ae45f726b60cb1b4e0886d',1,'MPL::StateSpace']]],
-  ['expanded_5fnodes_5f',['expanded_nodes_',['../classMPL_1_1env__base.html#a2e920048a984a5f0deeec48cee24aeaa',1,'MPL::env_base']]]
+  ['da_5f',['da_',['../classMPL_1_1env__base.html#a975a616c1e7ae43f1d92ba4f8baf7975',1,'MPL::env_base']]],
+  ['data_5f',['data_',['../classMapReader.html#a8fcd43bdf860d30a6dd7eee9efeffa5a',1,'MapReader']]],
+  ['dilate_5fneighbor_5f',['dilate_neighbor_',['../classMPL_1_1MapUtilBase.html#adddd683bedcd861183d90aacb41a29c7',1,'MPL::MapUtilBase']]],
+  ['dim_5f',['dim_',['../classMPL_1_1MapUtilBase.html#a646bddffd162ddbafb4d6a986db62b2b',1,'MPL::MapUtilBase::dim_()'],['../classMapReader.html#ad3569fc2e16736d8f74c1de3404a5402',1,'MapReader::dim_()']]],
+  ['dj_5f',['dj_',['../classMPL_1_1env__base.html#ae958108a1a2eec24bc56f0bf8f510d9e',1,'MPL::env_base']]],
+  ['ds_5f',['ds_',['../classMPL_1_1env__base.html#a93c9a2bd16fefabc99ee2aee1bc2d445',1,'MPL::env_base']]],
+  ['dt_5f',['dt_',['../classMPL_1_1env__base.html#abf7c0ad06bbb55d346d822c52af51a26',1,'MPL::env_base::dt_()'],['../structMPL_1_1StateSpace.html#a851fa88109bc8b7aca459bcfd6e875e7',1,'MPL::StateSpace::dt_()']]],
+  ['dv_5f',['dv_',['../classMPL_1_1env__base.html#a8a4985a02d526c38b4e823b4e6815136',1,'MPL::env_base']]]
 ];

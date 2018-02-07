@@ -3,7 +3,7 @@ var searchData=
   ['map_5f',['map_',['../classMPL_1_1MapUtilBase.html#aa5725453a0c751adbbc2c09126cd6565',1,'MPL::MapUtilBase']]],
   ['map_5futil_5f',['map_util_',['../classMPMapUtil.html#a842bc1b28d918942b92c9c9278658ef5',1,'MPMapUtil']]],
   ['map_5futil_5fbase_2eh',['map_util_base.h',['../map__util__base_8h.html',1,'']]],
-  ['mapreader',['MapReader',['../classMapReader.html',1,'']]],
+  ['mapreader',['MapReader',['../classMapReader.html',1,'MapReader&lt; Ti, Tf &gt;'],['../classMapReader.html#aa92a0fd7f12a02a128b33240ab87b66f',1,'MapReader::MapReader()']]],
   ['maputilbase',['MapUtilBase',['../classMPL_1_1MapUtilBase.html',1,'MPL::MapUtilBase&lt; Ti, Tf, Tmap &gt;'],['../classMPL_1_1MapUtilBase.html#a4038d1970a8fa0420a4fcd26943a1ca2',1,'MPL::MapUtilBase::MapUtilBase()']]],
   ['maputilbase_3c_20vec3i_2c_20vec3f_2c_20std_3a_3avector_3c_20signed_20char_20_3e_20_3e',['MapUtilBase&lt; Vec3i, Vec3f, std::vector&lt; signed char &gt; &gt;',['../classMPL_1_1MapUtilBase.html',1,'MPL']]],
   ['mat2f',['Mat2f',['../data__type_8h.html#a227812175d5d72f8ddf60fd47ed9d3ee',1,'data_type.h']]],

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['g',['g',['../structMPL_1_1State.html#a04e0dbb11e919e9538b3875b5a22e79f',1,'MPL::State']]],
   ['get_5fdt',['get_dt',['../classMPL_1_1env__base.html#ad20696e1a80eea534985a1be87735e1b',1,'MPL::env_base']]],
   ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#aa85f1858e00de899de7a6156e834adcd',1,'MPL::env_base']]],
   ['get_5fsucc',['get_succ',['../classMPL_1_1env__base.html#add85a24c2e7bcdbcfde00c80fee083d3',1,'MPL::env_base::get_succ()'],['../classMPL_1_1env__cloud.html#aa70d9986ca84bb12ada06ead5d03b63a',1,'MPL::env_cloud::get_succ()'],['../classMPL_1_1env__map.html#aa01f25b506bb2e5af18046673ef87d43',1,'MPL::env_map::get_succ()']]],
@@ -15,7 +16,6 @@ var searchData=
   ['getnullset',['getNullSet',['../classMPBaseUtil.html#a27f2b3f2f59f24d9815aca58466cccac',1,'MPBaseUtil']]],
   ['getopenset',['getOpenSet',['../classMPBaseUtil.html#abd774b351f528f9257db3f5876c77471',1,'MPBaseUtil']]],
   ['getorigin',['getOrigin',['../classMPL_1_1MapUtilBase.html#ab61c6dcb2b2a1a7345c79c67c3b4c338',1,'MPL::MapUtilBase']]],
-  ['getpolyhedra',['getPolyhedra',['../classMPCloudUtil.html#a6e0992436c35fa6013d0d5f908db8796',1,'MPCloudUtil']]],
   ['getres',['getRes',['../classMPL_1_1MapUtilBase.html#a58aae164dcfc96d689743efe5e2038ff',1,'MPL::MapUtilBase']]],
   ['getsegst',['getSegsT',['../classTrajectory.html#a13c112898c1f72e8a27fc67b3cdef211',1,'Trajectory']]],
   ['getsubstatespace',['getSubStateSpace',['../classMPBaseUtil.html#a225fdd875aa6bdd6d424744af39f0481',1,'MPBaseUtil::getSubStateSpace()'],['../structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17',1,'MPL::StateSpace::getSubStateSpace()']]],
@@ -25,7 +25,6 @@ var searchData=
   ['getvalidprimitives',['getValidPrimitives',['../classMPBaseUtil.html#a02018a52f81c20d4b8c017c2ca7c1350',1,'MPBaseUtil']]],
   ['getws',['getWs',['../classMPBaseUtil.html#ae9f6683380b22548a1d1136319ff463e',1,'MPBaseUtil']]],
   ['goal_5fnode_5f',['goal_node_',['../classMPL_1_1env__base.html#a42222f6c6f6c69d977e3cfe549d8aa76',1,'MPL::env_base']]],
-  ['goal_5foutside',['goal_outside',['../classMPL_1_1env__base.html#a18d8dfe720dafe2fde2d4e2acef00d33',1,'MPL::env_base']]],
   ['graph_5fsearch_2eh',['graph_search.h',['../graph__search_8h.html',1,'']]],
   ['graphsearch',['GraphSearch',['../classMPL_1_1GraphSearch.html',1,'MPL::GraphSearch'],['../classMPL_1_1GraphSearch.html#a32b762065c805a769d55c64c662d4fc5',1,'MPL::GraphSearch::GraphSearch()']]]
 ];

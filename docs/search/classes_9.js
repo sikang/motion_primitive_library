@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['timer',['Timer',['../classMPL_1_1Timer.html',1,'MPL']]],
+  ['timer',['Timer',['../classTimer.html',1,'']]],
   ['trajectory',['Trajectory',['../classTrajectory.html',1,'']]]
 ];

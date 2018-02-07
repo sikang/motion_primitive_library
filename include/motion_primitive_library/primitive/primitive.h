@@ -15,10 +15,10 @@
  * State includes position, velocity and acceleration in \f$R^3\f$
  */
 struct Waypoint {
-  Vec3f pos; ///<position in \f$\mathbb{R}^3\f$
-  Vec3f vel; ///<velocity in \f$\mathbb{R}^3\f$
-  Vec3f acc; ///<acceleration in \f$\mathbb{R}^3\f$
-  Vec3f jrk; ///<jerk in \f$\mathbb{R}^3\f$
+  Vec3f pos; ///<position in \f$R^3\f$
+  Vec3f vel; ///<velocity in \f$R^3\f$
+  Vec3f acc; ///<acceleration in \f$R^3\f$
+  Vec3f jrk; ///<jerk in \f$R^3\f$
 
 
   bool use_pos = false;///<If true, attribute pos will be used in primitive generation
