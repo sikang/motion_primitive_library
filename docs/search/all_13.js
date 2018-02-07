@@ -3,7 +3,7 @@ var searchData=
   ['u_5f',['U_',['../classMPL_1_1env__base.html#a6fec9eb45a2cf926c4833f5a25a7f8cc',1,'MPL::env_base']]],
   ['updateblockednodes',['updateBlockedNodes',['../classMPMapUtil.html#a7293785ce02fe66729b48daad309be37',1,'MPMapUtil']]],
   ['updateclearednodes',['updateClearedNodes',['../classMPMapUtil.html#accb338b9c10b9c175bc443256a137dfe',1,'MPMapUtil']]],
-  ['updategoal',['updateGoal',['../classMPBaseUtil.html#a494f005d943539dda346dc9fa60de236',1,'MPBaseUtil::updateGoal()'],['../structMPL_1_1StateSpace.html#a46fd32cc167689fa75539dd9fcf924da',1,'MPL::StateSpace::updateGoal()']]],
+  ['updategoal',['updateGoal',['../structMPL_1_1StateSpace.html#a290f2b30aae29670d38dd2696fea5194',1,'MPL::StateSpace']]],
   ['updatenode',['updateNode',['../structMPL_1_1StateSpace.html#adc6c9c08d50314a503c2990ddec08cac',1,'MPL::StateSpace']]],
   ['use_5facc',['use_acc',['../structWaypoint.html#aee2b103557f9b8aa6a6d710d6e2df463',1,'Waypoint']]],
   ['use_5fjrk',['use_jrk',['../structWaypoint.html#a6f593a225ec24be894f1142125794bdf',1,'Waypoint']]],

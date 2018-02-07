@@ -1,3 +1,10 @@
+/**
+ * @file state_space.h
+ * @brief state space class for graph search
+ */
+
+
+
 #include <boost/heap/d_ary_heap.hpp>      // boost::heap::d_ary_heap
 #include <memory>                         // std::shared_ptr
 #include <limits>                         // std::numeric_limits
