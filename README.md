@@ -1,4 +1,5 @@
 # MRSL Motion Primitive Library for quadrotor v0.4
+[![wercker status](https://app.wercker.com/status/ae575e9b5218e1f02684065445c6de66/s/master "wercker status")](https://app.wercker.com/project/byKey/ae575e9b5218e1f02684065445c6de66)
 - - -
 ## New Feature
   - Add incremental trajectory planning
