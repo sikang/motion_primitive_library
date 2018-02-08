@@ -1,12 +1,8 @@
+box: ubuntu
+
 build:
   steps:
    - script:
-      name: install dependencies
-      code: |
-        sudo apt-get update
-        rosdep update
-        rosdep install --from-paths . --ignore-src -y -r --as-root apt:false
-    - script:
       name: build
       code: |
         mkdir build
