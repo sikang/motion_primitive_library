@@ -13,6 +13,7 @@ FIND_PACKAGE(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
+list(REMOVE_ITEM VTK_LIBRARIES "vtkproj4")
 
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
