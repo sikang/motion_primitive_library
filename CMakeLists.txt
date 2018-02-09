@@ -9,11 +9,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-deprecated-declara
 
 set(BUILD_SHARED_LIBS ON)
 
-FIND_PACKAGE(PCL REQUIRED)
+FIND_PACKAGE(PCL 1.7 REQUIRED)
+if(NOT "${PCL_LIBRARIES}" STREQUAL "")
+  list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
+endif()
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-list(REMOVE_ITEM VTK_LIBRARIES "vtkproj4")
 
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
