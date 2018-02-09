@@ -7,8 +7,9 @@
 
 ## Compilation
 #### Prerequisite:
-  - [`PCL`](http://pointclouds.org/)
-  - [`Eigen`](http://eigen.tuxfamily.org/index.php?title=Main_Page)
+  - `PCL`: apt install libpcl-dev
+  - `Eigen`: apt install libeigen3-dev
+  - `YAML-CPP`: apt install libyaml-cpp-dev
 
 ##### A) Simple cmake
 ```sh
