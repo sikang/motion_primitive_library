@@ -7,7 +7,6 @@
 
 ## Compilation
 #### Prerequisite:
-  - `Boost`
   - [`PCL`](http://pointclouds.org/)
   - [`Eigen`](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 

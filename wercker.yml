@@ -1,4 +1,4 @@
-box: osrf/ros:kinetic-desktop-full
+box: ubuntu
 
 build:
   steps:
@@ -6,18 +6,13 @@ build:
       name: install dependencies
       code: |
         sudo apt-get update
-        rosdep update
-        rosdep install --from-paths . --ignore-src -y -r --as-root apt:false
+        sudo apt install libeigen3-dev libpcl-dev cmake
     - script:
       name: build
       code: |
-        cd ..
-        mkdir -p catkin_ws/src
-        mv source catkin_ws/src/
-        cd catkin_ws/src
-        catkin_init_workspace
-        cd ..
-        export ROS_PARALLEL_JOBS='-j4 -l4' # Limit parallel jobs
-        catkin_make_isolated -DCMAKE_BUILD_TYPE=Release
+        mkdir build
+        cd build
+        cmake ..
+        make -j4
 
 
