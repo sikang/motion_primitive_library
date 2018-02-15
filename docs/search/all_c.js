@@ -15,6 +15,7 @@ var searchData=
   ['matdf',['MatDf',['../data__type_8h.html#a18e124bf36dc876ac69175bb51375c78',1,'data_type.h']]],
   ['math_2eh',['math.h',['../math_8h.html',1,'']]],
   ['max_5facc',['max_acc',['../classPrimitive.html#a25e5b4fa8b11ed0be84a5246f8d09215',1,'Primitive']]],
+  ['max_5fattitude',['max_attitude',['../primitive__util_8h.html#a0aa5f00e88e4526acd48482efa9658a2',1,'primitive_util.cpp']]],
   ['max_5fjrk',['max_jrk',['../classPrimitive.html#ac194f73b50d5ecc6e2c7c241720c9b4b',1,'Primitive']]],
   ['max_5fnum_5f',['max_num_',['../classMPBaseUtil.html#a2a98e75b4acfd38a6e3898b42d8fccf9',1,'MPBaseUtil']]],
   ['max_5ft_5f',['max_t_',['../classMPBaseUtil.html#aa18778ffcf24bea5332507a255e511e1',1,'MPBaseUtil::max_t_()'],['../structMPL_1_1StateSpace.html#a2677cd76471ec9d9ca3d4cc1db31f714',1,'MPL::StateSpace::max_t_()']]],

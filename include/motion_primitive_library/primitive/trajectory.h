@@ -1,6 +1,6 @@
 /**
  * @file trajectory.h
- * @brief Trajectory classes
+ * @brief Trajectory class
  */
 
 

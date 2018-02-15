@@ -1,6 +1,7 @@
 var searchData=
 [
   ['sample',['sample',['../classPrimitive.html#aa15ac4cb4b646446c858bf52ef3a06cf',1,'Primitive::sample()'],['../classTrajectory.html#a642225510c88c8eb8137faaff92c2fcf',1,'Trajectory::sample()']]],
+  ['sample_5fellipsoids',['sample_ellipsoids',['../primitive__util_8h.html#a02334480ad9e8cc60ac9496173a9692c',1,'sample_ellipsoids(const Primitive &amp;pr, const Vec3f &amp;axe, int N):&#160;primitive_util.cpp'],['../primitive__util_8h.html#adf76ec15a5f81a96df24ad005c548861',1,'sample_ellipsoids(const Trajectory &amp;traj, const Vec3f &amp;axe, int N):&#160;primitive_util.cpp']]],
   ['scale',['scale',['../classTrajectory.html#ab6ab39c7d4ab8387300e6b0d2055f16a',1,'Trajectory']]],
   ['scale_5fdown',['scale_down',['../classTrajectory.html#a8b714873cc8c99bdfb822037b8646754',1,'Trajectory']]],
   ['segs',['segs',['../classTrajectory.html#a86463591d1de80f857bc707b63341ec7',1,'Trajectory']]],

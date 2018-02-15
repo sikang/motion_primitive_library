@@ -19,6 +19,13 @@ For technical detials, refer to the original paper ["Search-based Motion Plannin
   - `Eigen`: apt install libeigen3-dev
   - `YAML-CPP`: apt install libyaml-cpp-dev
 
+or simply run following commands:
+```sh
+$ sudo apt-get update
+$ sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
+```
+ 
+
 ##### A) Simple cmake
 ```sh
 mkdir build && cd build && cmake .. && make
