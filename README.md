@@ -51,10 +51,14 @@ target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
 
 
 ## Example Usage
-Before planning, the start and goal states must be set up accordingly as:
-```c++
+Three components are needed to set up a planner:
+
+#### 1) Start and Goal:
+We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input. 
+An example for 3D planning is given as:
+```
 // Initialize planning mission 
-Waypoint start, goal;
+Waypoint3 start, goal;
 start.pos = Vec3f(2.5, -3.5, 0.0);
 start.use_pos = true;
 start.use_vel = true;
@@ -67,7 +71,7 @@ goal.use_acc = start.use_acc;
 goal.use_jrk = start.use_jrk;
 ```
 
-The flags `use_xxx` will adapt the planning in different control space. For example, the one above is control in acc space. Four options are provided by setting those flags as below:
+The flag `use_xxx` will adapt the planning in different control space. For example, the one above is control in acc space. Four options are provided by setting those flags as below:
 
 Vel | Acc | Jrk | Snp
 :-- | :-- | :-- | :--
@@ -76,10 +80,28 @@ Vel | Acc | Jrk | Snp
 `use_acc = false` | `use_acc = false` | `use_acc = true` | `use_acc = true`
 `use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = true`
 
+#### 2) Set collision checking:
+For `class MPMapUtil`, we use `class MapUtil` to handle collision checking in voxel map. 
+An example for 3D collision checking based on `VoxelMapUtil` is given as: 
+```
+std::shared_ptr<VoxelMapUtil> map_util;
+map_util.reset(new VoxelMapUtil);
+```
+#### 3) Set control input:
+An example for the control input for 3D planning is given as `U` in":
+```
+vec_Vec3f U;
+const decimal_t du = u_max / num;
+for(decimal_t dx = -u_max; dx <= u_max; dx += du )
+  for(decimal_t dy = -u_max; dy <= u_max; dy += du )
+    for(decimal_t dz = -u_max; dz <= u_max; dz += du )
+      U.push_back(Vec3f(dx, dy, dz));
+```
 
+#### 4) Set the planner:
 After setting up start and goal states, a planning thread can be started as:
 ```
-std::unique_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
+std::unique_ptr<MPMap3DUtil> planner(new MPMap3DUtil(true)); // Declare a mp planner using voxel map
 planner->setMapUtil(map_util); // Set collision checking function
 planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity
@@ -89,7 +111,7 @@ planner->setUmax(0.5); // Set max control input
 planner->setDt(1.0); // Set dt for each primitive
 planner->setW(10); // Set weight of time 
 planner->setMaxNum(-1); // Set maximum allowed number of expanded nodes (-1 means no limitation)
-planner->setU(1, false);// 2D discretization with 1
+planner->setU(U);// 2D discretization with 1
 planner->setTol(0.2, 0.1, 1); // Tolerance for goal region (pos=0.2, vel=0.1, acc=1 accordingly)
 
 bool valid = planner->plan(start, goal); // Plan from start to goal
