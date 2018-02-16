@@ -1,8 +1,10 @@
 #include <motion_primitive_library/primitive/poly_traj.h>
 
-PolyTraj::PolyTraj() {}
+template <int Dim>
+PolyTraj<Dim>::PolyTraj() {}
 
-Waypoint PolyTraj::evaluate(decimal_t time) const {
+template <int Dim>
+Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
   if (time < 0)
     time = 0;
   int cur_idx = -1;
@@ -16,39 +18,45 @@ Waypoint PolyTraj::evaluate(decimal_t time) const {
     time = waypoint_times_.back();
 
   const decimal_t t_traj = time - waypoint_times_[cur_idx];
-  const MatD3f &p = coefficients_[cur_idx];
-  Waypoint waypoint;
-  for (int derr = 0; derr < 3; derr++ ){
-    Vec3f v3 = Vec3f::Zero();
+  const MatDNf<Dim> &p = coefficients_[cur_idx];
+  Waypoint<Dim> waypoint;
+  for (int derr = 0; derr < Dim; derr++ ){
+    Vecf<Dim> vec = Vecf<Dim>::Zero();
     for (unsigned int i = derr; i < p.rows(); i++) {
       unsigned int c = 1;
       for (int j = 0; j < derr; j++)
         c *= (i - j);
-      v3 += p.row(i).transpose() * (c * std::pow(t_traj, i - derr));
+      vec += p.row(i).transpose() * (c * std::pow(t_traj, i - derr));
     }
     if(derr == 0)
-      waypoint.pos = v3;
+      waypoint.pos = vec;
     else if(derr == 1)
-      waypoint.vel = v3;
+      waypoint.vel = vec;
     else if(derr == 2)
-      waypoint.acc = v3;
+      waypoint.acc = vec;
   }
 
   return waypoint;
 }
 
-decimal_t PolyTraj::getTotalTime() const { return waypoint_times_.back(); }
+template <int Dim>
+decimal_t PolyTraj<Dim>::getTotalTime() const { 
+  return waypoint_times_.back(); 
+}
 
-void PolyTraj::clear() {
+template <int Dim>
+void PolyTraj<Dim>::clear() {
   waypoint_times_.clear();
   coefficients_.clear();
 }
 
-void PolyTraj::addCoeff(const MatD3f &p) {
-  coefficients_.push_back(p);
+template <int Dim>
+void PolyTraj<Dim>::addCoeff(const MatDNf<Dim> &coeff) {
+  coefficients_.push_back(coeff);
 }
 
-void PolyTraj::addTime(const std::vector<decimal_t> &dts) {
+template <int Dim>
+void PolyTraj<Dim>::addTime(const std::vector<decimal_t> &dts) {
   waypoint_times_.clear();
   waypoint_times_.push_back(0);
   for (auto t : dts)
@@ -56,12 +64,13 @@ void PolyTraj::addTime(const std::vector<decimal_t> &dts) {
   dts_ = dts;
 }
 
-std::vector<Primitive> PolyTraj::toPrimitives() {
-  std::vector<Primitive> trajs;
+template <int Dim>
+vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() {
+  vec_E<Primitive<Dim>> trajs;
   trajs.resize(coefficients_.size());
   for (unsigned int i = 0; i < coefficients_.size(); i++) {
     vec_E<Vec6f> coeffs;
-    const MatD3f &p = coefficients_[i];
+    const MatDNf<Dim> &p = coefficients_[i];
     for (unsigned int j = 0; j < p.cols(); j++) {
       Vec6f coeff;
       for (unsigned int k = 0; k < p.rows(); k++)
@@ -69,14 +78,10 @@ std::vector<Primitive> PolyTraj::toPrimitives() {
       coeffs.push_back(coeff.reverse());
     }
 
-    trajs[i] = Primitive(coeffs, dts_[i]);
+    trajs[i] = Primitive<Dim>(coeffs, dts_[i]);
   }
   return trajs;
 }
 
-inline int PolyTraj::factorial(int n) {
-  if(n <= 1)
-    return 1;
-  return n*factorial(n-1);
-}
+
 

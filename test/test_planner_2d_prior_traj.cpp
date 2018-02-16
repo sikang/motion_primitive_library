@@ -25,11 +25,9 @@ int main(int argc, char ** argv){
   std::shared_ptr<VoxelMapUtil> map_util;
   map_util.reset(new VoxelMapUtil);
   map_util->setMap(reader.origin(), reader.dim(), reader.data(), reader.resolution());
-  map_util->dilate(0.1, 0.1); // Dilate obstacles with r = 0.1, h = 0.1
-  map_util->dilating(); // Dilating
 
   // Initialize planning mission 
-  Waypoint start, goal;
+  Waypoint3 start, goal;
   start.pos = Vec3f(2.5, -3.5, 0.0); 
   start.vel = Vec3f::Zero(); 
   start.acc = Vec3f::Zero(); 
@@ -49,17 +47,25 @@ int main(int argc, char ** argv){
   goal.use_acc = start.use_acc;
   goal.use_jrk = start.use_jrk;
 
-  std::unique_ptr<MPMapUtil> planner(new MPMapUtil(true)); // Declare a mp planner using voxel map
+  decimal_t u_max = 1.0;
+  decimal_t du = u_max;
+  vec_Vec3f U;
+  for(decimal_t dx = -u_max; dx <= u_max; dx += du )
+    for(decimal_t dy = -u_max; dy <= u_max; dy += du )
+      U.push_back(Vec3f(dx, dy, 0));
+
+
+  std::unique_ptr<MPMap3DUtil> planner(new MPMap3DUtil(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
   planner->setAmax(1.0); // Set max acceleration 
   planner->setJmax(1.0); // Set max jerk
-  planner->setUmax(1.0); // Set max control input
+  planner->setUmax(u_max); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
   planner->setW(10); // Set dt for each primitive
   planner->setMaxNum(-1); // Set maximum allowed states
-  planner->setU(1, false);// 2D discretization with 1
+  planner->setU(U);// 2D discretization with 1
   planner->setTol(0.5, 1, 1); // Tolerance for goal region
 
 
@@ -70,7 +76,7 @@ int main(int argc, char ** argv){
   printf("MP Planner prior takes: %f ms\n", dt);
   printf("MP Planner prior expanded states: %zu\n", planner->getCloseSet().size());
 
-  Trajectory prior_traj = planner->getTraj();
+  Trajectory3 prior_traj = planner->getTraj();
   printf("Total time T: %f\n", prior_traj.getTotalTime());
   printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
       prior_traj.J(0), prior_traj.J(1), prior_traj.J(2), prior_traj.J(3));
@@ -88,18 +94,26 @@ int main(int argc, char ** argv){
   */
 
 
+  u_max = 0.5;
+  du = u_max;
+  U.clear();
+  for(decimal_t dx = -u_max; dx <= u_max; dx += du )
+    for(decimal_t dy = -u_max; dy <= u_max; dy += du )
+      U.push_back(Vec3f(dx, dy, 0));
+
+
   int alpha = 0;
-  planner.reset(new MPMapUtil(true)); // Declare a mp planner using voxel map
+  planner.reset(new MPMap3DUtil(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
   planner->setAmax(1.0); // Set max acceleration 
   planner->setJmax(1.0); // Set max jerk
-  planner->setUmax(0.5); // Set max control input
+  planner->setUmax(u_max); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
   planner->setW(10); // Set dt for each primitive
   planner->setMaxNum(-1); // Set maximum allowed states
-  planner->setU(1, false);// 2D discretization with 1
+  planner->setU(U);// 2D discretization with 1
   planner->setTol(0.2, 0.1, 1); // Tolerance for goal region
   planner->setAlpha(alpha);
   planner->setPriorTrajectory(prior_traj);
@@ -171,7 +185,7 @@ int main(int argc, char ** argv){
 
 
   if(valid) {
-    Trajectory traj = planner->getTraj();
+    Trajectory3 traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
     printf("Refined total time T: %f\n", total_t);
     printf("Refined total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
@@ -184,7 +198,7 @@ int main(int argc, char ** argv){
     double dt = total_t / num; 
     boost::geometry::model::linestring<point_2d> line;
     for(double t = 0; t <= total_t; t += dt) {
-      Waypoint w;
+      Waypoint3 w;
       traj.evaluate(t, w);
       line.push_back(point_2d(w.pos(0), w.pos(1)));
     }
@@ -196,7 +210,7 @@ int main(int argc, char ** argv){
     dt = total_t / num; 
     boost::geometry::model::linestring<point_2d> prior_line;
     for(double t = 0; t <= total_t; t += dt) {
-      Waypoint w;
+      Waypoint3 w;
       prior_traj.evaluate(t, w);
       prior_line.push_back(point_2d(w.pos(0), w.pos(1)));
     }

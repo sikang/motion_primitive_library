@@ -23,22 +23,21 @@ typedef std::string Key;
 /**
  * @brief Base environment class
  */
+template <int Dim>
 class env_base
 {
   public:
     ///Simple constructor
-    env_base(){}
-    ~env_base(){}
-
+    env_base() {}
 
     ///Check if hit the goal region
-    bool is_goal(const Waypoint& state) const
+    bool is_goal(const Waypoint<Dim>& state) const
     {
-      bool goaled = (state.pos - goal_node_.pos).lpNorm<Eigen::Infinity>() <= tol_dis;
+      bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis;
       if(goaled && goal_node_.use_vel) 
-        goaled = (state.vel - goal_node_.vel).lpNorm<Eigen::Infinity>() <= tol_vel;
+        goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel;
       if(goaled && goal_node_.use_acc) 
-        goaled = (state.acc - goal_node_.acc).lpNorm<Eigen::Infinity>() <= tol_acc;
+        goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc;
      return goaled;
     }
 
@@ -47,11 +46,11 @@ class env_base
      * @param Waypoint current state coord
      * @param t current state time
      */
-    double get_heur(const Waypoint& state, double t) const
+    decimal_t get_heur(const Waypoint<Dim>& state, decimal_t t) const
     {
       if(goal_node_ == state) 
         return 0;
-      Waypoint goal_node = goal_node_;
+      Waypoint<Dim> goal_node = goal_node_;
       t += alpha_ * dt_;
       if(!prior_traj_.segs.empty() && t < prior_traj_.getTotalTime()) {
         prior_traj_.evaluate(t, goal_node);
@@ -66,7 +65,7 @@ class env_base
     }
 
     /// calculate the cost from state to goal
-    double cal_heur(const Waypoint& state, const Waypoint& goal) const
+    decimal_t cal_heur(const Waypoint<Dim>& state, const Waypoint<Dim>& goal) const
     {
       //return 0;
       //return w_*(state.pos - goal.pos).norm();
@@ -74,11 +73,11 @@ class env_base
       if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
          goal.use_pos && goal.use_vel && goal.use_acc && !goal.use_jrk) {
  
-        const Vec3f dp = goal.pos - state.pos;
-        const Vec3f v0 = state.vel;
-        const Vec3f v1 = goal.vel;
-        const Vec3f a0 = state.acc;
-        const Vec3f a1 = goal.acc;
+        const Vecf<Dim> dp = goal.pos - state.pos;
+        const Vecf<Dim> v0 = state.vel;
+        const Vecf<Dim> v1 = goal.vel;
+        const Vecf<Dim> a0 = state.acc;
+        const Vecf<Dim> a1 = goal.acc;
         decimal_t a = w_;
         decimal_t b = 0;
         decimal_t c = -9*a0.dot(a0)+6*a0.dot(a1)-9*a1.dot(a1);
@@ -89,7 +88,7 @@ class env_base
 
         std::vector<decimal_t> ts = solve(a, b, c, d, e, f, g);
 
-        decimal_t t_bar =(state.pos - goal.pos).lpNorm<Eigen::Infinity>() / v_max_;
+        decimal_t t_bar = (state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
         ts.push_back(t_bar);
         decimal_t min_cost = std::numeric_limits<decimal_t>::max();
         for(auto t: ts) {
@@ -104,10 +103,10 @@ class env_base
 
       else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
          goal.use_pos && goal.use_vel && !goal.use_acc && !goal.use_jrk) {
-        const Vec3f dp = goal.pos - state.pos;
-        const Vec3f v0 = state.vel;
-        const Vec3f v1 = goal.vel;
-        const Vec3f a0 = state.acc;
+        const Vecf<Dim> dp = goal.pos - state.pos;
+        const Vecf<Dim> v0 = state.vel;
+        const Vecf<Dim> v1 = goal.vel;
+        const Vecf<Dim> a0 = state.acc;
 
         decimal_t a = w_;
         decimal_t b = 0;
@@ -119,11 +118,10 @@ class env_base
 
         std::vector<decimal_t> ts = solve(a, b, c, d, e, f, g);
 
-        decimal_t t_bar =(state.pos - goal.pos).lpNorm<Eigen::Infinity>() / v_max_;
+        decimal_t t_bar = (state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
         ts.push_back(t_bar);
         decimal_t min_cost = std::numeric_limits<decimal_t>::max();
         for(auto t: ts) {
-          //printf("t: %f ", t);
           if(t < t_bar)
             continue;
           decimal_t cost = a*t-c/t-d/2/t/t-e/3/t/t/t-f/4/t/t/t/t-g/5/t/t/t/t/t;
@@ -136,9 +134,9 @@ class env_base
 
       else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
          goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk) {
-        const Vec3f dp = goal.pos - state.pos;
-        const Vec3f v0 = state.vel;
-        const Vec3f a0 = state.acc;
+        const Vecf<Dim> dp = goal.pos - state.pos;
+        const Vecf<Dim> v0 = state.vel;
+        const Vecf<Dim> a0 = state.acc;
 
         decimal_t a = w_;
         decimal_t b = 0;
@@ -150,7 +148,7 @@ class env_base
 
         std::vector<decimal_t> ts = solve(a, b, c, d, e, f, g);
 
-        decimal_t t_bar =(state.pos - goal.pos).lpNorm<Eigen::Infinity>() / v_max_;
+        decimal_t t_bar = (state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
         ts.push_back(t_bar);
 
         decimal_t min_cost = std::numeric_limits<decimal_t>::max();
@@ -167,9 +165,10 @@ class env_base
 
       else if(state.use_pos && state.use_vel && !state.use_acc && !state.use_jrk &&
               goal.use_pos && goal.use_vel && !goal.use_acc && !goal.use_jrk) {
-        const Vec3f dp = goal.pos - state.pos;
-        const Vec3f v0 = state.vel;
-        const Vec3f v1 = goal.vel;
+        const Vecf<Dim> dp = goal.pos - state.pos;
+        const Vecf<Dim> v0 = state.vel;
+        const Vecf<Dim> v1 = goal.vel;
+
         decimal_t c1 = -36*dp.dot(dp);
         decimal_t c2 = 24*(v0+v1).dot(dp);
         decimal_t c3 = -4*(v0.dot(v0)+v0.dot(v1)+v1.dot(v1));
@@ -177,37 +176,7 @@ class env_base
         decimal_t c5 = w_;
 
         std::vector<decimal_t> ts = quartic(c5, c4, c3, c2, c1);
-        decimal_t t_bar =(state.pos - goal.pos).lpNorm<Eigen::Infinity>() / v_max_;
-        ts.push_back(t_bar);
-
-        decimal_t cost = std::numeric_limits<decimal_t>::max();
-       for(auto t: ts) {
-          if(t < t_bar)
-            continue;
-          decimal_t c = -c1/3/t/t/t-c2/2/t/t-c3/t+w_*t;
-          if(c < cost)
-            cost = c;
-          //printf("t: %f, cost: %f\n",t, cost);
-        }
-        //printf("-----------\n");
-        //if(ts.empty())
-          //printf("wrong! no root fond!\n");
-
-        return cost;
-      }
-
-      else if(state.use_pos && state.use_vel && !state.use_acc && !state.use_jrk &&
-              goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk) {
-        const Vec3f dp = goal.pos - state.pos;
-        const Vec3f v0 = state.vel;
-        decimal_t c1 = -9*dp.dot(dp);
-        decimal_t c2 = 12*v0.dot(dp);
-        decimal_t c3 = -3*v0.dot(v0);
-        decimal_t c4 = 0;
-        decimal_t c5 = w_;
-
-        std::vector<decimal_t> ts = quartic(c5, c4, c3, c2, c1);
-        decimal_t t_bar =(state.pos - goal.pos).lpNorm<Eigen::Infinity>() / v_max_;
+        decimal_t t_bar = (state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
         ts.push_back(t_bar);
 
         decimal_t cost = std::numeric_limits<decimal_t>::max();
@@ -217,11 +186,34 @@ class env_base
           decimal_t c = -c1/3/t/t/t-c2/2/t/t-c3/t+w_*t;
           if(c < cost)
             cost = c;
-          //printf("t: %f, cost: %f\n",t, cost);
         }
-        //printf("-----------\n");
-        //if(ts.empty())
-          //printf("wrong! no root fond!\n");
+
+        return cost;
+      }
+
+      else if(state.use_pos && state.use_vel && !state.use_acc && !state.use_jrk &&
+          goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk) {
+        const Vecf<Dim> dp = goal.pos - state.pos;
+        const Vecf<Dim> v0 = state.vel;
+
+        decimal_t c1 = -9*dp.dot(dp);
+        decimal_t c2 = 12*v0.dot(dp);
+        decimal_t c3 = -3*v0.dot(v0);
+        decimal_t c4 = 0;
+        decimal_t c5 = w_;
+
+        std::vector<decimal_t> ts = quartic(c5, c4, c3, c2, c1);
+        decimal_t t_bar = (state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
+        ts.push_back(t_bar);
+
+        decimal_t cost = std::numeric_limits<decimal_t>::max();
+        for(auto t: ts) {
+          if(t < t_bar)
+            continue;
+          decimal_t c = -c1/3/t/t/t-c2/2/t/t-c3/t+w_*t;
+          if(c < cost)
+            cost = c;
+        }
 
         return cost;
       }
@@ -234,71 +226,51 @@ class env_base
     }
 
     ///Replace the original cast function
-    inline Vec3i round(const Vec3f& vec, double res) const {
-      return Vec3i(std::round(vec(0) / res),
-          std::round(vec(1) / res),
-          std::round(vec(2) / res));
+    inline Veci<Dim> round(const Vecf<Dim>& vec, decimal_t res) const {
+      Veci<Dim> vecI;
+      for(int i = 0; i < Dim; i++)
+        vecI(i) = std::round(vec(i) / res);
+      return vecI;
+    }
+
+    ///Convert a vec to a string
+    std::string toString(const Veci<Dim>& vec) const {
+      std::string str;
+      for(int i = 0; i < Dim; i++)
+        str += std::to_string(vec(i)) + "-";
+      return str;
     }
 
     ///Genegrate Key from state
-    Key state_to_idx(const Waypoint& state) const {
-      Vec3i pi = round(state.pos, ds_);
+    Key state_to_idx(const Waypoint<Dim>& state) const {
+      const Veci<Dim> pi = round(state.pos, ds_);
       if(state.use_pos && state.use_vel && !state.use_acc ) {
-        Vec3i vi = round(state.vel, dv_);
-      return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
-        std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2));
+        const Veci<Dim> vi = round(state.vel, dv_);
+        return toString(pi) + toString(vi);
       }
       else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk) {
-        Vec3i vi = round(state.vel, dv_);
-        Vec3i ai = round(state.acc, da_);
-        return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
-          std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2)) + "-" +
-          std::to_string(ai(0)) + "-" + std::to_string(ai(1)) + "-" + std::to_string(ai(2));
+        const Veci<Dim> vi = round(state.vel, dv_);
+        const Veci<Dim> ai = round(state.acc, da_);
+        return toString(pi) + toString(vi) + toString(ai);
       }
       else if(state.use_pos && state.use_vel && state.use_acc && state.use_jrk) {
-        Vec3i vi = round(state.vel, dv_);
-        Vec3i ai = round(state.acc, da_);
-        Vec3i ji = round(state.jrk, dj_);
-        return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2)) + "-" +
-          std::to_string(vi(0)) + "-" + std::to_string(vi(1)) + "-" + std::to_string(vi(2)) + "-" +
-          std::to_string(ai(0)) + "-" + std::to_string(ai(1)) + "-" + std::to_string(ai(2)) + "-" +
-          std::to_string(ji(0)) + "-" + std::to_string(ji(1)) + "-" + std::to_string(ji(2));
+        const Veci<Dim> vi = round(state.vel, dv_);
+        const Veci<Dim> ai = round(state.acc, da_);
+        const Veci<Dim> ji = round(state.jrk, dj_);
+        return toString(pi) + toString(vi) + toString(ai) + toString(ji);
       }
       else 
-        return std::to_string(pi(0)) + "-" + std::to_string(pi(1)) + "-" + std::to_string(pi(2));
+        return toString(pi);
     }
 
     ///Recover trajectory
-    void forward_action( const Waypoint& curr, int action_id, Primitive& pr) const
+    void forward_action( const Waypoint<Dim>& curr, int action_id, Primitive<Dim>& pr) const
     {
-      pr = Primitive(curr, U_[action_id], dt_);
-    }
-
-    /**
-     * @brief Set discretization in control space
-     * @param n indicates how many samples on each semi-axes, eq: \f$ du = \frac{u_{max}}{n}\f$
-     * @param use_3d if true, we also expand in z-axis
-     */
-    void set_discretization(int n, bool use_3d) {
-      decimal_t du = u_max_ / n;
-
-      vec_Vec3f U;
-      if(use_3d) {
-        for(decimal_t dx = -u_max_; dx <= u_max_; dx += du )
-          for(decimal_t dy = -u_max_; dy <= u_max_; dy += du )
-            for(decimal_t dz = -u_max_; dz <= u_max_; dz += u_max_ ) //here we reduce the z control
-              U.push_back(Vec3f(dx, dy, dz));
-      }
-      else{
-        for(decimal_t dx = -u_max_; dx <= u_max_; dx += du )
-          for(decimal_t dy = -u_max_; dy <= u_max_; dy += du )
-            U.push_back(Vec3f(dx, dy, 0));
-      }
-      set_U(U);
+      pr = Primitive<Dim>(curr, U_[action_id], dt_);
     }
 
     ///Set max U in each axis
-    void set_U(const vec_Vec3f& U) {
+    void set_U(const vec_Vecf<Dim>& U) {
       U_ = U;
     }
 
@@ -328,7 +300,7 @@ class env_base
     }
 
     ///Set prior trajectory 
-    void set_prior_trajectory(const Trajectory& traj) {
+    void set_prior_trajectory(const Trajectory<Dim>& traj) {
       prior_traj_ = traj;
     }
 
@@ -368,7 +340,7 @@ class env_base
     }
 
     ///Set goal state
-    void set_goal(const Waypoint& state) {
+    void set_goal(const Waypoint<Dim>& state) {
       goal_node_ = state;
     }
 
@@ -394,13 +366,13 @@ class env_base
     }
 
     ///Check if a point is in free space
-    virtual bool is_free(const Vec3f& pt) const { 
+    virtual bool is_free(const Vecf<Dim>& pt) const { 
       printf("Used Null is_free() for pt\n");
       return true; 
     }
 
     ///Check if a primitive is in free space
-    virtual bool is_free(const Primitive& pr) const { 
+    virtual bool is_free(const Primitive<Dim>& pr) const { 
       printf("Used Null is_free() for pr\n");
       return true; 
     }
@@ -418,10 +390,10 @@ class env_base
      * @param succ_cost The array stores cost along valid edges
      * @param action_idx The array stores corresponding idx of control for each successor
      */
-    virtual void get_succ( const Waypoint& curr, 
-        std::vector<Waypoint>& succ,
+    virtual void get_succ( const Waypoint<Dim>& curr, 
+        vec_E<Waypoint<Dim>>& succ,
         std::vector<Key>& succ_idx,
-        std::vector<double>& succ_cost,
+        std::vector<decimal_t>& succ_cost,
         std::vector<int>& action_idx) const
     {
       printf("Used Null get_succ()\n");
@@ -432,47 +404,46 @@ class env_base
     }
 
     ///weight of time cost
-    double w_ = 10; 
+    decimal_t w_ = 10; 
     ///order of derivatives for effort
     int wi_; 
     ///heuristic time offset
     int alpha_ = 0;
 
     ///tolerance of position for goal region
-    double tol_dis = 1.0;
+    decimal_t tol_dis = 1.0;
     ///tolerance of velocity for goal region
-    double tol_vel = 1.0;
+    decimal_t tol_vel = 1.0;
     ///tolerance of acceleration for goal region
-    double tol_acc = 1.0;
+    decimal_t tol_acc = 1.0;
     ///max control input
-    double u_max_;
+    decimal_t u_max_;
     ///max velocity
-    double v_max_ = -1;
+    decimal_t v_max_ = -1;
     ///max acceleration
-    double a_max_ = -1;
+    decimal_t a_max_ = -1;
     ///max jerk
-    double j_max_ = -1;
+    decimal_t j_max_ = -1;
     ///max execution time
-    double t_max_ = -1;
+    decimal_t t_max_ = -1;
     ///duration of primitive
-    double dt_ = 1.0;
+    decimal_t dt_ = 1.0;
     ///grid size in position
-    double ds_ = 0.01;
+    decimal_t ds_ = 0.01;
     ///grid size in velocity
-    double dv_ = 0.01;
+    decimal_t dv_ = 0.01;
     ///grid size in acceleration
-    double da_ = 0.01;
+    decimal_t da_ = 0.01;
     ///grid size in jerk
-    double dj_ = 0.01;
-
+    decimal_t dj_ = 0.01;
+    ///expanded nodes
+    mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input
-    vec_Vec3f U_;
-    ///Expanded nodes
-    mutable vec_Vec3f expanded_nodes_;
+    vec_Vecf<Dim> U_;
     ///Goal node
-    Waypoint goal_node_;
+    Waypoint<Dim> goal_node_;
     ///Prior trajectory
-    Trajectory prior_traj_;
+    Trajectory<Dim> prior_traj_;
 
 };
 }

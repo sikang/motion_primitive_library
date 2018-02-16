@@ -6,11 +6,11 @@
 using namespace MPL;
 
 /**************************** Recover Trajectory ***************************/
-
-Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<StateSpace> ss_ptr, const std::shared_ptr<env_base>& ENV, const Key& start_key) {
+template <int Dim>
+Trajectory<Dim> GraphSearch<Dim>::recoverTraj(StatePtr<Dim> currNode_ptr, std::shared_ptr<StateSpace<Dim>> ss_ptr, const std::shared_ptr<env_base<Dim>>& ENV, const Key& start_key) {
   // Recover trajectory
   ss_ptr->best_child_.clear();
-  std::vector<Primitive> prs;
+  vec_E<Primitive<Dim>> prs;
   while( !currNode_ptr->pred_hashkey.empty())
   {
     if(verbose_) {
@@ -19,8 +19,8 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
     }
     ss_ptr->best_child_.push_back(currNode_ptr);
     int min_id = -1;
-    double min_rhs = std::numeric_limits<double>::infinity();
-    double min_g = std::numeric_limits<double>::infinity();
+    decimal_t min_rhs = std::numeric_limits<decimal_t>::infinity();
+    decimal_t min_g = std::numeric_limits<decimal_t>::infinity();
     for(unsigned int i = 0; i < currNode_ptr->pred_hashkey.size(); i++) {
       Key key = currNode_ptr->pred_hashkey[i];
       //std::cout << "action id: " << currNode_ptr->pred_action_id[i] << " parent g: " << ss_ptr->hm_[key]->g << " action cost: " << currNode_ptr->pred_action_cost[i] << " parent key: " <<key << std::endl;
@@ -42,7 +42,7 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
       Key key = currNode_ptr->pred_hashkey[min_id];
       int action_idx = currNode_ptr->pred_action_id[min_id];
       currNode_ptr = ss_ptr->hm_[key];
-      Primitive pr;
+      Primitive<Dim> pr;
       ENV->forward_action( currNode_ptr->coord, action_idx, pr );
       prs.push_back(pr);
       if(verbose_) {
@@ -71,31 +71,31 @@ Trajectory GraphSearch::recoverTraj(StatePtr currNode_ptr, std::shared_ptr<State
 
   std::reverse(prs.begin(), prs.end());
   std::reverse(ss_ptr->best_child_.begin(), ss_ptr->best_child_.end());
-  return Trajectory(prs);
+  return Trajectory<Dim>(prs);
 }
 
 
 
 /********************************* Astar  **************************************/
-
-double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
-    const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
-    Trajectory& traj, int max_expand, double max_t)
+template <int Dim>
+decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim>& start_coord, Key start_key,
+    const std::shared_ptr<env_base<Dim>>& ENV, std::shared_ptr<StateSpace<Dim>>& ss_ptr, 
+    Trajectory<Dim>& traj, int max_expand, decimal_t max_t)
 {
   // Check if done
   if( ENV->is_goal(start_coord) )
     return 0;
   
   // Initialize start node
-  StatePtr currNode_ptr = ss_ptr->hm_[start_key];
+  StatePtr<Dim> currNode_ptr = ss_ptr->hm_[start_key];
   if(ss_ptr->pq_.empty()) {
     if(verbose_) 
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr = std::make_shared<State>(State(start_key, start_coord));
+    currNode_ptr = std::make_shared<State<Dim>>(State<Dim>(start_key, start_coord));
     currNode_ptr->t = 0;
     currNode_ptr->g = 0;
     currNode_ptr->h = ENV->get_heur(start_coord, currNode_ptr->t);
-    double fval = currNode_ptr->g + ss_ptr->eps_ * currNode_ptr->h;
+    decimal_t fval = currNode_ptr->g + ss_ptr->eps_ * currNode_ptr->h;
     currNode_ptr->heapkey = ss_ptr->pq_.push( std::make_pair(fval, currNode_ptr));
     currNode_ptr->iterationopened = true;
     currNode_ptr->iterationclosed = false;
@@ -112,9 +112,9 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
     currNode_ptr->iterationclosed = true; // Add to closed list
 
     // Get successors
-    std::vector<Waypoint> succ_coord;
+    vec_E<Waypoint<Dim>> succ_coord;
     std::vector<MPL::Key> succ_key;
-    std::vector<double> succ_cost;
+    std::vector<decimal_t> succ_cost;
     std::vector<int> succ_act_id;
 
     ENV->get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
@@ -127,10 +127,10 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
         continue;
  
       // Get child
-      StatePtr& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
+      StatePtr<Dim>& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
       if( !succNode_ptr )
       {
-        succNode_ptr = std::make_shared<State>(State(succ_key[s], succ_coord[s]) );
+        succNode_ptr = std::make_shared<State<Dim>>(State<Dim>(succ_key[s], succ_coord[s]) );
         succNode_ptr->t = currNode_ptr->t + ENV->dt_;
         succNode_ptr->h = ENV->get_heur( succNode_ptr->coord, succNode_ptr->t); 
         /*
@@ -152,7 +152,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
 
       // see if we can improve the value of successor
       // taking into account the cost of action
-      double tentative_gval = currNode_ptr->g + succ_cost[s];
+      decimal_t tentative_gval = currNode_ptr->g + succ_cost[s];
 
       if( tentative_gval < succNode_ptr->g )
       {
@@ -165,7 +165,7 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
         succNode_ptr->t = currNode_ptr->t + ENV->dt_;
 	succNode_ptr->g = tentative_gval;    // Update gval
 
-	double fval = succNode_ptr->g + (ss_ptr->eps_) * succNode_ptr->h;
+	decimal_t fval = succNode_ptr->g + (ss_ptr->eps_) * succNode_ptr->h;
 
 	// if currently in OPEN, update
 	if( succNode_ptr->iterationopened && !succNode_ptr->iterationclosed)
@@ -206,18 +206,18 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
     // If maximum expansion reached, abort!
     if(max_expand > 0 && expand_iteration >= max_expand) {
       printf(ANSI_COLOR_RED "MaxExpandStep [%d] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_expand);
-      return std::numeric_limits<double>::infinity();
+      return std::numeric_limits<decimal_t>::infinity();
     }
 
     // If pq is empty, abort!
     if( ss_ptr->pq_.empty()) {
       printf(ANSI_COLOR_RED "Priority queue is empty!!!!!!\n\n" ANSI_COLOR_RESET);
-      return std::numeric_limits<double>::infinity();
+      return std::numeric_limits<decimal_t>::infinity();
     }
   }
 
   if(verbose_) {
-    double fval = ss_ptr->calculateKey(currNode_ptr);
+    decimal_t fval = ss_ptr->calculateKey(currNode_ptr);
     printf(ANSI_COLOR_GREEN "goalNode fval: %f, g: %f!\n" ANSI_COLOR_RESET, fval, currNode_ptr->g);
     printf(ANSI_COLOR_GREEN "Expand [%d] nodes!\n" ANSI_COLOR_RESET, expand_iteration);
   }
@@ -234,10 +234,10 @@ double GraphSearch::Astar(const Waypoint& start_coord, Key start_key,
 }
 
 /********************************* LPAstar  **************************************/
-
-double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key, 
-    const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
-    Trajectory& traj, int max_expand, double max_t)
+template <int Dim>
+decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim>& start_coord, Key start_key, 
+    const std::shared_ptr<env_base<Dim>>& ENV, std::shared_ptr<StateSpace<Dim>>& ss_ptr, 
+    Trajectory<Dim>& traj, int max_expand, decimal_t max_t)
 {
   // Check if done
   if( ENV->is_goal(start_coord) ) {
@@ -248,16 +248,16 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 
 
   // set Tmax in ss_ptr
-  ss_ptr->max_t_ = max_t > 0 ? max_t : std::numeric_limits<double>::infinity();
+  ss_ptr->max_t_ = max_t > 0 ? max_t : std::numeric_limits<decimal_t>::infinity();
 
   // Initialize start node
-  StatePtr currNode_ptr = ss_ptr->hm_[start_key];
+  StatePtr<Dim> currNode_ptr = ss_ptr->hm_[start_key];
   if(!currNode_ptr) {
     if(verbose_)
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr = std::make_shared<State>(State(start_key, start_coord));
+    currNode_ptr = std::make_shared<State<Dim>>(State<Dim>(start_key, start_coord));
     currNode_ptr->t = 0;
-    currNode_ptr->g = std::numeric_limits<double>::infinity();
+    currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
     currNode_ptr->rhs = 0;
     currNode_ptr->h = ENV->get_heur(start_coord, currNode_ptr->t);
     currNode_ptr->heapkey = ss_ptr->pq_.push( std::make_pair(ss_ptr->calculateKey(currNode_ptr), currNode_ptr));
@@ -267,8 +267,8 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   }
 
   // Initialize goal node
-  StatePtr goalNode_ptr = std::make_shared<State>(State(Key(), Waypoint()));
-  if(!ss_ptr->best_child_.empty() && (ss_ptr->best_child_.back()->t >= max_t ||ENV->is_goal(ss_ptr->best_child_.back()->coord)))
+  StatePtr<Dim> goalNode_ptr = std::make_shared<State<Dim>>(State<Dim>(Key(), Waypoint<Dim>()));
+  if(!ss_ptr->best_child_.empty() && (ss_ptr->best_child_.back()->t >= max_t || ENV->is_goal(ss_ptr->best_child_.back()->coord)))
     goalNode_ptr = ss_ptr->best_child_.back();
 
   int expand_iteration = 0;
@@ -284,14 +284,14 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     if(currNode_ptr->g > currNode_ptr->rhs) 
       currNode_ptr->g = currNode_ptr->rhs;
     else {
-      currNode_ptr->g = std::numeric_limits<double>::infinity();
+      currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
       ss_ptr->updateNode(currNode_ptr);
     }
 
     // Get successors
-    std::vector<Waypoint> succ_coord = currNode_ptr->succ_coord;
+    vec_E<Waypoint<Dim>> succ_coord = currNode_ptr->succ_coord;
     std::vector<MPL::Key> succ_key = currNode_ptr->succ_hashkey;
-    std::vector<double> succ_cost = currNode_ptr->succ_action_cost;
+    std::vector<decimal_t> succ_cost = currNode_ptr->succ_action_cost;
     std::vector<int> succ_act_id = currNode_ptr->succ_action_id;
 
     bool explored = false;
@@ -308,9 +308,9 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     for( unsigned s = 0; s < succ_key.size(); ++s )
     {
       // Get child
-      StatePtr& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
+      StatePtr<Dim>& succNode_ptr = ss_ptr->hm_[ succ_key[s] ];
       if( !(succNode_ptr) ) {
-        succNode_ptr = std::make_shared<State>(State(succ_key[s], succ_coord[s]) );
+        succNode_ptr = std::make_shared<State<Dim>>(State<Dim>(succ_key[s], succ_coord[s]) );
         succNode_ptr->h = ENV->get_heur(succNode_ptr->coord, currNode_ptr->t + ENV->dt_);   // compute heuristic        
       }
 
@@ -346,14 +346,14 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
     if(max_expand > 0 && expand_iteration >= max_expand) {
       if(verbose_)
         printf(ANSI_COLOR_RED "MaxExpandStep [%d] Reached!!!!!!\n\n" ANSI_COLOR_RESET, max_expand);
-      return std::numeric_limits<double>::infinity();
+      return std::numeric_limits<decimal_t>::infinity();
     }
 
     // If pq is empty, abort!
     if( ss_ptr->pq_.empty()) {
       if(verbose_)
         printf(ANSI_COLOR_RED "Priority queue is empty!!!!!!\n\n" ANSI_COLOR_RESET);
-      return std::numeric_limits<double>::infinity();
+      return std::numeric_limits<decimal_t>::infinity();
     }
   }
 
@@ -380,7 +380,7 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
   //****** Recover trajectory
   traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_key);
   
-  //std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
+  //std::chrono::duration<decimal_t> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
   //printf("time for recovering: %f, expand: %d\n", elapsed_seconds.count(), expand_iteration);
 
   ss_ptr->expand_iteration_ = expand_iteration;
@@ -388,3 +388,6 @@ double GraphSearch::LPAstar(const Waypoint& start_coord, Key start_key,
 }
 
  
+template class GraphSearch<2>;
+
+template class GraphSearch<3>;

@@ -8,7 +8,7 @@
 /**
  * @brief Motion primitive planner using point cloud
  */
-class MPCloudUtil : public MPBaseUtil
+class MPCloudUtil : public MPBaseUtil<3>
 {
   public:
     /**

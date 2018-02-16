@@ -18,6 +18,7 @@
  *
  * Given intermediate waypoints and associated time allocation, generate the n-th order polynomials
  */
+template <int Dim>
 class PolySolver {
   public:
     /**
@@ -34,16 +35,16 @@ class PolySolver {
      *
      * Note that the element in dts is the time for that segment
      */
-    bool solve(const std::vector<Waypoint>& waypoints, 
+    bool solve(const vec_E<Waypoint<Dim>>& waypoints, 
         const std::vector<decimal_t> &dts);
 
     ///Get the solved trajectory
-    std::shared_ptr<PolyTraj> getTrajectory();
+    std::shared_ptr<PolyTraj<Dim>> getTrajectory();
 
   private:
     unsigned int N_;
     unsigned int R_;
     bool debug_;
-    std::shared_ptr<PolyTraj> ptraj_;
+    std::shared_ptr<PolyTraj<Dim>> ptraj_;
 };
 #endif

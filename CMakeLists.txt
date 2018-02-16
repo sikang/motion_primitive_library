@@ -29,7 +29,6 @@ ELSE()
 ENDIF()
 
 add_library(primitive src/primitive/primitive.cpp
-  src/primitive/primitive_util.cpp
   src/primitive/trajectory.cpp
   src/primitive/math.cpp)
 

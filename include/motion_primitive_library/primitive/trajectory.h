@@ -56,6 +56,7 @@ class Lambda {
  *
  * A trajectory is composed from several primitives, so-called linear piece-wise polynomials
  */
+template <int Dim>
 class Trajectory {
   public:
     /**
@@ -65,7 +66,7 @@ class Trajectory {
     /**
      * @brief Construct from multiple primitives
      */
-    Trajectory(const std::vector<Primitive>& trajs);
+    Trajectory(const vec_E<Primitive<Dim>>& prs);
     /**
      * @brief Return the total duration of the trajectory
      */
@@ -80,7 +81,7 @@ class Trajectory {
      * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
      * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution
      */ 
-    bool evaluate(decimal_t t, Waypoint &p) const;
+    bool evaluate(decimal_t t, Waypoint<Dim>& p) const;
     /**
      * @brief Scale according to ratio at start and end (velocity only)
      */
@@ -92,7 +93,7 @@ class Trajectory {
     /**
      * @brief Sample N states using uniformed time
      */
-    std::vector<Waypoint> sample(int N) const;
+    vec_E<Waypoint<Dim>> sample(int N) const;
     /**
      * @brief Return total efforts of primitive for the given duration: \f$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt\f$
      *
@@ -104,7 +105,7 @@ class Trajectory {
     std::vector<decimal_t> getSegsT() const;
 
     ///Segments of primitives
-    std::vector<Primitive> segs;
+    vec_E<Primitive<Dim>> segs;
     ///Time in virtual domain
     std::vector<decimal_t> taus;
     ///Time in actual domain
@@ -114,5 +115,9 @@ class Trajectory {
     ///Scaling object
     Lambda lambda_;
 };
+
+typedef Trajectory<2> Trajectory2;
+
+typedef Trajectory<3> Trajectory3;
 
 #endif

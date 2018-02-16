@@ -148,7 +148,8 @@ bool Lambda::exist() const{
 
 
 //*********** Trajectory *********************
-Trajectory::Trajectory(const std::vector<Primitive>& prs) {
+template <int Dim>
+Trajectory<Dim>::Trajectory(const vec_E<Primitive<Dim>>& prs) {
   // Constructor from multiple primitives
   segs = prs;
 
@@ -159,11 +160,13 @@ Trajectory::Trajectory(const std::vector<Primitive>& prs) {
   total_t_ = taus.back();
 }
 
-decimal_t Trajectory::getTotalTime() const {
+template <int Dim>
+decimal_t Trajectory<Dim>::getTotalTime() const {
   return total_t_;
 }
 
-bool Trajectory::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
+template <int Dim>
+bool Trajectory<Dim>::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
   std::vector<VirtualPoint> vs;
   VirtualPoint vi, vf;
   vi.p = ri;
@@ -233,7 +236,8 @@ bool Trajectory::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
 }
 
 
-bool Trajectory::scale(decimal_t ri, decimal_t rf) {
+template <int Dim>
+bool Trajectory<Dim>::scale(decimal_t ri, decimal_t rf) {
   std::vector<VirtualPoint> vs;
   VirtualPoint vi, vf;
   vi.p = 1.0/ri;
@@ -256,7 +260,9 @@ bool Trajectory::scale(decimal_t ri, decimal_t rf) {
   return true;
 }
 
-bool Trajectory::evaluate(decimal_t time, Waypoint &p) const {
+
+template <int Dim>
+bool Trajectory<Dim>::evaluate(decimal_t time, Waypoint<Dim>& p) const {
   decimal_t tau = lambda_.getTau(time);
   if(tau < 0)
     tau = 0;
@@ -272,10 +278,10 @@ bool Trajectory::evaluate(decimal_t time, Waypoint &p) const {
     lambda_dot = vt.v;
   }
 
-  for(int id = 0; id < (int)segs.size(); id++) {
+  for(int id = 0; id < (int) segs.size(); id++) {
     if(tau >= taus[id] && tau <= taus[id+1]) {
       tau -= taus[id];
-      for(int j = 0; j < 3; j++) {
+      for(int j = 0; j < Dim; j++) {
         Vec4f d = segs[id].traj(j).evaluate(tau);
         p.pos(j) = d(0);
         p.vel(j) = d(1)/lambda;
@@ -291,12 +297,13 @@ bool Trajectory::evaluate(decimal_t time, Waypoint &p) const {
   return false;
 }
 
-std::vector<Waypoint> Trajectory::sample(int N) const {
-  std::vector<Waypoint> ps;
+template <int Dim>
+vec_E<Waypoint<Dim>> Trajectory<Dim>::sample(int N) const {
+  vec_E<Waypoint<Dim>> ps;
 
   decimal_t dt = total_t_ / N;
   for(decimal_t t = 0; t <= total_t_; t+= dt) {
-    Waypoint pt;
+    Waypoint<Dim> pt;
     if(evaluate(t, pt))
       ps.push_back(pt);
   }
@@ -305,18 +312,21 @@ std::vector<Waypoint> Trajectory::sample(int N) const {
 }
 
 
-Lambda Trajectory::lambda() const {
+template <int Dim>
+Lambda Trajectory<Dim>::lambda() const {
   return lambda_;
 }
 
-decimal_t Trajectory::J(int i) const {
+template <int Dim>
+decimal_t Trajectory<Dim>::J(int i) const {
   decimal_t J = 0;
   for(const auto& seg: segs)
     J += seg.J(i);
   return J;
 }
 
-std::vector<decimal_t> Trajectory::getSegsT() const {
+template <int Dim>
+std::vector<decimal_t> Trajectory<Dim>::getSegsT() const {
   std::vector<decimal_t> dts;
   for(int i = 0; i < (int)Ts.size() - 1; i++)
     dts.push_back(Ts[i+1] - Ts[i]);
@@ -324,3 +334,6 @@ std::vector<decimal_t> Trajectory::getSegsT() const {
   return dts;
 }
 
+template class Trajectory<2>;
+
+template class Trajectory<3>;

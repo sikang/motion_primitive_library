@@ -2,7 +2,7 @@
 
 using namespace MPL;
 
-MPCloudUtil::MPCloudUtil(bool verbose)
+MPCloudUtil::MPCloudUtil(bool verbose) : MPBaseUtil<3>::MPBaseUtil()
 {
   planner_verbose_= verbose;
   if(planner_verbose_)

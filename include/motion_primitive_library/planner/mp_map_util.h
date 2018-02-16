@@ -9,7 +9,8 @@ using linkedHashMap = std::unordered_map<int, std::vector<std::pair<MPL::Key, in
 /**
  * @brief Motion primitive planner in voxel map
  */
-class MPMapUtil : public MPBaseUtil
+template <int Dim>
+class MPMapUtil : public MPBaseUtil<Dim>
 {
   public:
     /**
@@ -20,21 +21,21 @@ class MPMapUtil : public MPBaseUtil
     ///Set map util
     void setMapUtil(std::shared_ptr<MPL::VoxelMapUtil>& map_util);
     ///Get linked voxels
-    vec_Vec3f getLinkedNodes() const;
+    vec_Vecf<Dim> getLinkedNodes() const;
     /**
      * @brief Update edge costs according to the new blocked nodes
      * @param pns the new occupied voxels 
      *
      * The function returns affected primitives for debug purpose
      */
-    std::vector<Primitive> updateBlockedNodes(const vec_Vec3i& pns);
+    vec_E<Primitive<Dim>> updateBlockedNodes(const vec_Veci<Dim>& pns);
     /**
      * @brief Update edge costs according to the new cleared nodes
      * @param pns the new cleared voxels 
      *
      * The function returns affected primitives for debug purpose
      */
-    std::vector<Primitive> updateClearedNodes(const vec_Vec3i& pns);
+    vec_E<Primitive<Dim>> updateClearedNodes(const vec_Veci<Dim>& pns);
 
   protected:
     ///Map util
@@ -44,3 +45,6 @@ class MPMapUtil : public MPBaseUtil
 };
 
 
+typedef MPMapUtil<2> MPMap2DUtil;
+
+typedef MPMapUtil<3> MPMap3DUtil;

@@ -11,29 +11,28 @@
 /**
  * @brief Trajectory class for solving n-th polynomial with PolySolver
  */
+template <int Dim>
 class PolyTraj {
-public:
-  ///Simple constructor
-  PolyTraj();
-  ///Clear
-  void clear();
-  ///Set coefficients
-  void addCoeff(const MatD3f &p);
-  ///Set time allocation
-  void addTime(const std::vector<decimal_t> &dts);
-  ///Convert to Primitive class
-  std::vector<Primitive> toPrimitives();
+  public:
+    ///Simple constructor
+    PolyTraj();
+    ///Clear
+    void clear();
+    ///Set coefficients
+    void addCoeff(const MatDNf<Dim>& coeff);
+    ///Set time allocation
+    void addTime(const std::vector<decimal_t> &dts);
+    ///Convert to Primitive class
+    vec_E<Primitive<Dim>> toPrimitives();
 
-  ///Evaluate the waypoint at t
-  Waypoint evaluate(decimal_t t) const;
-  ///Get the total time for the trajectory
-  decimal_t getTotalTime() const;
+    ///Evaluate the waypoint at t
+    Waypoint<Dim> evaluate(decimal_t t) const;
+    ///Get the total time for the trajectory
+    decimal_t getTotalTime() const;
 
-private:
-  inline int factorial(int n);
-  std::vector<decimal_t> waypoint_times_;
-  std::vector<decimal_t> dts_;
-  std::deque<MatD3f, Eigen::aligned_allocator<MatD3f>>
-      coefficients_;
+  private:
+    std::vector<decimal_t> waypoint_times_;
+    std::vector<decimal_t> dts_;
+    std::deque<MatDNf<Dim>, Eigen::aligned_allocator<MatDNf<Dim>>> coefficients_;
 };
 #endif

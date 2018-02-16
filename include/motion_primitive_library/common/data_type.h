@@ -38,18 +38,39 @@ using vec_E = std::vector<T, Eigen::aligned_allocator<T>>;
 */
 typedef double decimal_t;
 
+///Pre-allocated std::vector for Eigen.
+template <int N> 
+using Vecf = Eigen::Matrix<decimal_t, N, 1>;
+///Pre-allocated std::vector for Eigen.
+template <int N> 
+using Veci = Eigen::Matrix<int, N, 1>;
+///Pre-allocated std::vector for Eigen.
+template <int M, int N> 
+using Matf = Eigen::Matrix<decimal_t, M, N>;
+///Pre-allocated std::vector for Eigen.
+template <int N> 
+using MatDNf = Eigen::Matrix<decimal_t, Eigen::Dynamic, N>;
+///Pre-allocated std::vector for Eigen.
+template <int N> 
+using vec_Vecf = vec_E<Vecf<N>>;
+///Pre-allocated std::vector for Eigen.
+template <int N> 
+using vec_Veci = vec_E<Veci<N>>;
+
+
+
 ///Column vector in float of size 2.
-typedef Eigen::Matrix<decimal_t, 2, 1> Vec2f;
+typedef Vecf<2> Vec2f;
 ///Column vector in int of size 2.
-typedef Eigen::Vector2i Vec2i;
+typedef Veci<2> Vec2i;
 ///Column vector in float of size 3.
-typedef Eigen::Matrix<decimal_t, 3, 1> Vec3f;
+typedef Vecf<3> Vec3f;
 ///Column vector in int of size 3.
-typedef Eigen::Vector3i Vec3i;
+typedef Veci<3> Vec3i;
 ///Column vector in float of size 4.
-typedef Eigen::Matrix<decimal_t, 4, 1> Vec4f;
+typedef Vecf<4> Vec4f;
 ///Column vector in float of size 6.
-typedef Eigen::Matrix<decimal_t, 6, 1> Vec6f;
+typedef Vecf<6> Vec6f;
 
 ///Vector of type Vec2f.
 typedef vec_E<Vec2f> vec_Vec2f;
@@ -61,28 +82,21 @@ typedef vec_E<Vec3f> vec_Vec3f;
 typedef vec_E<Vec3i> vec_Vec3i;
 
 ///2x2 Matrix in float
-typedef Eigen::Matrix<decimal_t, 2, 2> Mat2f;
+typedef Matf<2, 2> Mat2f;
 ///3x3 Matrix in float
-typedef Eigen::Matrix<decimal_t, 3, 3> Mat3f;
+typedef Matf<3, 3> Mat3f;
 ///4x4 Matrix in float
-typedef Eigen::Matrix<decimal_t, 4, 4> Mat4f;
+typedef Matf<4, 4> Mat4f;
 ///6x6 Matrix in float
-typedef Eigen::Matrix<decimal_t, 6, 6> Mat6f;
+typedef Matf<6, 6> Mat6f;
 
 ///Column vector in float with dynamic size
-typedef Eigen::Matrix<decimal_t, Eigen::Dynamic, 1> VecDf;
+typedef Vecf<Eigen::Dynamic> VecDf;
 ///Nx3 matrix in float 
-typedef Eigen::Matrix<decimal_t, Eigen::Dynamic, 3> MatD3f;
+typedef Matf<Eigen::Dynamic, 3> MatD3f;
 ///NxN matrix in float
-typedef Eigen::Matrix<decimal_t, Eigen::Dynamic, Eigen::Dynamic> MatDf;
+typedef Matf<Eigen::Dynamic, Eigen::Dynamic> MatDf;
 
-//Allias of Eigen::Translation
-typedef Eigen::Translation<decimal_t, 3> Trans3f;
-//Allias of Eigen::AngleAxis
-typedef Eigen::AngleAxis<decimal_t> Anglef;
-
-///Allias of Eigen::Quaterniond
-typedef Eigen::Quaternion<decimal_t> Quatf;
 ///Allias of Eigen::Affine2d
 typedef Eigen::Transform<decimal_t, 2, Eigen::Affine> Aff2f;
 ///Allias of Eigen::Affine3d

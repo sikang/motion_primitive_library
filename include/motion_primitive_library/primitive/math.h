@@ -24,3 +24,10 @@ std::vector<decimal_t> quartic(decimal_t a, decimal_t b, decimal_t c, decimal_t 
 std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e);
 ///A more general solver for \f$a*t^6+b*t^5+c*t^4+d*t^3+e*t^2+f*t+g = 0\f$
 std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e, decimal_t f, decimal_t g);
+
+///Return \f$n!\f$
+int factorial(int n);
+
+///Return \f$t^n\f$
+decimal_t power(decimal_t t, int n);
+ 

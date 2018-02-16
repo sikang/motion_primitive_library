@@ -1,5 +1,16 @@
 #include <motion_primitive_library/primitive/math.h>
 
+int factorial(int n) {
+  if(n <= 1)
+    return 1;
+  return n*factorial(n-1);
+}
+
+decimal_t power(decimal_t t, int n) {
+  return n <= 0 ? 1 : power(t, n-1);
+}
+
+
 /* **************************************************************** */
 std::vector<decimal_t> quad(decimal_t b, decimal_t c, decimal_t d) {
   std::vector<decimal_t> dts;

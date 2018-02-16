@@ -52,10 +52,6 @@ Vec4f Primitive1D::evaluate(decimal_t t) const {
   return vec;
 }
 
-inline decimal_t power(decimal_t t, int n) {
-  return n <= 0 ? 1 : power(t, n-1);
-}
-
 decimal_t Primitive1D::J(decimal_t t, int i) const {
   // i = 0, return integration of square of vel
   if(i == 0)
@@ -135,63 +131,66 @@ std::vector<decimal_t> Primitive1D::extrema_jrk(decimal_t t) const {
 
 
 //********** Primitive Main Class *************
-Primitive::Primitive() {}
+template <int Dim>
+Primitive<Dim>::Primitive() {}
 
-Primitive::Primitive(const vec_E<Vec6f>& cs, decimal_t t) : t_(t)
+template <int Dim>
+Primitive<Dim>::Primitive(const vec_E<Vec6f>& cs, decimal_t t) : t_(t)
 {
   // Constructor from coeffs
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < Dim; i++)
     prs_[i] = Primitive1D(cs[i]);
 }
 
 
-Primitive::Primitive(const Waypoint& p, const Vec3f& u, decimal_t t) : t_(t)
+template <int Dim>
+Primitive<Dim>::Primitive(const Waypoint<Dim>& p, const Vecf<Dim>& u, decimal_t t) : t_(t)
 {
   if(p.use_jrk) {
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < Dim; i++) {
       Vec4f vec;
       vec << p.pos(i), p.vel(i), p.acc(i), p.jrk(i);
       prs_[i] = Primitive1D(vec, u(i));
     }
   }
   else if(p.use_acc) {
-   for(int i = 0; i < 3; i++)
+   for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(Vec3f(p.pos(i), p.vel(i), p.acc(i)), u(i));
   }
   else if(p.use_vel) {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(Vec2f(p.pos(i), p.vel(i)), u(i));
   }
   else if(p.use_pos) {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(p.pos(i), u(i));
   }
   else
     printf("Null Primitive using control!\n");
 }
 
-Primitive::Primitive(const Waypoint& p1, const Waypoint& p2, decimal_t t) :
-    t_(t)
+template <int Dim>
+Primitive<Dim>::Primitive(const Waypoint<Dim>& p1, const Waypoint<Dim>& p2, decimal_t t) : t_(t)
 {
   // Constructor from Two Waypoints
   // Fully contrained
   if(p1.use_pos && p1.use_vel && p1.use_acc && !p1.use_jrk &&
      p2.use_pos && p2.use_vel && p2.use_acc && !p2.use_jrk) {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(p1.pos(i), p1.vel(i), p1.acc(i),
-                              p2.pos(i), p2.vel(i), p2.acc(i), t_);
+                            p2.pos(i), p2.vel(i), p2.acc(i), t_);
   }
   // Use vel only
   else if(p1.use_pos && p1.use_vel && !p1.use_acc && !p1.use_jrk &&
           p2.use_pos && p2.use_vel && !p2.use_acc && !p2.use_jrk) {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(p1.pos(i), p1.vel(i),
                               p2.pos(i), p2.vel(i), t_);
   }
   // Use pos only
   else if(p1.use_pos && !p1.use_vel && !p1.use_acc && !p1.use_jrk &&
           p2.use_pos && !p2.use_vel && !p2.use_acc && !p2.use_jrk) {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(p1.pos(i), p2.pos(i), t_);
   }
   // Null
@@ -202,7 +201,8 @@ Primitive::Primitive(const Waypoint& p1, const Waypoint& p2, decimal_t t) :
   }
 }
 
-decimal_t Primitive::max_vel(int k) const {
+template <int Dim>
+decimal_t Primitive<Dim>::max_vel(int k) const {
   std::vector<decimal_t> ts = prs_[k].extrema_vel(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);
@@ -218,7 +218,8 @@ decimal_t Primitive::max_vel(int k) const {
   return max_v;
 }
 
-decimal_t Primitive::max_acc(int k) const {
+template <int Dim>
+decimal_t Primitive<Dim>::max_acc(int k) const {
   std::vector<decimal_t> ts = prs_[k].extrema_acc(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);
@@ -235,7 +236,8 @@ decimal_t Primitive::max_acc(int k) const {
   return max_a;
 }
 
-decimal_t Primitive::max_jrk(int k) const {
+template <int Dim>
+decimal_t Primitive<Dim>::max_jrk(int k) const {
   std::vector<decimal_t> ts = prs_[k].extrema_jrk(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);
@@ -253,36 +255,39 @@ decimal_t Primitive::max_jrk(int k) const {
 }
 
 
-bool Primitive::valid_vel(decimal_t mv) const {
+template <int Dim>
+bool Primitive<Dim>::valid_vel(decimal_t mv) const {
   // ignore negative threshold
   if(mv < 0)
     return true;
   // check if max vel is violating the constraint
-  for(int i = 0; i < 3; i++) {
+  for(int i = 0; i < Dim; i++) {
     if(max_vel(i) > mv)
       return false;
   }
   return true;
 }
 
-bool Primitive::valid_acc(decimal_t ma) const {
+template <int Dim>
+bool Primitive<Dim>::valid_acc(decimal_t ma) const {
   // ignore negative threshold
   if(ma < 0)
     return true;
   // check if max acc is violating the constraint
-  for(int i = 0; i < 3; i++) {
+  for(int i = 0; i < Dim; i++) {
     if(max_acc(i) > ma)
       return false;
   }
   return true;
 }
 
-bool Primitive::valid_jrk(decimal_t mj) const {
+template <int Dim>
+bool Primitive<Dim>::valid_jrk(decimal_t mj) const {
   // ignore negative threshold
   if(mj < 0)
     return true;
   // check if max jerk is violating the constraint
-  for(int i = 0; i < 3; i++) {
+  for(int i = 0; i < Dim; i++) {
     if(max_jrk(i) > mj)
       return false;
   }
@@ -290,9 +295,10 @@ bool Primitive::valid_jrk(decimal_t mj) const {
 }
 
 
-Waypoint Primitive::evaluate(decimal_t t) const {
-  Waypoint p;
-  for(int j = 0; j < 3; j++) {
+template <int Dim>
+Waypoint<Dim> Primitive<Dim>::evaluate(decimal_t t) const {
+  Waypoint<Dim> p;
+  for(int j = 0; j < Dim; j++) {
     Vec4f d = prs_[j].evaluate(t);
     p.pos(j) = d(0);
     p.vel(j) = d(1);
@@ -303,8 +309,9 @@ Waypoint Primitive::evaluate(decimal_t t) const {
 }
 
 
-std::vector<Waypoint> Primitive::sample(int N) const {
-  std::vector<Waypoint> ps;
+template <int Dim>
+vec_E<Waypoint<Dim>> Primitive<Dim>::sample(int N) const {
+  vec_E<Waypoint<Dim>> ps;
   decimal_t dt = t_ / N;
   /*
   for(decimal_t t = 0; t <= t_; t+= dt)
@@ -316,20 +323,28 @@ std::vector<Waypoint> Primitive::sample(int N) const {
   return ps;
 }
 
-Primitive1D Primitive::traj(int k) const { return prs_[k]; }
+template <int Dim>
+Primitive1D Primitive<Dim>::traj(int k) const { return prs_[k]; }
 
-decimal_t Primitive::t() const { return t_; }
+template <int Dim>
+decimal_t Primitive<Dim>::t() const { return t_; }
 
-decimal_t Primitive::J(int i) const {
-  return prs_[0].J(t_, i)+prs_[1].J(t_, i)+prs_[2].J(t_, i);
+template <int Dim>
+decimal_t Primitive<Dim>::J(int i) const {
+  decimal_t j = 0;
+  for(const auto& pr: prs_)
+    j += pr.J(t_, i);
+  return j;
 }
 
-
-vec_E<Vec6f> Primitive::coeffs() const {
+template <int Dim>
+vec_E<Vec6f> Primitive<Dim>::coeffs() const {
   vec_E<Vec6f> cs;
-  cs.push_back(prs_[0].coeff());
-  cs.push_back(prs_[1].coeff());
-  cs.push_back(prs_[2].coeff());
-
+  for(const auto& pr: prs_)
+    cs.push_back(pr.coeff());
   return cs;
 }
+
+template class Primitive<2>;
+
+template class Primitive<3>;

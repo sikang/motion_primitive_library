@@ -15,6 +15,7 @@
 /**
  * @brief Motion planning base util class
  */
+template <int Dim>
 class MPBaseUtil
 {
   public:
@@ -23,21 +24,21 @@ class MPBaseUtil
     ///Check if it has been planned
     bool initialized();
     ///Get nodes on the optimal trajectory
-    std::vector<Waypoint> getWs() const;
+    vec_E<Waypoint<Dim>> getWs() const;
     ///Get optimal trajectory
-    Trajectory getTraj() const;
+    Trajectory<Dim> getTraj() const;
     ///Get expanded collision free primitives
-    std::vector<Primitive> getValidPrimitives() const;
+    vec_E<Primitive<Dim>> getValidPrimitives() const;
     ///Get expanded primitives
-    std::vector<Primitive> getAllPrimitives() const;
+    vec_E<Primitive<Dim>> getAllPrimitives() const;
     ///Get points in open set
-    vec_Vec3f getOpenSet() const;
+    vec_Vecf<Dim> getOpenSet() const;
     ///Get points in close set
-    vec_Vec3f getCloseSet() const;
+    vec_Vecf<Dim> getCloseSet() const;
     ///Get points neither in open nor close set
-    vec_Vec3f getNullSet() const;
+    vec_Vecf<Dim> getNullSet() const;
     ///Get expanded points, for A* it should be the same as the close set
-    vec_Vec3f getExpandedNodes() const;
+    vec_Vecf<Dim> getExpandedNodes() const;
     ///Get number of expanded nodes
     int getExpandedNum() const;
     /**
@@ -63,7 +64,7 @@ class MPBaseUtil
     ///Set max time step to explore
     void setTmax(decimal_t t);
     ///Set prior trajectory
-    void setPriorTrajectory(const Trajectory& traj);
+    void setPriorTrajectory(const Trajectory<Dim>& traj);
     ///Set dt for each primitive
     void setDt(decimal_t dt);
     ///Set weight for cost in time
@@ -77,7 +78,7 @@ class MPBaseUtil
     ///Enable U through discretization 
     void setU(int n, bool use_3d);
     ///Set U 
-    void setU(const vec_Vec3f& U);
+    void setU(const vec_Vecf<Dim>& U);
     ///Set tolerance in geometric and dynamic spaces
     void setTol(decimal_t tol_dis, decimal_t tol_vel, decimal_t tol_acc = 0.0);
     /**
@@ -88,27 +89,25 @@ class MPBaseUtil
      * The start waypoint 
      * The goal waypoint is the center of the goal region, the planner cannot find the trajectory hit the excat goal state due to discretization;
      */
-    bool plan(const Waypoint &start, const Waypoint &goal);
+    bool plan(const Waypoint<Dim> &start, const Waypoint<Dim> &goal);
 
   protected:
     ///Env class
-    std::shared_ptr<MPL::env_base> ENV_;
+    std::shared_ptr<MPL::env_base<Dim>> ENV_;
     ///Planner workspace
-    std::shared_ptr<MPL::StateSpace> ss_ptr_;
+    std::shared_ptr<MPL::StateSpace<Dim>> ss_ptr_;
     ///Intermediate nodes in optimal trajectory
-    std::vector<Waypoint> ws_;
+    vec_E<Waypoint<Dim>> ws_;
     ///Optimal trajectory
-    Trajectory traj_;
+    Trajectory<Dim> traj_;
     ///Greedy searching parameter
     decimal_t epsilon_ = 1.0;
     ///Maxmum number of expansion, -1 means no limitation
     int max_num_ = -1;
     ///Maxmum time horizon of expansion, 0 means no limitation
-    double max_t_ = 0;
+    decimal_t max_t_ = 0;
     ///Enable LPAstar for planning
     bool use_lpastar_ = false;
-
-
     ///Enabled to display debug message
     bool planner_verbose_;
 };

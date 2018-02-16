@@ -37,7 +37,7 @@ class DecompUtil {
     ///Get polyhedra
     Polyhedra polyhedra();
     ///Check if a primitive is inside the SFC from \f$t: 0 \rightarrow dt\f$
-    bool isFree(const Primitive& pr);
+    bool isFree(const Primitive3& pr);
     ///Convert obstacle points into pcl point cloud
     PCLPointCloud toPCL(const vec_Vec3f &obs);
  private:

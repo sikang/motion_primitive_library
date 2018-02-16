@@ -53,9 +53,9 @@ void DecompUtil::setObstacles(const vec_Vec3f& obs) {
 }
 
 
-bool DecompUtil::isFree(const Primitive& pr) {
+bool DecompUtil::isFree(const Primitive3& pr) {
   if(!Vs_.empty()) {
-    std::vector<Waypoint> ps = pr.sample(2);
+    vec_E<Waypoint3> ps = pr.sample(2);
     for(const auto& it: ps) {
       if(!insidePolyhedron(it.pos, Vs_))
         return false;

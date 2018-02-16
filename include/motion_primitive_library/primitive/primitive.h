@@ -14,12 +14,12 @@
  *
  * State includes position, velocity and acceleration in \f$R^3\f$
  */
+template <int Dim>
 struct Waypoint {
-  Vec3f pos; ///<position in \f$R^3\f$
-  Vec3f vel; ///<velocity in \f$R^3\f$
-  Vec3f acc; ///<acceleration in \f$R^3\f$
-  Vec3f jrk; ///<jerk in \f$R^3\f$
-
+  Vecf<Dim> pos; ///<position in \f$R^n\f$
+  Vecf<Dim> vel; ///<velocity in \f$R^n\f$
+  Vecf<Dim> acc; ///<acceleration in \f$R^n\f$
+  Vecf<Dim> jrk; ///<jerk in \f$R^n\f$
 
   bool use_pos = false;///<If true, attribute pos will be used in primitive generation
   bool use_vel = false;///<If true, attribute vel will be used in primitive generation 
@@ -27,7 +27,9 @@ struct Waypoint {
   bool use_jrk = false;///<If true, attribute jrk will be used in primitive generation 
 
   ///Print all the useful attributes
-  void print() const {
+  void print(std::string str = "") const {
+    if(!str.empty())
+      std::cout << str << std::endl;
     std::cout << "pos: " << pos.transpose() << std::endl;
     std::cout << "vel: " << vel.transpose() << std::endl;
     std::cout << "acc: " << acc.transpose() << std::endl;
@@ -39,7 +41,7 @@ struct Waypoint {
   }
 
   ///Check if two waypoints are equivalent
-  bool operator==(const Waypoint& n) const {
+  bool operator==(const Waypoint<Dim>& n) const {
     /*
     return this->pos == n.pos &&
       this->vel == n.vel &&
@@ -58,7 +60,7 @@ struct Waypoint {
   }
 
   ///Check if two waypoints are not equivalent
-  bool operator!=(const Waypoint& n) {
+  bool operator!=(const Waypoint<Dim>& n) {
     return !(*this==n);
   }
 };
@@ -146,6 +148,7 @@ class Primitive1D {
  *
  * Contains three 1D primitives corresponding to x, y, z indivisually.
  */
+template <int Dim>
 class Primitive {
  public:
   /**
@@ -155,11 +158,11 @@ class Primitive {
   /**
    * @brief Construct from an initial state p and an input control u for a given duration t
    */
-  Primitive(const Waypoint& p, const Vec3f& u, decimal_t t);
+  Primitive(const Waypoint<Dim>& p, const Vecf<Dim>& u, decimal_t t);
   /**
    * @brief Construct from an initial state p1 and a goal state p2 for a given duration t
    */
-  Primitive(const Waypoint& p1, const Waypoint& p2, decimal_t t);
+  Primitive(const Waypoint<Dim>& p1, const Waypoint<Dim>& p2, decimal_t t);
   /**
    * @brief Construct from given coefficients and duration
    */
@@ -169,7 +172,7 @@ class Primitive {
    *
    * Note: no flag in the returned waypoint is set
    */
-  Waypoint evaluate(decimal_t t) const;
+  Waypoint<Dim> evaluate(decimal_t t) const;
   /** 
    * @brief Return pre-defined duration
    */
@@ -217,7 +220,7 @@ class Primitive {
   /**
    * @brief Sample N states using uniformed time
    */
-  std::vector<Waypoint> sample(int N) const;
+  vec_E<Waypoint<Dim>> sample(int N) const;
   /**
    * @brief Retrieve coefficients
    */
@@ -227,8 +230,14 @@ class Primitive {
   decimal_t t_;
  public:
   ///By default, primitive class contains three 1D primitive
-  Primitive1D prs_[3];
+  std::array<Primitive1D, Dim> prs_;
 };
 
+typedef Waypoint<2> Waypoint2;
 
+typedef Waypoint<3> Waypoint3;
+
+typedef Primitive<2> Primitive2;
+
+typedef Primitive<3> Primitive3;
 #endif

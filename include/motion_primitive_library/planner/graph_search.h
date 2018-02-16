@@ -17,6 +17,7 @@ namespace MPL
    *
    * Implement A* and Lifelong Planning A*
    */
+  template <int Dim>
   class GraphSearch
   {
     public:
@@ -38,9 +39,9 @@ namespace MPL
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double Astar(const Waypoint& start_coord, Key start_key,
-          const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
-          Trajectory& traj, int max_expand = -1, double max_t = 0);
+      decimal_t Astar(const Waypoint<Dim>& start_coord, Key start_key,
+          const std::shared_ptr<env_base<Dim>>& ENV, std::shared_ptr<StateSpace<Dim>>& ss_ptr, 
+          Trajectory<Dim>& traj, int max_expand = -1, decimal_t max_t = 0);
       /**
        * @brief Lifelong Planning Astar graph search
        *
@@ -52,14 +53,14 @@ namespace MPL
        * @param max_expand max number of expanded states, default value is -1 which means there is no limitation
        * @param max_t max time horizon of expanded states, default value is -1 which means there is no limitation
        */
-      double LPAstar(const Waypoint& start_coord, Key start_key, 
-          const std::shared_ptr<env_base>& ENV, std::shared_ptr<StateSpace> ss_ptr, 
-          Trajectory& traj, int max_expand = -1, double max_t = 0);
+      decimal_t LPAstar(const Waypoint<Dim>& start_coord, Key start_key, 
+          const std::shared_ptr<env_base<Dim>>& ENV, std::shared_ptr<StateSpace<Dim>>& ss_ptr, 
+          Trajectory<Dim>& traj, int max_expand = -1, decimal_t max_t = 0);
 
    private:
       ///Recover trajectory 
-      Trajectory recoverTraj(StatePtr ptr, std::shared_ptr<StateSpace> ss_ptr, 
-          const std::shared_ptr<env_base>& ENV, const Key& start_idx);
+      Trajectory<Dim> recoverTraj(StatePtr<Dim> ptr, std::shared_ptr<StateSpace<Dim>> ss_ptr, 
+          const std::shared_ptr<env_base<Dim>>& ENV, const Key& start_idx);
       ///Verbose flag
       bool verbose_ = false;
  

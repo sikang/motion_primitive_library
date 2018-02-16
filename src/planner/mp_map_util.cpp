@@ -2,32 +2,35 @@
 
 using namespace MPL;
 
-MPMapUtil::MPMapUtil(bool verbose) {
-  planner_verbose_ = verbose;
-  if(planner_verbose_)
+template <int Dim>
+MPMapUtil<Dim>::MPMapUtil(bool verbose) {
+  this->planner_verbose_ = verbose;
+  if(this->planner_verbose_)
     printf(ANSI_COLOR_CYAN "[MPPlanner] PLANNER VERBOSE ON\n" ANSI_COLOR_RESET);
 }
 
-void MPMapUtil::setMapUtil(std::shared_ptr<VoxelMapUtil>& map_util) {
-  ENV_.reset(new MPL::env_map(map_util));
+template <int Dim>
+void MPMapUtil<Dim>::setMapUtil(std::shared_ptr<VoxelMapUtil>& map_util) {
+  this->ENV_.reset(new MPL::env_map<Dim>(map_util));
   map_util_ = map_util;
 }
 
-vec_Vec3f MPMapUtil::getLinkedNodes() const {
+template <int Dim>
+vec_Vecf<Dim> MPMapUtil<Dim>::getLinkedNodes() const {
   lhm_.clear();
-  vec_Vec3f linked_pts;
-  for(const auto& it: ss_ptr_->hm_) {
+  vec_Vecf<Dim> linked_pts;
+  for(const auto& it: this->ss_ptr_->hm_) {
     if(!it.second)
       continue;
     //check pred array
     for(unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
       Key key = it.second->pred_hashkey[i];
-      Primitive pr;
-      ENV_->forward_action( ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
+      Primitive<Dim> pr;
+      this->ENV_->forward_action( this->ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
       double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
       int n = 1.0 * std::ceil(max_v * pr.t() / map_util_->getRes());
       int prev_id = -1;
-      std::vector<Waypoint> ws = pr.sample(n);
+      vec_E<Waypoint<Dim>> ws = pr.sample(n);
       for(const auto& w: ws) {
         int id = map_util_->getIndex(map_util_->floatToInt(w.pos));
         if(id != prev_id) {
@@ -43,7 +46,8 @@ vec_Vec3f MPMapUtil::getLinkedNodes() const {
 }
 
 
-std::vector<Primitive> MPMapUtil::updateBlockedNodes(const vec_Vec3i& blocked_pns) {
+template <int Dim>
+vec_E<Primitive<Dim>> MPMapUtil<Dim>::updateBlockedNodes(const vec_Veci<Dim>& blocked_pns) {
   std::vector<std::pair<Key, int>> blocked_nodes;
   for(const auto& it: blocked_pns) {
     int id = map_util_->getIndex(it);
@@ -54,11 +58,12 @@ std::vector<Primitive> MPMapUtil::updateBlockedNodes(const vec_Vec3i& blocked_pn
     }
   }
 
-  return ss_ptr_->increaseCost(blocked_nodes, ENV_);
+  return this->ss_ptr_->increaseCost(blocked_nodes, this->ENV_);
 }
 
 
-std::vector<Primitive> MPMapUtil::updateClearedNodes(const vec_Vec3i& cleared_pns) {
+template <int Dim>
+vec_E<Primitive<Dim>> MPMapUtil<Dim>::updateClearedNodes(const vec_Veci<Dim>& cleared_pns) {
   std::vector<std::pair<Key, int>> cleared_nodes;
   for(const auto& it: cleared_pns) {
     int id = map_util_->getIndex(it);
@@ -69,5 +74,7 @@ std::vector<Primitive> MPMapUtil::updateClearedNodes(const vec_Vec3i& cleared_pn
     }
   }
   
-  return ss_ptr_->decreaseCost(cleared_nodes, ENV_);
+  return this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
 }
+
+template class MPMapUtil<3>;

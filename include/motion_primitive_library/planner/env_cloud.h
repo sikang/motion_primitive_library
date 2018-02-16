@@ -14,7 +14,7 @@ namespace MPL {
 /**
  * @brief Point cloud environment
  */
-class env_cloud : public env_base
+class env_cloud : public env_base<3>
 {
   protected:
     std::unique_ptr<DecompUtil> map_util_;
@@ -30,10 +30,6 @@ class env_cloud : public env_base
     }
 
     ~env_cloud() {}
-
-    ///Set goal state
-    void set_goal(const Waypoint& goal) {
-   }
 
     ///Check if a point is in free space
     bool is_free(const Vec3f& pt) const {
@@ -53,8 +49,8 @@ class env_cloud : public env_base
      * When goal is outside, extra step is needed for finding optimal trajectory
      * Here we use Heuristic function and multiply with 2
      */
-     void get_succ( const Waypoint& curr, 
-        std::vector<Waypoint>& succ,
+     void get_succ( const Waypoint3& curr, 
+        vec_E<Waypoint3>& succ,
         std::vector<Key>& succ_idx,
         std::vector<double>& succ_cost,
         std::vector<int>& action_idx,
@@ -68,8 +64,8 @@ class env_cloud : public env_base
 
       //ws_.push_back(curr);
       for(int i = 0; i < (int) U_.size(); i++) {
-        Primitive pr(curr, U_[i], dt_);
-        Waypoint tn = pr.evaluate(dt_);
+        Primitive3 pr(curr, U_[i], dt_);
+        Waypoint3 tn = pr.evaluate(dt_);
         if(pr.valid_vel(v_max_) && pr.valid_acc(a_max_)) {
           bool valid = map_util_->isFree(pr);
           if(valid) {
