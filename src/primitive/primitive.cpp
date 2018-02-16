@@ -203,6 +203,9 @@ Primitive<Dim>::Primitive(const Waypoint<Dim>& p1, const Waypoint<Dim>& p2, deci
 
 template <int Dim>
 decimal_t Primitive<Dim>::max_vel(int k) const {
+  if(k >= Dim)
+    return 0;
+
   std::vector<decimal_t> ts = prs_[k].extrema_vel(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);
@@ -220,6 +223,9 @@ decimal_t Primitive<Dim>::max_vel(int k) const {
 
 template <int Dim>
 decimal_t Primitive<Dim>::max_acc(int k) const {
+  if(k >= Dim)
+    return 0;
+
   std::vector<decimal_t> ts = prs_[k].extrema_acc(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);
@@ -238,6 +244,9 @@ decimal_t Primitive<Dim>::max_acc(int k) const {
 
 template <int Dim>
 decimal_t Primitive<Dim>::max_jrk(int k) const {
+  if(k >= Dim)
+    return 0;
+
   std::vector<decimal_t> ts = prs_[k].extrema_jrk(t_);
   Vec4f p1 = prs_[k].evaluate(0);
   Vec4f p2 = prs_[k].evaluate(t_);

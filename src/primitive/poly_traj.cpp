@@ -83,5 +83,6 @@ vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() {
   return trajs;
 }
 
+template class PolyTraj<2>;
 
-
+template class PolyTraj<3>;

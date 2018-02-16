@@ -7,11 +7,10 @@
 #define ENV_MP_H
 #include <motion_primitive_library/planner/env_base.h>
 #include <motion_primitive_library/primitive/primitive.h>
-#include <motion_primitive_library/collision_checking/voxel_map_util.h>
+#include <motion_primitive_library/collision_checking/map_util.h>
 #include <unordered_map>
 
 namespace MPL {
-
   /**
    * @brief Voxel map environment
    */
@@ -25,10 +24,10 @@ namespace MPL {
     public:
     lookUpTable collision_checking_table_;
 
-    std::shared_ptr<VoxelMapUtil> map_util_;
+    std::shared_ptr<MapUtil<Dim>> map_util_;
 
     ///Constructor with map util as input
-    env_map(std::shared_ptr<VoxelMapUtil> map_util)
+    env_map(std::shared_ptr<MapUtil<Dim>> map_util)
       : map_util_(map_util)
     {}
 
@@ -43,12 +42,16 @@ namespace MPL {
      * Sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map.
      */
     bool is_free(const Primitive<Dim>& pr) const {
-      double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
+      double max_v = 0;
+      if(Dim == 2) 
+        max_v = std::max(pr.max_vel(0), pr.max_vel(1));
+      else if(Dim == 3)
+        max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
       int n = std::ceil(max_v * pr.t() / map_util_->getRes());
       vec_E<Waypoint<Dim>> pts = pr.sample(n);
       for(const auto& pt: pts) {
         Veci<Dim> pn = map_util_->floatToInt(pt.pos);
-        if(map_util_->isOccupied(pn) || map_util_->isOutSide(pn))
+        if(map_util_->isOccupied(pn) || map_util_->isOutside(pn))
           return false;
       }
 
@@ -81,7 +84,7 @@ namespace MPL {
       this->expanded_nodes_.push_back(curr.pos);
 
       const Veci<Dim> pn = map_util_->floatToInt(curr.pos);
-      if(map_util_->isOutSide(pn))
+      if(map_util_->isOutside(pn))
         return;
 
       for(unsigned int i = 0; i < this->U_.size(); i++) {
@@ -90,8 +93,8 @@ namespace MPL {
         if(tn == curr) 
           continue;
         if(pr.valid_vel(this->v_max_) && 
-            pr.valid_acc(this->a_max_) && 
-            pr.valid_jrk(this->j_max_)) {
+           pr.valid_acc(this->a_max_) && 
+           pr.valid_jrk(this->j_max_)) {
           tn.use_pos = curr.use_pos;
           tn.use_vel = curr.use_vel;
           tn.use_acc = curr.use_acc;
@@ -107,7 +110,6 @@ namespace MPL {
       }
 
     }
-
 
   };
 

@@ -47,4 +47,8 @@ class PolySolver {
     bool debug_;
     std::shared_ptr<PolyTraj<Dim>> ptraj_;
 };
+
+typedef PolySolver<2> PolySolver2;
+
+typedef PolySolver<3> PolySolver3;
 #endif

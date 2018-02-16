@@ -10,7 +10,7 @@ MPMapUtil<Dim>::MPMapUtil(bool verbose) {
 }
 
 template <int Dim>
-void MPMapUtil<Dim>::setMapUtil(std::shared_ptr<VoxelMapUtil>& map_util) {
+void MPMapUtil<Dim>::setMapUtil(std::shared_ptr<MapUtil<Dim>>& map_util) {
   this->ENV_.reset(new MPL::env_map<Dim>(map_util));
   map_util_ = map_util;
 }
@@ -76,5 +76,7 @@ vec_E<Primitive<Dim>> MPMapUtil<Dim>::updateClearedNodes(const vec_Veci<Dim>& cl
   
   return this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
 }
+
+template class MPMapUtil<2>;
 
 template class MPMapUtil<3>;

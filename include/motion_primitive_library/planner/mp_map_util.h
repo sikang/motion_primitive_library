@@ -19,7 +19,7 @@ class MPMapUtil : public MPBaseUtil<Dim>
      */
     MPMapUtil(bool verbose);
     ///Set map util
-    void setMapUtil(std::shared_ptr<MPL::VoxelMapUtil>& map_util);
+    void setMapUtil(std::shared_ptr<MPL::MapUtil<Dim>>& map_util);
     ///Get linked voxels
     vec_Vecf<Dim> getLinkedNodes() const;
     /**
@@ -39,7 +39,7 @@ class MPMapUtil : public MPBaseUtil<Dim>
 
   protected:
     ///Map util
-    std::shared_ptr<MPL::VoxelMapUtil> map_util_;
+    std::shared_ptr<MPL::MapUtil<Dim>> map_util_;
     ///Linked table that records voxel and corresponding primitives passed through it
     mutable linkedHashMap lhm_;
 };

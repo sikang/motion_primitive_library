@@ -101,7 +101,7 @@ vec_E<Primitive<Dim>> StateSpace<Dim>::increaseCost(std::vector<std::pair<Key, i
 
       Key parent_key = succNode_ptr->pred_hashkey[i];
       Primitive<Dim> pr;
-      ENV->forward_action( hm_[parent_key]->coord, succNode_ptr->pred_action_id[i], pr );
+      ENV->forward_action( hm_[parent_key]->coord, succNode_ptr->pred_action_id[i], pr);
       prs.push_back(pr);
 
       int succ_act_id = hm_[affected_node.first]->pred_action_id[i];

@@ -1,6 +1,5 @@
 #include "timer.hpp"
-#include "map_reader.hpp"
-#include <motion_primitive_library/collision_checking/voxel_map_util.h>
+#include "read_map.hpp"
 #include <motion_primitive_library/planner/mp_map_util.h>
 
 #include <boost/geometry.hpp>
@@ -9,39 +8,40 @@
 
 using namespace MPL;
 
-int main(int argc, char ** argv){
+int main(int argc, char ** argv) {
   if(argc != 2) {
     printf(ANSI_COLOR_RED "Input yaml required!\n" ANSI_COLOR_RESET);
     return -1;
   }
 
   // Load the map 
-  MapReader<Vec3i, Vec3f> reader(argv[1]); 
+  MapReader<Vec2i, Vec2f> reader(argv[1]); 
   if(!reader.exist()) {
     printf(ANSI_COLOR_RED "Cannot find input file [%s]!\n" ANSI_COLOR_RESET, argv[1]);
     return -1;
   }
 
   // Pass the data into a VoxelMapUtil class for collision checking
-  std::shared_ptr<VoxelMapUtil> map_util;
-  map_util.reset(new VoxelMapUtil);
+  std::shared_ptr<OccMapUtil> map_util;
+  map_util.reset(new OccMapUtil);
   map_util->setMap(reader.origin(), reader.dim(), reader.data(), reader.resolution());
+  map_util->freeUnknown();
 
   // Initialize planning mission 
-  Waypoint3 start, goal;
-  start.pos = Vec3f(2.5, -3.5, 0.0); 
-  start.vel = Vec3f::Zero(); 
-  start.acc = Vec3f::Zero(); 
-  start.jrk = Vec3f::Zero(); 
+  Waypoint2 start, goal;
+  start.pos = Vec2f(reader.start(0), reader.start(1)); 
+  start.vel = Vec2f::Zero(); 
+  start.acc = Vec2f::Zero(); 
+  start.jrk = Vec2f::Zero(); 
   start.use_pos = true;
   start.use_vel = true;
   start.use_acc = false; 
   start.use_jrk = false; 
 
-  goal.pos = Vec3f(37, 2.5, 0.0);
-  goal.vel = Vec3f::Zero(); 
-  goal.acc = Vec3f::Zero(); 
-  goal.jrk = Vec3f::Zero(); 
+  goal.pos = Vec2f(reader.goal(0), reader.goal(1));
+  goal.vel = Vec2f::Zero(); 
+  goal.acc = Vec2f::Zero(); 
+  goal.jrk = Vec2f::Zero(); 
  
   goal.use_pos = start.use_pos;
   goal.use_vel = start.use_vel;
@@ -50,12 +50,12 @@ int main(int argc, char ** argv){
 
   decimal_t u_max = 0.5;
   decimal_t du = u_max;
-  vec_Vec3f U;
+  vec_Vec2f U;
   for(decimal_t dx = -u_max; dx <= u_max; dx += du )
     for(decimal_t dy = -u_max; dy <= u_max; dy += du )
-      U.push_back(Vec3f(dx, dy, 0));
+      U.push_back(Vec2f(dx, dy));
 
-  std::unique_ptr<MPMap3DUtil> planner(new MPMap3DUtil(true)); // Declare a mp planner using voxel map
+  std::unique_ptr<MPMap2DUtil> planner(new MPMap2DUtil(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
@@ -76,13 +76,13 @@ int main(int argc, char ** argv){
   printf("MP Planner expanded states: %zu\n", planner->getCloseSet().size());
 
   // Plot the result in svg image
-  const Vec3i dim = reader.dim();
   typedef boost::geometry::model::d2::point_xy<double> point_2d;
   // Declare a stream and an SVG mapper
   std::ofstream svg("output.svg");
   boost::geometry::svg_mapper<point_2d> mapper(svg, 1000, 1000);
 
   // Draw the canvas
+  const Vec2i dim = reader.dim();
   boost::geometry::model::polygon<point_2d> bound;
   const double origin_x = reader.origin()(0);
   const double origin_y = reader.origin()(1);
@@ -114,8 +114,8 @@ int main(int argc, char ** argv){
   // Draw the obstacles
   for(int x = 0; x < dim(0); x ++) {
     for(int y = 0; y < dim(1); y ++) {
-      if(!map_util->isFree(Vec3i(x, y, 0))) {
-        Vec3f pt = map_util->intToFloat(Vec3i(x, y, 0));
+      if(!map_util->isFree(Vec2i(x, y))) {
+        Vec2f pt = map_util->intToFloat(Vec2i(x, y));
         point_2d a;
         boost::geometry::assign_values(a, pt(0), pt(1));
         mapper.add(a);
@@ -135,7 +135,7 @@ int main(int argc, char ** argv){
 
   // Draw the trajectory
   if(valid) {
-    Trajectory3 traj = planner->getTraj();
+    Trajectory2 traj = planner->getTraj();
     double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
     printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
@@ -144,7 +144,7 @@ int main(int argc, char ** argv){
     const double dt = total_t / num; 
     boost::geometry::model::linestring<point_2d> line;
     for(double t = 0; t <= total_t; t += dt) {
-      Waypoint3 w;
+      Waypoint2 w;
       traj.evaluate(t, w);
       line.push_back(point_2d(w.pos(0), w.pos(1)));
     }

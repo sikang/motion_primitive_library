@@ -35,4 +35,8 @@ class PolyTraj {
     std::vector<decimal_t> dts_;
     std::deque<MatDNf<Dim>, Eigen::aligned_allocator<MatDNf<Dim>>> coefficients_;
 };
+
+typedef PolyTraj<2> PolyTraj2;
+
+typedef PolyTraj<3> PolyTraj3;
 #endif

@@ -75,8 +75,6 @@ class MPBaseUtil
     void setEpsilon(decimal_t eps);
     ///Set max number of expansion
     void setMaxNum(int num);
-    ///Enable U through discretization 
-    void setU(int n, bool use_3d);
     ///Set U 
     void setU(const vec_Vecf<Dim>& U);
     ///Set tolerance in geometric and dynamic spaces
