@@ -33,7 +33,7 @@ var searchData=
   ['setobstacles',['setObstacles',['../classDecompUtil.html#a7df54ef30f4efe5ce1198c9b6eeea813',1,'DecompUtil']]],
   ['setpriortrajectory',['setPriorTrajectory',['../classMPBaseUtil.html#a6568041dd064ec2468b85b0099584ad6',1,'MPBaseUtil']]],
   ['settmax',['setTmax',['../classMPBaseUtil.html#a4a7a9bf94b3bbfd245b8b81c0cdec620',1,'MPBaseUtil']]],
-  ['settol',['setTol',['../classMPBaseUtil.html#af070764e2a60076d5855734a6997eb1b',1,'MPBaseUtil']]],
+  ['settol',['setTol',['../classMPBaseUtil.html#ac50130549c3afb87d3526b51a1f58de4',1,'MPBaseUtil']]],
   ['setu',['setU',['../classMPBaseUtil.html#afa38853e76aa239b5abcc74b409e940c',1,'MPBaseUtil']]],
   ['setumax',['setUmax',['../classMPBaseUtil.html#a932710959d3b709a10b4ce361a984048',1,'MPBaseUtil']]],
   ['setvmax',['setVmax',['../classMPBaseUtil.html#af1cbdb7ecc4e8085838eb3af1a306dc0',1,'MPBaseUtil']]],

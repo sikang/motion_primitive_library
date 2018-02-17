@@ -108,7 +108,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:ad7a04fcce594083507ec010810f2f00a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N states using uniformed time. <br /></td></tr>
 <tr class="separator:ad7a04fcce594083507ec010810f2f00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf17e62b2d5bcc0d5a08be93121cb120"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#adf17e62b2d5bcc0d5a08be93121cb120">J</a> (int i) const</td></tr>
-<tr class="memdesc:adf17e62b2d5bcc0d5a08be93121cb120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>.  <a href="#adf17e62b2d5bcc0d5a08be93121cb120">More...</a><br /></td></tr>
+<tr class="memdesc:adf17e62b2d5bcc0d5a08be93121cb120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_17.png"/>.  <a href="#adf17e62b2d5bcc0d5a08be93121cb120">More...</a><br /></td></tr>
 <tr class="separator:adf17e62b2d5bcc0d5a08be93121cb120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1904677017c57f5d557b7844e3a6393e"><td class="memItemLeft" align="right" valign="top"><a id="a1904677017c57f5d557b7844e3a6393e"></a>
 std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a1904677017c57f5d557b7844e3a6393e">getSegsT</a> () const</td></tr>
@@ -143,7 +143,7 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
 class Trajectory&lt; Dim &gt;</h3>
 
 <p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> class. </p>
-<p>A trajectory is composed from several primitives, so-called linear piece-wise polynomials </p>
+<p>A trajectory is composed by multiple end-to-end connected primitives, so-called piece-wise polynomials </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5c98caade0922c06c9501a784165d723"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c98caade0922c06c9501a784165d723">&#9670;&nbsp;</a></span>evaluate()</h2>
@@ -174,7 +174,7 @@ template&lt;int Dim&gt; </div>
 </div><div class="memdoc">
 
 <p>Evaluate state at t, return false if fails to evaluate. </p>
-<p>If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation; The failure case is when lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_14.png"/> has no solution </p>
+<p>If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation; The failure case is when lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_16.png"/> has no solution </p>
 
 </div>
 </div>
@@ -196,7 +196,7 @@ template&lt;int Dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>. </p>
+<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_17.png"/>. </p>
 <p>Return J is the summation of efforts in all three dimensions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>effort is defined as (i+1)-th derivative of polynomial </td></tr>

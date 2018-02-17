@@ -11,12 +11,14 @@ var searchData=
   ['tol_5fdis',['tol_dis',['../classMPL_1_1env__base.html#a2b1d6761655696e3034084ce7fa801c1',1,'MPL::env_base']]],
   ['tol_5fvel',['tol_vel',['../classMPL_1_1env__base.html#a20f20d5b0c79b25de2241ceaed1c0da7',1,'MPL::env_base']]],
   ['topcl',['toPCL',['../classDecompUtil.html#aee70de96e74159e6af61681a41da5d1c',1,'DecompUtil']]],
-  ['toprimitives',['toPrimitives',['../classPolyTraj.html#a21fd6efd52ceb803ebd5b4943c3d4b07',1,'PolyTraj']]],
+  ['toprimitives',['toPrimitives',['../classPolyTraj.html#a302096dd4b586c65c973beb3705d450e',1,'PolyTraj']]],
   ['tostring',['toString',['../classMPL_1_1env__base.html#a18b7b74a3e3b2903c37eb0956f8483fe',1,'MPL::env_base']]],
   ['total_5ft_5f',['total_t_',['../classTrajectory.html#a08e10efee7e33c2618bb7727fa2d034b',1,'Trajectory']]],
   ['traj',['traj',['../classPrimitive.html#aa76754bad7e00ed81868263c01b22d5f',1,'Primitive']]],
   ['traj_5f',['traj_',['../classMPBaseUtil.html#a34a64539c64819e5c413269745caf158',1,'MPBaseUtil']]],
   ['trajectory',['Trajectory',['../classTrajectory.html',1,'Trajectory&lt; Dim &gt;'],['../classTrajectory.html#a28d57dbc2b417e504bede1abbd772544',1,'Trajectory::Trajectory()'],['../classTrajectory.html#a261644c545eae2262753edb6aab27798',1,'Trajectory::Trajectory(const vec_E&lt; Primitive&lt; Dim &gt;&gt; &amp;prs)']]],
   ['trajectory_2eh',['trajectory.h',['../trajectory_8h.html',1,'']]],
+  ['trajectory2',['Trajectory2',['../trajectory_8h.html#a88416ffbfdb5e21f6c6fedca064dc300',1,'trajectory.h']]],
+  ['trajectory3',['Trajectory3',['../trajectory_8h.html#a01cca99dc6fa191e36b99391e724c605',1,'trajectory.h']]],
   ['ts',['Ts',['../classTrajectory.html#a29224a22e9c3b698a2d3645e234eb22f',1,'Trajectory']]]
 ];
