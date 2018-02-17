@@ -10,21 +10,21 @@
 #include "math.h"
 
 /**
- * @brief Node in graph
+ * @brief State lattice
  *
- * State includes position, velocity and acceleration in \f$R^3\f$
+ * State includes position, velocity, acceleration and jerk in \f$R^n\f$, where the dimension \f$n\f$ can be either 2 or 3.
  */
 template <int Dim>
 struct Waypoint {
-  Vecf<Dim> pos; ///<position in \f$R^n\f$
-  Vecf<Dim> vel; ///<velocity in \f$R^n\f$
-  Vecf<Dim> acc; ///<acceleration in \f$R^n\f$
-  Vecf<Dim> jrk; ///<jerk in \f$R^n\f$
+  Vecf<Dim> pos; ///<position in \f$R^{Dim}\f$
+  Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
+  Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
+  Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
 
-  bool use_pos = false;///<If true, attribute pos will be used in primitive generation
-  bool use_vel = false;///<If true, attribute vel will be used in primitive generation 
-  bool use_acc = false;///<If true, attribute acc will be used in primitive generation 
-  bool use_jrk = false;///<If true, attribute jrk will be used in primitive generation 
+  bool use_pos = false;///<If true, pos will be used in primitive generation
+  bool use_vel = false;///<If true, vel will be used in primitive generation 
+  bool use_acc = false;///<If true, acc will be used in primitive generation 
+  bool use_jrk = false;///<If true, jrk will be used in primitive generation 
 
   ///Print all the useful attributes
   void print(std::string str = "") const {
@@ -40,7 +40,11 @@ struct Waypoint {
     std::cout << "use_jrk: " << use_jrk << std::endl;
   }
 
-  ///Check if two waypoints are equivalent
+  /**
+   * @brief  Check if two waypoints are equivalent
+   *
+   * We compare the attriute if the corresponding flag `use_xxx` of either Waypoint is true.
+   */
   bool operator==(const Waypoint<Dim>& n) const {
     /*
     return this->pos == n.pos &&
@@ -61,7 +65,7 @@ struct Waypoint {
 
   ///Check if two waypoints are not equivalent
   bool operator!=(const Waypoint<Dim>& n) {
-    return !(*this==n);
+    return !(*this == n);
   }
 };
 
@@ -111,9 +115,9 @@ class Primitive1D {
      */
     Primitive1D(decimal_t p1, decimal_t v1, decimal_t a1, decimal_t p2, decimal_t v2, decimal_t a2, decimal_t t);
     /**
-     * @brief Return total efforts of 1D primitive for the given duration: \f$J(t, i) = \int_0^t |p^{(i+1)}(t)|^2dt\f$
+     * @brief Return total efforts of 1D primitive for the given duration: \f$J(t, i) = \int_0^t |p^{i}(t)|^2dt\f$
      * @param t assume the duration is from 0 to t
-     * @param i effort is defined as (i+1)-th derivative of polynomial
+     * @param i effort is defined as \f$i\f$-th derivative of polynomial
      */
     decimal_t J(decimal_t t, int i) const;
     /**
@@ -146,7 +150,7 @@ class Primitive1D {
 /** 
  * @brief Primitive class
  *
- * Contains three 1D primitives corresponding to x, y, z indivisually.
+ * Contains \f$n\f$ 1D primitives corresponding to each axis individually.
  */
 template <int Dim>
 class Primitive {
@@ -170,11 +174,11 @@ class Primitive {
   /**
    * @brief Return state at t
    *
-   * Note: no flag in the returned waypoint is set
+   * Note: no flag `use_xxx` set in the returned waypoint
    */
   Waypoint<Dim> evaluate(decimal_t t) const;
   /** 
-   * @brief Return pre-defined duration
+   * @brief Return duration
    */
   decimal_t t() const;
   /**
@@ -195,26 +199,25 @@ class Primitive {
    */
   decimal_t max_jrk(int k) const;
   /**
-   * @brief Check if the max velocity is below the threshold
-   * @param mv is the max threshold for velocity
+   * @brief Check if the max velocity magnitude is within the threshold
+   * @param mv is the max threshold 
    */
   bool valid_vel(decimal_t mv) const;
   /**
-   * @brief Check if the max acceleration is below the threshold
-   * @param ma is the max threshold for acceleration
+   * @brief Check if the max acceleration magnitude is within the threshold
+   * @param ma is the max threshold 
    */
   bool valid_acc(decimal_t ma) const;
   /**
-   * @brief Check if the max jerk is below the threshold
-   * @param mj is the max threshold for jerk
+   * @brief Check if the max jerk magnitude is within the threshold
+   * @param mj is the max threshold 
    */
   bool valid_jrk(decimal_t mj) const;
- 
   /**
-   * @brief Return total efforts of primitive for the given duration: \f$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt\f$
+   * @brief Return total efforts of primitive for the given duration: \f$J(i) = \int_0^t |p^{i}(t)|^2dt\f$
    *
    * Return J is the summation of efforts in all three dimensions
-   * @param i effort is defined as (i+1)-th derivative of polynomial
+   * @param i effort is defined as \f$i\f$-th derivative of polynomial
    */
   decimal_t J(int i) const;
   /**
@@ -229,15 +232,19 @@ class Primitive {
   ///Duration
   decimal_t t_;
  public:
-  ///By default, primitive class contains three 1D primitive
+  ///By default, primitive class contains `Dim` 1D primitive
   std::array<Primitive1D, Dim> prs_;
 };
 
+///Waypoint for 2D
 typedef Waypoint<2> Waypoint2;
 
+///Waypoint for 3D
 typedef Waypoint<3> Waypoint3;
 
+///Primitive for 2D
 typedef Primitive<2> Primitive2;
 
+///Primitive for 3D
 typedef Primitive<3> Primitive3;
 #endif

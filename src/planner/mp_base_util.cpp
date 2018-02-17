@@ -238,22 +238,22 @@ bool MPBaseUtil<Dim>::plan(const Waypoint<Dim> &start, const Waypoint<Dim> &goal
   }
 
   if(start.use_pos && start.use_vel && start.use_acc && start.use_jrk) {
-    ENV_->set_wi(3);
+    ENV_->set_wi(4);
     if(planner_verbose_)
       printf("[MPBaseUtil] set effort in snap\n");
   }
   else if(start.use_pos && start.use_vel && start.use_acc && !start.use_jrk) {
-    ENV_->set_wi(2);
+    ENV_->set_wi(3);
     if(planner_verbose_)
       printf("[MPBaseUtil] set effort in jrk\n");
   }
   else if(start.use_pos && start.use_vel && !start.use_acc && !start.use_jrk) {
-    ENV_->set_wi(1);
+    ENV_->set_wi(2);
     if(planner_verbose_)
       printf("[MPBaseUtil] set effort in acc\n");
   }
   else if(start.use_pos && !start.use_vel && !start.use_acc && !start.use_jrk) {
-    ENV_->set_wi(0);
+    ENV_->set_wi(1);
     if(planner_verbose_)
       printf("[MPBaseUtil] set effort in vel\n");
   }

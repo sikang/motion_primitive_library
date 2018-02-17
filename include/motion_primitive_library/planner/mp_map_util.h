@@ -15,7 +15,7 @@ class MPMapUtil : public MPBaseUtil<Dim>
   public:
     /**
      * @brief Simple constructor
-     * @param verbose enable print out
+     * @param verbose enable debug messages
      */
     MPMapUtil(bool verbose);
     ///Set map util
@@ -44,7 +44,8 @@ class MPMapUtil : public MPBaseUtil<Dim>
     mutable linkedHashMap lhm_;
 };
 
-
+///Planner for 2D OccMap
 typedef MPMapUtil<2> MPMap2DUtil;
 
+///Planner for 3D VoxelMap
 typedef MPMapUtil<3> MPMap3DUtil;

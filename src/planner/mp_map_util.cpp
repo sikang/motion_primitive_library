@@ -27,7 +27,11 @@ vec_Vecf<Dim> MPMapUtil<Dim>::getLinkedNodes() const {
       Key key = it.second->pred_hashkey[i];
       Primitive<Dim> pr;
       this->ENV_->forward_action( this->ss_ptr_->hm_[key]->coord, it.second->pred_action_id[i], pr );
-      double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
+      decimal_t max_v = 0;
+      if(Dim == 2)
+        max_v = std::max(pr.max_vel(0), pr.max_vel(1));
+      else if(Dim == 3)
+        max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
       int n = 1.0 * std::ceil(max_v * pr.t() / map_util_->getRes());
       int prev_id = -1;
       vec_E<Waypoint<Dim>> ws = pr.sample(n);

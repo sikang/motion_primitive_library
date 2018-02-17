@@ -61,7 +61,7 @@ bool DecompUtil::isFree(const Primitive3& pr) {
         return false;
     }
   }
-  double max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
+  decimal_t max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
   int n = std::ceil(max_v * pr.t() / axe_(0));
   vec_Ellipsoid Es = sample_ellipsoids(pr, axe_, n);
 

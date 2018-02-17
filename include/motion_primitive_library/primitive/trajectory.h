@@ -54,7 +54,7 @@ class Lambda {
 /**
  * @brief Trajectory class
  *
- * A trajectory is composed from several primitives, so-called linear piece-wise polynomials
+ * A trajectory is composed by multiple end-to-end connected primitives, so-called piece-wise polynomials
  */
 template <int Dim>
 class Trajectory {
@@ -116,8 +116,10 @@ class Trajectory {
     Lambda lambda_;
 };
 
+///Trajectory in 2D
 typedef Trajectory<2> Trajectory2;
 
+///Trajectory in 3D
 typedef Trajectory<3> Trajectory3;
 
 #endif

@@ -65,7 +65,7 @@ void PolyTraj<Dim>::addTime(const std::vector<decimal_t> &dts) {
 }
 
 template <int Dim>
-vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() {
+vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
   vec_E<Primitive<Dim>> trajs;
   trajs.resize(coefficients_.size());
   for (unsigned int i = 0; i < coefficients_.size(); i++) {

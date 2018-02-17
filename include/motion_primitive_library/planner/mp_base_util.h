@@ -23,7 +23,7 @@ class MPBaseUtil
     MPBaseUtil();
     ///Check if it has been planned
     bool initialized();
-    ///Get nodes on the optimal trajectory
+    ///Get states on the optimal trajectory
     vec_E<Waypoint<Dim>> getWs() const;
     ///Get optimal trajectory
     Trajectory<Dim> getTraj() const;
@@ -78,14 +78,13 @@ class MPBaseUtil
     ///Set U 
     void setU(const vec_Vecf<Dim>& U);
     ///Set tolerance in geometric and dynamic spaces
-    void setTol(decimal_t tol_dis, decimal_t tol_vel, decimal_t tol_acc = 0.0);
+    void setTol(decimal_t tol_dis, decimal_t tol_vel = 0, decimal_t tol_acc = 0);
     /**
      * @brief Planning thread
      * @param start start waypoint
      * @param goal goal waypoint
      *
-     * The start waypoint 
-     * The goal waypoint is the center of the goal region, the planner cannot find the trajectory hit the excat goal state due to discretization;
+     * The goal waypoint is the center of the goal region, the planner cannot find the trajectory hits the exact goal state due to discretization
      */
     bool plan(const Waypoint<Dim> &start, const Waypoint<Dim> &goal);
 

@@ -24,6 +24,7 @@ namespace MPL {
     public:
     lookUpTable collision_checking_table_;
 
+    ///Collision checking util
     std::shared_ptr<MapUtil<Dim>> map_util_;
 
     ///Constructor with map util as input
@@ -42,7 +43,7 @@ namespace MPL {
      * Sample points along the primitive, and check each point for collision; the number of sampling is calculated based on the maximum velocity and resolution of the map.
      */
     bool is_free(const Primitive<Dim>& pr) const {
-      double max_v = 0;
+      decimal_t max_v = 0;
       if(Dim == 2) 
         max_v = std::max(pr.max_vel(0), pr.max_vel(1));
       else if(Dim == 3)
@@ -73,7 +74,7 @@ namespace MPL {
     void get_succ( const Waypoint<Dim>& curr, 
         vec_E<Waypoint<Dim>>& succ,
         std::vector<Key>& succ_idx,
-        std::vector<double>& succ_cost,
+        std::vector<decimal_t>& succ_cost,
         std::vector<int>& action_idx) const
     {
       succ.clear();
@@ -102,8 +103,8 @@ namespace MPL {
 
           succ.push_back(tn);
           succ_idx.push_back(this->state_to_idx(tn));
-          double cost = is_free(pr) ? pr.J(this->wi_) + 
-            this->w_*this->dt_: std::numeric_limits<double>::infinity();
+          decimal_t cost = is_free(pr) ? pr.J(this->wi_) + 
+            this->w_*this->dt_: std::numeric_limits<decimal_t>::infinity();
           succ_cost.push_back(cost);
           action_idx.push_back(i);
         }
@@ -112,10 +113,6 @@ namespace MPL {
     }
 
   };
-
-typedef env_map<2> env_map_2d;
-
-typedef env_map<3> env_map_3d;
 
 }
 

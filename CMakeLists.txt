@@ -56,7 +56,6 @@ target_link_libraries(mp_cloud_util primitive mp_base_util ${PCL_LIBRARIES})
 #  src/planner/astar.cpp)
 #target_link_libraries(mp_sfc_util primitive)
 
-
 add_executable(test_planner_2d test/test_planner_2d.cpp)
 target_link_libraries(test_planner_2d mp_map_util ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 
@@ -66,7 +65,7 @@ target_link_libraries(test_planner_2d_prior_traj mp_map_util ${YAMLCPP_LIBRARIES
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util
+install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util 
   RUNTIME DESTINATION bin                                                                               
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

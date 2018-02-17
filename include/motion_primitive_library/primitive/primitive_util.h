@@ -31,9 +31,8 @@ void print_max(const Primitive<Dim>& p) {
 }
 
 
-
 /**
- * @brief estimate the ellipsoid 
+ * @brief estimate the ellipsoid in 3D
  * @param axe the length of semi-axes of the ellipsoid
  * @param pos center of ellipsoid 
  * @param acc acceleration
@@ -64,8 +63,6 @@ Vec3f to3D(const Vecf<Dim>& p) {
   return p3;
 }
 
-
-
 ///Sample N ellipsoids along the primitive
 template <int Dim>
 vec_Ellipsoid sample_ellipsoids(const Primitive<Dim>& pr, const Vec3f& axe, int N) {
@@ -93,8 +90,6 @@ vec_Ellipsoid sample_ellipsoids(const Trajectory<Dim>& traj, const Vec3f& axe, i
 
   return Es;
 }
-
-
 
 ///Approximate the maximum roll/pitch along the trajectory
 template <int Dim>
@@ -127,6 +122,5 @@ void max_attitude(const Trajectory<Dim>& traj, int N) {
 }
 
 
- 
 #endif
 

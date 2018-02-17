@@ -38,11 +38,6 @@ Primitive1D::Primitive1D(decimal_t p1, decimal_t p2, decimal_t t) {
 }
 
 Vec4f Primitive1D::evaluate(decimal_t t) const {
-  /*
-  return Vec3f(c(0)/120*t*t*t*t*t+c(1)/24*t*t*t*t+c(2)/6*t*t*t+c(3)/2*t*t+c(4)*t+c(5),
-               c(0)/24*t*t*t*t+c(1)/6*t*t*t+c(2)/2*t*t+c(3)*t+c(4),
-               c(0)/6*t*t*t+c(1)/2*t*t+c(2)*t+c(3));
-               */
   Vec4f vec;
   vec << c(0)/120*t*t*t*t*t+c(1)/24*t*t*t*t+c(2)/6*t*t*t+c(3)/2*t*t+c(4)*t+c(5),
       c(0)/24*t*t*t*t+c(1)/6*t*t*t+c(2)/2*t*t+c(3)*t+c(4),
@@ -53,22 +48,22 @@ Vec4f Primitive1D::evaluate(decimal_t t) const {
 }
 
 decimal_t Primitive1D::J(decimal_t t, int i) const {
-  // i = 0, return integration of square of vel
-  if(i == 0)
+  // i = 1, return integration of square of vel
+  if(i == 1)
     return c(0)*c(0)/5184*power(t,9)+c(0)*c(1)/576*power(t,8)+(c(1)*c(1)/252+c(0)*c(2)/168)*power(t,7)+
       (c(0)*c(3)/72+c(1)*c(2)/36)*power(t,6)+(c(2)*c(2)/20+c(0)*c(4)/60+c(1)*c(3)/15)*power(t,5)+
       (c(2)*c(3)/4+c(1)*c(4)/12)*power(t,4)+(c(3)*c(3)/3+c(2)*c(4)/3)*t*t*t+c(3)*c(4)*t*t+c(4)*c(4)*t;
-  // i = 1, return integration of square of acc
-  else if(i == 1)
+  // i = 2, return integration of square of acc
+  else if(i == 2)
     return c(0)*c(0)/252*t*t*t*t*t*t*t+c(0)*c(1)/36*t*t*t*t*t*t+(c(1)*c(1)/20+c(0)*c(2)/15)*t*t*t*t*t+
       (c(0)*c(3)/12+c(1)*c(2)/4)*t*t*t*t+(c(2)*c(2)/3+c(1)*c(3)/3)*t*t*t+
       c(2)*c(3)*t*t+c(3)*c(3)*t;
-  // i = 2, return integration of square of jerk
-  else if(i == 2)
+  // i = 3, return integration of square of jerk
+  else if(i == 3)
     return c(2)*c(2)*t+c(1)*c(2)*t*t+(c(1)*c(1)+c(0)*c(2))/3*t*t*t+
       c(0)*c(1)/4*t*t*t*t+c(0)*c(0)/20*t*t*t*t*t;
-  // i = 3, return integration of square of snap
-  else if(i == 3)
+  // i = 4, return integration of square of snap
+  else if(i == 4)
     return c(0)*c(0)/3.*t*t*t+c(0)*c(1)*t*t+c(1)*c(1)*t;
   else
     return 0;

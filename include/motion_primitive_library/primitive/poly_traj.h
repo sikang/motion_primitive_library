@@ -23,20 +23,20 @@ class PolyTraj {
     ///Set time allocation
     void addTime(const std::vector<decimal_t> &dts);
     ///Convert to Primitive class
-    vec_E<Primitive<Dim>> toPrimitives();
-
+    vec_E<Primitive<Dim>> toPrimitives() const;
     ///Evaluate the waypoint at t
     Waypoint<Dim> evaluate(decimal_t t) const;
     ///Get the total time for the trajectory
     decimal_t getTotalTime() const;
-
   private:
     std::vector<decimal_t> waypoint_times_;
     std::vector<decimal_t> dts_;
     std::deque<MatDNf<Dim>, Eigen::aligned_allocator<MatDNf<Dim>>> coefficients_;
 };
 
+///PolyTraj in 2D
 typedef PolyTraj<2> PolyTraj2;
 
+///PolyTraj in 3D
 typedef PolyTraj<3> PolyTraj3;
 #endif

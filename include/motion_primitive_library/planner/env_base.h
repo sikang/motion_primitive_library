@@ -30,13 +30,13 @@ class env_base
     ///Simple constructor
     env_base() {}
 
-    ///Check if hit the goal region
+    ///Check if state hit the goal region, use L-1 norm
     bool is_goal(const Waypoint<Dim>& state) const
     {
       bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis;
-      if(goaled && goal_node_.use_vel) 
+      if(goaled && goal_node_.use_vel && tol_vel > 0) 
         goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel;
-      if(goaled && goal_node_.use_acc) 
+      if(goaled && goal_node_.use_acc && tol_acc > 0) 
         goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc;
      return goaled;
     }
@@ -319,7 +319,7 @@ class env_base
       tol_vel = vel;
     }
 
-    ///Set velocity tolerance for goal region
+    ///Set acceleration tolerance for goal region
     void set_tol_acc(decimal_t acc) {
       tol_acc = acc;
     }
@@ -411,11 +411,11 @@ class env_base
     int alpha_ = 0;
 
     ///tolerance of position for goal region
-    decimal_t tol_dis = 1.0;
-    ///tolerance of velocity for goal region
-    decimal_t tol_vel = 1.0;
-    ///tolerance of acceleration for goal region
-    decimal_t tol_acc = 1.0;
+    decimal_t tol_dis = 0.0;
+    ///tolerance of velocity for goal region, 0 means no tolerance
+    decimal_t tol_vel = 0.0;
+    ///tolerance of acceleration for goal region, 0 means no tolerance
+    decimal_t tol_acc = 0.0;
     ///max control input
     decimal_t u_max_;
     ///max velocity

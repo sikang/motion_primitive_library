@@ -27,7 +27,7 @@ int main(int argc, char ** argv) {
   map_util->setMap(reader.origin(), reader.dim(), reader.data(), reader.resolution());
   map_util->freeUnknown();
 
-  // Initialize planning mission 
+  // Initialize start and goal, using acc control
   Waypoint2 start, goal;
   start.pos = Vec2f(reader.start(0), reader.start(1)); 
   start.vel = Vec2f::Zero(); 
@@ -48,6 +48,7 @@ int main(int argc, char ** argv) {
   goal.use_acc = start.use_acc;
   goal.use_jrk = start.use_jrk;
 
+  // Initialize control input
   decimal_t u_max = 0.5;
   decimal_t du = u_max;
   vec_Vec2f U;
@@ -55,18 +56,18 @@ int main(int argc, char ** argv) {
     for(decimal_t dy = -u_max; dy <= u_max; dy += du )
       U.push_back(Vec2f(dx, dy));
 
+  // Initialize planner
   std::unique_ptr<MPMap2DUtil> planner(new MPMap2DUtil(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
   planner->setAmax(1.0); // Set max acceleration 
-  planner->setJmax(1.0); // Set max jerk
   planner->setUmax(u_max); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
-  planner->setW(10); // Set dt for each primitive
+  planner->setW(10); // Set weight for time
   planner->setMaxNum(-1); // Set maximum allowed states
   planner->setU(U);// 2D discretization with 1
-  planner->setTol(0.2, 0.1, 1); // Tolerance for goal region
+  planner->setTol(0.5); // Tolerance for goal region, 0.5m in position
 
   // Planning
   Timer time(true);
@@ -133,23 +134,37 @@ int main(int argc, char ** argv) {
   }
 
 
-  // Draw the trajectory
   if(valid) {
+    // Draw the trajectory
     Trajectory2 traj = planner->getTraj();
     double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
-    printf("Total J:  J(0) = %f, J(1) = %f, J(2) = %f, J(3) = %f\n", 
-        traj.J(0), traj.J(1), traj.J(2), traj.J(3));
-    int num = 100; // number of points on trajectory to draw
+    printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n", 
+        traj.J(1), traj.J(2), traj.J(3), traj.J(4));
+    int num = 200; // number of points on trajectory to draw
     const double dt = total_t / num; 
     boost::geometry::model::linestring<point_2d> line;
+    Vec2f prev_pt;
     for(double t = 0; t <= total_t; t += dt) {
       Waypoint2 w;
       traj.evaluate(t, w);
-      line.push_back(point_2d(w.pos(0), w.pos(1)));
+      if((w.pos - prev_pt).norm() > 0.2) {
+        line.push_back(point_2d(w.pos(0), w.pos(1)));
+        prev_pt = w.pos;
+      }
     }
     mapper.add(line);
     mapper.map(line, "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
+
+    // Draw states long trajectory
+    for(const auto& pt: planner->getWs()) {
+      point_2d a;
+      boost::geometry::assign_values(a, pt.pos(0), pt.pos(1));
+      mapper.add(a);
+      mapper.map(a, "fill-opacity:1.0;fill:rgb(10,10,250);", 2); // Blue
+    }
+
+
   }
  
 

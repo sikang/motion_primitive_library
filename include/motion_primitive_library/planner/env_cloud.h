@@ -52,9 +52,9 @@ class env_cloud : public env_base<3>
      void get_succ( const Waypoint3& curr, 
         vec_E<Waypoint3>& succ,
         std::vector<Key>& succ_idx,
-        std::vector<double>& succ_cost,
+        std::vector<decimal_t>& succ_cost,
         std::vector<int>& action_idx,
-        std::vector<double>& action_dts ) const
+        std::vector<decimal_t>& action_dts ) const
     {
       succ.clear();
       succ_idx.clear();
@@ -62,6 +62,7 @@ class env_cloud : public env_base<3>
       action_idx.clear();
       action_dts.clear();
 
+      expanded_nodes_.push_back(curr.pos);
       //ws_.push_back(curr);
       for(int i = 0; i < (int) U_.size(); i++) {
         Primitive3 pr(curr, U_[i], dt_);

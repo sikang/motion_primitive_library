@@ -1,11 +1,11 @@
 /**
  * @file math.h
- *  @brief Polynomial roots solver
+ * @brief Polynomial roots solver
 
- *Solving real roots for n-th order polynomial:
+ * Solving real roots for n-th order polynomial:
     if n < 5, the closed form solution will be calculated;
     if n >= 5, using Eigen Polynomials solver which is slower but correct.
-    */
+ */
 #pragma once
 #include <motion_primitive_library/common/data_type.h>
 #include <unsupported/Eigen/Polynomials>
