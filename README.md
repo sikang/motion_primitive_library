@@ -51,27 +51,27 @@ target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
 
 
 ## Example Usage
-Three components are needed to set up a planner:
+### Preparation
+Three components are required to be set properly before running the planner:
 
 #### 1) Start and Goal:
 We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input. 
-An example for 3D planning is given as:
+An example for 2D planning is given as:
 ```
-// Initialize planning mission 
-Waypoint3 start, goal;
-start.pos = Vec3f(2.5, -3.5, 0.0);
+Waypoint2 start, goal; // Initialize start and goal as Waypoint 2D
+start.pos = Vec3f(2.5, -3.5);
 start.use_pos = true;
 start.use_vel = true;
 start.use_acc = false; 
 start.use_jrk = false; 
-goal.pos = Vec3f(35, 2.5, 0.0);
+goal.pos = Vec3f(35, 2.5);
 goal.use_pos = start.use_pos;
 goal.use_vel = start.use_vel;
 goal.use_acc = start.use_acc;
 goal.use_jrk = start.use_jrk;
 ```
 
-The flag `use_xxx` will adapt the planning in different control space. For example, the one above is control in acc space. Four options are provided by setting those flags as below:
+The flag `use_xxx` indicates the planner to plan in different control space. For example, the one above is control in acc space. Four options are provided by setting those flags as below:
 
 Vel | Acc | Jrk | Snp
 :-- | :-- | :-- | :--
@@ -81,28 +81,28 @@ Vel | Acc | Jrk | Snp
 `use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = true`
 
 #### 2) Set collision checking:
-For `class MPMapUtil`, we use `class MapUtil` to handle collision checking in voxel map. 
-An example for 3D collision checking based on `VoxelMapUtil` is given as: 
+For `class MPMapUtil`, we use `class MapUtil` to handle collision checking in a voxel map. 
+An example for 2D collision checking based on `OccMapUtil` is given as: 
 ```
-std::shared_ptr<VoxelMapUtil> map_util;
-map_util.reset(new VoxelMapUtil);
+std::shared_ptr<OccMapUtil> map_util;
+map_util.reset(new OccMapUtil); // Initialize map_util
 ```
+
 #### 3) Set control input:
-An example for the control input for 3D planning is given as `U` in":
+An example for the control input `U` for 2D planning is given as following, in this case, `U` simply include 9 elements:
 ```
-vec_Vec3f U;
+vec_Vec2f U;
 const decimal_t du = u_max / num;
 for(decimal_t dx = -u_max; dx <= u_max; dx += du )
   for(decimal_t dy = -u_max; dy <= u_max; dy += du )
-    for(decimal_t dz = -u_max; dz <= u_max; dz += du )
-      U.push_back(Vec3f(dx, dy, dz));
+      U.push_back(Vec2f(dx, dy));
 ```
 
-#### 4) Set the planner:
-After setting up start and goal states, a planning thread can be started as:
+### Run the planner:
+After set up above 3 components, a planner can be initialized as:
 ```
-std::unique_ptr<MPMap3DUtil> planner(new MPMap3DUtil(true)); // Declare a mp planner using voxel map
-planner->setMapUtil(map_util); // Set collision checking function
+std::unique_ptr<MPMap2DUtil> planner(new MPMap2DUtil(true)); // Declare a 2D planner with verbose on
+planner->setMapUtil(map_util); // Set collision checking util
 planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity
 planner->setAmax(1.0); // Set max acceleration 
@@ -110,8 +110,7 @@ planner->setJmax(1.0); // Set max jerk
 planner->setUmax(0.5); // Set max control input
 planner->setDt(1.0); // Set dt for each primitive
 planner->setW(10); // Set weight of time 
-planner->setMaxNum(-1); // Set maximum allowed number of expanded nodes (-1 means no limitation)
-planner->setU(U);// 2D discretization with 1
+planner->setU(U); // Set control input
 planner->setTol(0.2, 0.1, 1); // Tolerance for goal region (pos=0.2, vel=0.1, acc=1 accordingly)
 
 bool valid = planner->plan(start, goal); // Plan from start to goal

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MRSL Motion Primitive Library: Primitive Class Reference</title>
+<title>MRSL Motion Primitive Library: Primitive&lt; Dim &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,7 +66,7 @@ $(function() {
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classPrimitive-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Primitive Class Reference</div>  </div>
+<div class="title">Primitive&lt; Dim &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -77,91 +77,96 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae6b6e9440d482575d1dcbf77a936c201"><td class="memItemLeft" align="right" valign="top"><a id="ae6b6e9440d482575d1dcbf77a936c201"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#ae6b6e9440d482575d1dcbf77a936c201">Primitive</a> ()</td></tr>
-<tr class="memdesc:ae6b6e9440d482575d1dcbf77a936c201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
-<tr class="separator:ae6b6e9440d482575d1dcbf77a936c201"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81784280371418d819d60ae73259c11e"><td class="memItemLeft" align="right" valign="top"><a id="a81784280371418d819d60ae73259c11e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a81784280371418d819d60ae73259c11e">Primitive</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;p, const <a class="el" href="data__type_8h.html#a6a51054135436e5d0a4529dc0054ae0a">Vec3f</a> &amp;u, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a70f76ce1aa18321cc779b794610a8fae">t</a>)</td></tr>
-<tr class="memdesc:a81784280371418d819d60ae73259c11e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from an initial state p and an input control u for a given duration t. <br /></td></tr>
-<tr class="separator:a81784280371418d819d60ae73259c11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4743329c799c6094fdf7eafa991e087c"><td class="memItemLeft" align="right" valign="top"><a id="a4743329c799c6094fdf7eafa991e087c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a4743329c799c6094fdf7eafa991e087c">Primitive</a> (const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;p1, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;p2, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a70f76ce1aa18321cc779b794610a8fae">t</a>)</td></tr>
-<tr class="memdesc:a4743329c799c6094fdf7eafa991e087c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from an initial state p1 and a goal state p2 for a given duration t. <br /></td></tr>
-<tr class="separator:a4743329c799c6094fdf7eafa991e087c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c983cf1088b0a50b24c056d4c3db661"><td class="memItemLeft" align="right" valign="top"><a id="a8c983cf1088b0a50b24c056d4c3db661"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a8c983cf1088b0a50b24c056d4c3db661">Primitive</a> (const <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="data__type_8h.html#a0d5d8b43b7b87d7dde4c803a341d14af">Vec6f</a> &gt; &amp;cs, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a70f76ce1aa18321cc779b794610a8fae">t</a>)</td></tr>
-<tr class="memdesc:a8c983cf1088b0a50b24c056d4c3db661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from given coefficients and duration. <br /></td></tr>
-<tr class="separator:a8c983cf1088b0a50b24c056d4c3db661"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d263bca7ef33d0f343fd94fee0bc6ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structWaypoint.html">Waypoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a0d263bca7ef33d0f343fd94fee0bc6ce">evaluate</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a70f76ce1aa18321cc779b794610a8fae">t</a>) const</td></tr>
-<tr class="memdesc:a0d263bca7ef33d0f343fd94fee0bc6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return state at t.  <a href="#a0d263bca7ef33d0f343fd94fee0bc6ce">More...</a><br /></td></tr>
-<tr class="separator:a0d263bca7ef33d0f343fd94fee0bc6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70f76ce1aa18321cc779b794610a8fae"><td class="memItemLeft" align="right" valign="top"><a id="a70f76ce1aa18321cc779b794610a8fae"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a70f76ce1aa18321cc779b794610a8fae">t</a> () const</td></tr>
-<tr class="memdesc:a70f76ce1aa18321cc779b794610a8fae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pre-defined duration. <br /></td></tr>
-<tr class="separator:a70f76ce1aa18321cc779b794610a8fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1df44ac9e3bd6d0de41a1c0a83e30a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPrimitive1D.html">Primitive1D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#ac1df44ac9e3bd6d0de41a1c0a83e30a5">traj</a> (int k) const</td></tr>
-<tr class="memdesc:ac1df44ac9e3bd6d0de41a1c0a83e30a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the 1D primitive.  <a href="#ac1df44ac9e3bd6d0de41a1c0a83e30a5">More...</a><br /></td></tr>
-<tr class="separator:ac1df44ac9e3bd6d0de41a1c0a83e30a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14682cf852b57be7fa55a2429fc70306"><td class="memItemLeft" align="right" valign="top"><a id="a14682cf852b57be7fa55a2429fc70306"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a14682cf852b57be7fa55a2429fc70306">max_vel</a> (int k) const</td></tr>
-<tr class="memdesc:a14682cf852b57be7fa55a2429fc70306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max velocity along k-th dimension. <br /></td></tr>
-<tr class="separator:a14682cf852b57be7fa55a2429fc70306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25e5b4fa8b11ed0be84a5246f8d09215"><td class="memItemLeft" align="right" valign="top"><a id="a25e5b4fa8b11ed0be84a5246f8d09215"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a25e5b4fa8b11ed0be84a5246f8d09215">max_acc</a> (int k) const</td></tr>
-<tr class="memdesc:a25e5b4fa8b11ed0be84a5246f8d09215"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max accleration along k-th dimension. <br /></td></tr>
-<tr class="separator:a25e5b4fa8b11ed0be84a5246f8d09215"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac194f73b50d5ecc6e2c7c241720c9b4b"><td class="memItemLeft" align="right" valign="top"><a id="ac194f73b50d5ecc6e2c7c241720c9b4b"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#ac194f73b50d5ecc6e2c7c241720c9b4b">max_jrk</a> (int k) const</td></tr>
-<tr class="memdesc:ac194f73b50d5ecc6e2c7c241720c9b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max jerk along k-th dimension. <br /></td></tr>
-<tr class="separator:ac194f73b50d5ecc6e2c7c241720c9b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4687bbf212724b70a40166f29220eede"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a4687bbf212724b70a40166f29220eede">valid_vel</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mv) const</td></tr>
-<tr class="memdesc:a4687bbf212724b70a40166f29220eede"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max velocity is below the threshold.  <a href="#a4687bbf212724b70a40166f29220eede">More...</a><br /></td></tr>
-<tr class="separator:a4687bbf212724b70a40166f29220eede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc0a67e77856ad40d477b3e212078bc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#abc0a67e77856ad40d477b3e212078bc5">valid_acc</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ma) const</td></tr>
-<tr class="memdesc:abc0a67e77856ad40d477b3e212078bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max acceleration is below the threshold.  <a href="#abc0a67e77856ad40d477b3e212078bc5">More...</a><br /></td></tr>
-<tr class="separator:abc0a67e77856ad40d477b3e212078bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f5bab76f0406a1d6cb6cd3f63cd0f16"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a2f5bab76f0406a1d6cb6cd3f63cd0f16">valid_jrk</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mj) const</td></tr>
-<tr class="memdesc:a2f5bab76f0406a1d6cb6cd3f63cd0f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max jerk is below the threshold.  <a href="#a2f5bab76f0406a1d6cb6cd3f63cd0f16">More...</a><br /></td></tr>
-<tr class="separator:a2f5bab76f0406a1d6cb6cd3f63cd0f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a91a66cdc103d66926aae7da24939b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a7a91a66cdc103d66926aae7da24939b3">J</a> (int i) const</td></tr>
-<tr class="memdesc:a7a91a66cdc103d66926aae7da24939b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_11.png"/>.  <a href="#a7a91a66cdc103d66926aae7da24939b3">More...</a><br /></td></tr>
-<tr class="separator:a7a91a66cdc103d66926aae7da24939b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa15ac4cb4b646446c858bf52ef3a06cf"><td class="memItemLeft" align="right" valign="top"><a id="aa15ac4cb4b646446c858bf52ef3a06cf"></a>
-std::vector&lt; <a class="el" href="structWaypoint.html">Waypoint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#aa15ac4cb4b646446c858bf52ef3a06cf">sample</a> (int N) const</td></tr>
-<tr class="memdesc:aa15ac4cb4b646446c858bf52ef3a06cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N states using uniformed time. <br /></td></tr>
-<tr class="separator:aa15ac4cb4b646446c858bf52ef3a06cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adeedc55773c4d16548a9a12478124b97"><td class="memItemLeft" align="right" valign="top"><a id="adeedc55773c4d16548a9a12478124b97"></a>
-<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="data__type_8h.html#a0d5d8b43b7b87d7dde4c803a341d14af">Vec6f</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#adeedc55773c4d16548a9a12478124b97">coeffs</a> () const</td></tr>
-<tr class="memdesc:adeedc55773c4d16548a9a12478124b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve coefficients. <br /></td></tr>
-<tr class="separator:adeedc55773c4d16548a9a12478124b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40ffaf02bcf580e47ef536e44a1297d"><td class="memItemLeft" align="right" valign="top"><a id="af40ffaf02bcf580e47ef536e44a1297d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#af40ffaf02bcf580e47ef536e44a1297d">Primitive</a> ()</td></tr>
+<tr class="memdesc:af40ffaf02bcf580e47ef536e44a1297d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
+<tr class="separator:af40ffaf02bcf580e47ef536e44a1297d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5336cefd4939eeda6872efecd0acc24"><td class="memItemLeft" align="right" valign="top"><a id="af5336cefd4939eeda6872efecd0acc24"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#af5336cefd4939eeda6872efecd0acc24">Primitive</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;p, const <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt; &amp;u, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a908ba5793fc0520602352b59358a34ea">t</a>)</td></tr>
+<tr class="memdesc:af5336cefd4939eeda6872efecd0acc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from an initial state p and an input control u for a given duration t. <br /></td></tr>
+<tr class="separator:af5336cefd4939eeda6872efecd0acc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7832340c4550b8d1929e68d8db4266"><td class="memItemLeft" align="right" valign="top"><a id="a9e7832340c4550b8d1929e68d8db4266"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a9e7832340c4550b8d1929e68d8db4266">Primitive</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;p1, const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;p2, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a908ba5793fc0520602352b59358a34ea">t</a>)</td></tr>
+<tr class="memdesc:a9e7832340c4550b8d1929e68d8db4266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from an initial state p1 and a goal state p2 for a given duration t. <br /></td></tr>
+<tr class="separator:a9e7832340c4550b8d1929e68d8db4266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d98eeacfa95bfff419f381ca68fa1b5"><td class="memItemLeft" align="right" valign="top"><a id="a5d98eeacfa95bfff419f381ca68fa1b5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a5d98eeacfa95bfff419f381ca68fa1b5">Primitive</a> (const <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="data__type_8h.html#a940b1af907878e3cb6d2f7694730ee01">Vec6f</a> &gt; &amp;cs, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a908ba5793fc0520602352b59358a34ea">t</a>)</td></tr>
+<tr class="memdesc:a5d98eeacfa95bfff419f381ca68fa1b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from given coefficients and duration. <br /></td></tr>
+<tr class="separator:a5d98eeacfa95bfff419f381ca68fa1b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad169f643f0556872f140f16a9ca73270"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#ad169f643f0556872f140f16a9ca73270">evaluate</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html#a908ba5793fc0520602352b59358a34ea">t</a>) const</td></tr>
+<tr class="memdesc:ad169f643f0556872f140f16a9ca73270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return state at t.  <a href="#ad169f643f0556872f140f16a9ca73270">More...</a><br /></td></tr>
+<tr class="separator:ad169f643f0556872f140f16a9ca73270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a908ba5793fc0520602352b59358a34ea"><td class="memItemLeft" align="right" valign="top"><a id="a908ba5793fc0520602352b59358a34ea"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a908ba5793fc0520602352b59358a34ea">t</a> () const</td></tr>
+<tr class="memdesc:a908ba5793fc0520602352b59358a34ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pre-defined duration. <br /></td></tr>
+<tr class="separator:a908ba5793fc0520602352b59358a34ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76754bad7e00ed81868263c01b22d5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPrimitive1D.html">Primitive1D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#aa76754bad7e00ed81868263c01b22d5f">traj</a> (int k) const</td></tr>
+<tr class="memdesc:aa76754bad7e00ed81868263c01b22d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the 1D primitive.  <a href="#aa76754bad7e00ed81868263c01b22d5f">More...</a><br /></td></tr>
+<tr class="separator:aa76754bad7e00ed81868263c01b22d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c369ebe499544a832c88b6fc4ada0e4"><td class="memItemLeft" align="right" valign="top"><a id="a6c369ebe499544a832c88b6fc4ada0e4"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a6c369ebe499544a832c88b6fc4ada0e4">max_vel</a> (int k) const</td></tr>
+<tr class="memdesc:a6c369ebe499544a832c88b6fc4ada0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max velocity along k-th dimension. <br /></td></tr>
+<tr class="separator:a6c369ebe499544a832c88b6fc4ada0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3547fefaf5d3ea5421c7a4e8f9364c"><td class="memItemLeft" align="right" valign="top"><a id="abc3547fefaf5d3ea5421c7a4e8f9364c"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#abc3547fefaf5d3ea5421c7a4e8f9364c">max_acc</a> (int k) const</td></tr>
+<tr class="memdesc:abc3547fefaf5d3ea5421c7a4e8f9364c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max accleration along k-th dimension. <br /></td></tr>
+<tr class="separator:abc3547fefaf5d3ea5421c7a4e8f9364c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a5a1461298a7f3ebd653faedd6866e2"><td class="memItemLeft" align="right" valign="top"><a id="a0a5a1461298a7f3ebd653faedd6866e2"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a0a5a1461298a7f3ebd653faedd6866e2">max_jrk</a> (int k) const</td></tr>
+<tr class="memdesc:a0a5a1461298a7f3ebd653faedd6866e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max jerk along k-th dimension. <br /></td></tr>
+<tr class="separator:a0a5a1461298a7f3ebd653faedd6866e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaadc309423410cb6117d86405364be5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#aaadc309423410cb6117d86405364be5e">valid_vel</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mv) const</td></tr>
+<tr class="memdesc:aaadc309423410cb6117d86405364be5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max velocity is below the threshold.  <a href="#aaadc309423410cb6117d86405364be5e">More...</a><br /></td></tr>
+<tr class="separator:aaadc309423410cb6117d86405364be5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c2f7f89a284b641b9741e4def5928f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a48c2f7f89a284b641b9741e4def5928f">valid_acc</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ma) const</td></tr>
+<tr class="memdesc:a48c2f7f89a284b641b9741e4def5928f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max acceleration is below the threshold.  <a href="#a48c2f7f89a284b641b9741e4def5928f">More...</a><br /></td></tr>
+<tr class="separator:a48c2f7f89a284b641b9741e4def5928f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ae6f3e365cc37c25033f135cb0df750"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a6ae6f3e365cc37c25033f135cb0df750">valid_jrk</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mj) const</td></tr>
+<tr class="memdesc:a6ae6f3e365cc37c25033f135cb0df750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max jerk is below the threshold.  <a href="#a6ae6f3e365cc37c25033f135cb0df750">More...</a><br /></td></tr>
+<tr class="separator:a6ae6f3e365cc37c25033f135cb0df750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74a46674e3a0cc1fdea44c4ce506f5cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a74a46674e3a0cc1fdea44c4ce506f5cb">J</a> (int i) const</td></tr>
+<tr class="memdesc:a74a46674e3a0cc1fdea44c4ce506f5cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>.  <a href="#a74a46674e3a0cc1fdea44c4ce506f5cb">More...</a><br /></td></tr>
+<tr class="separator:a74a46674e3a0cc1fdea44c4ce506f5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05f39d37c30257fe531ff264039d4bb8"><td class="memItemLeft" align="right" valign="top"><a id="a05f39d37c30257fe531ff264039d4bb8"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a05f39d37c30257fe531ff264039d4bb8">sample</a> (int N) const</td></tr>
+<tr class="memdesc:a05f39d37c30257fe531ff264039d4bb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N states using uniformed time. <br /></td></tr>
+<tr class="separator:a05f39d37c30257fe531ff264039d4bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a2433425bdea39a8a91cf7f03f5992"><td class="memItemLeft" align="right" valign="top"><a id="af2a2433425bdea39a8a91cf7f03f5992"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="data__type_8h.html#a940b1af907878e3cb6d2f7694730ee01">Vec6f</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#af2a2433425bdea39a8a91cf7f03f5992">coeffs</a> () const</td></tr>
+<tr class="memdesc:af2a2433425bdea39a8a91cf7f03f5992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve coefficients. <br /></td></tr>
+<tr class="separator:af2a2433425bdea39a8a91cf7f03f5992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a78ffa023da2d325d034e08b6929cc97d"><td class="memItemLeft" align="right" valign="top"><a id="a78ffa023da2d325d034e08b6929cc97d"></a>
-<a class="el" href="classPrimitive1D.html">Primitive1D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a78ffa023da2d325d034e08b6929cc97d">prs_</a> [3]</td></tr>
-<tr class="memdesc:a78ffa023da2d325d034e08b6929cc97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">By default, primitive class contains three 1D primitive. <br /></td></tr>
-<tr class="separator:a78ffa023da2d325d034e08b6929cc97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada7fb3a9bbce1f574d3b9e49ac6631cd"><td class="memItemLeft" align="right" valign="top"><a id="ada7fb3a9bbce1f574d3b9e49ac6631cd"></a>
+std::array&lt; <a class="el" href="classPrimitive1D.html">Primitive1D</a>, Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#ada7fb3a9bbce1f574d3b9e49ac6631cd">prs_</a></td></tr>
+<tr class="memdesc:ada7fb3a9bbce1f574d3b9e49ac6631cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">By default, primitive class contains three 1D primitive. <br /></td></tr>
+<tr class="separator:ada7fb3a9bbce1f574d3b9e49ac6631cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:addf18cdf875316f9c28f95f5d34e8484"><td class="memItemLeft" align="right" valign="top"><a id="addf18cdf875316f9c28f95f5d34e8484"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#addf18cdf875316f9c28f95f5d34e8484">t_</a></td></tr>
-<tr class="memdesc:addf18cdf875316f9c28f95f5d34e8484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duration. <br /></td></tr>
-<tr class="separator:addf18cdf875316f9c28f95f5d34e8484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a311d2629375c5805fa64ac5d930bb7b9"><td class="memItemLeft" align="right" valign="top"><a id="a311d2629375c5805fa64ac5d930bb7b9"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive.html#a311d2629375c5805fa64ac5d930bb7b9">t_</a></td></tr>
+<tr class="memdesc:a311d2629375c5805fa64ac5d930bb7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duration. <br /></td></tr>
+<tr class="separator:a311d2629375c5805fa64ac5d930bb7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classPrimitive.html" title="Primitive class. ">Primitive</a> class. </p>
+<div class="textblock"><h3>template&lt;int Dim&gt;<br />
+class Primitive&lt; Dim &gt;</h3>
+
+<p><a class="el" href="classPrimitive.html" title="Primitive class. ">Primitive</a> class. </p>
 <p>Contains three 1D primitives corresponding to x, y, z indivisually. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0d263bca7ef33d0f343fd94fee0bc6ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d263bca7ef33d0f343fd94fee0bc6ce">&#9670;&nbsp;</a></span>evaluate()</h2>
+<a id="ad169f643f0556872f140f16a9ca73270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad169f643f0556872f140f16a9ca73270">&#9670;&nbsp;</a></span>evaluate()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structWaypoint.html">Waypoint</a> Primitive::evaluate </td>
+          <td class="memname"><a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::evaluate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -175,14 +180,16 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a91a66cdc103d66926aae7da24939b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a91a66cdc103d66926aae7da24939b3">&#9670;&nbsp;</a></span>J()</h2>
+<a id="a74a46674e3a0cc1fdea44c4ce506f5cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74a46674e3a0cc1fdea44c4ce506f5cb">&#9670;&nbsp;</a></span>J()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> Primitive::J </td>
+          <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::J </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -191,7 +198,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_11.png"/>. </p>
+<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>. </p>
 <p>Return J is the summation of efforts in all three dimensions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>effort is defined as (i+1)-th derivative of polynomial </td></tr>
@@ -201,14 +208,16 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac1df44ac9e3bd6d0de41a1c0a83e30a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1df44ac9e3bd6d0de41a1c0a83e30a5">&#9670;&nbsp;</a></span>traj()</h2>
+<a id="aa76754bad7e00ed81868263c01b22d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa76754bad7e00ed81868263c01b22d5f">&#9670;&nbsp;</a></span>traj()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classPrimitive1D.html">Primitive1D</a> Primitive::traj </td>
+          <td class="memname"><a class="el" href="classPrimitive1D.html">Primitive1D</a> <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::traj </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>k</em></td><td>)</td>
@@ -227,14 +236,16 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="abc0a67e77856ad40d477b3e212078bc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc0a67e77856ad40d477b3e212078bc5">&#9670;&nbsp;</a></span>valid_acc()</h2>
+<a id="a48c2f7f89a284b641b9741e4def5928f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c2f7f89a284b641b9741e4def5928f">&#9670;&nbsp;</a></span>valid_acc()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool Primitive::valid_acc </td>
+          <td class="memname">bool <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::valid_acc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
           <td class="paramname"><em>ma</em></td><td>)</td>
@@ -253,14 +264,16 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2f5bab76f0406a1d6cb6cd3f63cd0f16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f5bab76f0406a1d6cb6cd3f63cd0f16">&#9670;&nbsp;</a></span>valid_jrk()</h2>
+<a id="a6ae6f3e365cc37c25033f135cb0df750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae6f3e365cc37c25033f135cb0df750">&#9670;&nbsp;</a></span>valid_jrk()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool Primitive::valid_jrk </td>
+          <td class="memname">bool <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::valid_jrk </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
           <td class="paramname"><em>mj</em></td><td>)</td>
@@ -279,14 +292,16 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4687bbf212724b70a40166f29220eede"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4687bbf212724b70a40166f29220eede">&#9670;&nbsp;</a></span>valid_vel()</h2>
+<a id="aaadc309423410cb6117d86405364be5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaadc309423410cb6117d86405364be5e">&#9670;&nbsp;</a></span>valid_vel()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool Primitive::valid_vel </td>
+          <td class="memname">bool <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;::valid_vel </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
           <td class="paramname"><em>mv</em></td><td>)</td>

@@ -2,14 +2,12 @@
  * @file data_type.h
  * @brief Defines all data types used in this lib
 
- * Mostly alias from Eigen Library.
+ * Mostly aliasing from Eigen Library.
  */
 
 #ifndef BASIC_DATA_H
 #define BASIC_DATA_H
 #include <stdio.h>
-#include <math.h>
-#include <limits>
 #include <vector>
 #include <Eigen/Geometry>
 #include <Eigen/StdVector>
@@ -29,47 +27,46 @@
 ///Reset font color in printf funtion 
 #define ANSI_COLOR_RESET "\x1b[0m"
 
-///Pre-allocated std::vector for Eigen.
-template <typename T> 
-using vec_E = std::vector<T, Eigen::aligned_allocator<T>>;
 /*! \brief Rename the float type used in lib 
 
     Default is set to be double, but user can change it to float.
 */
 typedef double decimal_t;
 
-///Pre-allocated std::vector for Eigen.
+
+///Pre-allocated std::vector for Eigen using vec_E
+template <typename T> 
+using vec_E = std::vector<T, Eigen::aligned_allocator<T>>;
+///Eigen 1D float vector
 template <int N> 
 using Vecf = Eigen::Matrix<decimal_t, N, 1>;
-///Pre-allocated std::vector for Eigen.
+///Eigen 1D int vector
 template <int N> 
 using Veci = Eigen::Matrix<int, N, 1>;
-///Pre-allocated std::vector for Eigen.
+///MxN Eigen matrix
 template <int M, int N> 
 using Matf = Eigen::Matrix<decimal_t, M, N>;
-///Pre-allocated std::vector for Eigen.
+///MxN Eigen matrix with M unknown
 template <int N> 
 using MatDNf = Eigen::Matrix<decimal_t, Eigen::Dynamic, N>;
-///Pre-allocated std::vector for Eigen.
+///Vector of Eigen 1D float vector
 template <int N> 
 using vec_Vecf = vec_E<Vecf<N>>;
-///Pre-allocated std::vector for Eigen.
+///Vector of Eigen 1D int vector
 template <int N> 
 using vec_Veci = vec_E<Veci<N>>;
 
-
-
-///Column vector in float of size 2.
+///Eigen 1D float vector of size 2
 typedef Vecf<2> Vec2f;
-///Column vector in int of size 2.
+///Eigen 1D int vector of size 2
 typedef Veci<2> Vec2i;
-///Column vector in float of size 3.
+///Eigen 1D float vector of size 3
 typedef Vecf<3> Vec3f;
-///Column vector in int of size 3.
+///Eigen 1D int vector of size 3
 typedef Veci<3> Vec3i;
-///Column vector in float of size 4.
+///Eigen 1D float vector of size 4
 typedef Vecf<4> Vec4f;
-///Column vector in float of size 6.
+///Column vector in float of size 6
 typedef Vecf<6> Vec6f;
 
 ///Vector of type Vec2f.
@@ -90,11 +87,11 @@ typedef Matf<4, 4> Mat4f;
 ///6x6 Matrix in float
 typedef Matf<6, 6> Mat6f;
 
-///Column vector in float with dynamic size
+///Dynamic Nx1 Eigen float vector
 typedef Vecf<Eigen::Dynamic> VecDf;
-///Nx3 matrix in float 
-typedef Matf<Eigen::Dynamic, 3> MatD3f;
-///NxN matrix in float
+///Mx3 Eigen float matrix
+typedef MatDNf<3> MatD3f;
+///Dynamic MxN Eigen float matrix
 typedef Matf<Eigen::Dynamic, Eigen::Dynamic> MatDf;
 
 ///Allias of Eigen::Affine2d

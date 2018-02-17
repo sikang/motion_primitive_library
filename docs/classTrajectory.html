@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MRSL Motion Primitive Library: Trajectory Class Reference</title>
+<title>MRSL Motion Primitive Library: Trajectory&lt; Dim &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classTrajectory-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Trajectory Class Reference</div>  </div>
+<div class="title">Trajectory&lt; Dim &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -76,80 +76,85 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa340ba80f1f4d1aa39f19f069d5d8089"><td class="memItemLeft" align="right" valign="top"><a id="aa340ba80f1f4d1aa39f19f069d5d8089"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#aa340ba80f1f4d1aa39f19f069d5d8089">Trajectory</a> ()</td></tr>
-<tr class="memdesc:aa340ba80f1f4d1aa39f19f069d5d8089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
-<tr class="separator:aa340ba80f1f4d1aa39f19f069d5d8089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adac628485b1435285343ad23d418771e"><td class="memItemLeft" align="right" valign="top"><a id="adac628485b1435285343ad23d418771e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#adac628485b1435285343ad23d418771e">Trajectory</a> (const std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt; &amp;trajs)</td></tr>
-<tr class="memdesc:adac628485b1435285343ad23d418771e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from multiple primitives. <br /></td></tr>
-<tr class="separator:adac628485b1435285343ad23d418771e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e100ce61c43876dbe3fa66b4bf3f3f"><td class="memItemLeft" align="right" valign="top"><a id="ad1e100ce61c43876dbe3fa66b4bf3f3f"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#ad1e100ce61c43876dbe3fa66b4bf3f3f">getTotalTime</a> () const</td></tr>
-<tr class="memdesc:ad1e100ce61c43876dbe3fa66b4bf3f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total duration of the trajectory. <br /></td></tr>
-<tr class="separator:ad1e100ce61c43876dbe3fa66b4bf3f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95bd1ec2a088a09e578699743ab59af0"><td class="memItemLeft" align="right" valign="top"><a id="a95bd1ec2a088a09e578699743ab59af0"></a>
-<a class="el" href="classLambda.html">Lambda</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a95bd1ec2a088a09e578699743ab59af0">lambda</a> () const</td></tr>
-<tr class="memdesc:a95bd1ec2a088a09e578699743ab59af0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve scaling factor. <br /></td></tr>
-<tr class="separator:a95bd1ec2a088a09e578699743ab59af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e22aeb1c664fe36c6921f0c42687dbc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a4e22aeb1c664fe36c6921f0c42687dbc">evaluate</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> t, <a class="el" href="structWaypoint.html">Waypoint</a> &amp;p) const</td></tr>
-<tr class="memdesc:a4e22aeb1c664fe36c6921f0c42687dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate state at t, return false if fails to evaluate.  <a href="#a4e22aeb1c664fe36c6921f0c42687dbc">More...</a><br /></td></tr>
-<tr class="separator:a4e22aeb1c664fe36c6921f0c42687dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6ab39c7d4ab8387300e6b0d2055f16a"><td class="memItemLeft" align="right" valign="top"><a id="ab6ab39c7d4ab8387300e6b0d2055f16a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#ab6ab39c7d4ab8387300e6b0d2055f16a">scale</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ri, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> rf)</td></tr>
-<tr class="memdesc:ab6ab39c7d4ab8387300e6b0d2055f16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale according to ratio at start and end (velocity only) <br /></td></tr>
-<tr class="separator:ab6ab39c7d4ab8387300e6b0d2055f16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b714873cc8c99bdfb822037b8646754"><td class="memItemLeft" align="right" valign="top"><a id="a8b714873cc8c99bdfb822037b8646754"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a8b714873cc8c99bdfb822037b8646754">scale_down</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mv, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ri, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> rf)</td></tr>
-<tr class="memdesc:a8b714873cc8c99bdfb822037b8646754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale down the whole trajectory according to mv. <br /></td></tr>
-<tr class="separator:a8b714873cc8c99bdfb822037b8646754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a642225510c88c8eb8137faaff92c2fcf"><td class="memItemLeft" align="right" valign="top"><a id="a642225510c88c8eb8137faaff92c2fcf"></a>
-std::vector&lt; <a class="el" href="structWaypoint.html">Waypoint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a642225510c88c8eb8137faaff92c2fcf">sample</a> (int N) const</td></tr>
-<tr class="memdesc:a642225510c88c8eb8137faaff92c2fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N states using uniformed time. <br /></td></tr>
-<tr class="separator:a642225510c88c8eb8137faaff92c2fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9de3103dbebd1e425bfb5d247905582e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a9de3103dbebd1e425bfb5d247905582e">J</a> (int i) const</td></tr>
-<tr class="memdesc:a9de3103dbebd1e425bfb5d247905582e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_11.png"/>.  <a href="#a9de3103dbebd1e425bfb5d247905582e">More...</a><br /></td></tr>
-<tr class="separator:a9de3103dbebd1e425bfb5d247905582e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13c112898c1f72e8a27fc67b3cdef211"><td class="memItemLeft" align="right" valign="top"><a id="a13c112898c1f72e8a27fc67b3cdef211"></a>
-std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a13c112898c1f72e8a27fc67b3cdef211">getSegsT</a> () const</td></tr>
-<tr class="memdesc:a13c112898c1f72e8a27fc67b3cdef211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time for each segment. <br /></td></tr>
-<tr class="separator:a13c112898c1f72e8a27fc67b3cdef211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d57dbc2b417e504bede1abbd772544"><td class="memItemLeft" align="right" valign="top"><a id="a28d57dbc2b417e504bede1abbd772544"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a28d57dbc2b417e504bede1abbd772544">Trajectory</a> ()</td></tr>
+<tr class="memdesc:a28d57dbc2b417e504bede1abbd772544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
+<tr class="separator:a28d57dbc2b417e504bede1abbd772544"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261644c545eae2262753edb6aab27798"><td class="memItemLeft" align="right" valign="top"><a id="a261644c545eae2262753edb6aab27798"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a261644c545eae2262753edb6aab27798">Trajectory</a> (const <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt;&gt; &amp;prs)</td></tr>
+<tr class="memdesc:a261644c545eae2262753edb6aab27798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from multiple primitives. <br /></td></tr>
+<tr class="separator:a261644c545eae2262753edb6aab27798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f4d5f86feb5f56e5fae7fd02311e9c"><td class="memItemLeft" align="right" valign="top"><a id="a93f4d5f86feb5f56e5fae7fd02311e9c"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a93f4d5f86feb5f56e5fae7fd02311e9c">getTotalTime</a> () const</td></tr>
+<tr class="memdesc:a93f4d5f86feb5f56e5fae7fd02311e9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total duration of the trajectory. <br /></td></tr>
+<tr class="separator:a93f4d5f86feb5f56e5fae7fd02311e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c8a21095d260d7b8e4226c37fe56379"><td class="memItemLeft" align="right" valign="top"><a id="a2c8a21095d260d7b8e4226c37fe56379"></a>
+<a class="el" href="classLambda.html">Lambda</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a2c8a21095d260d7b8e4226c37fe56379">lambda</a> () const</td></tr>
+<tr class="memdesc:a2c8a21095d260d7b8e4226c37fe56379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve scaling factor. <br /></td></tr>
+<tr class="separator:a2c8a21095d260d7b8e4226c37fe56379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c98caade0922c06c9501a784165d723"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a5c98caade0922c06c9501a784165d723">evaluate</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> t, <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;p) const</td></tr>
+<tr class="memdesc:a5c98caade0922c06c9501a784165d723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate state at t, return false if fails to evaluate.  <a href="#a5c98caade0922c06c9501a784165d723">More...</a><br /></td></tr>
+<tr class="separator:a5c98caade0922c06c9501a784165d723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f54099ed3abd448c571b20200f42b3a"><td class="memItemLeft" align="right" valign="top"><a id="a5f54099ed3abd448c571b20200f42b3a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a5f54099ed3abd448c571b20200f42b3a">scale</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ri, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> rf)</td></tr>
+<tr class="memdesc:a5f54099ed3abd448c571b20200f42b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale according to ratio at start and end (velocity only) <br /></td></tr>
+<tr class="separator:a5f54099ed3abd448c571b20200f42b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bedf803b27daaca08d0e049a17fa41a"><td class="memItemLeft" align="right" valign="top"><a id="a9bedf803b27daaca08d0e049a17fa41a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a9bedf803b27daaca08d0e049a17fa41a">scale_down</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mv, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ri, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> rf)</td></tr>
+<tr class="memdesc:a9bedf803b27daaca08d0e049a17fa41a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale down the whole trajectory according to mv. <br /></td></tr>
+<tr class="separator:a9bedf803b27daaca08d0e049a17fa41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7a04fcce594083507ec010810f2f00a"><td class="memItemLeft" align="right" valign="top"><a id="ad7a04fcce594083507ec010810f2f00a"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#ad7a04fcce594083507ec010810f2f00a">sample</a> (int N) const</td></tr>
+<tr class="memdesc:ad7a04fcce594083507ec010810f2f00a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N states using uniformed time. <br /></td></tr>
+<tr class="separator:ad7a04fcce594083507ec010810f2f00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf17e62b2d5bcc0d5a08be93121cb120"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#adf17e62b2d5bcc0d5a08be93121cb120">J</a> (int i) const</td></tr>
+<tr class="memdesc:adf17e62b2d5bcc0d5a08be93121cb120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>.  <a href="#adf17e62b2d5bcc0d5a08be93121cb120">More...</a><br /></td></tr>
+<tr class="separator:adf17e62b2d5bcc0d5a08be93121cb120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1904677017c57f5d557b7844e3a6393e"><td class="memItemLeft" align="right" valign="top"><a id="a1904677017c57f5d557b7844e3a6393e"></a>
+std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a1904677017c57f5d557b7844e3a6393e">getSegsT</a> () const</td></tr>
+<tr class="memdesc:a1904677017c57f5d557b7844e3a6393e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time for each segment. <br /></td></tr>
+<tr class="separator:a1904677017c57f5d557b7844e3a6393e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a86463591d1de80f857bc707b63341ec7"><td class="memItemLeft" align="right" valign="top"><a id="a86463591d1de80f857bc707b63341ec7"></a>
-std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a86463591d1de80f857bc707b63341ec7">segs</a></td></tr>
-<tr class="memdesc:a86463591d1de80f857bc707b63341ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Segments of primitives. <br /></td></tr>
-<tr class="separator:a86463591d1de80f857bc707b63341ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade771595933ca25ab668bf01bf98d569"><td class="memItemLeft" align="right" valign="top"><a id="ade771595933ca25ab668bf01bf98d569"></a>
-std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#ade771595933ca25ab668bf01bf98d569">taus</a></td></tr>
-<tr class="memdesc:ade771595933ca25ab668bf01bf98d569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time in virtual domain. <br /></td></tr>
-<tr class="separator:ade771595933ca25ab668bf01bf98d569"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c66152bb9ecb9cff63309db2c365c32"><td class="memItemLeft" align="right" valign="top"><a id="a3c66152bb9ecb9cff63309db2c365c32"></a>
-std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a3c66152bb9ecb9cff63309db2c365c32">Ts</a></td></tr>
-<tr class="memdesc:a3c66152bb9ecb9cff63309db2c365c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time in actual domain. <br /></td></tr>
-<tr class="separator:a3c66152bb9ecb9cff63309db2c365c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b0a281aec27c849837512b4753ccf03"><td class="memItemLeft" align="right" valign="top"><a id="a1b0a281aec27c849837512b4753ccf03"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a1b0a281aec27c849837512b4753ccf03">total_t_</a></td></tr>
-<tr class="memdesc:a1b0a281aec27c849837512b4753ccf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total time of the trajectory. <br /></td></tr>
-<tr class="separator:a1b0a281aec27c849837512b4753ccf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1556cdfd7511e2fca4f0a7d6b504fdc1"><td class="memItemLeft" align="right" valign="top"><a id="a1556cdfd7511e2fca4f0a7d6b504fdc1"></a>
-<a class="el" href="classLambda.html">Lambda</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a1556cdfd7511e2fca4f0a7d6b504fdc1">lambda_</a></td></tr>
-<tr class="memdesc:a1556cdfd7511e2fca4f0a7d6b504fdc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scaling object. <br /></td></tr>
-<tr class="separator:a1556cdfd7511e2fca4f0a7d6b504fdc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1740804394e9c3d87e1cb86fd8034a20"><td class="memItemLeft" align="right" valign="top"><a id="a1740804394e9c3d87e1cb86fd8034a20"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a1740804394e9c3d87e1cb86fd8034a20">segs</a></td></tr>
+<tr class="memdesc:a1740804394e9c3d87e1cb86fd8034a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Segments of primitives. <br /></td></tr>
+<tr class="separator:a1740804394e9c3d87e1cb86fd8034a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a283d2293df0bdb4b525e403b6cd8eb10"><td class="memItemLeft" align="right" valign="top"><a id="a283d2293df0bdb4b525e403b6cd8eb10"></a>
+std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a283d2293df0bdb4b525e403b6cd8eb10">taus</a></td></tr>
+<tr class="memdesc:a283d2293df0bdb4b525e403b6cd8eb10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time in virtual domain. <br /></td></tr>
+<tr class="separator:a283d2293df0bdb4b525e403b6cd8eb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29224a22e9c3b698a2d3645e234eb22f"><td class="memItemLeft" align="right" valign="top"><a id="a29224a22e9c3b698a2d3645e234eb22f"></a>
+std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a29224a22e9c3b698a2d3645e234eb22f">Ts</a></td></tr>
+<tr class="memdesc:a29224a22e9c3b698a2d3645e234eb22f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time in actual domain. <br /></td></tr>
+<tr class="separator:a29224a22e9c3b698a2d3645e234eb22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e10efee7e33c2618bb7727fa2d034b"><td class="memItemLeft" align="right" valign="top"><a id="a08e10efee7e33c2618bb7727fa2d034b"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a08e10efee7e33c2618bb7727fa2d034b">total_t_</a></td></tr>
+<tr class="memdesc:a08e10efee7e33c2618bb7727fa2d034b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total time of the trajectory. <br /></td></tr>
+<tr class="separator:a08e10efee7e33c2618bb7727fa2d034b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a000bf7e3a68f675ea1e7470a32f34"><td class="memItemLeft" align="right" valign="top"><a id="a24a000bf7e3a68f675ea1e7470a32f34"></a>
+<a class="el" href="classLambda.html">Lambda</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a24a000bf7e3a68f675ea1e7470a32f34">lambda_</a></td></tr>
+<tr class="memdesc:a24a000bf7e3a68f675ea1e7470a32f34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scaling object. <br /></td></tr>
+<tr class="separator:a24a000bf7e3a68f675ea1e7470a32f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> class. </p>
+<div class="textblock"><h3>template&lt;int Dim&gt;<br />
+class Trajectory&lt; Dim &gt;</h3>
+
+<p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> class. </p>
 <p>A trajectory is composed from several primitives, so-called linear piece-wise polynomials </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4e22aeb1c664fe36c6921f0c42687dbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e22aeb1c664fe36c6921f0c42687dbc">&#9670;&nbsp;</a></span>evaluate()</h2>
+<a id="a5c98caade0922c06c9501a784165d723"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c98caade0922c06c9501a784165d723">&#9670;&nbsp;</a></span>evaluate()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool Trajectory::evaluate </td>
+          <td class="memname">bool <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;::evaluate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
           <td class="paramname"><em>t</em>, </td>
@@ -157,7 +162,7 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structWaypoint.html">Waypoint</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;&#160;</td>
           <td class="paramname"><em>p</em>&#160;</td>
         </tr>
         <tr>
@@ -169,18 +174,20 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
 </div><div class="memdoc">
 
 <p>Evaluate state at t, return false if fails to evaluate. </p>
-<p>If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation; The failure case is when lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_12.png"/> has no solution </p>
+<p>If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation; The failure case is when lambda is ill-posed such that <img class="formulaInl" alt="$t = \lambda(\tau)^{-1}$" src="form_14.png"/> has no solution </p>
 
 </div>
 </div>
-<a id="a9de3103dbebd1e425bfb5d247905582e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9de3103dbebd1e425bfb5d247905582e">&#9670;&nbsp;</a></span>J()</h2>
+<a id="adf17e62b2d5bcc0d5a08be93121cb120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf17e62b2d5bcc0d5a08be93121cb120">&#9670;&nbsp;</a></span>J()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> Trajectory::J </td>
+          <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;::J </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -189,7 +196,7 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
       </table>
 </div><div class="memdoc">
 
-<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_11.png"/>. </p>
+<p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_13.png"/>. </p>
 <p>Return J is the summation of efforts in all three dimensions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>effort is defined as (i+1)-th derivative of polynomial </td></tr>

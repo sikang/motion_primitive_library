@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['raytrace',['rayTrace',['../classMPL_1_1MapUtilBase.html#a5733a2395b0cb7f68a50c90ad6766a87',1,'MPL::MapUtilBase::rayTrace()'],['../classMPL_1_1VoxelMapUtil.html#ac8314acb23114af729c138abdb481810',1,'MPL::VoxelMapUtil::rayTrace()']]],
-  ['recovertraj',['recoverTraj',['../classMPL_1_1GraphSearch.html#a0638604bda50ac11dd9d3e7f4094f18e',1,'MPL::GraphSearch']]],
-  ['reset',['reset',['../classMPBaseUtil.html#a19135688def385cd5fbdebcbebb1171b',1,'MPBaseUtil']]],
-  ['resolution',['resolution',['../classMapReader.html#ac1cd348e77342ff56e92b36928da38eb',1,'MapReader']]],
-  ['round',['round',['../classMPL_1_1env__base.html#a7f46837c1699ca5177104ae978d20ddb',1,'MPL::env_base']]]
+  ['raytrace',['rayTrace',['../classMPL_1_1MapUtil.html#aca6d3fc883a0db14032d826c30a73aff',1,'MPL::MapUtil']]],
+  ['recovertraj',['recoverTraj',['../classMPL_1_1GraphSearch.html#ae2e93f9ab1ea870786cd2119ebad4ba4',1,'MPL::GraphSearch']]],
+  ['reset',['reset',['../classMPBaseUtil.html#a5f4135c84e9d3d3b9b880c6227f6ddba',1,'MPBaseUtil']]],
+  ['round',['round',['../classMPL_1_1env__base.html#aa9a38f44386ae7778411212b63fa42b7',1,'MPL::env_base']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MRSL Motion Primitive Library: PolySolver Class Reference</title>
+<title>MRSL Motion Primitive Library: PolySolver&lt; Dim &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classPolySolver-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">PolySolver Class Reference</div>  </div>
+<div class="title">PolySolver&lt; Dim &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -76,44 +76,49 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a52dd35206bb3a5b0d19b43122a6c647a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a52dd35206bb3a5b0d19b43122a6c647a">PolySolver</a> (unsigned int smooth_derivative_order, unsigned int minimize_derivative)</td></tr>
-<tr class="memdesc:a52dd35206bb3a5b0d19b43122a6c647a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor.  <a href="#a52dd35206bb3a5b0d19b43122a6c647a">More...</a><br /></td></tr>
-<tr class="separator:a52dd35206bb3a5b0d19b43122a6c647a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70681eea721175289facc422d186b97d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a70681eea721175289facc422d186b97d">solve</a> (const std::vector&lt; <a class="el" href="structWaypoint.html">Waypoint</a> &gt; &amp;waypoints, const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
-<tr class="memdesc:a70681eea721175289facc422d186b97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the trajector as defined in constructor.  <a href="#a70681eea721175289facc422d186b97d">More...</a><br /></td></tr>
-<tr class="separator:a70681eea721175289facc422d186b97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba6ebeaf03052445baa1702ef531988"><td class="memItemLeft" align="right" valign="top"><a id="a0ba6ebeaf03052445baa1702ef531988"></a>
-std::shared_ptr&lt; <a class="el" href="classPolyTraj.html">PolyTraj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a0ba6ebeaf03052445baa1702ef531988">getTrajectory</a> ()</td></tr>
-<tr class="memdesc:a0ba6ebeaf03052445baa1702ef531988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the solved trajectory. <br /></td></tr>
-<tr class="separator:a0ba6ebeaf03052445baa1702ef531988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9958da7ed036790bb6216111e065a71c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a9958da7ed036790bb6216111e065a71c">PolySolver</a> (unsigned int smooth_derivative_order, unsigned int minimize_derivative)</td></tr>
+<tr class="memdesc:a9958da7ed036790bb6216111e065a71c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor.  <a href="#a9958da7ed036790bb6216111e065a71c">More...</a><br /></td></tr>
+<tr class="separator:a9958da7ed036790bb6216111e065a71c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794e1d7a1ce70b497a76aa92415757d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a794e1d7a1ce70b497a76aa92415757d3">solve</a> (const <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&gt; &amp;waypoints, const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
+<tr class="memdesc:a794e1d7a1ce70b497a76aa92415757d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the trajector as defined in constructor.  <a href="#a794e1d7a1ce70b497a76aa92415757d3">More...</a><br /></td></tr>
+<tr class="separator:a794e1d7a1ce70b497a76aa92415757d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2848755828e352354d6740bde24e43ae"><td class="memItemLeft" align="right" valign="top"><a id="a2848755828e352354d6740bde24e43ae"></a>
+std::shared_ptr&lt; <a class="el" href="classPolyTraj.html">PolyTraj</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPolySolver.html#a2848755828e352354d6740bde24e43ae">getTrajectory</a> ()</td></tr>
+<tr class="memdesc:a2848755828e352354d6740bde24e43ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the solved trajectory. <br /></td></tr>
+<tr class="separator:a2848755828e352354d6740bde24e43ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a43e76929e2ef7fd15e7464f2fcf9f98b"><td class="memItemLeft" align="right" valign="top"><a id="a43e76929e2ef7fd15e7464f2fcf9f98b"></a>
+<tr class="memitem:a05e80fc467c2fd6ed86b2406b46cee8b"><td class="memItemLeft" align="right" valign="top"><a id="a05e80fc467c2fd6ed86b2406b46cee8b"></a>
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>N_</b></td></tr>
-<tr class="separator:a43e76929e2ef7fd15e7464f2fcf9f98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a15c2c02b2a1671f0056c1d2eebbd1f"><td class="memItemLeft" align="right" valign="top"><a id="a6a15c2c02b2a1671f0056c1d2eebbd1f"></a>
+<tr class="separator:a05e80fc467c2fd6ed86b2406b46cee8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3354e2810ae6f83328e38feffba66619"><td class="memItemLeft" align="right" valign="top"><a id="a3354e2810ae6f83328e38feffba66619"></a>
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>R_</b></td></tr>
-<tr class="separator:a6a15c2c02b2a1671f0056c1d2eebbd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af49b9ebf7f435c26058908270dddd03b"><td class="memItemLeft" align="right" valign="top"><a id="af49b9ebf7f435c26058908270dddd03b"></a>
+<tr class="separator:a3354e2810ae6f83328e38feffba66619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513264833fd583e3c4f70552d36c0fdc"><td class="memItemLeft" align="right" valign="top"><a id="a513264833fd583e3c4f70552d36c0fdc"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>debug_</b></td></tr>
-<tr class="separator:af49b9ebf7f435c26058908270dddd03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51b490f28a6931a7a33855a318044f26"><td class="memItemLeft" align="right" valign="top"><a id="a51b490f28a6931a7a33855a318044f26"></a>
-std::shared_ptr&lt; <a class="el" href="classPolyTraj.html">PolyTraj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptraj_</b></td></tr>
-<tr class="separator:a51b490f28a6931a7a33855a318044f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a513264833fd583e3c4f70552d36c0fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b1d7df17bc4c1d97c98448e1cc44bd"><td class="memItemLeft" align="right" valign="top"><a id="a18b1d7df17bc4c1d97c98448e1cc44bd"></a>
+std::shared_ptr&lt; <a class="el" href="classPolyTraj.html">PolyTraj</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ptraj_</b></td></tr>
+<tr class="separator:a18b1d7df17bc4c1d97c98448e1cc44bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> generator back-end class. </p>
+<div class="textblock"><h3>template&lt;int Dim&gt;<br />
+class PolySolver&lt; Dim &gt;</h3>
+
+<p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> generator back-end class. </p>
 <p>Given intermediate waypoints and associated time allocation, generate the n-th order polynomials </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a52dd35206bb3a5b0d19b43122a6c647a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52dd35206bb3a5b0d19b43122a6c647a">&#9670;&nbsp;</a></span>PolySolver()</h2>
+<a id="a9958da7ed036790bb6216111e065a71c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9958da7ed036790bb6216111e065a71c">&#9670;&nbsp;</a></span>PolySolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">PolySolver::PolySolver </td>
+          <td class="memname"><a class="el" href="classPolySolver.html">PolySolver</a>&lt; Dim &gt;::<a class="el" href="classPolySolver.html">PolySolver</a> </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>smooth_derivative_order</em>, </td>
@@ -144,16 +149,18 @@ std::shared_ptr&lt; <a class="el" href="classPolyTraj.html">PolyTraj</a> &gt;&#1
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a70681eea721175289facc422d186b97d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70681eea721175289facc422d186b97d">&#9670;&nbsp;</a></span>solve()</h2>
+<a id="a794e1d7a1ce70b497a76aa92415757d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a794e1d7a1ce70b497a76aa92415757d3">&#9670;&nbsp;</a></span>solve()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool PolySolver::solve </td>
+          <td class="memname">bool <a class="el" href="classPolySolver.html">PolySolver</a>&lt; Dim &gt;::solve </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="structWaypoint.html">Waypoint</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>waypoints</em>, </td>
         </tr>
         <tr>

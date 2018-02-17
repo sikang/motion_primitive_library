@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MRSL Motion Primitive Library: MPL::StateSpace Struct Reference</title>
+<title>MRSL Motion Primitive Library: MPL::StateSpace&lt; Dim &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,7 +60,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceMPL.html">MPL</a></li><li class="navelem"><a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a></li>  </ul>
+<li class="navelem"><b>MPL</b></li><li class="navelem"><a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -69,7 +69,7 @@ $(function() {
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structMPL_1_1StateSpace-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">MPL::StateSpace Struct Reference</div>  </div>
+<div class="title">MPL::StateSpace&lt; Dim &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -80,80 +80,85 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2a19cbedb06cdf410402d88e7489b726"><td class="memItemLeft" align="right" valign="top"><a id="a2a19cbedb06cdf410402d88e7489b726"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2a19cbedb06cdf410402d88e7489b726">StateSpace</a> (double eps=1)</td></tr>
-<tr class="memdesc:a2a19cbedb06cdf410402d88e7489b726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor. <br /></td></tr>
-<tr class="separator:a2a19cbedb06cdf410402d88e7489b726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a960c831f470e825e6a6c56a1faa41357"><td class="memItemLeft" align="right" valign="top"><a id="a960c831f470e825e6a6c56a1faa41357"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a960c831f470e825e6a6c56a1faa41357">StateSpace</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> eps=1)</td></tr>
+<tr class="memdesc:a960c831f470e825e6a6c56a1faa41357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor. <br /></td></tr>
+<tr class="separator:a960c831f470e825e6a6c56a1faa41357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86fc56247c5f39249f673f546c795e17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a86fc56247c5f39249f673f546c795e17">getSubStateSpace</a> (int time_step)</td></tr>
 <tr class="memdesc:a86fc56247c5f39249f673f546c795e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subtree.  <a href="#a86fc56247c5f39249f673f546c795e17">More...</a><br /></td></tr>
 <tr class="separator:a86fc56247c5f39249f673f546c795e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a290f2b30aae29670d38dd2696fea5194"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a290f2b30aae29670d38dd2696fea5194">updateGoal</a> (std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV, const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;goal)</td></tr>
-<tr class="memdesc:a290f2b30aae29670d38dd2696fea5194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update goal.  <a href="#a290f2b30aae29670d38dd2696fea5194">More...</a><br /></td></tr>
-<tr class="separator:a290f2b30aae29670d38dd2696fea5194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1716ae56fb26029a6b7335a959588be7"><td class="memItemLeft" align="right" valign="top"><a id="a1716ae56fb26029a6b7335a959588be7"></a>
-std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a1716ae56fb26029a6b7335a959588be7">increaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV)</td></tr>
-<tr class="memdesc:a1716ae56fb26029a6b7335a959588be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the cost of actions. <br /></td></tr>
-<tr class="separator:a1716ae56fb26029a6b7335a959588be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada42adcea4a41645c027b652f94f6916"><td class="memItemLeft" align="right" valign="top"><a id="ada42adcea4a41645c027b652f94f6916"></a>
-std::vector&lt; <a class="el" href="classPrimitive.html">Primitive</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ada42adcea4a41645c027b652f94f6916">decreaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;ENV)</td></tr>
-<tr class="memdesc:ada42adcea4a41645c027b652f94f6916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrease the cost of actions. <br /></td></tr>
-<tr class="separator:ada42adcea4a41645c027b652f94f6916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc6c9c08d50314a503c2990ddec08cac"><td class="memItemLeft" align="right" valign="top"><a id="adc6c9c08d50314a503c2990ddec08cac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#adc6c9c08d50314a503c2990ddec08cac">updateNode</a> (<a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;currNode_ptr)</td></tr>
-<tr class="memdesc:adc6c9c08d50314a503c2990ddec08cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the node in the graph. <br /></td></tr>
-<tr class="separator:adc6c9c08d50314a503c2990ddec08cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a732b0ab1c4e7983bc2cedce156fee088"><td class="memItemLeft" align="right" valign="top"><a id="a732b0ab1c4e7983bc2cedce156fee088"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a732b0ab1c4e7983bc2cedce156fee088">calculateKey</a> (const <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &amp;node)</td></tr>
-<tr class="memdesc:a732b0ab1c4e7983bc2cedce156fee088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the fval as min(rhs, g) + h. <br /></td></tr>
-<tr class="separator:a732b0ab1c4e7983bc2cedce156fee088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4788caee709f9b92c1c7744270dc905f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a4788caee709f9b92c1c7744270dc905f">updateGoal</a> (std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;goal)</td></tr>
+<tr class="memdesc:a4788caee709f9b92c1c7744270dc905f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update goal.  <a href="#a4788caee709f9b92c1c7744270dc905f">More...</a><br /></td></tr>
+<tr class="separator:a4788caee709f9b92c1c7744270dc905f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f1f371e43ed0406e1148e74c7b760b"><td class="memItemLeft" align="right" valign="top"><a id="ad8f1f371e43ed0406e1148e74c7b760b"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ad8f1f371e43ed0406e1148e74c7b760b">increaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="env__base_8h.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV)</td></tr>
+<tr class="memdesc:ad8f1f371e43ed0406e1148e74c7b760b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the cost of actions. <br /></td></tr>
+<tr class="separator:ad8f1f371e43ed0406e1148e74c7b760b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae83c9b798683b58b37d809e67743584d"><td class="memItemLeft" align="right" valign="top"><a id="ae83c9b798683b58b37d809e67743584d"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ae83c9b798683b58b37d809e67743584d">decreaseCost</a> (std::vector&lt; std::pair&lt; <a class="el" href="env__base_8h.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt; &gt; states, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV)</td></tr>
+<tr class="memdesc:ae83c9b798683b58b37d809e67743584d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrease the cost of actions. <br /></td></tr>
+<tr class="separator:ae83c9b798683b58b37d809e67743584d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb4e102e9c0af7a4f7e9ae677b594e74"><td class="memItemLeft" align="right" valign="top"><a id="acb4e102e9c0af7a4f7e9ae677b594e74"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#acb4e102e9c0af7a4f7e9ae677b594e74">updateNode</a> (<a class="el" href="state__space_8h.html#af67a4604c1ad59cd9ce6ef14b671404f">StatePtr</a>&lt; Dim &gt; &amp;currNode_ptr)</td></tr>
+<tr class="memdesc:acb4e102e9c0af7a4f7e9ae677b594e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the node in the graph. <br /></td></tr>
+<tr class="separator:acb4e102e9c0af7a4f7e9ae677b594e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056bc8ec889bbdd901e2171aa0f62c11"><td class="memItemLeft" align="right" valign="top"><a id="a056bc8ec889bbdd901e2171aa0f62c11"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a056bc8ec889bbdd901e2171aa0f62c11">calculateKey</a> (const <a class="el" href="state__space_8h.html#af67a4604c1ad59cd9ce6ef14b671404f">StatePtr</a>&lt; Dim &gt; &amp;node)</td></tr>
+<tr class="memdesc:a056bc8ec889bbdd901e2171aa0f62c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the fval as min(rhs, g) + h. <br /></td></tr>
+<tr class="separator:a056bc8ec889bbdd901e2171aa0f62c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace9912f1027b75015fb7d18c5c118f87"><td class="memItemLeft" align="right" valign="top"><a id="ace9912f1027b75015fb7d18c5c118f87"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ace9912f1027b75015fb7d18c5c118f87">isBlocked</a> ()</td></tr>
 <tr class="memdesc:ace9912f1027b75015fb7d18c5c118f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the trajectory is blocked by new obstacle. <br /></td></tr>
 <tr class="separator:ace9912f1027b75015fb7d18c5c118f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa63137b1428c7f45fc9ead45dd76223a"><td class="memItemLeft" align="right" valign="top"><a id="aa63137b1428c7f45fc9ead45dd76223a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#aa63137b1428c7f45fc9ead45dd76223a">checkValidation</a> (const <a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a> &amp;hm)</td></tr>
-<tr class="memdesc:aa63137b1428c7f45fc9ead45dd76223a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function to check if the graph is valid. <br /></td></tr>
-<tr class="separator:aa63137b1428c7f45fc9ead45dd76223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7990dca4e5ca459b8c77b293a4c6a41"><td class="memItemLeft" align="right" valign="top"><a id="ab7990dca4e5ca459b8c77b293a4c6a41"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ab7990dca4e5ca459b8c77b293a4c6a41">checkValidation</a> (const <a class="el" href="state__space_8h.html#adf6d9eaef32be89826591ecff7aee704">hashMap</a>&lt; Dim &gt; &amp;hm)</td></tr>
+<tr class="memdesc:ab7990dca4e5ca459b8c77b293a4c6a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function to check if the graph is valid. <br /></td></tr>
+<tr class="separator:ab7990dca4e5ca459b8c77b293a4c6a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6e927ed61a08000cd08e9ac173b43aa0"><td class="memItemLeft" align="right" valign="top"><a id="a6e927ed61a08000cd08e9ac173b43aa0"></a>
-<a class="el" href="namespaceMPL.html#af10a63545f5d7e532249379196d7f84c">priorityQueue</a>&lt; <a class="el" href="structMPL_1_1State.html">State</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a6e927ed61a08000cd08e9ac173b43aa0">pq_</a></td></tr>
-<tr class="memdesc:a6e927ed61a08000cd08e9ac173b43aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue, open set. <br /></td></tr>
-<tr class="separator:a6e927ed61a08000cd08e9ac173b43aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c68115861ade046645134b1895e8892"><td class="memItemLeft" align="right" valign="top"><a id="a2c68115861ade046645134b1895e8892"></a>
-<a class="el" href="namespaceMPL.html#a34b3b7a82c7de69f67e26f5f2e18a8a6">hashMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2c68115861ade046645134b1895e8892">hm_</a></td></tr>
-<tr class="memdesc:a2c68115861ade046645134b1895e8892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashmap, stores all the nodes. <br /></td></tr>
-<tr class="separator:a2c68115861ade046645134b1895e8892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="memItemLeft" align="right" valign="top"><a id="a364c9942e6a22c0e5b94a4fe1f9f9a5f"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a364c9942e6a22c0e5b94a4fe1f9f9a5f">eps_</a></td></tr>
-<tr class="memdesc:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heuristic weight, default as 1. <br /></td></tr>
-<tr class="separator:a364c9942e6a22c0e5b94a4fe1f9f9a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a851fa88109bc8b7aca459bcfd6e875e7"><td class="memItemLeft" align="right" valign="top"><a id="a851fa88109bc8b7aca459bcfd6e875e7"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a851fa88109bc8b7aca459bcfd6e875e7">dt_</a></td></tr>
-<tr class="memdesc:a851fa88109bc8b7aca459bcfd6e875e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution time for each primitive. <br /></td></tr>
-<tr class="separator:a851fa88109bc8b7aca459bcfd6e875e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97d81e646b21836176325076dbe30fac"><td class="memItemLeft" align="right" valign="top"><a id="a97d81e646b21836176325076dbe30fac"></a>
-std::vector&lt; <a class="el" href="namespaceMPL.html#a3801daa412c74da0b8ccb3ecfb4ec19f">StatePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a97d81e646b21836176325076dbe30fac">best_child_</a></td></tr>
-<tr class="memdesc:a97d81e646b21836176325076dbe30fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">The best trajectory from previous plan. <br /></td></tr>
-<tr class="separator:a97d81e646b21836176325076dbe30fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="memItemLeft" align="right" valign="top"><a id="a2677cd76471ec9d9ca3d4cc1db31f714"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a2677cd76471ec9d9ca3d4cc1db31f714">max_t_</a> = std::numeric_limits&lt;double&gt;::infinity()</td></tr>
-<tr class="memdesc:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum time of the valid trajectories. <br /></td></tr>
-<tr class="separator:a2677cd76471ec9d9ca3d4cc1db31f714"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6060523e8ae45f726b60cb1b4e0886d"><td class="memItemLeft" align="right" valign="top"><a id="ae6060523e8ae45f726b60cb1b4e0886d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#ae6060523e8ae45f726b60cb1b4e0886d">expand_iteration_</a> = 0</td></tr>
-<tr class="memdesc:ae6060523e8ae45f726b60cb1b4e0886d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of expansion iteration. <br /></td></tr>
-<tr class="separator:ae6060523e8ae45f726b60cb1b4e0886d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc1482b369040046a53dd101b20b1c5f"><td class="memItemLeft" align="right" valign="top"><a id="afc1482b369040046a53dd101b20b1c5f"></a>
+<a class="el" href="state__space_8h.html#a3ef168ac69f2277c37cab13a77e041ae">priorityQueue</a>&lt; <a class="el" href="structMPL_1_1State.html">State</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#afc1482b369040046a53dd101b20b1c5f">pq_</a></td></tr>
+<tr class="memdesc:afc1482b369040046a53dd101b20b1c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority queue, open set. <br /></td></tr>
+<tr class="separator:afc1482b369040046a53dd101b20b1c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7ca288b7c0999701c1886d91616e5b"><td class="memItemLeft" align="right" valign="top"><a id="a9e7ca288b7c0999701c1886d91616e5b"></a>
+<a class="el" href="state__space_8h.html#adf6d9eaef32be89826591ecff7aee704">hashMap</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a9e7ca288b7c0999701c1886d91616e5b">hm_</a></td></tr>
+<tr class="memdesc:a9e7ca288b7c0999701c1886d91616e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashmap, stores all the nodes. <br /></td></tr>
+<tr class="separator:a9e7ca288b7c0999701c1886d91616e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52ebcf1af669908d06b0651f5a5a604d"><td class="memItemLeft" align="right" valign="top"><a id="a52ebcf1af669908d06b0651f5a5a604d"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a52ebcf1af669908d06b0651f5a5a604d">eps_</a></td></tr>
+<tr class="memdesc:a52ebcf1af669908d06b0651f5a5a604d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heuristic weight, default as 1. <br /></td></tr>
+<tr class="separator:a52ebcf1af669908d06b0651f5a5a604d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763471e73992d0eafe605f04c23eff12"><td class="memItemLeft" align="right" valign="top"><a id="a763471e73992d0eafe605f04c23eff12"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a763471e73992d0eafe605f04c23eff12">dt_</a></td></tr>
+<tr class="memdesc:a763471e73992d0eafe605f04c23eff12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execution time for each primitive. <br /></td></tr>
+<tr class="separator:a763471e73992d0eafe605f04c23eff12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b5688e1f0370cd0746265d30929786"><td class="memItemLeft" align="right" valign="top"><a id="a18b5688e1f0370cd0746265d30929786"></a>
+<a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="state__space_8h.html#af67a4604c1ad59cd9ce6ef14b671404f">StatePtr</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a18b5688e1f0370cd0746265d30929786">best_child_</a></td></tr>
+<tr class="memdesc:a18b5688e1f0370cd0746265d30929786"><td class="mdescLeft">&#160;</td><td class="mdescRight">The best trajectory from previous plan. <br /></td></tr>
+<tr class="separator:a18b5688e1f0370cd0746265d30929786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb3222301c52a16d6c879c2a45407c11"><td class="memItemLeft" align="right" valign="top"><a id="abb3222301c52a16d6c879c2a45407c11"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#abb3222301c52a16d6c879c2a45407c11">max_t_</a> = std::numeric_limits&lt;<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&gt;::infinity()</td></tr>
+<tr class="memdesc:abb3222301c52a16d6c879c2a45407c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum time of the valid trajectories. <br /></td></tr>
+<tr class="separator:abb3222301c52a16d6c879c2a45407c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42655a66f19a3f7bf2a1bc3406567400"><td class="memItemLeft" align="right" valign="top"><a id="a42655a66f19a3f7bf2a1bc3406567400"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMPL_1_1StateSpace.html#a42655a66f19a3f7bf2a1bc3406567400">expand_iteration_</a> = 0</td></tr>
+<tr class="memdesc:a42655a66f19a3f7bf2a1bc3406567400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of expansion iteration. <br /></td></tr>
+<tr class="separator:a42655a66f19a3f7bf2a1bc3406567400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>
+<div class="textblock"><h3>template&lt;int Dim&gt;<br />
+struct MPL::StateSpace&lt; Dim &gt;</h3>
+
+<p><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a86fc56247c5f39249f673f546c795e17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a86fc56247c5f39249f673f546c795e17">&#9670;&nbsp;</a></span>getSubStateSpace()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void StateSpace::getSubStateSpace </td>
@@ -175,22 +180,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 
 </div>
 </div>
-<a id="a290f2b30aae29670d38dd2696fea5194"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a290f2b30aae29670d38dd2696fea5194">&#9670;&nbsp;</a></span>updateGoal()</h2>
+<a id="a4788caee709f9b92c1c7744270dc905f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4788caee709f9b92c1c7744270dc905f">&#9670;&nbsp;</a></span>updateGoal()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void MPL::StateSpace::updateGoal </td>
+          <td class="memname">void <a class="el" href="structMPL_1_1StateSpace.html">MPL::StateSpace</a>&lt; Dim &gt;::updateGoal </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>ENV</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structWaypoint.html">Waypoint</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;&#160;</td>
           <td class="paramname"><em>goal</em>&#160;</td>
         </tr>
         <tr>
