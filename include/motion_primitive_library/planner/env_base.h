@@ -431,11 +431,11 @@ class env_base
     ///grid size in position
     decimal_t ds_ = 0.01;
     ///grid size in velocity
-    decimal_t dv_ = 0.01;
+    decimal_t dv_ = 0.1;
     ///grid size in acceleration
-    decimal_t da_ = 0.01;
+    decimal_t da_ = 0.1;
     ///grid size in jerk
-    decimal_t dj_ = 0.01;
+    decimal_t dj_ = 0.1;
     ///expanded nodes
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input

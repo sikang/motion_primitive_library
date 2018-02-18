@@ -44,7 +44,6 @@ class env_cloud : public env_base<3>
      * @param succ_idx The array stores successors' Key
      * @param succ_cost The array stores cost along valid edges
      * @param action_idx The array stores corresponding idx of control for each successor
-     * @param action_dts The array stores corresponding dt of control for each successor
      *
      * When goal is outside, extra step is needed for finding optimal trajectory
      * Here we use Heuristic function and multiply with 2
@@ -53,14 +52,12 @@ class env_cloud : public env_base<3>
         vec_E<Waypoint3>& succ,
         std::vector<Key>& succ_idx,
         std::vector<decimal_t>& succ_cost,
-        std::vector<int>& action_idx,
-        std::vector<decimal_t>& action_dts ) const
+        std::vector<int>& action_idx) const
     {
       succ.clear();
       succ_idx.clear();
       succ_cost.clear();
       action_idx.clear();
-      action_dts.clear();
 
       expanded_nodes_.push_back(curr.pos);
       //ws_.push_back(curr);
@@ -80,7 +77,6 @@ class env_cloud : public env_base<3>
             succ_idx.push_back(state_to_idx(tn));
             succ_cost.push_back(pr.J(wi_) + w_*dt_);
             action_idx.push_back(i);
-            action_dts.push_back(dt_);
           }
         }
       }
