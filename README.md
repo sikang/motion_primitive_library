@@ -26,18 +26,38 @@ $ sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
 ```
  
 
-##### A) Simple cmake
+#### A) Simple cmake
 ```sh
 mkdir build && cd build && cmake .. && make
 ```
 
-##### B) Using Catkin (not recognizable by catkin\_make)
+#### B) Using Catkin (not recognizable by catkin\_make)
 ```sh
 $ mv motion_primitive_library ~/catkin_ws/src
 $ cd ~/catkin_ws & catkin_make_isolated -DCMAKE_BUILD_TYPE=Release
 ```
 
-##### Include in other projects:
+#### CTest
+Run following command in the `build` folder for testing the executables: 
+```sh
+$ make test
+```
+
+If everything works, you should see the results as:
+```
+Running tests...
+Test project /home/sikang/cpp_ws/src/mpl_ros/motion_primitive_library/build
+    Start 1: test_planner_2d
+1/2 Test #1: test_planner_2d ..................   Passed    0.93 sec
+    Start 2: test_planner_2d_prior_traj
+2/2 Test #2: test_planner_2d_prior_traj .......   Passed    1.00 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   1.94 sec
+```
+
+#### Include in other projects:
 To link this lib properly, add following in the `CMakeLists.txt` 
 ```
 find_package(motion_primitive_library REQUIRED)
@@ -47,7 +67,6 @@ add_executable(test_xxx src/test_xxx.cpp)
 target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
 
 ```
-
 
 
 ## Example Usage
