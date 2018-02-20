@@ -17,6 +17,7 @@ build:
     - script:
       name: test
       code: |
+        cd build
         make test
 
 
