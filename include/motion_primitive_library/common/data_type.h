@@ -5,13 +5,13 @@
  * Mostly aliasing from Eigen Library.
  */
 
-#ifndef BASIC_DATA_H
-#define BASIC_DATA_H
 #include <stdio.h>
 #include <vector>
 #include <Eigen/Geometry>
 #include <Eigen/StdVector>
 
+#ifndef BASIC_COLOR_H
+#define BASIC_COLOR_H
 ///Set red font in printf funtion 
 #define ANSI_COLOR_RED "\x1b[1;31m"
 ///Set green font in printf funtion 
@@ -26,7 +26,10 @@
 #define ANSI_COLOR_CYAN "\x1b[1;36m"
 ///Reset font color in printf funtion 
 #define ANSI_COLOR_RESET "\x1b[0m"
+#endif
 
+#ifndef BASIC_DATA_H
+#define BASIC_DATA_H
 /*! \brief Rename the float type used in lib 
 
     Default is set to be double, but user can change it to float.
@@ -98,19 +101,11 @@ typedef Matf<Eigen::Dynamic, Eigen::Dynamic> MatDf;
 typedef Eigen::Transform<decimal_t, 2, Eigen::Affine> Aff2f;
 ///Allias of Eigen::Affine3d
 typedef Eigen::Transform<decimal_t, 3, Eigen::Affine> Aff3f;
-///std::pair of Eigen::Vector3d
-typedef std::pair<Vec3f, Vec3f> pair_Vec3f;
 
 ///Ellipsoid: first is the Affine Transform, second is the center
 typedef std::pair<Mat3f, Vec3f> Ellipsoid;
 ///Vector of Ellipsoids
 typedef vec_E<Ellipsoid> vec_Ellipsoid;
-
-///Pair of linear equality constraints in 3D <A, b> as: \f$Ax \leq b\f$
-typedef std::pair<MatD3f, VecDf> LinearConstraint3f; // Ax <= b
-///Vector of LinearConstraint3f
-typedef vec_E<LinearConstraint3f> vec_LinearConstraint3f;
-
 
 ///Face class
 class Face {

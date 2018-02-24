@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['pair_5fvec3f',['pair_Vec3f',['../data__type_8h.html#a8f4b636ce76b430796cf6ccfa3772149',1,'data_type.h']]],
   ['plan',['plan',['../classMPBaseUtil.html#ad3cecf4e79424dff7f445030d5de8eff',1,'MPBaseUtil']]],
   ['planner_5fverbose_5f',['planner_verbose_',['../classMPBaseUtil.html#a15c6cb5941387a1ef46a210afab1a1e2',1,'MPBaseUtil']]],
   ['poly_5fsolver_2eh',['poly_solver.h',['../poly__solver_8h.html',1,'']]],

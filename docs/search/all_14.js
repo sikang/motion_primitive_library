@@ -15,7 +15,6 @@ var searchData=
   ['vec6f',['Vec6f',['../data__type_8h.html#a940b1af907878e3cb6d2f7694730ee01',1,'data_type.h']]],
   ['vec_5fe',['vec_E',['../data__type_8h.html#a6b9210d48a0a541940af71827aad1b41',1,'data_type.h']]],
   ['vec_5fellipsoid',['vec_Ellipsoid',['../data__type_8h.html#a47ddb28a89d8b9f6aaa729f91e61dbec',1,'data_type.h']]],
-  ['vec_5flinearconstraint3f',['vec_LinearConstraint3f',['../data__type_8h.html#a97477a2716b74d7fa5e03978ea0d03f0',1,'data_type.h']]],
   ['vec_5fvec2f',['vec_Vec2f',['../data__type_8h.html#af640446aaa0ada84a270bd5639b36a7d',1,'data_type.h']]],
   ['vec_5fvec2i',['vec_Vec2i',['../data__type_8h.html#a79168c9f029798876a1093e0e53bc36b',1,'data_type.h']]],
   ['vec_5fvec3f',['vec_Vec3f',['../data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b',1,'data_type.h']]],
