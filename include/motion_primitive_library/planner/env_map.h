@@ -29,8 +29,26 @@ namespace MPL {
 
     ///Constructor with map util as input
     env_map(std::shared_ptr<MapUtil<Dim>> map_util)
-      : map_util_(map_util)
-    {}
+      : map_util_(map_util) {}
+
+    ///Check if state hit the goal region, use L-1 norm
+    bool is_goal(const Waypoint<Dim>& state) const {
+      bool goaled = (state.pos - this->goal_node_.pos).template lpNorm<Eigen::Infinity>() <= this->tol_dis;
+      if(goaled && this->goal_node_.use_vel && this->tol_vel > 0) 
+        goaled = (state.vel - this->goal_node_.vel).template lpNorm<Eigen::Infinity>() <= this->tol_vel;
+      if(goaled && this->goal_node_.use_acc && this->tol_acc > 0) 
+        goaled = (state.acc - this->goal_node_.acc).template lpNorm<Eigen::Infinity>() <= this->tol_acc;
+      if(goaled) {
+        auto pns = map_util_->rayTrace(state.pos, this->goal_node_.pos);
+        for(const auto& it: pns) {
+          if(map_util_->isOccupied(it))
+            return false;
+        }
+      }
+      return goaled;
+    }
+
+
 
     ///Check if a point is in free space
     bool is_free(const Vecf<Dim>& pt) const {

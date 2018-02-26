@@ -15,6 +15,8 @@ bool MPBaseUtil<Dim>::initialized() {
 template <int Dim>
 void MPBaseUtil<Dim>::reset() {
   ss_ptr_ = nullptr;
+  traj_ = Trajectory<Dim>();
+  ws_.clear();
 }
 
 template <int Dim>

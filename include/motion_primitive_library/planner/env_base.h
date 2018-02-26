@@ -31,8 +31,7 @@ class env_base
     env_base() {}
 
     ///Check if state hit the goal region, use L-1 norm
-    bool is_goal(const Waypoint<Dim>& state) const
-    {
+    virtual bool is_goal(const Waypoint<Dim>& state) const {
       bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis;
       if(goaled && goal_node_.use_vel && tol_vel > 0) 
         goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel;
