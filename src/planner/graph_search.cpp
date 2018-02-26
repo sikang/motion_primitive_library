@@ -117,7 +117,7 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim>& start_coord, Key start_ke
     std::vector<decimal_t> succ_cost;
     std::vector<int> succ_act_id;
 
-    ENV->get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
+    ENV->get_succ( currNode_ptr->coord, currNode_ptr->t, succ_coord, succ_key, succ_cost, succ_act_id);
 
     // Process successors (satisfy dynamic constraints but might hit obstacles)
     for( unsigned s = 0; s < succ_coord.size(); ++s )
@@ -297,7 +297,7 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim>& start_coord, Key start_
     bool explored = false;
     if(currNode_ptr->succ_hashkey.empty()) {
       explored= true;
-      ENV->get_succ( currNode_ptr->coord, succ_coord, succ_key, succ_cost, succ_act_id);
+      ENV->get_succ( currNode_ptr->coord, currNode_ptr->t, succ_coord, succ_key, succ_cost, succ_act_id);
       currNode_ptr->succ_coord.resize(succ_coord.size());
       currNode_ptr->succ_hashkey.resize(succ_coord.size());
       currNode_ptr->succ_action_id.resize(succ_coord.size());

@@ -390,6 +390,7 @@ class env_base
      * @param action_idx The array stores corresponding idx of control for each successor
      */
     virtual void get_succ( const Waypoint<Dim>& curr, 
+        double curr_t,
         vec_E<Waypoint<Dim>>& succ,
         std::vector<Key>& succ_idx,
         std::vector<decimal_t>& succ_cost,
@@ -443,7 +444,6 @@ class env_base
     Waypoint<Dim> goal_node_;
     ///Prior trajectory
     Trajectory<Dim> prior_traj_;
-
 };
 }
 

@@ -77,6 +77,30 @@ namespace MPL {
       return true;
     }
 
+    bool is_free(const Primitive<Dim>& pr, double t) const {
+      decimal_t max_v = 0;
+      if(Dim == 2) 
+        max_v = std::max(pr.max_vel(0), pr.max_vel(1));
+      else if(Dim == 3)
+        max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
+      int n = std::ceil(max_v * pr.t() / map_util_->getRes());
+      vec_E<Waypoint<Dim>> pts = pr.sample(n);
+      for(const auto& pt: pts) {
+        Veci<Dim> pn = map_util_->floatToInt(pt.pos);
+        if(t > t_free_) {
+          if(map_util_->isOccupied(pn) || map_util_->isOutside(pn))
+          return false;
+        }
+        else {
+          if(!map_util_->isFree(pn))
+            return false;
+        }
+      }
+
+      return true;
+    }
+
+ 
     /**
      * @brief Get successor
      *
@@ -90,6 +114,7 @@ namespace MPL {
      * Only return the primitive satisfies valid dynamic constriants (include the one hits obstacles).
      */
     void get_succ( const Waypoint<Dim>& curr, 
+        double curr_t,
         vec_E<Waypoint<Dim>>& succ,
         std::vector<Key>& succ_idx,
         std::vector<decimal_t>& succ_cost,
@@ -121,7 +146,7 @@ namespace MPL {
 
           succ.push_back(tn);
           succ_idx.push_back(this->state_to_idx(tn));
-          decimal_t cost = is_free(pr) ? pr.J(this->wi_) + 
+          decimal_t cost = is_free(pr, curr_t) ? pr.J(this->wi_) + 
             this->w_*this->dt_: std::numeric_limits<decimal_t>::infinity();
           succ_cost.push_back(cost);
           action_idx.push_back(i);
@@ -129,6 +154,11 @@ namespace MPL {
       }
 
     }
+
+    ///Time in free space
+    double t_free_ = 1.1;
+
+
 
   };
 

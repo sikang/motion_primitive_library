@@ -242,6 +242,17 @@ namespace MPL {
         map_ = map;
       }
 
+      void freeVoxels(const Vecf<Dim>& pt, const vec_Veci<Dim> ns)
+      {
+        const Veci<Dim> pn = floatToInt(pt);
+        for(const auto& n: ns) {
+          Veci<Dim> pnn = pn + n;
+          if(isUnknown(pnn))
+            map_[getIndex(pnn)] = val_free;
+        }
+      }
+
+
       ///Free unknown voxels
       void freeUnknown() {
         Veci<Dim> n;
