@@ -243,6 +243,8 @@ void StateSpace<Dim>::checkValidation(const hashMap<Dim>& hm) {
       hm.size(), open_cnt, close_cnt, null_cnt);
 }
 
-template class StateSpace<2>;
-
-template class StateSpace<3>;
+namespace MPL
+{
+template struct StateSpace<2>;
+template struct StateSpace<3>;
+}

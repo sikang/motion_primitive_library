@@ -387,7 +387,8 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim>& start_coord, Key start_
   return goalNode_ptr->g;
 }
 
- 
+namespace MPL
+{
 template class GraphSearch<2>;
-
 template class GraphSearch<3>;
+}
