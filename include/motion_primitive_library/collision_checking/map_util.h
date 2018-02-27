@@ -34,8 +34,6 @@ namespace MPL {
       }
 
 
-      ///Check if the given cell is outside of the map in i-the dimension
-      bool isOutSideXYZ(const Vecf<Dim> &n, int i) { return n(i) < 0 || n(i) >= dim_(i); }
       ///Check if the cell is free by index
       bool isFree(int idx) { return map_[idx] == val_free; }
       ///Check if the cell is unknown by index
