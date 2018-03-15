@@ -10,7 +10,7 @@
 #include <motion_primitive_library/primitive/primitive.h>
 
 /**
- * @biref Used for scaling, ignored for most case
+ * @brief Used for scaling, ignored for most case
  */
 struct VirtualPoint{
   decimal_t p;
@@ -19,8 +19,9 @@ struct VirtualPoint{
 };
 
 
-bool VirtualPointComp (VirtualPoint i, VirtualPoint j);
-
+/**
+ * @brief polynomial between two virtual points
+ */
 class LambdaSeg {
   public:
     LambdaSeg() {}
@@ -34,6 +35,10 @@ class LambdaSeg {
     decimal_t dT;
 };
 
+/**
+ * @brief piecewise polynomial for trajectory
+ *
+ */
 class Lambda {
   public:
     Lambda() {}

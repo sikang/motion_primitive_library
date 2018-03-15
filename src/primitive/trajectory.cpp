@@ -1,7 +1,5 @@
 #include <motion_primitive_library/primitive/trajectory.h>
 
-bool VirtualPointComp (VirtualPoint i, VirtualPoint j) { return (i.t<j.t); }
-
 //********** Lambda Seg ****************
 LambdaSeg::LambdaSeg(const VirtualPoint& v1, const VirtualPoint& v2) {
   Mat4f A;
@@ -204,7 +202,7 @@ bool Trajectory<Dim>::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
 
   vs.push_back(vf);
 
-  std::sort(vs.begin(), vs.end(), VirtualPointComp);
+  std::sort(vs.begin(), vs.end(), [](const VirtualPoint& i, const VirtualPoint& j){return i.t < j.t;});
   decimal_t max_l = 1;
   for(const auto& v: vs) {
     if(v.p > max_l)
@@ -214,7 +212,7 @@ bool Trajectory<Dim>::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
   if(max_l <= 1)
     return false;
 
-  printf("max_l: %f\n", max_l);
+  //printf("max_l: %f\n", max_l);
   for(int i = 1; i < (int)vs.size()-1; i++)
     vs[i].p = max_l;
   std::vector<VirtualPoint> vs_s;
@@ -222,7 +220,6 @@ bool Trajectory<Dim>::scale_down(decimal_t mv, decimal_t ri, decimal_t rf) {
   for(const auto& v: vs)
     if(v.t > vs_s.back().t)
       vs_s.push_back(v);
-
 
   lambda_ = Lambda(vs_s);
 
@@ -286,7 +283,7 @@ bool Trajectory<Dim>::evaluate(decimal_t time, Waypoint<Dim>& p) const {
         p.pos(j) = d(0);
         p.vel(j) = d(1)/lambda;
         p.acc(j) = d(2)/lambda/lambda-d(1)*lambda_dot/lambda/lambda/lambda;
-        p.jrk(j) = d(3); //TODO
+        p.jrk(j) = d(3)/lambda/lambda-3/power(lambda, 3)*d(2)*d(2)*lambda_dot+3/power(lambda,4)*d(1)*lambda_dot*lambda_dot; // assume lambda_ddot = 0
       }
       return true;
 
