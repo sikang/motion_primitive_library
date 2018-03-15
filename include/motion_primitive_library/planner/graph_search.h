@@ -56,14 +56,12 @@ namespace MPL
       decimal_t LPAstar(const Waypoint<Dim>& start_coord, Key start_key, 
           const std::shared_ptr<env_base<Dim>>& ENV, std::shared_ptr<StateSpace<Dim>>& ss_ptr, 
           Trajectory<Dim>& traj, int max_expand = -1, decimal_t max_t = 0);
-
    private:
       ///Recover trajectory 
       Trajectory<Dim> recoverTraj(StatePtr<Dim> ptr, std::shared_ptr<StateSpace<Dim>> ss_ptr, 
           const std::shared_ptr<env_base<Dim>>& ENV, const Key& start_idx);
       ///Verbose flag
       bool verbose_ = false;
- 
  };
 }
 #endif

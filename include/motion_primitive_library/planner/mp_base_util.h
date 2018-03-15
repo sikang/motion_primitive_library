@@ -27,6 +27,8 @@ class MPBaseUtil
     vec_E<Waypoint<Dim>> getWs() const;
     ///Get optimal trajectory
     Trajectory<Dim> getTraj() const;
+    ///Get valid primitives connect to the goal
+    vec_E<Primitive<Dim>> getPrimitivesToGoal() const;
     ///Get expanded collision free primitives
     vec_E<Primitive<Dim>> getValidPrimitives() const;
     ///Get expanded primitives

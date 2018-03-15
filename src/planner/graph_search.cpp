@@ -1,15 +1,17 @@
 #include <motion_primitive_library/planner/graph_search.h>
 #include <motion_primitive_library/planner/env_base.h>
 #include <motion_primitive_library/primitive/primitive_util.h>
-#include <chrono>                          // std::chrono
+#include <chrono>                     
 
 using namespace MPL;
+
 
 /**************************** Recover Trajectory ***************************/
 template <int Dim>
 Trajectory<Dim> GraphSearch<Dim>::recoverTraj(StatePtr<Dim> currNode_ptr, std::shared_ptr<StateSpace<Dim>> ss_ptr, const std::shared_ptr<env_base<Dim>>& ENV, const Key& start_key) {
   // Recover trajectory
   ss_ptr->best_child_.clear();
+
   vec_E<Primitive<Dim>> prs;
   while( !currNode_ptr->pred_hashkey.empty())
   {
