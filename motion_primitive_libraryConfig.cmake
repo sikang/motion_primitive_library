@@ -11,4 +11,5 @@ set(MOTION_PRIMITIVE_LIBRARY_LIBRARIES "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/..
   "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libpoly_solver.so"
   "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmp_base_util.so"
   "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmp_map_util.so"
+  "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmp_funnel_util.so"
   "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmp_cloud_util.so")

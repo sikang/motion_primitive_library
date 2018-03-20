@@ -49,6 +49,9 @@ add_library(mp_cloud_util src/planner/mp_cloud_util.cpp
   src/collision_checking/decomp_util.cpp)
 target_link_libraries(mp_cloud_util primitive mp_base_util ${PCL_LIBRARIES})
 
+add_library(mp_funnel_util src/planner/mp_funnel_util.cpp
+  src/collision_checking/funnel_util.cpp)
+target_link_libraries(mp_funnel_util primitive mp_base_util ${PCL_LIBRARIES})
 
 #add_library(mp_sfc_util src/planner/mp_sfc_util.cpp
 #  src/planner/mp_base_util.cpp
@@ -69,7 +72,7 @@ add_test(test_planner_2d_prior_traj test_planner_2d_prior_traj ${CMAKE_SOURCE_DI
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util 
+install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util mp_funnel_util
   RUNTIME DESTINATION bin                                                                               
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
