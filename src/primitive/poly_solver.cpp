@@ -2,9 +2,9 @@
 
 template <int Dim>
 PolySolver<Dim>::PolySolver(unsigned int smooth_derivative_order,
-                            unsigned int minimize_derivative)
+                            unsigned int minimize_derivative, bool debug)
     : N_(2 * (smooth_derivative_order + 1)), R_(minimize_derivative),
-      debug_(false) {
+      debug_(debug) {
   ptraj_ = std::make_shared<PolyTraj<Dim>>();
 }
 
@@ -21,11 +21,17 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>>& waypoints,
   const unsigned int num_segments = num_waypoints - 1;
   if(num_waypoints < 2)
     return false;
+  if(debug_) {
+    for(unsigned int i = 0; i < num_waypoints; i++)
+      waypoints[i].print("waypoint"+std::to_string(i)+":");
+
+  }
 
   MatDf A = MatDf::Zero(num_segments * N_, num_segments * N_);
   MatDf Q = MatDf::Zero(num_segments * N_, num_segments * N_);
   for (unsigned int i = 0; i < num_segments; i++) {
     decimal_t seg_time = dts[i];
+    // n column
     for (unsigned int n = 0; n < N_; n++) {
       // A_0
       if (n < N_ / 2) {
@@ -49,7 +55,7 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>>& waypoints,
           int val = 1;
           for (unsigned int m = 0; m < R_; m++)
             val *= (r - m) * (n - m);
-          Q(i * N_ + r, i * N_ + n) = 2 * val *
+          Q(i * N_ + r, i * N_ + n) = val *
                                       power(seg_time, r + n - 2 * R_ + 1) /
                                       (r + n - 2 * R_ + 1);
         }
@@ -57,27 +63,103 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>>& waypoints,
     }
   }
 
-  const unsigned int num_fixed_derivatives = num_waypoints - 2 + N_;
-  const unsigned int num_free_derivatives =
-      num_waypoints * N_ / 2 - num_fixed_derivatives;
+  const unsigned int smooth_derivative_order = N_ / 2 - 1;
+  const unsigned int num_total_derivatives = num_waypoints * N_ / 2;
+  unsigned int num_fixed_derivatives = 0;
+  for(const auto& it: waypoints) {
+    if(it.use_pos && smooth_derivative_order >= 0) 
+      num_fixed_derivatives++;
+    if(it.use_vel && smooth_derivative_order >= 1)
+      num_fixed_derivatives++;
+    if(it.use_acc && smooth_derivative_order >= 2)
+      num_fixed_derivatives++;
+    if(it.use_jrk && smooth_derivative_order >= 3)
+      num_fixed_derivatives++;
+  }
+  const unsigned int num_free_derivatives = num_total_derivatives - num_fixed_derivatives;
   if (debug_)
     printf("num_fixed_derivatives: %d, num_free_derivatives: %d\n",
            num_fixed_derivatives, num_free_derivatives);
+
+  std::vector<std::pair<unsigned int, unsigned int>> permutation_table;
+  unsigned int raw_cnt = 0;
+  unsigned int fix_cnt = 0;
+  unsigned int free_cnt = 0;
+  unsigned int id = 0;
+  for(const auto& it: waypoints) {
+    if(it.use_pos && smooth_derivative_order >= 0) {
+      permutation_table.push_back(std::make_pair(raw_cnt, fix_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, fix_cnt));
+      raw_cnt++;
+      fix_cnt++;
+    }
+    else if(!it.use_pos && smooth_derivative_order >= 0) {
+      permutation_table.push_back(std::make_pair(raw_cnt, num_fixed_derivatives+free_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, num_fixed_derivatives+free_cnt));
+      raw_cnt++;
+      free_cnt++;
+    }
+    if(it.use_vel && smooth_derivative_order >= 1) {
+      permutation_table.push_back(std::make_pair(raw_cnt, fix_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, fix_cnt));
+      raw_cnt++;
+      fix_cnt++;
+    }
+    else if(!it.use_vel && smooth_derivative_order >= 1) {
+      permutation_table.push_back(std::make_pair(raw_cnt, num_fixed_derivatives+free_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, num_fixed_derivatives+free_cnt));
+      raw_cnt++;
+      free_cnt++;
+    }
+    if(it.use_acc && smooth_derivative_order >= 2) {
+      permutation_table.push_back(std::make_pair(raw_cnt, fix_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, fix_cnt));
+      raw_cnt++;
+      fix_cnt++;
+    }
+    else if(!it.use_acc && smooth_derivative_order >= 2) {
+      permutation_table.push_back(std::make_pair(raw_cnt, num_fixed_derivatives+free_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, num_fixed_derivatives+free_cnt));
+      raw_cnt++;
+      free_cnt++;
+    }
+    if(it.use_jrk && smooth_derivative_order >= 3) {
+      permutation_table.push_back(std::make_pair(raw_cnt, fix_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, fix_cnt));
+      raw_cnt++;
+      fix_cnt++;
+    }
+    else if(!it.use_jrk && smooth_derivative_order >= 3) {
+      permutation_table.push_back(std::make_pair(raw_cnt, num_fixed_derivatives+free_cnt));
+      if(id > 0 && id < num_waypoints-1)
+        permutation_table.push_back(std::make_pair(raw_cnt+N_/2, num_fixed_derivatives+free_cnt));
+      raw_cnt++;
+      free_cnt++;
+    }
+
+    if(id > 0 && id < num_waypoints-1)
+      raw_cnt += N_/2;
+    id ++;
+  }
+
+  if(debug_) {
+    std::cout << "permutation_table: \n" << std::endl;
+    for(auto it: permutation_table) 
+      std::cout << "old id: " << it.first << " new_id: " << it.second << std::endl;
+  }
+
   // M
   MatDf M = MatDf::Zero(num_segments * N_, num_waypoints * N_ / 2);
-  M.block(0, 0, N_ / 2, N_ / 2) = MatDf::Identity(N_ / 2, N_ / 2);
-  M.block(num_segments * N_ - N_ / 2, N_ / 2 + num_waypoints - 2, N_ / 2,
-          N_ / 2) = MatDf::Identity(N_ / 2, N_ / 2);
-  for (unsigned int i = 0; i < num_waypoints - 2; i++) {
-    M((2 * i + 1) * N_ / 2, N_ / 2 + i) = 1;
-    M((2 * i + 2) * N_ / 2, N_ / 2 + i) = 1;
-    for (unsigned int j = 1; j < N_ / 2; j++) {
-      M((2 * i + 1) * N_ / 2 + j,
-        num_fixed_derivatives - 1 + i * (N_ / 2 - 1) + j) = 1;
-      M((2 * i + 2) * N_ / 2 + j,
-        num_fixed_derivatives - 1 + i * (N_ / 2 - 1) + j) = 1;
-    }
-  }
+  for(const auto& it: permutation_table)
+    M(it.first, it.second) = 1;
+
   // Eigen::MatrixXf A_inv = A.inverse();
   MatDf A_inv_M = A.partialPivLu().solve(M);
   MatDf R = A_inv_M.transpose() * Q * A_inv_M;
@@ -89,42 +171,32 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>>& waypoints,
     std::cout << "R:\n" << R << std::endl;
   }
   MatDf Rpp = R.block(num_fixed_derivatives, num_fixed_derivatives,
-                                num_free_derivatives, num_free_derivatives);
+      num_free_derivatives, num_free_derivatives);
   MatDf Rpf = R.block(num_fixed_derivatives, 0, num_free_derivatives,
-                                num_fixed_derivatives);
+      num_fixed_derivatives);
 
   // Fixed derivatives
   MatDNf<Dim> Df = MatDNf<Dim>(num_fixed_derivatives, Dim);
-  // First point
-  Df.row(0) = waypoints[0].pos.transpose();
-  Df.row(1) = waypoints[0].vel.transpose();
-  if (N_/2 > 2)
-    Df.row(2) = waypoints[0].acc.transpose();
-  if (N_/2 > 3) 
-    Df.row(3) = waypoints[0].jrk.transpose();
-  for (unsigned int i = 4; i < N_ / 2; i++) 
-    Df.row(i) = Vecf<Dim>::Zero().transpose();
-
-  // Middle waypoints
-  for (unsigned int i = 1; i < num_waypoints - 1; i++) 
-    Df.row((N_ / 2) - 1 + i) = waypoints[i].pos.transpose();
-
-  // End point
-  int end = num_waypoints + 1;
-  Df.row(end) = waypoints[num_waypoints - 1].pos.transpose();
-  Df.row(end+1) = waypoints[num_waypoints - 1].vel.transpose();
-  if (N_ / 2 > 2) 
-    Df.row(end+2) = waypoints[num_waypoints - 1].acc.transpose();
-  if (N_ / 2 > 3) 
-    Df.row(end+3) = waypoints[num_waypoints - 1].jrk.transpose();
-  for (unsigned int i = 4; i < N_ / 2; i++) {
-    Df.row(end+i) = Vecf<Dim>::Zero().transpose();
-    // Df.row((N_ / 2) + (num_waypoints - 2) + i) = end_vel_.transpose();
+  for(const auto& it: permutation_table) {
+    if(it.second < num_fixed_derivatives) {
+      int id = std::floor((it.first + N_/2) / N_);
+      int derivative = it.first % (N_ / 2);
+      if(derivative == 0)
+        Df.row(it.second) = waypoints[id].pos.transpose();
+      else if(derivative == 1)
+        Df.row(it.second) = waypoints[id].vel.transpose();
+      else if(derivative == 2)
+        Df.row(it.second) = waypoints[id].acc.transpose();
+      else if(derivative == 3)
+        Df.row(it.second) = waypoints[id].jrk.transpose();
+    }
   }
+
   if (debug_)
     std::cout << "Df:\n" << Df << std::endl;
   MatDNf<Dim> D = MatDNf<Dim>(num_waypoints * N_ / 2, Dim);
   D.topRows(num_fixed_derivatives) = Df;
+
   if (num_waypoints > 2 && num_free_derivatives > 0) {
     MatDNf<Dim> Dp = -Rpp.partialPivLu().solve(Rpf * Df);
     // std::cout << "Dp:\n" << Dp << std::endl;
