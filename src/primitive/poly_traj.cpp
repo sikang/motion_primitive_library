@@ -83,6 +83,22 @@ vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
   return trajs;
 }
 
+
+template <int Dim>
+MatDNf<Dim> PolyTraj<Dim>::p() {
+  MatDNf<Dim> p;
+  if(coefficients_.empty())
+    return p;
+  unsigned int N = coefficients_.front().rows();
+  p = MatDNf<Dim>(N*coefficients_.size(), Dim);
+  int i = 0;
+  for(const auto& it: coefficients_) {
+    p.block(i*N, 0, N, Dim) = it;
+    i++;
+  }
+  return p;
+}
+
 template class PolyTraj<2>;
 
 template class PolyTraj<3>;

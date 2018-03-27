@@ -28,6 +28,8 @@ class PolyTraj {
     Waypoint<Dim> evaluate(decimal_t t) const;
     ///Get the total time for the trajectory
     decimal_t getTotalTime() const;
+    ///Get the p
+    MatDNf<Dim> p();
   private:
     std::vector<decimal_t> waypoint_times_;
     std::vector<decimal_t> dts_;

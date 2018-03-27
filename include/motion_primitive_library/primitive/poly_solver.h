@@ -36,16 +36,24 @@ class PolySolver {
      */
     bool solve(const vec_E<Waypoint<Dim>>& waypoints, const std::vector<decimal_t> &dts);
 
+    bool gradient_descent(const vec_E<Waypoint<Dim>>& waypoints,
+        const std::vector<double>& dts,
+        const std::vector<double>& c,
+        const vec_Vecf<Dim>& c_derivative);
+ 
+
     ///Get the solved trajectory
     std::shared_ptr<PolyTraj<Dim>> getTrajectory();
 
   private:
+    VecDf getT(int N, double t);
     ///Number of coefficients of a polynomial
     unsigned int N_;
     ///Order of derivative to optimize
     unsigned int R_;
     ///Enble output on screen
     bool debug_;
+    ///Solved trajectory
     std::shared_ptr<PolyTraj<Dim>> ptraj_;
 };
 
