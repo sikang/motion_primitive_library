@@ -38,14 +38,17 @@ class PolySolver {
 
     bool gradient_descent(const vec_E<Waypoint<Dim>>& waypoints,
         const std::vector<double>& dts,
-        const std::vector<double>& c,
-        const vec_Vecf<Dim>& c_derivative);
+        int m_sample);
  
+    void set_obs(const vec_Vecf<Dim>& obs) { obs_ = obs; }
 
     ///Get the solved trajectory
     std::shared_ptr<PolyTraj<Dim>> getTrajectory();
 
   private:
+    std::pair<MatDf, MatDf> get_Jc(const MatDf& T, const VecDf& deltaT, const MatDf& V, const MatDf& P, const MatDf& Lpp);
+    double get_c(const Vecf<Dim>& pt, const Vecf<Dim>& ref_pt);
+    Vecf<Dim> get_c_derivative(const Vecf<Dim>& pt, const vec_Vecf<Dim>& ref_pts);
     VecDf getT(int N, double t);
     ///Number of coefficients of a polynomial
     unsigned int N_;
@@ -55,6 +58,8 @@ class PolySolver {
     bool debug_;
     ///Solved trajectory
     std::shared_ptr<PolyTraj<Dim>> ptraj_;
+    vec_E<MatDf> B_;
+    vec_Vecf<Dim> obs_;
 };
 
 ///PolySolver for 2D
