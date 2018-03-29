@@ -32,8 +32,11 @@ add_library(primitive src/primitive/primitive.cpp
   src/primitive/trajectory.cpp)
 
 add_library(poly_solver src/primitive/poly_solver.cpp
-  src/primitive/poly_traj.cpp)
+  src/primitive/poly_traj.cpp
+  src/primitive/poly_gradient_descent.cpp)
 target_link_libraries(poly_solver primitive)
+
+
 
 add_library(mp_base_util 
   src/planner/mp_base_util.cpp
