@@ -85,7 +85,7 @@ class Trajectory {
      *
      * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
      * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution
-     */ 
+     */
     bool evaluate(decimal_t t, Waypoint<Dim>& p) const;
     /**
      * @brief Scale according to ratio at start and end (velocity only)
@@ -122,9 +122,9 @@ class Trajectory {
 };
 
 ///Trajectory in 2D
-typedef Trajectory<2> Trajectory2;
+typedef Trajectory<2> Trajectory2D;
 
 ///Trajectory in 3D
-typedef Trajectory<3> Trajectory3;
+typedef Trajectory<3> Trajectory3D;
 
 #endif

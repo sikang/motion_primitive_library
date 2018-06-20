@@ -136,7 +136,7 @@ int main(int argc, char ** argv) {
 
   if(valid) {
     // Draw the trajectory
-    Trajectory2 traj = planner->getTraj();
+    Trajectory2D traj = planner->getTraj();
     double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
     printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",

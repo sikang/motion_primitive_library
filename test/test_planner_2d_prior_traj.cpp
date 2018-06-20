@@ -78,7 +78,7 @@ int main(int argc, char ** argv){
   printf("MP Planner prior takes: %f ms\n", dt);
   printf("MP Planner prior expanded states: %zu\n", planner->getCloseSet().size());
 
-  Trajectory2 prior_traj = planner->getTraj();
+  Trajectory2D prior_traj = planner->getTraj();
   printf("Total time T: %f\n", prior_traj.getTotalTime());
   printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
       prior_traj.J(1), prior_traj.J(2), prior_traj.J(3), prior_traj.J(4));
@@ -180,7 +180,7 @@ int main(int argc, char ** argv){
 
 
   if(valid) {
-    Trajectory2 traj = planner->getTraj();
+    Trajectory2D traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
     printf("Refined total time T: %f\n", total_t);
     printf("Refined total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
