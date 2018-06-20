@@ -46,8 +46,8 @@ class env_funnel: public env_base<3>
      * When goal is outside, extra step is needed for finding optimal trajectory
      * Here we use Heuristic function and multiply with 2
      */
-     void get_succ( const Waypoint3& curr, 
-        vec_E<Waypoint3>& succ,
+     void get_succ( const Waypoint3D& curr,
+        vec_E<Waypoint3D>& succ,
         std::vector<Key>& succ_idx,
         std::vector<decimal_t>& succ_cost,
         std::vector<int>& action_idx) const
@@ -60,8 +60,8 @@ class env_funnel: public env_base<3>
       expanded_nodes_.push_back(curr.pos);
       //ws_.push_back(curr);
       for(int i = 0; i < (int) U_.size(); i++) {
-        Primitive3 pr(curr, U_[i], dt_);
-        Waypoint3 tn = pr.evaluate(dt_);
+        Primitive3D pr(curr, U_[i], dt_);
+        Waypoint3D tn = pr.evaluate(dt_);
         if(pr.valid_vel(v_max_) && pr.valid_acc(a_max_)) {
           Key tn_key = state_to_idx(tn);
           bool valid = map_util_->isFree(pr, curr.jrk, tn.jrk);
@@ -81,7 +81,7 @@ class env_funnel: public env_base<3>
 
     }
 
-   
+
 };
 }
 

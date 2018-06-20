@@ -22,9 +22,9 @@ struct Waypoint {
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
 
   bool use_pos = false;///<If true, pos will be used in primitive generation
-  bool use_vel = false;///<If true, vel will be used in primitive generation 
-  bool use_acc = false;///<If true, acc will be used in primitive generation 
-  bool use_jrk = false;///<If true, jrk will be used in primitive generation 
+  bool use_vel = false;///<If true, vel will be used in primitive generation
+  bool use_acc = false;///<If true, acc will be used in primitive generation
+  bool use_jrk = false;///<If true, jrk will be used in primitive generation
 
   ///Print all the useful attributes
   void print(std::string str = "") const {
@@ -72,7 +72,7 @@ struct Waypoint {
 /**
  * @brief Primitive1D class
  *
- * Assume the 1D primitive is the n-th order polynomial with n = 5 as 
+ * Assume the 1D primitive is the n-th order polynomial with n = 5 as
  * \f$p(t) = \frac{c(0)}{120}t^5+\frac{c(1)}{24}t^4+\frac{c(2)}{6}t^3+\frac{c(3)}{2}t^2+c(4)t+c(5) = 0\f$
  */
 class Primitive1D {
@@ -107,7 +107,7 @@ class Primitive1D {
      */
     Primitive1D(decimal_t p1, decimal_t p2,  decimal_t t);
     /**
-     * @brief Construct 1D primitive from an initial state (p1, v1) to a goal state (p2, v2), given duration t 
+     * @brief Construct 1D primitive from an initial state (p1, v1) to a goal state (p2, v2), given duration t
      */
     Primitive1D(decimal_t p1, decimal_t v1, decimal_t p2, decimal_t v2, decimal_t t);
     /**
@@ -124,7 +124,7 @@ class Primitive1D {
      * @brief Return coffecients
      */
     Vec6f coeff() const;
-    /** 
+    /**
      * @brief Return (p, v, a) at t, deault v, a are zeros
      */
     Vec4f evaluate(decimal_t t) const;
@@ -140,14 +140,14 @@ class Primitive1D {
      * @brief Return extrema of jerk, jerk at both ends (0, t) are considered
      */
     std::vector<decimal_t> extrema_jrk(decimal_t t) const;
- 
+
   public:
     /**@brief Coefficients*/
     Vec6f c;
 };
 
 
-/** 
+/**
  * @brief Primitive class
  *
  * Contains \f$n\f$ 1D primitives corresponding to each axis individually.
@@ -177,7 +177,7 @@ class Primitive {
    * Note: no flag `use_xxx` set in the returned waypoint
    */
   Waypoint<Dim> evaluate(decimal_t t) const;
-  /** 
+  /**
    * @brief Return duration
    */
   decimal_t t() const;
@@ -200,17 +200,17 @@ class Primitive {
   decimal_t max_jrk(int k) const;
   /**
    * @brief Check if the max velocity magnitude is within the threshold
-   * @param mv is the max threshold 
+   * @param mv is the max threshold
    */
   bool valid_vel(decimal_t mv) const;
   /**
    * @brief Check if the max acceleration magnitude is within the threshold
-   * @param ma is the max threshold 
+   * @param ma is the max threshold
    */
   bool valid_acc(decimal_t ma) const;
   /**
    * @brief Check if the max jerk magnitude is within the threshold
-   * @param mj is the max threshold 
+   * @param mj is the max threshold
    */
   bool valid_jrk(decimal_t mj) const;
   /**
@@ -237,14 +237,14 @@ class Primitive {
 };
 
 ///Waypoint for 2D
-typedef Waypoint<2> Waypoint2;
+typedef Waypoint<2> Waypoint2D;
 
 ///Waypoint for 3D
-typedef Waypoint<3> Waypoint3;
+typedef Waypoint<3> Waypoint3D;
 
 ///Primitive for 2D
-typedef Primitive<2> Primitive2;
+typedef Primitive<2> Primitive2D;
 
 ///Primitive for 3D
-typedef Primitive<3> Primitive3;
+typedef Primitive<3> Primitive3D;
 #endif

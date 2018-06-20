@@ -14,8 +14,8 @@ int main(int argc, char ** argv){
     return -1;
   }
 
-  // Load the map 
-  MapReader<Vec2i, Vec2f> reader(argv[1]); 
+  // Load the map
+  MapReader<Vec2i, Vec2f> reader(argv[1]);
   if(!reader.exist()) {
     printf(ANSI_COLOR_RED "Cannot find input file [%s]!\n" ANSI_COLOR_RESET, argv[1]);
     return -1;
@@ -28,21 +28,21 @@ int main(int argc, char ** argv){
   map_util->freeUnknown();
 
   // Initialize start and goal, using vel control
-  Waypoint2 start, goal;
-  start.pos = Vec2f(reader.start(0), reader.start(1)); 
-  start.vel = Vec2f::Zero(); 
-  start.acc = Vec2f::Zero(); 
-  start.jrk = Vec2f::Zero(); 
+  Waypoint2D start, goal;
+  start.pos = Vec2f(reader.start(0), reader.start(1));
+  start.vel = Vec2f::Zero();
+  start.acc = Vec2f::Zero();
+  start.jrk = Vec2f::Zero();
   start.use_pos = true;
   start.use_vel = false;
-  start.use_acc = false; 
-  start.use_jrk = false; 
+  start.use_acc = false;
+  start.use_jrk = false;
 
   goal.pos = Vec2f(reader.goal(0), reader.goal(1));
-  goal.vel = Vec2f::Zero(); 
-  goal.acc = Vec2f::Zero(); 
-  goal.jrk = Vec2f::Zero(); 
- 
+  goal.vel = Vec2f::Zero();
+  goal.acc = Vec2f::Zero();
+  goal.jrk = Vec2f::Zero();
+
   goal.use_pos = start.use_pos;
   goal.use_vel = start.use_vel;
   goal.use_acc = start.use_acc;
@@ -62,12 +62,12 @@ int main(int argc, char ** argv){
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
-  planner->setAmax(1.0); // Set max acceleration 
+  planner->setAmax(1.0); // Set max acceleration
   planner->setUmax(u_max); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
   planner->setW(10); // Set weight for time
   planner->setMaxNum(-1); // Set maximum allowed states
-  planner->setU(U); // Set control input 
+  planner->setU(U); // Set control input
   planner->setTol(0.5); // Tolerance for goal region
 
 
@@ -80,14 +80,14 @@ int main(int argc, char ** argv){
 
   Trajectory2 prior_traj = planner->getTraj();
   printf("Total time T: %f\n", prior_traj.getTotalTime());
-  printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n", 
+  printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
       prior_traj.J(1), prior_traj.J(2), prior_traj.J(3), prior_traj.J(4));
- 
+
   // Using acc control
   start.use_pos = true;
   start.use_vel = true;
-  start.use_acc = true; 
-  start.use_jrk = false; 
+  start.use_acc = true;
+  start.use_jrk = false;
 
   // Reset control input
   u_max = 0.5;
@@ -103,7 +103,7 @@ int main(int argc, char ** argv){
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
   planner->setVmax(1.0); // Set max velocity
-  planner->setAmax(1.0); // Set max acceleration 
+  planner->setAmax(1.0); // Set max acceleration
   planner->setUmax(u_max); // Set max control input
   planner->setDt(1.0); // Set dt for each primitive
   planner->setW(10); // Set weight for time
@@ -183,18 +183,18 @@ int main(int argc, char ** argv){
     Trajectory2 traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
     printf("Refined total time T: %f\n", total_t);
-    printf("Refined total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n", 
+    printf("Refined total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
         traj.J(1), traj.J(2), traj.J(3), traj.J(4));
 
     //printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t + traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));
 
     // Draw trajectory (Red thick line)
     int num = 500; // number of points on trajectory to draw
-    double dt = total_t / num; 
+    double dt = total_t / num;
     boost::geometry::model::linestring<point_2d> line;
     Vec2f prev_pt;
     for(double t = 0; t <= total_t; t += dt) {
-      Waypoint2 w;
+      Waypoint2D w;
       traj.evaluate(t, w);
       if((w.pos - prev_pt).norm() > 0.2) {
         line.push_back(point_2d(w.pos(0), w.pos(1)));
@@ -214,10 +214,10 @@ int main(int argc, char ** argv){
 
     // Draw prior trajectory (Black thin line)
     total_t = prior_traj.getTotalTime();
-    dt = total_t / num; 
+    dt = total_t / num;
     boost::geometry::model::linestring<point_2d> prior_line;
     for(double t = 0; t <= total_t; t += dt) {
-      Waypoint2 w;
+      Waypoint2D w;
       prior_traj.evaluate(t, w);
       if((w.pos - prev_pt).norm() > 0.2) {
         prior_line.push_back(point_2d(w.pos(0), w.pos(1)));
@@ -226,7 +226,7 @@ int main(int argc, char ** argv){
     }
     mapper.add(prior_line);
     mapper.map(prior_line, "opacity:1.0;fill:none;stroke:rgb(0,10,0);stroke-width:2"); // Black
- 
+
   }
 
 

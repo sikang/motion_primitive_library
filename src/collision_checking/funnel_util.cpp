@@ -24,20 +24,20 @@ Polyhedra FunnelUtil::polyhedra() {
 
 PCLPointCloud FunnelUtil::toPCL(const vec_Vec3f &obs)
 {
-  PCLPointCloud cloud;       
+  PCLPointCloud cloud;
   cloud.width = obs.size();
   cloud.height = 1;
   cloud.points.resize(cloud.width * cloud.height);
   for(unsigned int i = 0; i < obs.size(); i++)
-  {                                                           
+  {
     cloud.points[i].x = obs[i](0);
     cloud.points[i].y = obs[i](1);
     cloud.points[i].z = obs[i](2);
   }
   return cloud;
-}          
+}
 
-void FunnelUtil::setObstacles(const vec_Vec3f& obs) { 
+void FunnelUtil::setObstacles(const vec_Vec3f& obs) {
   obs_.clear();
   if(!Vs_.empty()) {
     for(const auto&it: obs) {
@@ -46,15 +46,15 @@ void FunnelUtil::setObstacles(const vec_Vec3f& obs) {
     }
   }
   else
-    obs_ = obs; 
+    obs_ = obs;
   PCLPointCloud::Ptr cloud_ptr = boost::make_shared<PCLPointCloud>(toPCL(obs_));
   kdtree_.setInputCloud (cloud_ptr);
 }
 
 
-bool FunnelUtil::isFree(const Primitive3& pr, const Vec3f& x10, Vec3f& x1f) {
+bool FunnelUtil::isFree(const Primitive3D& pr, const Vec3f& x10, Vec3f& x1f) {
   if(!Vs_.empty()) {
-    vec_E<Waypoint3> ps = pr.sample(2);
+    vec_E<Waypoint3D> ps = pr.sample(2);
     for(const auto& it: ps) {
       if(!insidePolyhedron(it.pos, Vs_))
         return false;

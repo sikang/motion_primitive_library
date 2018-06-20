@@ -38,7 +38,7 @@ class FunnelUtil {
     ///Get polyhedra
     Polyhedra polyhedra();
     ///Check if a primitive is inside the SFC from \f$t: 0 \rightarrow dt\f$
-    bool isFree(const Primitive3& pr, const Vec3f& x10, Vec3f& wf);
+    bool isFree(const Primitive3D& pr, const Vec3f& x10, Vec3f& wf);
     ///Convert obstacle points into pcl point cloud
     PCLPointCloud toPCL(const vec_Vec3f &obs);
  private:
