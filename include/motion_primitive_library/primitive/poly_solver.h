@@ -53,8 +53,8 @@ class PolySolver {
 };
 
 ///PolySolver for 2D
-typedef PolySolver<2> PolySolver2;
+typedef PolySolver<2> PolySolver2D;
 
 ///PolySolver for 3D
-typedef PolySolver<3> PolySolver3;
+typedef PolySolver<3> PolySolver3D;
 #endif
