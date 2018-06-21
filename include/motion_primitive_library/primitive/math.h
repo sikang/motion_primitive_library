@@ -11,20 +11,18 @@
 #include <unsupported/Eigen/Polynomials>
 #include <iostream>
 
-///Quadratic equation: \f$b*t^2+c*t+d = 0\f$
+/// Quadratic equation: \f$b*t^2+c*t+d = 0\f$
 inline std::vector<decimal_t> quad(decimal_t b, decimal_t c, decimal_t d) {
   std::vector<decimal_t> dts;
-  decimal_t p = c*c - 4*b*d;
-  if(p < 0)
+  decimal_t p = c * c - 4 * b * d;
+  if (p < 0)
     return dts;
-  else
-  {
-    dts.push_back((-c-sqrt(p))/(2*b));
-    dts.push_back((-c+sqrt(p))/(2*b));
+  else {
+    dts.push_back((-c - sqrt(p)) / (2 * b));
+    dts.push_back((-c + sqrt(p)) / (2 * b));
     return dts;
   }
 }
-
 
 ///Cubic equation: \f$a*t^3+b*t^2+c*t+d = 0\f$
 inline std::vector<decimal_t> cubic(decimal_t a, decimal_t b, decimal_t c, decimal_t d) {
@@ -104,27 +102,27 @@ inline std::vector<decimal_t> quartic(decimal_t a, decimal_t b, decimal_t c, dec
   return dts;
 }
 
-
 /*! \brief General solver for \f$a*t^4+b*t^3+c*t^2+d*t+e = 0\f$
 
-  \f$a, b, c\f$ can be zero. The function itself checks the highest order of the polynomial.
+  \f$a, b, c\f$ can be zero. The function itself checks the highest order of the
+  polynomial.
   */
-inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e){
+inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c,
+                                    decimal_t d, decimal_t e) {
   std::vector<decimal_t> ts;
-  if(a != 0)
+  if (a != 0)
     return quartic(a, b, c, d, e);
-  else if(b != 0)
+  else if (b != 0)
     return cubic(b, c, d, e);
-  else if(c != 0)
+  else if (c != 0)
     return quad(c, d, e);
-  else if(d != 0)
-  {
-    ts.push_back(-e/d);
+  else if (d != 0) {
+    ts.push_back(-e / d);
     return ts;
-  }
-  else
+  } else
     return ts;
 }
+
 ///A more general solver for \f$a*t^6+b*t^5+c*t^4+d*t^3+e*t^2+f*t+g = 0\f$
 inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e, decimal_t f, decimal_t g){
   std::vector<decimal_t> ts;
@@ -138,7 +136,7 @@ inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decim
 
   const Eigen::PolynomialSolver<double, 6>::RootsType & r = solver.roots();
   std::vector<decimal_t> ts;
-    //std::cout << coeff.transpose() << std::endl;
+  //std::cout << coeff.transpose() << std::endl;
   for(int i =0;i<r.rows();++i)
   {
     if(r[i].imag()==0) {
@@ -175,7 +173,6 @@ inline decimal_t power(decimal_t t, int n) {
   //return n <= 0 ? 1 : power(t, n-1);
 }
 
- 
 template <typename Derived>
 typename Derived::PlainObject pseudoInverse(Eigen::MatrixBase<Derived> const &m)
 {

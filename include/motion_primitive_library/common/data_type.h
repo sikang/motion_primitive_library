@@ -12,51 +12,50 @@
 
 #ifndef BASIC_COLOR_H
 #define BASIC_COLOR_H
-///Set red font in printf funtion 
+///Set red font in printf funtion
 #define ANSI_COLOR_RED "\x1b[1;31m"
-///Set green font in printf funtion 
+///Set green font in printf funtion
 #define ANSI_COLOR_GREEN "\x1b[1;32m"
-///Set yellow font in printf funtion 
+///Set yellow font in printf funtion
 #define ANSI_COLOR_YELLOW "\x1b[1;33m"
-///Set blue font in printf funtion 
+///Set blue font in printf funtion
 #define ANSI_COLOR_BLUE "\x1b[1;34m"
-///Set magenta font in printf funtion 
+///Set magenta font in printf funtion
 #define ANSI_COLOR_MAGENTA "\x1b[1;35m"
-///Set cyan font in printf funtion 
+///Set cyan font in printf funtion
 #define ANSI_COLOR_CYAN "\x1b[1;36m"
-///Reset font color in printf funtion 
+///Reset font color in printf funtion
 #define ANSI_COLOR_RESET "\x1b[0m"
 #endif
 
 #ifndef BASIC_DATA_H
 #define BASIC_DATA_H
-/*! \brief Rename the float type used in lib 
+/*! \brief Rename the float type used in lib
 
     Default is set to be double, but user can change it to float.
 */
 typedef double decimal_t;
 
-
 ///Pre-allocated std::vector for Eigen using vec_E
-template <typename T> 
+template <typename T>
 using vec_E = std::vector<T, Eigen::aligned_allocator<T>>;
 ///Eigen 1D float vector
-template <int N> 
+template <int N>
 using Vecf = Eigen::Matrix<decimal_t, N, 1>;
 ///Eigen 1D int vector
-template <int N> 
+template <int N>
 using Veci = Eigen::Matrix<int, N, 1>;
 ///MxN Eigen matrix
-template <int M, int N> 
+template <int M, int N>
 using Matf = Eigen::Matrix<decimal_t, M, N>;
 ///MxN Eigen matrix with M unknown
-template <int N> 
+template <int N>
 using MatDNf = Eigen::Matrix<decimal_t, Eigen::Dynamic, N>;
 ///Vector of Eigen 1D float vector
-template <int N> 
+template <int N>
 using vec_Vecf = vec_E<Vecf<N>>;
 ///Vector of Eigen 1D int vector
-template <int N> 
+template <int N>
 using vec_Veci = vec_E<Veci<N>>;
 
 ///Eigen 1D float vector of size 2

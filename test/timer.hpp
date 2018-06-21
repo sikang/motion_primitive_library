@@ -9,7 +9,7 @@
 class Timer {
   typedef std::chrono::high_resolution_clock high_resolution_clock;
   typedef std::chrono::milliseconds milliseconds;
-  public:
+ public:
   explicit Timer(bool run = false)
   {
     if (run)
@@ -23,6 +23,6 @@ class Timer {
   {
     return std::chrono::duration_cast<milliseconds>(high_resolution_clock::now() - _start);
   }
-  private:
+ private:
   high_resolution_clock::time_point _start;
 };

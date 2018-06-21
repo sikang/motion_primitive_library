@@ -12,13 +12,13 @@
 #include <motion_primitive_library/primitive/trajectory.h>
 
 namespace MPL {
-  
+
 /**
  * @brief Key for node
  *
  * We use string as the Key for indexing, by default the Key refers to 'pos-vel-acc-...'
  */
-typedef std::string Key; 
+typedef std::string Key;
 
 /**
  * @brief Base environment class
@@ -33,21 +33,21 @@ class env_base
     ///Check if state hit the goal region, use L-1 norm
     virtual bool is_goal(const Waypoint<Dim>& state) const {
       bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis;
-      if(goaled && goal_node_.use_vel && tol_vel > 0) 
+      if(goaled && goal_node_.use_vel && tol_vel > 0)
         goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel;
-      if(goaled && goal_node_.use_acc && tol_acc > 0) 
+      if(goaled && goal_node_.use_acc && tol_acc > 0)
         goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc;
      return goaled;
     }
 
     /**
-     * @brief Heuristic function 
+     * @brief Heuristic function
      * @param Waypoint current state coord
      * @param t current state time
      */
     decimal_t get_heur(const Waypoint<Dim>& state, decimal_t t) const
     {
-      if(goal_node_ == state) 
+      if(goal_node_ == state)
         return 0;
       Waypoint<Dim> goal_node = goal_node_;
       t += alpha_ * dt_;
@@ -71,7 +71,7 @@ class env_base
       //If in acceleration control space
       if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
          goal.use_pos && goal.use_vel && goal.use_acc && !goal.use_jrk) {
- 
+
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
         const Vecf<Dim> v1 = goal.vel;
@@ -94,7 +94,7 @@ class env_base
           if(t < t_bar)
            continue;
           decimal_t cost = a*t-c/t-d/2/t/t-e/3/t/t/t-f/4/t/t/t/t-g/5/t/t/t/t/t;
-          if(cost < min_cost) 
+          if(cost < min_cost)
             min_cost = cost;
         }
         return min_cost;
@@ -155,7 +155,7 @@ class env_base
           if(t < t_bar)
             continue;
           decimal_t cost = a*t-c/t-d/2/t/t-e/3/t/t/t-f/4/t/t/t/t-g/5/t/t/t/t/t;
-          if(cost < min_cost) 
+          if(cost < min_cost)
             min_cost = cost;
         }
         return min_cost;
@@ -216,7 +216,7 @@ class env_base
 
         return cost;
       }
- 
+
       else if(state.use_pos && !state.use_vel && !state.use_acc && !state.use_jrk &&
               goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk)
         return (w_ + 1) * (state.pos - goal.pos).norm();
@@ -258,7 +258,7 @@ class env_base
         const Veci<Dim> ji = round(state.jrk, dj_);
         return toString(pi) + toString(vi) + toString(ai) + toString(ji);
       }
-      else 
+      else
         return toString(pi);
     }
 
@@ -293,12 +293,12 @@ class env_base
       u_max_ = u;
     }
 
-    ///Set max amount of time step to explore 
+    ///Set max amount of time step to explore
     void set_t_max(decimal_t t) {
       t_max_ = t;
     }
 
-    ///Set prior trajectory 
+    ///Set prior trajectory
     void set_prior_trajectory(const Trajectory<Dim>& traj) {
       prior_traj_ = traj;
     }
@@ -365,15 +365,15 @@ class env_base
     }
 
     ///Check if a point is in free space
-    virtual bool is_free(const Vecf<Dim>& pt) const { 
+    virtual bool is_free(const Vecf<Dim>& pt) const {
       printf("Used Null is_free() for pt\n");
-      return true; 
+      return true;
     }
 
     ///Check if a primitive is in free space
-    virtual bool is_free(const Primitive<Dim>& pr) const { 
+    virtual bool is_free(const Primitive<Dim>& pr) const {
       printf("Used Null is_free() for pr\n");
-      return true; 
+      return true;
     }
 
     ///Retrieve dt
@@ -389,7 +389,7 @@ class env_base
      * @param succ_cost The array stores cost along valid edges
      * @param action_idx The array stores corresponding idx of control for each successor
      */
-    virtual void get_succ( const Waypoint<Dim>& curr, 
+    virtual void get_succ( const Waypoint<Dim>& curr,
         vec_E<Waypoint<Dim>>& succ,
         std::vector<Key>& succ_idx,
         std::vector<decimal_t>& succ_cost,
@@ -403,9 +403,9 @@ class env_base
     }
 
     ///weight of time cost
-    decimal_t w_ = 10; 
+    decimal_t w_ = 10;
     ///order of derivatives for effort
-    int wi_; 
+    int wi_;
     ///heuristic time offset
     int alpha_ = 0;
 

@@ -1,5 +1,5 @@
-#include "timer.hpp"
 #include "read_map.hpp"
+#include "timer.hpp"
 #include <motion_primitive_library/planner/mp_map_util.h>
 
 #include <boost/geometry.hpp>
@@ -8,23 +8,25 @@
 
 using namespace MPL;
 
-int main(int argc, char ** argv){
-  if(argc != 2) {
+int main(int argc, char **argv) {
+  if (argc != 2) {
     printf(ANSI_COLOR_RED "Input yaml required!\n" ANSI_COLOR_RESET);
     return -1;
   }
 
   // Load the map
   MapReader<Vec2i, Vec2f> reader(argv[1]);
-  if(!reader.exist()) {
-    printf(ANSI_COLOR_RED "Cannot find input file [%s]!\n" ANSI_COLOR_RESET, argv[1]);
+  if (!reader.exist()) {
+    printf(ANSI_COLOR_RED "Cannot find input file [%s]!\n" ANSI_COLOR_RESET,
+           argv[1]);
     return -1;
   }
 
   // Pass the data into a VoxelMapUtil class for collision checking
   std::shared_ptr<OccMapUtil> map_util;
   map_util.reset(new OccMapUtil);
-  map_util->setMap(reader.origin(), reader.dim(), reader.data(), reader.resolution());
+  map_util->setMap(reader.origin(), reader.dim(), reader.data(),
+                   reader.resolution());
   map_util->freeUnknown();
 
   // Initialize start and goal, using vel control
@@ -52,36 +54,36 @@ int main(int argc, char ** argv){
   decimal_t u_max = 1.0;
   decimal_t du = u_max;
   vec_Vec2f U;
-  for(decimal_t dx = -u_max; dx <= u_max; dx += du )
-    for(decimal_t dy = -u_max; dy <= u_max; dy += du )
+  for (decimal_t dx = -u_max; dx <= u_max; dx += du)
+    for (decimal_t dy = -u_max; dy <= u_max; dy += du)
       U.push_back(Vec2f(dx, dy));
 
-
   // Initialize planner
-  std::unique_ptr<MPMap2DUtil> planner(new MPMap2DUtil(true)); // Declare a mp planner using voxel map
+  std::unique_ptr<MPMap2DUtil> planner(
+      new MPMap2DUtil(true));    // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
-  planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
-  planner->setVmax(1.0); // Set max velocity
-  planner->setAmax(1.0); // Set max acceleration
-  planner->setUmax(u_max); // Set max control input
-  planner->setDt(1.0); // Set dt for each primitive
-  planner->setW(10); // Set weight for time
-  planner->setMaxNum(-1); // Set maximum allowed states
-  planner->setU(U); // Set control input
-  planner->setTol(0.5); // Tolerance for goal region
-
+  planner->setEpsilon(1.0);      // Set greedy param (default equal to 1)
+  planner->setVmax(1.0);         // Set max velocity
+  planner->setAmax(1.0);         // Set max acceleration
+  planner->setUmax(u_max);       // Set max control input
+  planner->setDt(1.0);           // Set dt for each primitive
+  planner->setW(10);             // Set weight for time
+  planner->setMaxNum(-1);        // Set maximum allowed states
+  planner->setU(U);              // Set control input
+  planner->setTol(0.5);          // Tolerance for goal region
 
   // Planning
   Timer time1(true);
   planner->plan(start, goal); // Plan from start to goal
   double dt = time1.Elapsed().count();
   printf("MP Planner prior takes: %f ms\n", dt);
-  printf("MP Planner prior expanded states: %zu\n", planner->getCloseSet().size());
+  printf("MP Planner prior expanded states: %zu\n",
+         planner->getCloseSet().size());
 
   Trajectory2D prior_traj = planner->getTraj();
   printf("Total time T: %f\n", prior_traj.getTotalTime());
   printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
-      prior_traj.J(1), prior_traj.J(2), prior_traj.J(3), prior_traj.J(4));
+         prior_traj.J(1), prior_traj.J(2), prior_traj.J(3), prior_traj.J(4));
 
   // Using acc control
   start.use_pos = true;
@@ -93,26 +95,25 @@ int main(int argc, char ** argv){
   u_max = 0.5;
   du = u_max;
   U.clear();
-  for(decimal_t dx = -u_max; dx <= u_max; dx += du )
-    for(decimal_t dy = -u_max; dy <= u_max; dy += du )
+  for (decimal_t dx = -u_max; dx <= u_max; dx += du)
+    for (decimal_t dy = -u_max; dy <= u_max; dy += du)
       U.push_back(Vec2f(dx, dy));
 
   // Reset planner
   int alpha = 0;
   planner.reset(new MPMap2DUtil(true)); // Declare a mp planner using voxel map
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
-  planner->setVmax(1.0); // Set max velocity
-  planner->setAmax(1.0); // Set max acceleration
-  planner->setUmax(u_max); // Set max control input
-  planner->setDt(1.0); // Set dt for each primitive
-  planner->setW(10); // Set weight for time
-  planner->setMaxNum(-1); // Set maximum allowed states
-  planner->setU(U);// Set control input
-  planner->setTol(0.5); // Tolerance for goal region
+  planner->setMapUtil(map_util);        // Set collision checking function
+  planner->setEpsilon(1.0);             // Set greedy param (default equal to 1)
+  planner->setVmax(1.0);                // Set max velocity
+  planner->setAmax(1.0);                // Set max acceleration
+  planner->setUmax(u_max);              // Set max control input
+  planner->setDt(1.0);                  // Set dt for each primitive
+  planner->setW(10);                    // Set weight for time
+  planner->setMaxNum(-1);               // Set maximum allowed states
+  planner->setU(U);                     // Set control input
+  planner->setTol(0.5);                 // Tolerance for goal region
   planner->setAlpha(alpha);
   planner->setPriorTrajectory(prior_traj);
-
 
   // Planning
   Timer time2(true);
@@ -120,7 +121,6 @@ int main(int argc, char ** argv){
   dt = time2.Elapsed().count();
   printf("MP Planner takes: %f ms\n", dt);
   printf("MP Planner expanded states: %zu\n", planner->getCloseSet().size());
-
 
   // Plot the result in image
   const Vec2i dim = reader.dim();
@@ -137,15 +137,16 @@ int main(int argc, char ** argv){
   const double range_y = reader.dim()(1) * reader.resolution();
   std::vector<point_2d> points;
   points.push_back(point_2d(origin_x, origin_y));
-  points.push_back(point_2d(origin_x, origin_y+range_y));
-  points.push_back(point_2d(origin_x+range_x, origin_y+range_y));
-  points.push_back(point_2d(origin_x+range_x, origin_y));
+  points.push_back(point_2d(origin_x, origin_y + range_y));
+  points.push_back(point_2d(origin_x + range_x, origin_y + range_y));
+  points.push_back(point_2d(origin_x + range_x, origin_y));
   points.push_back(point_2d(origin_x, origin_y));
   boost::geometry::assign_points(bound, points);
   boost::geometry::correct(bound);
 
   mapper.add(bound);
-  mapper.map(bound, "fill-opacity:1.0;fill:rgb(255,255,255);stroke:rgb(0,0,0);stroke-width:2"); // White
+  mapper.map(bound, "fill-opacity:1.0;fill:rgb(255,255,255);stroke:rgb(0,0,0);"
+                    "stroke-width:2"); // White
 
   // Draw start and goal
   point_2d start_pt, goal_pt;
@@ -157,9 +158,9 @@ int main(int argc, char ** argv){
   mapper.map(goal_pt, "fill-opacity:1.0;fill:rgb(255,0,0);", 10); // Red
 
   // Draw the obstacles
-  for(int x = 0; x < dim(0); x ++) {
-    for(int y = 0; y < dim(1); y ++) {
-      if(!map_util->isFree(Vec2i(x, y))) {
+  for (int x = 0; x < dim(0); x++) {
+    for (int y = 0; y < dim(1); y++) {
+      if (!map_util->isFree(Vec2i(x, y))) {
         Vec2f pt = map_util->intToFloat(Vec2i(x, y));
         point_2d a;
         boost::geometry::assign_values(a, pt(0), pt(1));
@@ -170,42 +171,43 @@ int main(int argc, char ** argv){
   }
 
   // Draw expended states
-  for(const auto& pt: planner->getCloseSet()) {
+  for (const auto &pt : planner->getCloseSet()) {
     point_2d a;
     boost::geometry::assign_values(a, pt(0), pt(1));
     mapper.add(a);
     mapper.map(a, "fill-opacity:1.0;fill:rgb(100,100,200);", 2); // Blue
   }
 
-
-
-  if(valid) {
+  if (valid) {
     Trajectory2D traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
     printf("Refined total time T: %f\n", total_t);
     printf("Refined total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
-        traj.J(1), traj.J(2), traj.J(3), traj.J(4));
+           traj.J(1), traj.J(2), traj.J(3), traj.J(4));
 
-    //printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t + traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));
+    // printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t +
+    // traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));
 
     // Draw trajectory (Red thick line)
     int num = 500; // number of points on trajectory to draw
     double dt = total_t / num;
     boost::geometry::model::linestring<point_2d> line;
     Vec2f prev_pt;
-    for(double t = 0; t <= total_t; t += dt) {
+    for (double t = 0; t <= total_t; t += dt) {
       Waypoint2D w;
       traj.evaluate(t, w);
-      if((w.pos - prev_pt).norm() > 0.2) {
+      if ((w.pos - prev_pt).norm() > 0.2) {
         line.push_back(point_2d(w.pos(0), w.pos(1)));
         prev_pt = w.pos;
       }
     }
     mapper.add(line);
-    mapper.map(line, "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
+    mapper.map(
+        line,
+        "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
 
     // Draw states long trajectory
-    for(const auto& pt: planner->getWs()) {
+    for (const auto &pt : planner->getWs()) {
       point_2d a;
       boost::geometry::assign_values(a, pt.pos(0), pt.pos(1));
       mapper.add(a);
@@ -216,19 +218,19 @@ int main(int argc, char ** argv){
     total_t = prior_traj.getTotalTime();
     dt = total_t / num;
     boost::geometry::model::linestring<point_2d> prior_line;
-    for(double t = 0; t <= total_t; t += dt) {
+    for (double t = 0; t <= total_t; t += dt) {
       Waypoint2D w;
       prior_traj.evaluate(t, w);
-      if((w.pos - prev_pt).norm() > 0.2) {
+      if ((w.pos - prev_pt).norm() > 0.2) {
         prior_line.push_back(point_2d(w.pos(0), w.pos(1)));
         prev_pt = w.pos;
       }
     }
     mapper.add(prior_line);
-    mapper.map(prior_line, "opacity:1.0;fill:none;stroke:rgb(0,10,0);stroke-width:2"); // Black
-
+    mapper.map(
+        prior_line,
+        "opacity:1.0;fill:none;stroke:rgb(0,10,0);stroke-width:2"); // Black
   }
-
 
   return 0;
 }

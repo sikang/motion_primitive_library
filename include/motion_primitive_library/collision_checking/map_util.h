@@ -7,9 +7,10 @@
 
 //#include <stack>
 #include <motion_primitive_library/common/data_type.h>
+#include <iostream>
 
 namespace MPL {
-  ///The type of map data Tmap is defined as a 1D array 
+  ///The type of map data Tmap is defined as a 1D array
   using Tmap = std::vector<signed char>;
   /**
    * @biref The map util class for collision checking
@@ -21,9 +22,9 @@ namespace MPL {
       MapUtil() {}
       ///Get map data
       Tmap getMap() { return map_; }
-      ///Get resolution 
+      ///Get resolution
       decimal_t getRes() { return res_; }
-      ///Get dimensions 
+      ///Get dimensions
       Veci<Dim> getDim() { return dim_; }
       ///Get origin
       Vecf<Dim> getOrigin() { return origin_d_; }
@@ -43,7 +44,7 @@ namespace MPL {
 
       ///Check if the cell is outside by coordinate
       bool isOutside(const Veci<Dim> &pn) {
-        for(int i = 0; i < Dim; i++) 
+        for(int i = 0; i < Dim; i++)
           if (pn(i) < 0 || pn(i) >= dim_(i))
             return true;
         return false;
@@ -70,7 +71,7 @@ namespace MPL {
       }
 
       /**
-       * @brief Set map 
+       * @brief Set map
        *
        * @param ori origin position
        * @param dim number of cells in each dimension
@@ -129,7 +130,7 @@ namespace MPL {
         return pns;
       }
 
-      ///Get occupied voxels 
+      ///Get occupied voxels
       vec_Vec3f getCloud() {
         vec_Vecf<Dim> cloud;
         Veci<Dim> n;
@@ -155,7 +156,7 @@ namespace MPL {
         return cloud;
       }
 
-      ///Get free voxels 
+      ///Get free voxels
       vec_Vec3f getFreeCloud() {
         vec_Vecf<Dim> cloud;
         Veci<Dim> n;
@@ -180,7 +181,7 @@ namespace MPL {
 
         return cloud;
       }
-      ///Get unknown voxels 
+      ///Get unknown voxels
       vec_Vec3f getUnknownCloud() {
         vec_Vecf<Dim> cloud;
         Veci<Dim> n;
