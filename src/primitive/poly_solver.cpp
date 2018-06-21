@@ -207,7 +207,8 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
 
   if (num_waypoints > 2 && num_free_derivatives > 0) {
     MatDNf<Dim> Dp = -Rpp.partialPivLu().solve(Rpf * Df);
-    std::cout << "Dp:\n" << Dp << std::endl;
+    if (debug_)
+      std::cout << "Dp:\n" << Dp << std::endl;
     D.bottomRows(num_free_derivatives) = Dp;
   }
 
