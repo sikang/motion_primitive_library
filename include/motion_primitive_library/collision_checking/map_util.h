@@ -99,13 +99,13 @@ namespace MPL {
       Veci<Dim> floatToInt(const Vecf<Dim> &pt) {
         Veci<Dim> pn;
         for(int i = 0; i < Dim; i++)
-          pn(i) = std::round((pt(i) - origin_d_(i)) / res_);
+          pn(i) = std::round((pt(i) - origin_d_(i)) / res_ - 0.5);
         return pn;
       }
       ///Discrete cell coordinate to float position
       Vecf<Dim> intToFloat(const Veci<Dim> &pn) {
-        return pn.template cast<decimal_t>() * res_ + origin_d_;
-        //return (pp.cast<decimal_t>() + Vec3f::Constant(0.5)) * res_ + origin_d_;
+        //return pn.template cast<decimal_t>() * res_ + origin_d_;
+        return (pn.template cast<decimal_t>() + Vecf<Dim>::Constant(0.5)) * res_ + origin_d_;
       }
 
       ///Raytrace from float point pt1 to pt2
