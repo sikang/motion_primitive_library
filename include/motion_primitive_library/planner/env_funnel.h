@@ -54,7 +54,7 @@ public:
     succ_cost.clear();
     action_idx.clear();
 
-    expanded_nodes_.push_back(curr.pos);
+    //expanded_nodes_.push_back(curr.pos);
     // ws_.push_back(curr);
     for (int i = 0; i < (int)U_.size(); i++) {
       Primitive3D pr(curr, U_[i], dt_);

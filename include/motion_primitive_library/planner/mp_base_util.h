@@ -63,8 +63,6 @@ public:
   void setUmax(decimal_t u);
   /// Set max time step to explore
   void setTmax(decimal_t t);
-  /// Set prior trajectory
-  void setPriorTrajectory(const Trajectory<Dim> &traj);
   /// Set dt for each primitive
   void setDt(decimal_t dt);
   /// Set weight for cost in time
@@ -77,7 +75,9 @@ public:
   void setMaxNum(int num);
   /// Set U
   void setU(const vec_Vecf<Dim> &U);
-  /// Set tolerance in geometric and dynamic spaces
+  /// Set prior trajectory
+  void setPriorTrajectory(const Trajectory<Dim> &traj);
+ /// Set tolerance in geometric and dynamic spaces
   void setTol(decimal_t tol_dis, decimal_t tol_vel = 0, decimal_t tol_acc = 0);
   /**
    * @brief Planning thread

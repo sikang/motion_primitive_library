@@ -343,6 +343,11 @@ class env_base
       goal_node_ = state;
     }
 
+    ///Set valid region
+    void set_valid_region(const std::vector<bool>& valid_region) {
+      valid_region_ = valid_region;
+    }
+
     ///Print out params
     void info() {
       printf(ANSI_COLOR_YELLOW "\n");
@@ -402,6 +407,11 @@ class env_base
       action_idx.push_back(0);
     }
 
+    /// Get the valid region
+    std::vector<bool> get_valid_region() const {
+      return valid_region_;
+    }
+
     ///weight of time cost
     decimal_t w_ = 10;
     ///order of derivatives for effort
@@ -443,7 +453,8 @@ class env_base
     Waypoint<Dim> goal_node_;
     ///Prior trajectory
     Trajectory<Dim> prior_traj_;
-
+    ///Valid region
+    std::vector<bool> valid_region_;
 };
 }
 

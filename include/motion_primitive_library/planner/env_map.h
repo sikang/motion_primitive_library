@@ -15,12 +15,7 @@ namespace MPL {
  * @brief Voxel map environment
  */
 template <int Dim> class env_map : public env_base<Dim> {
-  /// Lookup table for voxels
-  using lookUpTable = std::unordered_map<Key, vec_Vecf<Dim>>;
-
 public:
-  lookUpTable collision_checking_table_;
-
   /// Collision checking util
   std::shared_ptr<MapUtil<Dim>> map_util_;
 
@@ -50,7 +45,10 @@ public:
 
   /// Check if a point is in free space
   bool is_free(const Vecf<Dim> &pt) const {
-    return map_util_->isFree(map_util_->floatToInt(pt));
+    const auto pn = map_util_->floatToInt(pt);
+    if(!this->valid_region_.empty() && !this->valid_region_[map_util_->getIndex(pn)])
+      return false;
+    return map_util_->isFree(pn);
   }
 
   /**
@@ -71,6 +69,8 @@ public:
     for (const auto &pt : pts) {
       Veci<Dim> pn = map_util_->floatToInt(pt.pos);
       if (map_util_->isOccupied(pn) || map_util_->isOutside(pn))
+        return false;
+      if(!this->valid_region_.empty() && !this->valid_region_[map_util_->getIndex(pn)])
         return false;
     }
 
@@ -99,7 +99,7 @@ public:
     succ_cost.clear();
     action_idx.clear();
 
-    this->expanded_nodes_.push_back(curr.pos);
+    //this->expanded_nodes_.push_back(curr.pos);
 
     const Veci<Dim> pn = map_util_->floatToInt(curr.pos);
     if (map_util_->isOutside(pn))
@@ -127,6 +127,7 @@ public:
       }
     }
   }
+
 };
 }
 

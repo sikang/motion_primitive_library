@@ -19,6 +19,16 @@ public:
   MPMapUtil(bool verbose);
   /// Set map util
   void setMapUtil(std::shared_ptr<MPL::MapUtil<Dim>> &map_util);
+  /**
+   * @brief Set valid region
+   * @param path a sequence of waypoints from a path or trajectory
+   * @param search_radius the search distance in each axis
+   * @param dense if true, do ray cast between two consecutive points in path
+   */
+  void setValidRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense = false);
+
+  /// Get valid region
+  vec_Vecf<Dim> getValidRegion() const;
   /// Get linked voxels
   vec_Vecf<Dim> getLinkedNodes() const;
   /**

@@ -94,6 +94,7 @@ void MPBaseUtil<Dim>::setPriorTrajectory(const Trajectory<Dim> &traj) {
     printf("[MPBaseUtil] set prior trajectory\n");
 }
 
+
 template <int Dim>
 void MPBaseUtil<Dim>::setTol(decimal_t tol_dis, decimal_t tol_vel,
                              decimal_t tol_acc) {
