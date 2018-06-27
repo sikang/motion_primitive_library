@@ -40,6 +40,30 @@ template <int Dim> void MPBaseUtil<Dim>::setDt(decimal_t dt) {
     printf("[MPBaseUtil] set dt: %f\n", dt);
 }
 
+template <int Dim> void MPBaseUtil<Dim>::setDs(decimal_t ds) {
+  ENV_->set_ds(ds);
+  if (planner_verbose_)
+    printf("[MPBaseUtil] set ds: %f\n", ds);
+}
+
+template <int Dim> void MPBaseUtil<Dim>::setDv(decimal_t dv) {
+  ENV_->set_dv(dv);
+  if (planner_verbose_)
+    printf("[MPBaseUtil] set dv: %f\n", dv);
+}
+
+template <int Dim> void MPBaseUtil<Dim>::setDa(decimal_t da) {
+  ENV_->set_da(da);
+  if (planner_verbose_)
+    printf("[MPBaseUtil] set da: %f\n", da);
+}
+
+template <int Dim> void MPBaseUtil<Dim>::setDj(decimal_t dj) {
+  ENV_->set_dj(dj);
+  if (planner_verbose_)
+    printf("[MPBaseUtil] set dj: %f\n", dj);
+}
+
 template <int Dim> void MPBaseUtil<Dim>::setW(decimal_t w) {
   ENV_->set_w(w);
   if (planner_verbose_)
@@ -281,13 +305,15 @@ bool MPBaseUtil<Dim>::plan(const Waypoint<Dim> &start,
       printf("[MPBaseUtil] set effort in vel\n");
   } else {
     if (planner_verbose_) {
-      printf(ANSI_COLOR_RED "[MPBaseUtil] fail to set effort, pos/vel/acc/jrk "
+      printf(ANSI_COLOR_RED "[MPBaseUtil] fail to set effort, use_pos/use_vel/use_acc/use_jrk "
                             "--> %d/%d/%d/%d\n" ANSI_COLOR_RESET,
              start.use_pos, start.use_vel, start.use_acc, start.use_jrk);
     }
     return false;
   }
 
+  if(planner_verbose_)
+    ENV_->info();
   std::unique_ptr<MPL::GraphSearch<Dim>> planner_ptr(
       new MPL::GraphSearch<Dim>(planner_verbose_));
 

@@ -293,11 +293,6 @@ class env_base
       u_max_ = u;
     }
 
-    ///Set max amount of time step to explore
-    void set_t_max(decimal_t t) {
-      t_max_ = t;
-    }
-
     ///Set prior trajectory
     void set_prior_trajectory(const Trajectory<Dim>& traj) {
       prior_traj_ = traj;
@@ -307,6 +302,27 @@ class env_base
     void set_dt(decimal_t dt) {
       dt_ = dt;
     }
+
+    ///Set ds
+    void set_ds(decimal_t ds) {
+      ds_ = ds;
+    }
+
+    ///Set dv
+    void set_dv(decimal_t dv) {
+      dv_ = dv;
+    }
+
+    ///Set da
+    void set_da(decimal_t da) {
+      da_ = da;
+    }
+
+    ///Set dj
+    void set_dj(decimal_t dj) {
+      dj_ = dj;
+    }
+
 
     ///Set distance tolerance for goal region
     void set_tol_dis(decimal_t dis) {
@@ -354,13 +370,16 @@ class env_base
       printf("++++++++++ PLANNER +++++++++++\n");
       printf("+    alpha: %d                 +\n", alpha_);
       printf("+       dt: %.2f               +\n", dt_);
+      printf("+       ds: %.4f               +\n", ds_);
+      printf("+       dv: %.4f               +\n", dv_);
+      printf("+       da: %.4f               +\n", da_);
+      printf("+       dj: %.4f               +\n", dj_);
       printf("+        w: %.2f               +\n", w_);
       printf("+       wi: %d                 +\n", wi_);
       printf("+    v_max: %.2f               +\n", v_max_);
       printf("+    a_max: %.2f               +\n", a_max_);
       printf("+    j_max: %.2f               +\n", j_max_);
       printf("+    u_max: %.2f               +\n", u_max_);
-      printf("+    t_max: %.2f               +\n", t_max_);
       printf("+    U num: %zu                +\n", U_.size());
       printf("+  tol_dis: %.2f               +\n", tol_dis);
       printf("+  tol_vel: %.2f               +\n", tol_vel);
@@ -392,29 +411,26 @@ class env_base
      * @param succ The array stores valid successors
      * @param succ_idx The array stores successors' Key
      * @param succ_cost The array stores cost along valid edges
-     * @param action_idx The array stores corresponding idx of control for each successor
+     * @param action_idx The array stores corresponding idx of control for each
+     * successor
      */
-    virtual void get_succ( const Waypoint<Dim>& curr,
-        vec_E<Waypoint<Dim>>& succ,
-        std::vector<Key>& succ_idx,
-        std::vector<decimal_t>& succ_cost,
-        std::vector<int>& action_idx) const
-    {
+    virtual void get_succ(const Waypoint<Dim> &curr, vec_E<Waypoint<Dim>> &succ,
+                          std::vector<Key> &succ_idx,
+                          std::vector<decimal_t> &succ_cost,
+                          std::vector<int> &action_idx) const {
       printf("Used Null get_succ()\n");
       succ.push_back(curr);
-      succ_idx.push_back( state_to_idx(curr) );
+      succ_idx.push_back(state_to_idx(curr));
       succ_cost.push_back(0);
       action_idx.push_back(0);
     }
 
     /// Get the valid region
-    std::vector<bool> get_valid_region() const {
-      return valid_region_;
-    }
+    std::vector<bool> get_valid_region() const { return valid_region_; }
 
-    ///weight of time cost
+    /// weight of time cost
     decimal_t w_ = 10;
-    ///order of derivatives for effort
+    /// order of derivatives for effort
     int wi_;
     ///heuristic time offset
     int alpha_ = 0;
@@ -433,8 +449,6 @@ class env_base
     decimal_t a_max_ = -1;
     ///max jerk
     decimal_t j_max_ = -1;
-    ///max execution time
-    decimal_t t_max_ = -1;
     ///duration of primitive
     decimal_t dt_ = 1.0;
     ///grid size in position

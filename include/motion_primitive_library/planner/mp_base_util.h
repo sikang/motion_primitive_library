@@ -65,6 +65,14 @@ public:
   void setTmax(decimal_t t);
   /// Set dt for each primitive
   void setDt(decimal_t dt);
+  /// Set ds for each primitive
+  void setDs(decimal_t ds);
+  /// Set dv for each primitive
+  void setDv(decimal_t dv);
+  /// Set da for each primitive
+  void setDa(decimal_t da);
+  /// Set dj for each primitive
+  void setDj(decimal_t dj);
   /// Set weight for cost in time
   void setW(decimal_t w);
   /// Set alpha in time offset

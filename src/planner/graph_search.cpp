@@ -106,7 +106,7 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
         std::make_shared<State<Dim>>(State<Dim>(start_key, start_coord));
     currNode_ptr->t = 0;
     currNode_ptr->g = 0;
-    currNode_ptr->h = ENV->get_heur(start_coord, currNode_ptr->t);
+    currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(start_coord, currNode_ptr->t);
     decimal_t fval = currNode_ptr->g + ss_ptr->eps_ * currNode_ptr->h;
     currNode_ptr->heapkey =
         ss_ptr->pq_.push(std::make_pair(fval, currNode_ptr));
@@ -144,7 +144,8 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
         succNode_ptr = std::make_shared<State<Dim>>(
             State<Dim>(succ_key[s], succ_coord[s]));
         succNode_ptr->t = currNode_ptr->t + ENV->dt_;
-        succNode_ptr->h = ENV->get_heur(succNode_ptr->coord, succNode_ptr->t);
+        succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
+          ENV->get_heur(succNode_ptr->coord, succNode_ptr->t);
         /*
          * Comment this block if build multiple connected graph
          succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
@@ -280,7 +281,8 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
     currNode_ptr->t = 0;
     currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
     currNode_ptr->rhs = 0;
-    currNode_ptr->h = ENV->get_heur(start_coord, currNode_ptr->t);
+    currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
+      ENV->get_heur(start_coord, currNode_ptr->t);
     currNode_ptr->heapkey = ss_ptr->pq_.push(
         std::make_pair(ss_ptr->calculateKey(currNode_ptr), currNode_ptr));
     currNode_ptr->iterationopened = true;
@@ -336,7 +338,7 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
       if (!(succNode_ptr)) {
         succNode_ptr = std::make_shared<State<Dim>>(
             State<Dim>(succ_key[s], succ_coord[s]));
-        succNode_ptr->h =
+        succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
             ENV->get_heur(succNode_ptr->coord,
                           currNode_ptr->t + ENV->dt_); // compute heuristic
       }

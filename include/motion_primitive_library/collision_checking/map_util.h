@@ -264,6 +264,28 @@ namespace MPL {
         }
       }
 
+      ///Free all voxels
+      void freeAll() {
+        Veci<Dim> n;
+        if(Dim == 3) {
+          for (n(0) = 0; n(0) < dim_(0); n(0)++) {
+            for (n(1) = 0; n(1) < dim_(1); n(1)++) {
+              for (n(2) = 0; n(2) < dim_(2); n(2)++) {
+                  map_[getIndex(n)] = val_free;
+              }
+            }
+          }
+        }
+        else if (Dim == 2) {
+          for (n(0) = 0; n(0) < dim_(0); n(0)++) {
+            for (n(1) = 0; n(1) < dim_(1); n(1)++) {
+                map_[getIndex(n)] = val_free;
+            }
+          }
+        }
+      }
+
+
     protected:
       ///Resolution
       decimal_t res_;
