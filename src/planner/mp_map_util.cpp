@@ -5,7 +5,7 @@ using namespace MPL;
 template <int Dim> MPMapUtil<Dim>::MPMapUtil(bool verbose) {
   this->planner_verbose_ = verbose;
   if (this->planner_verbose_)
-    printf(ANSI_COLOR_CYAN "[MPPlanner] PLANNER VERBOSE ON\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_CYAN "[MPMapUtil] PLANNER VERBOSE ON\n" ANSI_COLOR_RESET);
 }
 
 template <int Dim>

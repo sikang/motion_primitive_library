@@ -344,6 +344,10 @@ class env_base
       w_ = w;
     }
 
+    ///set weight for cost in time, usually no need to change
+    virtual void set_distance_w(decimal_t w) {
+    }
+
     ///Set derivative order for cost in effort, dont need to set manually
     void set_wi(int wi) {
       wi_ = wi;

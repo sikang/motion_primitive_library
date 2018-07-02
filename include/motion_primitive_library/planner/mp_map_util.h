@@ -18,7 +18,7 @@ public:
    */
   MPMapUtil(bool verbose);
   /// Set map util
-  void setMapUtil(std::shared_ptr<MPL::MapUtil<Dim>> &map_util);
+  virtual void setMapUtil(std::shared_ptr<MPL::MapUtil<Dim>> &map_util);
   /**
    * @brief Set valid region
    * @param path a sequence of waypoints from a path or trajectory
