@@ -18,9 +18,11 @@ template <int Dim> class MPDistanceMapUtil : public MPMapUtil<Dim> {
   void setMapUtil(std::shared_ptr<MPL::MapUtil<Dim>> &map_util);
   void setDistanceRadius(const Vecf<Dim>& radius);
   void setMapRange(const Vecf<Dim>& range);
-  void setCweight(double c);
+  void setGradientWeight(decimal_t w);
+  void setPotentialWeight(decimal_t w);
 
-  vec_Vec3f getCloud(double h_max = 1.0);
+  vec_Vec3f getPotentialCloud(decimal_t h_max = 1.0);
+  vec_Vec3f getGradientCloud(decimal_t h_max = 1.0, int i = 0);
 
   void createMask(int pow);
   /**
@@ -30,12 +32,14 @@ template <int Dim> class MPDistanceMapUtil : public MPMapUtil<Dim> {
    */
   void updateDistanceMap(const Vecf<Dim>& pos);
  protected:
+  vec_E<Vecf<Dim>> calculateGradient(const Veci<Dim>& coord1, const Veci<Dim>& coord2);
   int8_t H_MAX{100};
 
   Vecf<Dim> distance_radius_;
   Vecf<Dim> map_range_;
   /// Mask for generating potential field around obstacle
-  vec_E<std::pair<Veci<Dim>, int8_t>> mask_;
+  vec_E<std::pair<Veci<Dim>, int8_t>> distance_mask_;
+  vec_E<Vecf<Dim>> gradient_map_;
 
 
 };

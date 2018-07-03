@@ -345,8 +345,22 @@ class env_base
     }
 
     ///set weight for cost in time, usually no need to change
-    virtual void set_distance_w(decimal_t w) {
+    virtual void set_potential_weight(decimal_t w) {
     }
+
+    ///set weight for cost in time, usually no need to change
+    virtual void set_gradient_weight(decimal_t w) {
+    }
+
+    ///set weight for cost in time, usually no need to change
+    virtual void set_potential_map(const std::vector<int8_t>& map) {
+    }
+
+    ///set weight for cost in time, usually no need to change
+    virtual void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
+    }
+
+
 
     ///Set derivative order for cost in effort, dont need to set manually
     void set_wi(int wi) {

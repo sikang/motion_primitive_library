@@ -16,9 +16,20 @@ public:
   /// Constructor with map util as input
   env_distance_map(std::shared_ptr<MapUtil<Dim>> map_util) : env_map<Dim>(map_util) {}
 
-  void set_distance_w(decimal_t w) {
-    cmap_ = this->map_util_->getMap();
-    cweight_ = w;
+  void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
+    gradient_map_ = map;
+  }
+
+  void set_gradient_weight(decimal_t w) {
+    gradient_weight_ = w;
+  }
+
+  void set_potential_map(const std::vector<int8_t>& map) {
+    potential_map_ = map;
+  }
+
+  void set_potential_weight(decimal_t w) {
+    potential_weight_ = w;
   }
 
   decimal_t traverse_primitive(const Primitive<Dim> &pr) const {
@@ -31,14 +42,19 @@ public:
     decimal_t c = 0;
     vec_E<Waypoint<Dim>> pts = pr.sample(n);
     for (const auto &pt : pts) {
-      Veci<Dim> pn = this->map_util_->floatToInt(pt.pos);
+      const Veci<Dim> pn = this->map_util_->floatToInt(pt.pos);
+      const int idx = this->map_util_->getIndex(pn);
       if (this->map_util_->isOutside(pn) ||
           (!this->valid_region_.empty() &&
-          !this->valid_region_[this->map_util_->getIndex(pn)]))
+          !this->valid_region_[idx]))
         return std::numeric_limits<decimal_t>::infinity();
-      const auto value = cmap_[this->map_util_->getIndex(pn)];
-      if(value < 100)
-        c += value;
+      decimal_t v_value = gradient_map_[idx].dot(pt.vel);
+      if(v_value > 0)
+        v_value = 0;
+      v_value = -v_value;
+      const auto p_value = potential_map_[idx];
+      if(p_value < 100)
+        c += potential_weight_ * p_value + gradient_weight_ * v_value;
       else
         return std::numeric_limits<decimal_t>::infinity();
     }
@@ -90,7 +106,7 @@ public:
         succ_idx.push_back(this->state_to_idx(tn));
         decimal_t cost = traverse_primitive(pr);
         if(!std::isinf(cost))
-          cost = cweight_ * cost + pr.J(this->wi_) + this->w_ * this->dt_;
+          cost += pr.J(this->wi_) + this->w_ * this->dt_;
         succ_cost.push_back(cost);
         action_idx.push_back(i);
       }
@@ -98,8 +114,10 @@ public:
   }
 
 protected:
-  std::vector<int8_t> cmap_;
-  decimal_t cweight_ = 0.1;
+  std::vector<int8_t> potential_map_;
+  vec_E<Vecf<Dim>> gradient_map_;
+  decimal_t potential_weight_ = 0.1;
+  decimal_t gradient_weight_ = 0.1;
 
 };
 }
