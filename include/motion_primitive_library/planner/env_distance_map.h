@@ -16,6 +16,15 @@ public:
   /// Constructor with map util as input
   env_distance_map(std::shared_ptr<MapUtil<Dim>> map_util) : env_map<Dim>(map_util) {}
 
+  /// Check if a point is in free space
+  bool is_free(const Vecf<Dim> &pt) const {
+    const auto pn = this->map_util_->floatToInt(pt);
+    if(!this->valid_region_.empty() &&
+       !this->valid_region_[this->map_util_->getIndex(pn)])
+      return false;
+    return potential_map_[this->map_util_->getIndex(pn)] < 100;
+  }
+
   void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
     gradient_map_ = map;
   }
@@ -48,11 +57,14 @@ public:
           (!this->valid_region_.empty() &&
           !this->valid_region_[idx]))
         return std::numeric_limits<decimal_t>::infinity();
+      /*
       decimal_t v_value = gradient_map_[idx].dot(pt.vel);
       if(v_value > 0)
         v_value = 0;
       v_value = -v_value;
+      */
       const auto p_value = potential_map_[idx];
+      const auto v_value = potential_map_[idx] * pt.vel.norm();
       if(p_value < 100)
         c += potential_weight_ * p_value + gradient_weight_ * v_value;
       else
