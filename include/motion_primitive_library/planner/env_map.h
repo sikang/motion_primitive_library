@@ -3,8 +3,8 @@
  * @biref environment for planning in voxel map
  */
 
-#ifndef ENV_MP_H
-#define ENV_MP_H
+#ifndef ENV_MAP_H
+#define ENV_MAP_H
 #include <motion_primitive_library/collision_checking/map_util.h>
 #include <motion_primitive_library/planner/env_base.h>
 #include <motion_primitive_library/primitive/primitive.h>
@@ -16,9 +16,6 @@ namespace MPL {
  */
 template <int Dim> class env_map : public env_base<Dim> {
 public:
-  /// Collision checking util
-  std::shared_ptr<MapUtil<Dim>> map_util_;
-
   /// Constructor with map util as input
   env_map(std::shared_ptr<MapUtil<Dim>> map_util) : map_util_(map_util) {}
 
@@ -77,6 +74,54 @@ public:
     return true;
   }
 
+ /**
+   * @brief Accumulate the cost along the primitive
+   *
+   * Sample points along the primitive, and sum up the cost of each point;
+   * number of sampling is calculated based on the maximum velocity and
+   * resolution of the map.
+   *
+   * If the potential map has been set, it also uses the potential values;
+   * otherwise, the accumulated value will be zero for collision-free primitive
+   * and infinity for others.
+   */
+
+  decimal_t traverse_primitive(const Primitive<Dim> &pr) const {
+    decimal_t max_v = 0;
+    for (int i = 0; i < Dim; i++) {
+      if (pr.max_vel(i) > max_v)
+        max_v = pr.max_vel(i);
+    }
+    int n = std::ceil(max_v * pr.t() / this->map_util_->getRes());
+    decimal_t c = 0;
+    vec_E<Waypoint<Dim>> pts = pr.sample(n);
+    for (const auto &pt : pts) {
+      const Veci<Dim> pn = this->map_util_->floatToInt(pt.pos);
+      const int idx = this->map_util_->getIndex(pn);
+      if (this->map_util_->isOutside(pn) ||
+          (!this->valid_region_.empty() &&
+          !this->valid_region_[idx]))
+        return std::numeric_limits<decimal_t>::infinity();
+      /*
+      decimal_t v_value = gradient_map_[idx].dot(pt.vel);
+      if(v_value > 0)
+        v_value = 0;
+      v_value = -v_value;
+      */
+      if(!potential_map_.empty()) {
+        if(potential_map_[idx] < 100 && potential_map_[idx] > 0)
+          c += potential_weight_ * potential_map_[idx] +
+            gradient_weight_ * pt.vel.norm();
+        else if(potential_map_[idx] >= 100)
+          return std::numeric_limits<decimal_t>::infinity();
+      }
+    }
+
+    return c;
+  }
+
+
+
   /**
    * @brief Get successor
    *
@@ -84,8 +129,8 @@ public:
    * @param succ The array stores valid successors
    * @param succ_idx The array stores successors' Key
    * @param succ_cost The array stores cost along valid edges
-   * @param action_idx The array stores corresponding idx of control for each
-   * successor
+   * @param action_idx The array stores corresponding idx of control input
+   * for each successor
    *
    * When goal is outside, extra step is needed for finding optimal trajectory.
    * Only return the primitive satisfies valid dynamic constriants (include the
@@ -101,9 +146,11 @@ public:
 
     //this->expanded_nodes_.push_back(curr.pos);
 
+    /*
     const Veci<Dim> pn = map_util_->floatToInt(curr.pos);
     if (map_util_->isOutside(pn))
       return;
+      */
 
     for (unsigned int i = 0; i < this->U_.size(); i++) {
       Primitive<Dim> pr(curr, this->U_[i], this->dt_);
@@ -119,15 +166,52 @@ public:
 
         succ.push_back(tn);
         succ_idx.push_back(this->state_to_idx(tn));
+        /*
         decimal_t cost = is_free(pr)
                              ? pr.J(this->wi_) + this->w_ * this->dt_
                              : std::numeric_limits<decimal_t>::infinity();
+                             */
+        decimal_t cost = traverse_primitive(pr);
+        if(!std::isinf(cost))
+          cost += pr.J(this->wi_) + this->w_ * this->dt_;
+
         succ_cost.push_back(cost);
         action_idx.push_back(i);
       }
     }
   }
 
+  /// Set gradient map
+  void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
+    gradient_map_ = map;
+  }
+
+  /// Set gradient weight
+  void set_gradient_weight(decimal_t w) {
+    gradient_weight_ = w;
+  }
+
+  /// Set potential map
+  void set_potential_map(const std::vector<int8_t>& map) {
+    potential_map_ = map;
+  }
+
+  /// Set potential weight
+  void set_potential_weight(decimal_t w) {
+    potential_weight_ = w;
+  }
+
+protected:
+  /// Collision checking util
+  std::shared_ptr<MapUtil<Dim>> map_util_;
+  /// Potential map, optional
+  std::vector<int8_t> potential_map_;
+  /// Gradient map, optional
+  vec_E<Vecf<Dim>> gradient_map_;
+  /// Weight of potential value
+  decimal_t potential_weight_{0.1};
+  /// Weight of gradient value
+  decimal_t gradient_weight_{0.1};
 };
 }
 
