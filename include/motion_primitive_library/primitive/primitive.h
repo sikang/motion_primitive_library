@@ -5,7 +5,6 @@
 
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
-#include <memory>
 #include <motion_primitive_library/common/data_type.h>
 #include "math.h"
 
@@ -20,13 +19,15 @@ struct Waypoint {
   Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
+  decimal_t yaw;
 
-  bool use_pos = false;///<If true, pos will be used in primitive generation
-  bool use_vel = false;///<If true, vel will be used in primitive generation
-  bool use_acc = false;///<If true, acc will be used in primitive generation
-  bool use_jrk = false;///<If true, jrk will be used in primitive generation
+  bool use_pos{false};///<If true, pos will be used in primitive generation
+  bool use_vel{false};///<If true, vel will be used in primitive generation
+  bool use_acc{false};///<If true, acc will be used in primitive generation
+  bool use_jrk{false};///<If true, jrk will be used in primitive generation
+  bool use_yaw{false};///<If true, yaw will be used in primitive generation
 
-  ///Print all the useful attributes
+  ///Print all attributes
   void print(std::string str = "") const {
     if(!str.empty())
       std::cout << str << std::endl;
@@ -34,10 +35,12 @@ struct Waypoint {
     std::cout << "vel: " << vel.transpose() << std::endl;
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
+    std::cout << "yaw: " << yaw << std::endl;
     std::cout << "use_pos: " << use_pos << std::endl;
     std::cout << "use_vel: " << use_vel << std::endl;
     std::cout << "use_acc: " << use_acc << std::endl;
     std::cout << "use_jrk: " << use_jrk << std::endl;
+    std::cout << "use_yaw: " << use_yaw << std::endl;
   }
 
   /**
@@ -59,6 +62,8 @@ struct Waypoint {
     if((this->use_acc || n.use_acc) && this->acc != n.acc)
       return false;
     if((this->use_jrk || n.use_jrk) && this->jrk != n.jrk)
+      return false;
+    if((this->use_yaw || n.use_yaw) && this->yaw != n.yaw)
       return false;
     return true;
   }
