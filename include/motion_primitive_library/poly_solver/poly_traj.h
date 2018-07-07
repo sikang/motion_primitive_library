@@ -5,7 +5,8 @@
 #ifndef POLY_TRAJ_H
 #define POLY_TRAJ_H
 
-#include <motion_primitive_library/primitive/primitive.h>
+#include <motion_primitive_library/common/primitive.h>
+#include <memory>
 #include <deque>
 
 /**
@@ -37,8 +38,8 @@ class PolyTraj {
 };
 
 ///PolyTraj in 2D
-typedef PolyTraj<2> PolyTraj2;
+typedef PolyTraj<2> PolyTraj2D;
 
 ///PolyTraj in 3D
-typedef PolyTraj<3> PolyTraj3;
+typedef PolyTraj<3> PolyTraj3D;
 #endif

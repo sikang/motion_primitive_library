@@ -1,4 +1,5 @@
-#include <motion_primitive_library/primitive/poly_solver.h>
+#include <motion_primitive_library/poly_solver/poly_solver.h>
+
 template <int Dim>
 PolySolver<Dim>::PolySolver(unsigned int smooth_derivative_order,
                             unsigned int minimize_derivative, bool debug)

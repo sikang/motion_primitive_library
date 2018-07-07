@@ -1,7 +1,6 @@
 #include <chrono>
 #include <motion_primitive_library/planner/env_base.h>
-#include <motion_primitive_library/planner/graph_search.h>
-#include <motion_primitive_library/primitive/primitive_util.h>
+#include <motion_primitive_library/planner/graph_search/graph_search.h>
 
 using namespace MPL;
 

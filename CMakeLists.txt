@@ -9,45 +9,37 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-deprecated-declara
 
 set(BUILD_SHARED_LIBS ON)
 
-FIND_PACKAGE(PCL 1.7 REQUIRED)
+find_package(PCL 1.7 REQUIRED)
 if(NOT "${PCL_LIBRARIES}" STREQUAL "")
   list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 endif()
-include_directories(${PCL_INCLUDE_DIRS})
+find_package(Eigen3 REQUIRED)
+find_package(PkgConfig REQUIRED)
+PKG_CHECK_MODULES(YAMLCPP REQUIRED yaml-cpp)
+include_directories(${PCL_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR} include)
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-FIND_PACKAGE(Eigen3 REQUIRED)
-FIND_PACKAGE(PkgConfig REQUIRED)
-PKG_CHECK_MODULES(YAMLCPP REQUIRED yaml-cpp)
-include_directories(${EIGEN3_INCLUDE_DIR} include)
+if(YAMLCPP_FOUND)
+  message(STATUS "Found yaml-cpp.")
+else()
+  message(FATAL_ERROR "Could not find yaml-cpp.")
+endif()
 
-IF(YAMLCPP_FOUND)
-  MESSAGE(STATUS "Found yaml-cpp.")
-ELSE()
-  MESSAGE(FATAL_ERROR "Could not find yaml-cpp.")
-ENDIF()
-
-add_library(primitive src/primitive/primitive.cpp
-  src/primitive/trajectory.cpp)
-
-add_library(poly_solver src/primitive/poly_solver.cpp
-  src/primitive/poly_traj.cpp
-  src/primitive/poly_gradient_descent.cpp)
-target_link_libraries(poly_solver primitive)
+add_library(poly_solver src/poly_solver/poly_solver.cpp
+  src/poly_solver/poly_traj.cpp)
 
 add_library(mp_base_util
   src/planner/mp_base_util.cpp
   src/planner/graph_search.cpp
   src/planner/state_space.cpp)
-target_link_libraries(mp_base_util primitive)
 
 add_library(mp_map_util src/planner/mp_map_util.cpp)
-target_link_libraries(mp_map_util primitive mp_base_util)
+target_link_libraries(mp_map_util mp_base_util)
 
 add_library(mp_cloud_util src/planner/mp_cloud_util.cpp
   src/collision_checking/decomp_util.cpp)
-target_link_libraries(mp_cloud_util primitive mp_base_util ${PCL_LIBRARIES})
+target_link_libraries(mp_cloud_util mp_base_util ${PCL_LIBRARIES})
 
 include(CTest)
 
@@ -62,7 +54,7 @@ add_test(test_planner_2d_prior_traj test_planner_2d_prior_traj ${CMAKE_SOURCE_DI
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS primitive poly_solver mp_base_util mp_map_util mp_cloud_util
+install(TARGETS poly_solver mp_base_util mp_map_util mp_cloud_util
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

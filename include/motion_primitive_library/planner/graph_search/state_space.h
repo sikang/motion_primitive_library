@@ -4,12 +4,8 @@
  */
 
 #include <boost/heap/d_ary_heap.hpp> // boost::heap::d_ary_heap
-#include <limits>                    // std::numeric_limits
-#include <memory>                    // std::shared_ptr
 #include <motion_primitive_library/planner/env_base.h>
-#include <motion_primitive_library/primitive/primitive.h>
 #include <unordered_map> // std::unordered_map
-#include <vector>        // std::vector
 
 namespace MPL {
 /// Key for hashmap

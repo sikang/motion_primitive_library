@@ -7,8 +7,8 @@
 #define ENV_MAP_H
 #include <motion_primitive_library/collision_checking/map_util.h>
 #include <motion_primitive_library/planner/env_base.h>
-#include <motion_primitive_library/primitive/primitive.h>
 #include <unordered_map>
+#include <memory>
 
 namespace MPL {
 /**
@@ -157,8 +157,9 @@ public:
       Waypoint<Dim> tn = pr.evaluate(this->dt_);
       if (tn == curr)
         continue;
-      if (pr.valid_vel(this->v_max_) && pr.valid_acc(this->a_max_) &&
-          pr.valid_jrk(this->j_max_)) {
+      if (pr.validate_vel(this->v_max_) &&
+          pr.validate_acc(this->a_max_) &&
+          pr.validate_jrk(this->j_max_)) {
         tn.use_pos = curr.use_pos;
         tn.use_vel = curr.use_vel;
         tn.use_acc = curr.use_acc;

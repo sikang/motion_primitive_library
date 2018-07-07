@@ -7,7 +7,7 @@
 #define GRAPH_SEARCH_H
 
 #include <motion_primitive_library/planner/graph_search/state_space.h>
-#include <motion_primitive_library/primitive/trajectory.h>
+#include <motion_primitive_library/common/trajectory.h>
 
 namespace MPL {
 

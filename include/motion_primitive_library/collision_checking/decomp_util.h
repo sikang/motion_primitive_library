@@ -4,8 +4,7 @@
  */
 #ifndef DECOMP_UTIL_H
 #define DECOMP_UTIL_H
-#include <motion_primitive_library/primitive/primitive.h>
-#include <motion_primitive_library/primitive/primitive_util.h>
+#include <motion_primitive_library/common/primitive.h>
 #include <pcl/kdtree/kdtree_flann.h>
 
 #include <boost/make_shared.hpp>

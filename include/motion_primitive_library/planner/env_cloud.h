@@ -7,7 +7,6 @@
 #define ENV_CLOUD_H
 #include <motion_primitive_library/collision_checking/decomp_util.h>
 #include <motion_primitive_library/planner/env_base.h>
-#include <motion_primitive_library/primitive/primitive.h>
 
 namespace MPL {
 
@@ -62,7 +61,9 @@ public:
     for (int i = 0; i < (int)U_.size(); i++) {
       Primitive3D pr(curr, U_[i], dt_);
       Waypoint3D tn = pr.evaluate(dt_);
-      if (pr.valid_vel(v_max_) && pr.valid_acc(a_max_)) {
+      if (pr.validate_vel(v_max_) &&
+          pr.validate_acc(a_max_) &&
+          pr.validate_jrk(j_max_)) {
         bool valid = map_util_->isFree(pr);
         if (valid) {
           // primitives_.push_back(pr);

@@ -6,10 +6,7 @@
 #ifndef ENV_BASE_H
 #define ENV_BASE_H
 
-#include <memory>
-#include <vector>
-#include <motion_primitive_library/primitive/primitive.h>
-#include <motion_primitive_library/primitive/trajectory.h>
+#include <motion_primitive_library/common/trajectory.h>
 
 namespace MPL {
 

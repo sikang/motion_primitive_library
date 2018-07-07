@@ -9,7 +9,7 @@
 #define MP_BASE_UTIL_H
 
 #include <motion_primitive_library/planner/env_base.h>
-#include <motion_primitive_library/planner/graph_search.h>
+#include <motion_primitive_library/planner/graph_search/graph_search.h>
 
 /**
  * @brief Motion planning base util class

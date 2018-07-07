@@ -124,7 +124,6 @@ class Face {
 typedef vec_E<Face> Polyhedron; // composed by planes with form (p, n)
 ///Vector of Polyhedron
 typedef vec_E<Polyhedron> Polyhedra;
-
 ///Extreme points of a polyhedron
 typedef vec_E<vec_Vec3f> BoundVec3f; // compose by extreme points
 

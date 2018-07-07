@@ -1,4 +1,4 @@
-#include <motion_primitive_library/primitive/poly_traj.h>
+#include <motion_primitive_library/poly_solver/poly_traj.h>
 
 template <int Dim> PolyTraj<Dim>::PolyTraj() {}
 

@@ -1,4 +1,4 @@
-#include <motion_primitive_library/planner/state_space.h>
+#include <motion_primitive_library/planner/graph_search/state_space.h>
 
 using namespace MPL;
 

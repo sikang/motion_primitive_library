@@ -1,17 +1,14 @@
 /**
  * @file poly_solver.h
- * @brief Trajectory generator back-end
+ * @brief Trajectory generator from given waypoints
  */
 #ifndef POLY_SOLVER_H
 #define POLY_SOLVER_H
 
-#include <stdio.h>
-#include <iostream>
-#include <memory>
 #include <Eigen/Core>
 #include <Eigen/StdVector>
 #include <Eigen/LU>
-#include <motion_primitive_library/primitive/poly_traj.h>
+#include <motion_primitive_library/poly_solver/poly_traj.h>
 
 /**
  * @brief Trajectory generator back-end class
