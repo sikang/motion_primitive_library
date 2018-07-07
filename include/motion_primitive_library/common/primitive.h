@@ -266,7 +266,7 @@ class Primitive {
    *
    * Note: flag `use_xxx` is not set in this constructor
    */
-  Primitive(const vec_E<Vec6f>& cs, decimal_t t) {
+  Primitive(const vec_E<Vec6f>& cs, decimal_t t) : t_(t) {
     for (int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(cs[i]);
   }

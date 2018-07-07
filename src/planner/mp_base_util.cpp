@@ -278,42 +278,38 @@ bool MPBaseUtil<Dim>::plan(const Waypoint<Dim> &start,
     goal.print("Goal:");
   }
 
-  if (!ENV_->is_free(start.pos)) {
-    printf(ANSI_COLOR_RED "[MPPlanner] start is not free!" ANSI_COLOR_RESET
-                          "\n");
-    return false;
-  }
-
-  if (start.use_pos && start.use_vel && start.use_acc && start.use_jrk) {
+  if (start.control == Control::SNP) {
     ENV_->set_wi(4);
     if (planner_verbose_)
-      printf("[MPBaseUtil] set effort in snap\n");
-  } else if (start.use_pos && start.use_vel && start.use_acc &&
-             !start.use_jrk) {
+      printf("[MPBaseUtil] set control in snap\n");
+  } else if (start.control == Control::JRK) {
     ENV_->set_wi(3);
     if (planner_verbose_)
-      printf("[MPBaseUtil] set effort in jrk\n");
-  } else if (start.use_pos && start.use_vel && !start.use_acc &&
-             !start.use_jrk) {
+      printf("[MPBaseUtil] set control in jrk\n");
+  } else if (start.control == Control::ACC) {
     ENV_->set_wi(2);
     if (planner_verbose_)
-      printf("[MPBaseUtil] set effort in acc\n");
-  } else if (start.use_pos && !start.use_vel && !start.use_acc &&
-             !start.use_jrk) {
+      printf("[MPBaseUtil] set control in acc\n");
+  } else if (start.control == Control::VEL) {
     ENV_->set_wi(1);
     if (planner_verbose_)
-      printf("[MPBaseUtil] set effort in vel\n");
+      printf("[MPBaseUtil] set control in vel\n");
   } else {
-    if (planner_verbose_) {
-      printf(ANSI_COLOR_RED "[MPBaseUtil] fail to set effort, use_pos/use_vel/use_acc/use_jrk "
-                            "--> %d/%d/%d/%d\n" ANSI_COLOR_RESET,
-             start.use_pos, start.use_vel, start.use_acc, start.use_jrk);
-    }
+    if (planner_verbose_)
+      printf(ANSI_COLOR_RED "[MPBaseUtil] fail to set control!" ANSI_COLOR_RESET "\n");
     return false;
   }
 
   if(planner_verbose_)
     ENV_->info();
+
+  if (!ENV_->is_free(start.pos)) {
+    printf(ANSI_COLOR_RED "[MPBaseUtil] start is not free!"
+           ANSI_COLOR_RESET "\n");
+    return false;
+  }
+
+
   std::unique_ptr<MPL::GraphSearch<Dim>> planner_ptr(
       new MPL::GraphSearch<Dim>(planner_verbose_));
 

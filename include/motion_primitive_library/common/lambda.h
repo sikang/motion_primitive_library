@@ -135,6 +135,8 @@ class Lambda {
 
 
   decimal_t getT(decimal_t tau) const {
+    if(segs.empty())
+      return tau;
     decimal_t T = 0;
     for (const auto &seg : segs) {
       if (tau >= seg.ti && tau <= seg.tf) {

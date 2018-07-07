@@ -43,8 +43,6 @@ public:
   /// Check if a point is in free space
   bool is_free(const Vecf<Dim> &pt) const {
     const auto pn = map_util_->floatToInt(pt);
-    if(!this->valid_region_.empty() && !this->valid_region_[map_util_->getIndex(pn)])
-      return false;
     return map_util_->isFree(pn);
   }
 
@@ -115,6 +113,8 @@ public:
         else if(potential_map_[idx] >= 100)
           return std::numeric_limits<decimal_t>::infinity();
       }
+      else if (map_util_->isOccupied(pn))
+          return std::numeric_limits<decimal_t>::infinity();
     }
 
     return c;
@@ -160,10 +160,6 @@ public:
       if (pr.validate_vel(this->v_max_) &&
           pr.validate_acc(this->a_max_) &&
           pr.validate_jrk(this->j_max_)) {
-        tn.use_pos = curr.use_pos;
-        tn.use_vel = curr.use_vel;
-        tn.use_acc = curr.use_acc;
-        tn.use_jrk = curr.use_jrk;
 
         succ.push_back(tn);
         succ_idx.push_back(this->state_to_idx(tn));
