@@ -1,12 +1,10 @@
 #include "read_map.hpp"
 #include "timer.hpp"
-#include <motion_primitive_library/planner/mp_map_util.h>
+#include <mpl_planner/planner/map_planner.h>
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-
-using namespace MPL;
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -23,8 +21,8 @@ int main(int argc, char **argv) {
   }
 
   // Pass the data into a VoxelMapUtil class for collision checking
-  std::shared_ptr<OccMapUtil> map_util;
-  map_util.reset(new OccMapUtil);
+  std::shared_ptr<MPL::OccMapUtil> map_util;
+  map_util.reset(new MPL::OccMapUtil);
   map_util->setMap(reader.origin(), reader.dim(), reader.data(),
                    reader.resolution());
   map_util->freeUnknown();
@@ -59,8 +57,8 @@ int main(int argc, char **argv) {
       U.push_back(Vec2f(dx, dy));
 
   // Initialize planner
-  std::unique_ptr<MPMap2DUtil> planner(
-      new MPMap2DUtil(true));    // Declare a mp planner using voxel map
+  std::unique_ptr<MPL::OccMapPlanner> planner(
+      new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setEpsilon(1.0);      // Set greedy param (default equal to 1)
   planner->setVmax(1.0);         // Set max velocity
@@ -101,7 +99,7 @@ int main(int argc, char **argv) {
 
   // Reset planner
   int alpha = 0;
-  planner.reset(new MPMap2DUtil(true)); // Declare a mp planner using voxel map
+  planner.reset(new MPL::OccMapPlanner(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util);        // Set collision checking function
   planner->setEpsilon(1.0);             // Set greedy param (default equal to 1)
   planner->setVmax(1.0);                // Set max velocity
@@ -207,7 +205,7 @@ int main(int argc, char **argv) {
         "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
 
     // Draw states long trajectory
-    for (const auto &pt : planner->getWs()) {
+    for (const auto &pt : traj.getWaypoints()) {
       point_2d a;
       boost::geometry::assign_values(a, pt.pos(0), pt.pos(1));
       mapper.add(a);
