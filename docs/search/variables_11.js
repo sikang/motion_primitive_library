@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['u_5f',['U_',['../classMPL_1_1env__base.html#a6b59fe3aaddac0262fc5cda74da2b35a',1,'MPL::env_base']]],
-  ['u_5fmax_5f',['u_max_',['../classMPL_1_1env__base.html#a9257936536b50e90d67680693ac9451a',1,'MPL::env_base']]],
-  ['use_5facc',['use_acc',['../structWaypoint.html#a7f7b99a891660a96d67867ece28378e3',1,'Waypoint']]],
-  ['use_5fjrk',['use_jrk',['../structWaypoint.html#a7127a77813618058aaf31e706485fa1c',1,'Waypoint']]],
-  ['use_5flpastar_5f',['use_lpastar_',['../classMPBaseUtil.html#a6ae608b85bf6a96b16311eb49cf38ba2',1,'MPBaseUtil']]],
-  ['use_5fpos',['use_pos',['../structWaypoint.html#aad0ad0411c963c0f4c9938a821b84c54',1,'Waypoint']]],
-  ['use_5fvel',['use_vel',['../structWaypoint.html#af315790148c93d2a438949d649d08b83',1,'Waypoint']]]
+  ['t',['t',['../structMPL_1_1State.html#aebc07caec7816f0e720268292d4eb531',1,'MPL::State']]],
+  ['t_5f',['t_',['../classPrimitive.html#a311d2629375c5805fa64ac5d930bb7b9',1,'Primitive']]],
+  ['taus',['taus',['../classTrajectory.html#a283d2293df0bdb4b525e403b6cd8eb10',1,'Trajectory']]],
+  ['tol_5facc',['tol_acc',['../classMPL_1_1env__base.html#aa0ad200692915d19f763ea78982563ff',1,'MPL::env_base']]],
+  ['tol_5fdis',['tol_dis',['../classMPL_1_1env__base.html#a2b1d6761655696e3034084ce7fa801c1',1,'MPL::env_base']]],
+  ['tol_5fvel',['tol_vel',['../classMPL_1_1env__base.html#a20f20d5b0c79b25de2241ceaed1c0da7',1,'MPL::env_base']]],
+  ['total_5ft_5f',['total_t_',['../classTrajectory.html#a08e10efee7e33c2618bb7727fa2d034b',1,'Trajectory']]],
+  ['traj_5f',['traj_',['../classMPL_1_1PlannerBase.html#a0d8c85ac528ced01c79d9c3ce20528bf',1,'MPL::PlannerBase']]],
+  ['ts',['Ts',['../classTrajectory.html#a29224a22e9c3b698a2d3645e234eb22f',1,'Trajectory']]]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['a',['a',['../classLambdaSeg.html#a412ec0de3a774b2f8a647aba718c9f6d',1,'LambdaSeg::a()'],['../classPrimitive1D.html#a5fe7de6c7a19bcd68e78b28c272355d3',1,'Primitive1D::a()']]],
   ['a_5fmax_5f',['a_max_',['../classMPL_1_1env__base.html#a7be6859be90f54ef175482d0aa6020c9',1,'MPL::env_base']]],
   ['acc',['acc',['../structWaypoint.html#a648217ed387d4e226bec8ecb05bfefe8',1,'Waypoint']]],
   ['addcoeff',['addCoeff',['../classPolyTraj.html#a32ee057ca68dd2559c1a773ee0e6a291',1,'PolyTraj']]],

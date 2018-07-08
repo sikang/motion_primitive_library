@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['waypoint',['Waypoint',['../structWaypoint.html',1,'']]]
+  ['virtualpoint',['VirtualPoint',['../structVirtualPoint.html',1,'']]]
 ];

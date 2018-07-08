@@ -10,8 +10,7 @@ It does not assume a hovering initial condition and, hence, is suitable for fast
 For technical details, refer to the original paper ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/) that has been published in IROS 2017.
 
 ## New Features
-  - Add incremental trajectory planning
-  - Fix many small bugs in previous version
+  - Reformat the repo structure
 
 ## Installation
 #### Prerequisite:
@@ -100,11 +99,11 @@ Vel | Acc | Jrk | Snp
 `use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = true`
 
 #### 2) Set collision checking:
-For `class MPMapUtil`, we use `class MapUtil` to handle collision checking in a voxel map.
+For planner `MapPlanner`, we use `class MapUtil` to handle collision checking in a voxel map.
 An example for 2D collision checking based on `OccMapUtil` is given as:
 ```
-std::shared_ptr<OccMapUtil> map_util;
-map_util.reset(new OccMapUtil); // Initialize map_util
+std::shared_ptr<MPL::OccMapUtil> map_util;
+map_util.reset(new MPL::OccMapUtil); // Initialize map_util
 map_util->setMap(origin, dim, data, resolution);
 ```
 
@@ -122,7 +121,7 @@ for(decimal_t dx = -u_max; dx <= u_max; dx += du )
 ### Run the planner:
 After set up above 3 components, a planner can be initialized as:
 ```
-std::unique_ptr<MPMap2DUtil> planner(new MPMap2DUtil(true)); // Declare a 2D planner with verbose on
+std::unique_ptr<MPL::OccMapPlanner> planner(new MPL::OccMapPlanner(true)); // Declare a 2D planner with verbose on
 planner->setMapUtil(map_util); // Set collision checking util
 planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
 planner->setVmax(1.0); // Set max velocity

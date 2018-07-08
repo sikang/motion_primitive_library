@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stateptr',['StatePtr',['../state__space_8h.html#af67a4604c1ad59cd9ce6ef14b671404f',1,'MPL']]]
+  ['stateptr',['StatePtr',['../namespaceMPL.html#a80aeb038e9b638b92bb0ab9a57e692a9',1,'MPL']]]
 ];
