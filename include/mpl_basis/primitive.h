@@ -84,11 +84,11 @@ class Primitive1D {
     /**
      * @brief Return total efforts of 1D primitive for the given duration: \f$J(t, i) = \int_0^t |p^{i}(t)|^2dt\f$
      * @param t assume the duration is from 0 to t
-     * @param i effort is defined as \f$i\f$-th derivative of polynomial
+     * @param control effort is defined as \f$i\f$-th derivative of polynomial
      */
-    decimal_t J(decimal_t t, int i) const {
+    decimal_t J(decimal_t t, Control::Control control) const {
       // i = 1, return integration of square of vel
-      if (i == 1)
+      if (control == Control::VEL)
         return c(0) * c(0) / 5184 * power(t, 9) + c(0) * c(1) / 576 * power(t, 8) +
           (c(1) * c(1) / 252 + c(0) * c(2) / 168) * power(t, 7) +
           (c(0) * c(3) / 72 + c(1) * c(2) / 36) * power(t, 6) +
@@ -97,19 +97,19 @@ class Primitive1D {
           (c(3) * c(3) / 3 + c(2) * c(4) / 3) * power(t, 3) +
           c(3) * c(4) * t * t + c(4) * c(4) * t;
       // i = 2, return integration of square of acc
-      else if (i == 2)
+      else if (control == Control::ACC)
         return c(0) * c(0) / 252 * power(t, 7) + c(0) * c(1) / 36 * power(t, 6) +
           (c(1) * c(1) / 20 + c(0) * c(2) / 15) * power(t, 5) +
           (c(0) * c(3) / 12 + c(1) * c(2) / 4) * power(t, 4) +
           (c(2) * c(2) / 3 + c(1) * c(3) / 3) * power(t, 3) +
           c(2) * c(3) * t * t + c(3) * c(3) * t;
       // i = 3, return integration of square of jerk
-      else if (i == 3)
+      else if (control == Control::JRK)
         return c(0) * c(0) / 20 * power(t, 5) + c(0) * c(1) / 4 * power(t, 4) +
           (c(1) * c(1) + c(0) * c(2)) / 3 * power(t, 3) +
           c(2) * c(2) * t * t +c(2) * c(2) * t;
       // i = 4, return integration of square of snap
-      else if (i == 4)
+      else if (control == Control::SNP)
         return c(0) * c(0) / 3 * power(t, 3) + c(0) * c(1) * t * t +
           c(1) * c(1) * t;
       else
@@ -294,7 +294,7 @@ class Primitive {
   decimal_t t() const { return t_; }
 
   /// Get the control indicator
-  int control() const { return control_; }
+  Control::Control control() const { return control_; }
 
   /**
    * @brief Retrieve the 1D primitive
@@ -409,15 +409,15 @@ class Primitive {
 
   /**
    * @brief Return total efforts of primitive for the given duration
-   * @param i effort is defined as \f$i\f$-th derivative of polynomial
+   * @param control effort is defined as \f$i\f$-th derivative of polynomial
    *
    * Return J is the summation of efforts in all three dimensions and
    * \f$J(i) = \int_0^t |p^{i}(t)|^2dt\f$
    */
-  decimal_t J(int i) const {
+  decimal_t J(Control::Control control) const {
     decimal_t j = 0;
     for (const auto &pr : prs_)
-      j += pr.J(t_, i);
+      j += pr.J(t_, control);
     return j;
   }
 
@@ -446,7 +446,7 @@ class Primitive {
   ///Duration
   decimal_t t_;
   ///Control
-  int control_;
+  Control::Control control_;
   ///By default, primitive class contains `Dim` 1D primitive
   std::array<Primitive1D, Dim> prs_;
 };

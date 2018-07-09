@@ -1,12 +1,14 @@
 #include <iostream>
 #include <bitset>
 
+namespace Control {
 enum Control {
   SNP = 0b1111,
   VEL = 0b1000,
   ACC = 0b1100,
   JRK = 0b1110,
 };
+}
 
 typedef union {
   struct {
@@ -16,16 +18,25 @@ typedef union {
     bool use_pos: 1;
   };
 
-  int use_xxx{0};
+  Control::Control use_xxx;
 
 } USE;
 
 void print(USE u) {
   std::cout << "use_pos | use_vel | use_acc | use_jrk: " << std::endl;
   std::cout << u.use_pos << " | " << u.use_vel << " | " << u.use_acc << " | " << u.use_jrk << std::endl;
-  std::cout << "use_xxx: " << u.use_xxx << std::endl;
   std::bitset<4> x(u.use_xxx);
-  std::cout << x << std::endl;
+  std::cout << "use_xxx: " << x << std::endl;
+  if(x == Control::VEL)
+    std::cout << "use vel!" << std::endl;
+  else if(x == Control::ACC)
+    std::cout << "use acc!" << std::endl;
+  else if(x == Control::JRK)
+    std::cout << "use jrk!" << std::endl;
+  else if(x == Control::SNP)
+    std::cout << "use snp!" << std::endl;
+  else
+    std::cout << "use null!" << std::endl;
 }
 
 int main() {

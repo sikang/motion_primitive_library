@@ -140,7 +140,7 @@ StateSpace<Dim>::decreaseCost(std::vector<std::pair<Key, int>> states,
                           succNode_ptr->pred_action_id[i], pr);
       if (ENV->is_free(pr)) {
         prs.push_back(pr);
-        succNode_ptr->pred_action_cost[i] = pr.J(ENV->wi_) + ENV->w_ * dt_;
+        succNode_ptr->pred_action_cost[i] = pr.J(pr.control()) + ENV->w_ * dt_;
         updateNode(succNode_ptr);
         int succ_act_id = succNode_ptr->pred_action_id[i];
         for (unsigned int j = 0; j < hm_[parent_key]->succ_action_id.size();

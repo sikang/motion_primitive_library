@@ -165,12 +165,12 @@ public:
         succ_idx.push_back(this->state_to_idx(tn));
         /*
         decimal_t cost = is_free(pr)
-                             ? pr.J(this->wi_) + this->w_ * this->dt_
+                             ? pr.J(curr.control) + this->w_ * this->dt_
                              : std::numeric_limits<decimal_t>::infinity();
                              */
         decimal_t cost = traverse_primitive(pr);
         if(!std::isinf(cost))
-          cost += pr.J(this->wi_) + this->w_ * this->dt_;
+          cost += pr.J(pr.control()) + this->w_ * this->dt_;
 
         succ_cost.push_back(cost);
         action_idx.push_back(i);

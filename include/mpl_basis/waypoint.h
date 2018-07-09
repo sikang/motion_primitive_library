@@ -6,15 +6,19 @@
 #ifndef MPL_WAYPOINT_H
 #define MPL_WAYPOINT_H
 #include <iostream>
+#include <bitset>
 #include <mpl_basis/data_type.h>
 
 /// Lookup table for control input
-enum Control {
-  VEL = 0b1000,
-  ACC = 0b1100,
-  JRK = 0b1110,
-  SNP = 0b1111,
-};
+namespace Control {
+  enum Control {
+    VEL = 0b1000,
+    ACC = 0b1100,
+    JRK = 0b1110,
+    SNP = 0b1111
+  };
+}
+
 
 /**
  * @brief Waypoint base class
@@ -29,7 +33,7 @@ struct Waypoint {
    * @brief Simple constructor
    * @param c control input
    */
-  Waypoint(int c) : control(c) {}
+  Waypoint(Control::Control c) : control(c) {}
   Vecf<Dim> pos; ///<position in \f$R^{Dim}\f$
   Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
@@ -42,7 +46,7 @@ struct Waypoint {
       bool use_vel : 1;///<If true, vel will be used in primitive generation
       bool use_pos : 1;///<If true, pos will be used in primitive generation
     };
-    int control{0};
+    Control::Control control;
   };
 
   ///Print all attributes
@@ -53,10 +57,21 @@ struct Waypoint {
     std::cout << "vel: " << vel.transpose() << std::endl;
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
-    std::cout << "use_pos: " << use_pos << std::endl;
-    std::cout << "use_vel: " << use_vel << std::endl;
-    std::cout << "use_acc: " << use_acc << std::endl;
-    std::cout << "use_jrk: " << use_jrk << std::endl;
+    std::cout << "use_pos | use_vel | use_acc | use_jrk: " << std::endl;
+    std::cout << use_pos << " | " << use_vel << " | " <<
+      use_acc << " | " << use_jrk << std::endl;
+    std::bitset<4> x(control);
+    std::cout << "control: " << x << std::endl;
+    if(x == Control::VEL)
+      std::cout << "use vel!" << std::endl;
+    else if(x == Control::ACC)
+      std::cout << "use acc!" << std::endl;
+    else if(x == Control::JRK)
+      std::cout << "use jrk!" << std::endl;
+    else if(x == Control::SNP)
+      std::cout << "use snp!" << std::endl;
+    else
+      std::cout << "use null!" << std::endl;
   }
 
   /**

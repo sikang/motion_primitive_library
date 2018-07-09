@@ -291,32 +291,10 @@ public:
     if (planner_verbose_) {
       start.print("Start:");
       goal.print("Goal:");
-    }
 
-    if (start.control == Control::SNP) {
-      ENV_->set_wi(4);
-      if (planner_verbose_)
-        printf("[PlannerBase] set control in snap\n");
-    } else if (start.control == Control::JRK) {
-      ENV_->set_wi(3);
-      if (planner_verbose_)
-        printf("[PlannerBase] set control in jrk\n");
-    } else if (start.control == Control::ACC) {
-      ENV_->set_wi(2);
-      if (planner_verbose_)
-        printf("[PlannerBase] set control in acc\n");
-    } else if (start.control == Control::VEL) {
-      ENV_->set_wi(1);
-      if (planner_verbose_)
-        printf("[PlannerBase] set control in vel\n");
-    } else {
-      if (planner_verbose_)
-        printf(ANSI_COLOR_RED "[PlannerBase] fail to set control!" ANSI_COLOR_RESET "\n");
-      return false;
-    }
-
-    if(planner_verbose_)
       ENV_->info();
+    }
+
 
     if (!ENV_->is_free(start.pos)) {
       printf(ANSI_COLOR_RED "[PlannerBase] start is not free!"

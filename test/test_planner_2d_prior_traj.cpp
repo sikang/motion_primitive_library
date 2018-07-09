@@ -80,8 +80,9 @@ int main(int argc, char **argv) {
 
   Trajectory2D prior_traj = planner->getTraj();
   printf("Total time T: %f\n", prior_traj.getTotalTime());
-  printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
-         prior_traj.J(1), prior_traj.J(2), prior_traj.J(3), prior_traj.J(4));
+  printf("Total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
+         prior_traj.J(Control::VEL), prior_traj.J(Control::ACC),
+         prior_traj.J(Control::JRK), prior_traj.J(Control::SNP));
 
   // Using acc control
   start.use_pos = true;
@@ -180,8 +181,8 @@ int main(int argc, char **argv) {
     Trajectory2D traj = planner->getTraj();
     decimal_t total_t = traj.getTotalTime();
     printf("Refined total time T: %f\n", total_t);
-    printf("Refined total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n",
-           traj.J(1), traj.J(2), traj.J(3), traj.J(4));
+    printf("Refined total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
+           traj.J(Control::VEL), traj.J(Control::ACC), traj.J(Control::JRK), traj.J(Control::SNP));
 
     // printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t +
     // traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));

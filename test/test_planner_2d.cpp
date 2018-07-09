@@ -138,8 +138,8 @@ int main(int argc, char **argv) {
     Trajectory2D traj = planner->getTraj();
     double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
-    printf("Total J:  J(1) = %f, J(2) = %f, J(3) = %f, J(4) = %f\n", traj.J(1),
-           traj.J(2), traj.J(3), traj.J(4));
+    printf("Total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
+           traj.J(Control::VEL), traj.J(Control::ACC), traj.J(Control::JRK), traj.J(Control::SNP));
     int num = 200; // number of points on trajectory to draw
     const double dt = total_t / num;
     boost::geometry::model::linestring<point_2d> line;

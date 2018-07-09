@@ -209,12 +209,12 @@ class Trajectory {
      * @brief Return total efforts of primitive for the given duration: \f$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt\f$
      *
      * Return J is the summation of efforts in all three dimensions
-     * @param i effort is defined as \f$i\f$-th derivative of polynomial
+     * @param control effort is defined as \f$i\f$-th derivative of polynomial
      */
-    decimal_t J(int i) const {
+    decimal_t J(Control::Control control) const {
       decimal_t J = 0;
       for (const auto &seg : segs)
-        J += seg.J(i);
+        J += seg.J(control);
       return J;
     }
 

@@ -42,18 +42,14 @@ class env_base
      * @param Waypoint current state coord
      * @param t current state time
      */
-    decimal_t get_heur(const Waypoint<Dim>& state, decimal_t t) const
-    {
-      if(goal_node_ == state)
+    decimal_t get_heur(const Waypoint<Dim> &state, decimal_t t) const {
+      if (goal_node_ == state)
         return 0;
       Waypoint<Dim> goal_node = goal_node_;
       t += alpha_ * dt_;
       if(!prior_traj_.segs.empty() && t < prior_traj_.getTotalTime()) {
         prior_traj_.evaluate(t, goal_node);
-        goal_node.use_pos = goal_node_.use_pos;
-        goal_node.use_vel = goal_node_.use_vel;
-        goal_node.use_acc = goal_node_.use_acc;
-        goal_node.use_jrk = goal_node_.use_jrk;
+        goal_node.control = goal_node_.control;
         return cal_heur(state, goal_node) + w_ * (prior_traj_.getTotalTime() - t);
       }
 
@@ -61,14 +57,11 @@ class env_base
     }
 
     /// calculate the cost from state to goal
-    decimal_t cal_heur(const Waypoint<Dim>& state, const Waypoint<Dim>& goal) const
-    {
+    decimal_t cal_heur(const Waypoint<Dim>& state,
+                       const Waypoint<Dim>& goal) const {
       //return 0;
       //return w_*(state.pos - goal.pos).norm();
-      //If in acceleration control space
-      if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
-         goal.use_pos && goal.use_vel && goal.use_acc && !goal.use_jrk) {
-
+      if(state.control == Control::JRK && goal.control == Control::JRK) {
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
         const Vecf<Dim> v1 = goal.vel;
@@ -97,8 +90,7 @@ class env_base
         return min_cost;
       }
 
-      else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
-         goal.use_pos && goal.use_vel && !goal.use_acc && !goal.use_jrk) {
+      else if(state.control == Control::JRK && goal.control == Control::ACC) {
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
         const Vecf<Dim> v1 = goal.vel;
@@ -128,8 +120,7 @@ class env_base
         return min_cost;
       }
 
-      else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk &&
-         goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk) {
+      else if(state.control == Control::JRK && goal.control == Control::VEL) {
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
         const Vecf<Dim> a0 = state.acc;
@@ -158,9 +149,7 @@ class env_base
         return min_cost;
       }
 
-
-      else if(state.use_pos && state.use_vel && !state.use_acc && !state.use_jrk &&
-              goal.use_pos && goal.use_vel && !goal.use_acc && !goal.use_jrk) {
+      else if(state.control == Control::ACC && goal.control == Control::ACC) {
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
         const Vecf<Dim> v1 = goal.vel;
@@ -187,8 +176,7 @@ class env_base
         return cost;
       }
 
-      else if(state.use_pos && state.use_vel && !state.use_acc && !state.use_jrk &&
-          goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk) {
+      else if(state.control == Control::ACC && goal.control == Control::VEL) {
         const Vecf<Dim> dp = goal.pos - state.pos;
         const Vecf<Dim> v0 = state.vel;
 
@@ -214,8 +202,7 @@ class env_base
         return cost;
       }
 
-      else if(state.use_pos && !state.use_vel && !state.use_acc && !state.use_jrk &&
-              goal.use_pos && !goal.use_vel && !goal.use_acc && !goal.use_jrk)
+      else if(state.control == Control::VEL && goal.control == Control::VEL)
         return (w_ + 1) * (state.pos - goal.pos).norm();
       else
         return w_*(state.pos - goal.pos).norm() / v_max_;
@@ -238,18 +225,18 @@ class env_base
     }
 
     ///Genegrate Key from state
-    Key state_to_idx(const Waypoint<Dim>& state) const {
+    virtual Key state_to_idx(const Waypoint<Dim>& state) const {
       const Veci<Dim> pi = round(state.pos, ds_);
-      if(state.use_pos && state.use_vel && !state.use_acc ) {
+      if(state.control == Control::ACC) {
         const Veci<Dim> vi = round(state.vel, dv_);
         return toString(pi) + toString(vi);
       }
-      else if(state.use_pos && state.use_vel && state.use_acc && !state.use_jrk) {
+      else if(state.control == Control::JRK) {
         const Veci<Dim> vi = round(state.vel, dv_);
         const Veci<Dim> ai = round(state.acc, da_);
         return toString(pi) + toString(vi) + toString(ai);
       }
-      else if(state.use_pos && state.use_vel && state.use_acc && state.use_jrk) {
+      else if(state.control == Control::SNP) {
         const Veci<Dim> vi = round(state.vel, dv_);
         const Veci<Dim> ai = round(state.acc, da_);
         const Veci<Dim> ji = round(state.jrk, dj_);
@@ -260,8 +247,8 @@ class env_base
     }
 
     ///Recover trajectory
-    void forward_action( const Waypoint<Dim>& curr, int action_id, Primitive<Dim>& pr) const
-    {
+    void forward_action( const Waypoint<Dim>& curr,
+                        int action_id, Primitive<Dim>& pr) const {
       pr = Primitive<Dim>(curr, U_[action_id], dt_);
     }
 
@@ -357,13 +344,6 @@ class env_base
     virtual void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
     }
 
-
-
-    ///Set derivative order for cost in effort, dont need to set manually
-    void set_wi(int wi) {
-      wi_ = wi;
-    }
-
     ///Set alpha
     void set_alpha(int alpha) {
       alpha_ = alpha;
@@ -383,22 +363,21 @@ class env_base
     void info() {
       printf(ANSI_COLOR_YELLOW "\n");
       printf("++++++++++ PLANNER +++++++++++\n");
-      printf("+    alpha: %d                 +\n", alpha_);
-      printf("+       dt: %.2f               +\n", dt_);
-      printf("+       ds: %.4f               +\n", ds_);
-      printf("+       dv: %.4f               +\n", dv_);
-      printf("+       da: %.4f               +\n", da_);
-      printf("+       dj: %.4f               +\n", dj_);
-      printf("+        w: %.2f               +\n", w_);
-      printf("+       wi: %d                 +\n", wi_);
-      printf("+    v_max: %.2f               +\n", v_max_);
-      printf("+    a_max: %.2f               +\n", a_max_);
-      printf("+    j_max: %.2f               +\n", j_max_);
-      printf("+    u_max: %.2f               +\n", u_max_);
-      printf("+    U num: %zu                +\n", U_.size());
-      printf("+  tol_dis: %.2f               +\n", tol_dis);
-      printf("+  tol_vel: %.2f               +\n", tol_vel);
-      printf("+  tol_acc: %.2f               +\n", tol_acc);
+      printf("+              dt: %.2f               +\n", dt_);
+      printf("+              ds: %.4f               +\n", ds_);
+      printf("+              dv: %.4f               +\n", dv_);
+      printf("+              da: %.4f               +\n", da_);
+      printf("+              dj: %.4f               +\n", dj_);
+      printf("+               w: %.2f               +\n", w_);
+      printf("+           v_max: %.2f               +\n", v_max_);
+      printf("+           a_max: %.2f               +\n", a_max_);
+      printf("+           j_max: %.2f               +\n", j_max_);
+      printf("+           u_max: %.2f               +\n", u_max_);
+      printf("+           U num: %zu                +\n", U_.size());
+      printf("+         tol_dis: %.2f               +\n", tol_dis);
+      printf("+         tol_vel: %.2f               +\n", tol_vel);
+      printf("+         tol_acc: %.2f               +\n", tol_acc);
+      printf("+           alpha: %d                 +\n", alpha_);
       printf("++++++++++ PLANNER +++++++++++\n");
       printf(ANSI_COLOR_RESET "\n");
     }
@@ -444,36 +423,33 @@ class env_base
     std::vector<bool> get_valid_region() const { return valid_region_; }
 
     /// weight of time cost
-    decimal_t w_ = 10;
-    /// order of derivatives for effort
-    int wi_;
+    decimal_t w_{10};
     ///heuristic time offset
-    int alpha_ = 0;
-
+    int alpha_{0};
     ///tolerance of position for goal region
-    decimal_t tol_dis = 0.0;
+    decimal_t tol_dis{0.2};
     ///tolerance of velocity for goal region, 0 means no tolerance
-    decimal_t tol_vel = 0.0;
+    decimal_t tol_vel{0.0};
     ///tolerance of acceleration for goal region, 0 means no tolerance
-    decimal_t tol_acc = 0.0;
+    decimal_t tol_acc{0.0};
     ///max control input
-    decimal_t u_max_;
+    decimal_t u_max_{1.0};
     ///max velocity
-    decimal_t v_max_ = -1;
+    decimal_t v_max_{-1};
     ///max acceleration
-    decimal_t a_max_ = -1;
+    decimal_t a_max_{-1};
     ///max jerk
-    decimal_t j_max_ = -1;
+    decimal_t j_max_{-1};
     ///duration of primitive
-    decimal_t dt_ = 1.0;
+    decimal_t dt_{1.0};
     ///grid size in position
-    decimal_t ds_ = 0.01;
+    decimal_t ds_{0.01};
     ///grid size in velocity
-    decimal_t dv_ = 0.1;
+    decimal_t dv_{0.1};
     ///grid size in acceleration
-    decimal_t da_ = 0.1;
+    decimal_t da_{0.1};
     ///grid size in jerk
-    decimal_t dj_ = 0.1;
+    decimal_t dj_{0.1};
     ///expanded nodes
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input

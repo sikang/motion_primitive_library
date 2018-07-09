@@ -10,9 +10,6 @@
 #include <unordered_map> // std::unordered_map
 
 namespace MPL {
-/// Key for hashmap
-typedef std::string Key;
-
 /// Heap element comparison
 template <class state> struct compare_pair {
   bool

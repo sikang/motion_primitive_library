@@ -74,7 +74,7 @@ public:
 
           succ.push_back(tn);
           succ_idx.push_back(state_to_idx(tn));
-          succ_cost.push_back(pr.J(wi_) + w_ * dt_);
+          succ_cost.push_back(pr.J(pr.control()) + w_ * dt_);
           action_idx.push_back(i);
         }
       }
