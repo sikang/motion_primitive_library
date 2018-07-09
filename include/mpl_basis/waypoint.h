@@ -46,7 +46,7 @@ struct Waypoint {
       bool use_vel : 1;///<If true, vel will be used in primitive generation
       bool use_pos : 1;///<If true, pos will be used in primitive generation
     };
-    Control::Control control;
+    Control::Control control : 4;
   };
 
   ///Print all attributes
@@ -62,13 +62,13 @@ struct Waypoint {
       use_acc << " | " << use_jrk << std::endl;
     std::bitset<4> x(control);
     std::cout << "control: " << x << std::endl;
-    if(x == Control::VEL)
+    if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
-    else if(x == Control::ACC)
+    else if(control == Control::ACC)
       std::cout << "use acc!" << std::endl;
-    else if(x == Control::JRK)
+    else if(control == Control::JRK)
       std::cout << "use jrk!" << std::endl;
-    else if(x == Control::SNP)
+    else if(control == Control::SNP)
       std::cout << "use snp!" << std::endl;
     else
       std::cout << "use null!" << std::endl;
