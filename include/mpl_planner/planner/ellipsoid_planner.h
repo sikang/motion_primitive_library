@@ -14,7 +14,7 @@ namespace MPL {
 /**
  * @brief Motion primitive planner using point cloud
  */
-class EllipsoidPlanner : public PlannerBase<3> {
+class EllipsoidPlanner : public PlannerBase<3, Waypoint3D> {
 public:
   /**
    * @brief Simple constructor

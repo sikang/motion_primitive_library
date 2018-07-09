@@ -2,11 +2,12 @@
 
 using namespace MPL;
 
-template <int Dim> void StateSpace<Dim>::getSubStateSpace(int time_step) {
+template <int Dim, typename Coord>
+void StateSpace<Dim, Coord>::getSubStateSpace(int time_step) {
   if (best_child_.empty())
     return;
 
-  StatePtr<Dim> currNode_ptr = best_child_[time_step];
+  StatePtr<Coord> currNode_ptr = best_child_[time_step];
   currNode_ptr->pred_action_cost.clear();
   currNode_ptr->pred_action_id.clear();
   currNode_ptr->pred_hashkey.clear();
@@ -24,8 +25,8 @@ template <int Dim> void StateSpace<Dim>::getSubStateSpace(int time_step) {
   currNode_ptr->g = 0;
   currNode_ptr->rhs = 0;
 
-  hashMap<Dim> new_hm;
-  priorityQueue<State<Dim>> epq;
+  hashMap<Coord> new_hm;
+  priorityQueue<State<Coord>> epq;
   currNode_ptr->heapkey =
       epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
   new_hm[currNode_ptr->hashkey] = currNode_ptr;
@@ -46,7 +47,7 @@ template <int Dim> void StateSpace<Dim>::getSubStateSpace(int time_step) {
     for (unsigned int i = 0; i < currNode_ptr->succ_hashkey.size(); i++) {
       Key succ_key = currNode_ptr->succ_hashkey[i];
 
-      StatePtr<Dim> &succNode_ptr = new_hm[succ_key];
+      StatePtr<Coord> &succNode_ptr = new_hm[succ_key];
       if (!succNode_ptr)
         succNode_ptr = hm_[succ_key];
 
@@ -90,14 +91,14 @@ template <int Dim> void StateSpace<Dim>::getSubStateSpace(int time_step) {
   // checkValidation(hm_);
 }
 
-template <int Dim>
+template <int Dim, typename Coord>
 vec_E<Primitive<Dim>>
-StateSpace<Dim>::increaseCost(std::vector<std::pair<Key, int>> states,
+StateSpace<Dim, Coord>::increaseCost(std::vector<std::pair<Key, int>> states,
                               const std::shared_ptr<env_base<Dim>> &ENV) {
   vec_E<Primitive<Dim>> prs;
   for (const auto &affected_node : states) {
     // update edge
-    StatePtr<Dim> &succNode_ptr = hm_[affected_node.first];
+    StatePtr<Coord> &succNode_ptr = hm_[affected_node.first];
     const int i = affected_node.second; // i-th pred
     if (!std::isinf(succNode_ptr->pred_action_cost[i])) {
       succNode_ptr->pred_action_cost[i] =
@@ -125,13 +126,13 @@ StateSpace<Dim>::increaseCost(std::vector<std::pair<Key, int>> states,
   return prs;
 }
 
-template <int Dim>
+template <int Dim, typename Coord>
 vec_E<Primitive<Dim>>
-StateSpace<Dim>::decreaseCost(std::vector<std::pair<Key, int>> states,
+StateSpace<Dim, Coord>::decreaseCost(std::vector<std::pair<Key, int>> states,
                               const std::shared_ptr<env_base<Dim>> &ENV) {
   vec_E<Primitive<Dim>> prs;
   for (const auto &affected_node : states) {
-    StatePtr<Dim> &succNode_ptr = hm_[affected_node.first];
+    StatePtr<Coord> &succNode_ptr = hm_[affected_node.first];
     const int i = affected_node.second;
     if (std::isinf(succNode_ptr->pred_action_cost[i])) {
       Key parent_key = succNode_ptr->pred_hashkey[i];
@@ -158,8 +159,8 @@ StateSpace<Dim>::decreaseCost(std::vector<std::pair<Key, int>> states,
   return prs;
 }
 
-template <int Dim>
-void StateSpace<Dim>::updateNode(StatePtr<Dim> &currNode_ptr) {
+template <int Dim, typename Coord>
+void StateSpace<Dim, Coord>::updateNode(StatePtr<Coord> &currNode_ptr) {
   // if currNode is not start, update its rhs
   // start rhs is assumed to be 0
   if (currNode_ptr->rhs != 0) {
@@ -192,7 +193,8 @@ void StateSpace<Dim>::updateNode(StatePtr<Dim> &currNode_ptr) {
   }
 }
 
-template <int Dim> bool StateSpace<Dim>::isBlocked() {
+template <int Dim, typename Coord>
+bool StateSpace<Dim, Coord>::isBlocked() {
   for (const auto &ptr : best_child_) {
     if (ptr->g != ptr->rhs)
       return true;
@@ -200,13 +202,13 @@ template <int Dim> bool StateSpace<Dim>::isBlocked() {
   return false;
 }
 
-template <int Dim>
-decimal_t StateSpace<Dim>::calculateKey(const StatePtr<Dim> &node) {
+template <int Dim, typename Coord>
+decimal_t StateSpace<Dim, Coord>::calculateKey(const StatePtr<Coord> &node) {
   return std::min(node->g, node->rhs) + eps_ * node->h;
 }
 
-template <int Dim>
-void StateSpace<Dim>::checkValidation(const hashMap<Dim> &hm) {
+template <int Dim, typename Coord>
+void StateSpace<Dim, Coord>::checkValidation(const hashMap<Coord> &hm) {
   //****** Check if there is null element in succ graph
   for (const auto &it : hm) {
     if (!it.second)
@@ -257,6 +259,6 @@ void StateSpace<Dim>::checkValidation(const hashMap<Dim> &hm) {
 }
 
 namespace MPL {
-template struct StateSpace<2>;
-template struct StateSpace<3>;
+template struct StateSpace<2, Waypoint2D>;
+template struct StateSpace<3, Waypoint3D>;
 }

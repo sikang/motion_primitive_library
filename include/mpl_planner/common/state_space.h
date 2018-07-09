@@ -11,7 +11,7 @@
 
 namespace MPL {
 /// Heap element comparison
-template <class state> struct compare_pair {
+template <typename state> struct compare_pair {
   bool
   operator()(const std::pair<decimal_t, std::shared_ptr<state>> &p1,
              const std::pair<decimal_t, std::shared_ptr<state>> &p2) const {
@@ -25,22 +25,22 @@ template <class state> struct compare_pair {
 };
 
 /// Define priority queue
-template <class state>
+template <typename state>
 using priorityQueue =
     boost::heap::d_ary_heap<std::pair<decimal_t, std::shared_ptr<state>>,
                             boost::heap::mutable_<true>, boost::heap::arity<2>,
                             boost::heap::compare<compare_pair<state>>>;
 
 /// Lattice of the graph in graph search
-template <int Dim> struct State {
+template <typename Coord> struct State {
   /// hash key in the hashmap
   Key hashkey; // discrete coordinates of this node
   /// state
-  Waypoint<Dim> coord;
+  Coord coord;
   /// minimum arrival time
   decimal_t t;
   /// coordinates of successors
-  vec_E<Waypoint<Dim>> succ_coord;
+  vec_E<Coord> succ_coord;
   /// hashkey of successors
   std::vector<Key> succ_hashkey;
   /// action id of successors
@@ -55,7 +55,7 @@ template <int Dim> struct State {
   std::vector<decimal_t> pred_action_cost;
 
   /// pointer to heap location
-  typename priorityQueue<State<Dim>>::handle_type heapkey;
+  typename priorityQueue<State<Coord>>::handle_type heapkey;
 
   // plan data
   /// start-to-state g value
@@ -70,28 +70,28 @@ template <int Dim> struct State {
   bool iterationclosed = false;
 
   /// Simple constructor
-  State(Key hashkey, const Waypoint<Dim> &coord)
+  State(Key hashkey, const Coord& coord)
       : hashkey(hashkey), coord(coord) {}
 };
 
 /// Declare StatePtr
-template <int Dim> using StatePtr = std::shared_ptr<State<Dim>>;
+template <typename Coord> using StatePtr = std::shared_ptr<State<Coord>>;
 
 /// Define hashmap type
-template <int Dim> using hashMap = std::unordered_map<Key, StatePtr<Dim>>;
+template <typename Coord> using hashMap = std::unordered_map<Key, StatePtr<Coord>>;
 
 /// State space
-template <int Dim> struct StateSpace {
+template <int Dim, typename Coord> struct StateSpace {
   /// Priority queue, open set
-  priorityQueue<State<Dim>> pq_;
+  priorityQueue<State<Coord>> pq_;
   /// Hashmap, stores all the nodes
-  hashMap<Dim> hm_;
+  hashMap<Coord> hm_;
   /// Heuristic weight, default as 1
   decimal_t eps_;
   /// Execution time for each primitive
   decimal_t dt_;
   /// The best trajectory from previous plan
-  vec_E<StatePtr<Dim>> best_child_;
+  vec_E<StatePtr<Coord>> best_child_;
   /// Maximum time of the valid trajectories
   decimal_t max_t_ = std::numeric_limits<decimal_t>::infinity();
   /// Number of expansion iteration
@@ -112,7 +112,7 @@ template <int Dim> struct StateSpace {
    * @param goal if changed, use new goal to calculate heuristic
    */
   void updateGoal(std::shared_ptr<env_base<Dim>> &ENV,
-                  const Waypoint<Dim> &goal);
+                  const Coord &goal);
   /// Increase the cost of actions
   vec_E<Primitive<Dim>> increaseCost(std::vector<std::pair<Key, int>> states,
                                      const std::shared_ptr<env_base<Dim>> &ENV);
@@ -120,15 +120,15 @@ template <int Dim> struct StateSpace {
   vec_E<Primitive<Dim>> decreaseCost(std::vector<std::pair<Key, int>> states,
                                      const std::shared_ptr<env_base<Dim>> &ENV);
   /// Update the node in the graph
-  void updateNode(StatePtr<Dim> &currNode_ptr);
+  void updateNode(StatePtr<Coord> &currNode_ptr);
 
   /// Calculate the fval as min(rhs, g) + h
-  decimal_t calculateKey(const StatePtr<Dim> &node);
+  decimal_t calculateKey(const StatePtr<Coord> &node);
 
   /// Check if the trajectory is blocked by new obstacle
   bool isBlocked();
   /// Internal function to check if the graph is valid
-  void checkValidation(const hashMap<Dim> &hm);
+  void checkValidation(const hashMap<Coord> &hm);
 };
 }
 

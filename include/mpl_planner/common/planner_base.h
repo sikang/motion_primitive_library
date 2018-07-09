@@ -17,7 +17,7 @@
 
 namespace MPL {
 
-template <int Dim> class PlannerBase {
+template <int Dim, typename Coord> class PlannerBase {
 public:
   /// Simple constructor
   PlannerBase(bool verbose = false) : planner_verbose_(verbose) {}
@@ -39,7 +39,7 @@ public:
     std::unordered_map<Key, bool> added;
 
     auto currNode_ptr = ss_ptr_->best_child_.back();
-    std::queue<StatePtr<Dim>> q;
+    std::queue<StatePtr<Coord>> q;
     q.push(currNode_ptr);
     while (!q.empty()) {
       int size = q.size();
@@ -287,7 +287,7 @@ public:
    * The goal waypoint is the center of the goal region, the planner cannot find
    * the trajectory hits the exact goal state due to discretization
    */
-  bool plan(const Waypoint<Dim> &start, const Waypoint<Dim> &goal) {
+  bool plan(const Coord &start, const Coord &goal) {
     if (planner_verbose_) {
       start.print("Start:");
       goal.print("Goal:");
@@ -303,19 +303,19 @@ public:
     }
 
 
-    std::unique_ptr<MPL::GraphSearch<Dim>> planner_ptr(
-      new MPL::GraphSearch<Dim>(planner_verbose_));
+    std::unique_ptr<MPL::GraphSearch<Dim, Coord>> planner_ptr(
+      new MPL::GraphSearch<Dim, Coord>(planner_verbose_));
 
     // If use A*, reset the state space
     if (!use_lpastar_)
-      ss_ptr_.reset(new MPL::StateSpace<Dim>(epsilon_));
+      ss_ptr_.reset(new MPL::StateSpace<Dim, Coord>(epsilon_));
     else {
       // If use LPA*, reset the state space only at the initial planning
       if (!initialized()) {
         if (planner_verbose_)
           printf(ANSI_COLOR_CYAN
                  "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
-        ss_ptr_.reset(new MPL::StateSpace<Dim>(epsilon_));
+        ss_ptr_.reset(new MPL::StateSpace<Dim, Coord>(epsilon_));
       }
     }
 
@@ -344,7 +344,7 @@ protected:
   /// Env class
   std::shared_ptr<MPL::env_base<Dim>> ENV_;
   /// Planner workspace
-  std::shared_ptr<MPL::StateSpace<Dim>> ss_ptr_;
+  std::shared_ptr<MPL::StateSpace<Dim, Coord>> ss_ptr_;
   /// Optimal trajectory
   Trajectory<Dim> traj_;
   /// Greedy searching parameter

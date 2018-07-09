@@ -5,9 +5,10 @@
 using namespace MPL;
 
 /**************************** Recover Trajectory ***************************/
-template <int Dim>
-Trajectory<Dim> GraphSearch<Dim>::recoverTraj(
-    StatePtr<Dim> currNode_ptr, std::shared_ptr<StateSpace<Dim>> ss_ptr,
+template <int Dim, typename Coord>
+Trajectory<Dim> GraphSearch<Dim, Coord>::recoverTraj(
+    StatePtr<Coord> currNode_ptr,
+    std::shared_ptr<StateSpace<Dim, Coord>> ss_ptr,
     const std::shared_ptr<env_base<Dim>> &ENV, const Key &start_key) {
   // Recover trajectory
   ss_ptr->best_child_.clear();
@@ -85,24 +86,23 @@ Trajectory<Dim> GraphSearch<Dim>::recoverTraj(
 }
 
 /********************************* Astar **************************************/
-template <int Dim>
-decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
-                                  Key start_key,
-                                  const std::shared_ptr<env_base<Dim>> &ENV,
-                                  std::shared_ptr<StateSpace<Dim>> &ss_ptr,
-                                  Trajectory<Dim> &traj, int max_expand,
-                                  decimal_t max_t) {
+template <int Dim, typename Coord>
+decimal_t
+GraphSearch<Dim, Coord>::Astar(const Coord &start_coord, Key start_key,
+                               const std::shared_ptr<env_base<Dim>> &ENV,
+                               std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr,
+                               Trajectory<Dim> &traj, int max_expand,
+                               decimal_t max_t) {
   // Check if done
   if (ENV->is_goal(start_coord))
     return 0;
 
   // Initialize start node
-  StatePtr<Dim> currNode_ptr = ss_ptr->hm_[start_key];
+  StatePtr<Coord> currNode_ptr = ss_ptr->hm_[start_key];
   if (ss_ptr->pq_.empty()) {
     if (verbose_)
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr =
-        std::make_shared<State<Dim>>(State<Dim>(start_key, start_coord));
+    currNode_ptr = std::make_shared<State<Coord>>(start_key, start_coord);
     currNode_ptr->t = 0;
     currNode_ptr->g = 0;
     currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(start_coord, currNode_ptr->t);
@@ -123,7 +123,7 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
     currNode_ptr->iterationclosed = true; // Add to closed list
 
     // Get successors
-    vec_E<Waypoint<Dim>> succ_coord;
+    vec_E<Coord> succ_coord;
     std::vector<MPL::Key> succ_key;
     std::vector<decimal_t> succ_cost;
     std::vector<int> succ_act_id;
@@ -138,10 +138,10 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
         continue;
 
       // Get child
-      StatePtr<Dim> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
+      StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
       if (!succNode_ptr) {
-        succNode_ptr = std::make_shared<State<Dim>>(
-            State<Dim>(succ_key[s], succ_coord[s]));
+        succNode_ptr = std::make_shared<State<Coord>>(
+            State<Coord>(succ_key[s], succ_coord[s]));
         succNode_ptr->t = currNode_ptr->t + ENV->dt_;
         succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
           ENV->get_heur(succNode_ptr->coord, succNode_ptr->t);
@@ -251,13 +251,12 @@ decimal_t GraphSearch<Dim>::Astar(const Waypoint<Dim> &start_coord,
 
 /********************************* LPAstar
  * **************************************/
-template <int Dim>
-decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
-                                    Key start_key,
-                                    const std::shared_ptr<env_base<Dim>> &ENV,
-                                    std::shared_ptr<StateSpace<Dim>> &ss_ptr,
-                                    Trajectory<Dim> &traj, int max_expand,
-                                    decimal_t max_t) {
+template <int Dim, typename Coord>
+decimal_t GraphSearch<Dim, Coord>::LPAstar(
+    const Coord &start_coord, Key start_key,
+    const std::shared_ptr<env_base<Dim>> &ENV,
+    std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr, Trajectory<Dim> &traj,
+    int max_expand, decimal_t max_t) {
   // Check if done
   if (ENV->is_goal(start_coord)) {
     if (verbose_)
@@ -271,12 +270,11 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
       max_t > 0 ? max_t : std::numeric_limits<decimal_t>::infinity();
 
   // Initialize start node
-  StatePtr<Dim> currNode_ptr = ss_ptr->hm_[start_key];
+  StatePtr<Coord> currNode_ptr = ss_ptr->hm_[start_key];
   if (!currNode_ptr) {
     if (verbose_)
       printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
-    currNode_ptr =
-        std::make_shared<State<Dim>>(State<Dim>(start_key, start_coord));
+    currNode_ptr = std::make_shared<State<Coord>>(start_key, start_coord);
     currNode_ptr->t = 0;
     currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
     currNode_ptr->rhs = 0;
@@ -290,8 +288,7 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
   }
 
   // Initialize goal node
-  StatePtr<Dim> goalNode_ptr =
-      std::make_shared<State<Dim>>(State<Dim>(Key(), Waypoint<Dim>()));
+  StatePtr<Coord> goalNode_ptr = std::make_shared<State<Coord>>(Key(), Coord());
   if (!ss_ptr->best_child_.empty() &&
       (ss_ptr->best_child_.back()->t >= max_t ||
        ENV->is_goal(ss_ptr->best_child_.back()->coord)))
@@ -314,7 +311,7 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
     }
 
     // Get successors
-    vec_E<Waypoint<Dim>> succ_coord = currNode_ptr->succ_coord;
+    vec_E<Coord> succ_coord = currNode_ptr->succ_coord;
     std::vector<MPL::Key> succ_key = currNode_ptr->succ_hashkey;
     std::vector<decimal_t> succ_cost = currNode_ptr->succ_action_cost;
     std::vector<int> succ_act_id = currNode_ptr->succ_action_id;
@@ -333,10 +330,9 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
     // Process successors
     for (unsigned s = 0; s < succ_key.size(); ++s) {
       // Get child
-      StatePtr<Dim> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
+      StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
       if (!(succNode_ptr)) {
-        succNode_ptr = std::make_shared<State<Dim>>(
-            State<Dim>(succ_key[s], succ_coord[s]));
+        succNode_ptr = std::make_shared<State<Coord>>(succ_key[s], succ_coord[s]);
         succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
             ENV->get_heur(succNode_ptr->coord,
                           currNode_ptr->t + ENV->dt_); // compute heuristic
@@ -427,6 +423,6 @@ decimal_t GraphSearch<Dim>::LPAstar(const Waypoint<Dim> &start_coord,
 }
 
 namespace MPL {
-template class GraphSearch<2>;
-template class GraphSearch<3>;
+template class GraphSearch<2, Waypoint2D>;
+template class GraphSearch<3, Waypoint3D>;
 }

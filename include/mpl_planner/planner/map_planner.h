@@ -16,7 +16,7 @@ using linkedHashMap =
 /**
  * @brief Motion primitive planner in voxel map
  */
-template <int Dim> class MapPlanner: public PlannerBase<Dim> {
+template <int Dim> class MapPlanner: public PlannerBase<Dim, Waypoint<Dim>> {
 public:
   /**
    * @brief Simple constructor

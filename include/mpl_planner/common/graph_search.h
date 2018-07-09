@@ -16,7 +16,7 @@ namespace MPL {
  *
  * Implement A* and Lifelong Planning A*
  */
-template <int Dim> class GraphSearch {
+template <int Dim, typename Coord> class GraphSearch {
 public:
   /**
    * @brief Simple empty constructor
@@ -38,9 +38,9 @@ public:
    * @param max_t max time horizon of expanded states, default value is -1 which
    * means there is no limitation
    */
-  decimal_t Astar(const Waypoint<Dim> &start_coord, Key start_key,
+  decimal_t Astar(const Coord &start_coord, Key start_key,
                   const std::shared_ptr<env_base<Dim>> &ENV,
-                  std::shared_ptr<StateSpace<Dim>> &ss_ptr,
+                  std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr,
                   Trajectory<Dim> &traj, int max_expand = -1,
                   decimal_t max_t = 0);
   /**
@@ -56,16 +56,16 @@ public:
    * @param max_t max time horizon of expanded states, default value is -1 which
    * means there is no limitation
    */
-  decimal_t LPAstar(const Waypoint<Dim> &start_coord, Key start_key,
+  decimal_t LPAstar(const Coord &start_coord, Key start_key,
                     const std::shared_ptr<env_base<Dim>> &ENV,
-                    std::shared_ptr<StateSpace<Dim>> &ss_ptr,
+                    std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr,
                     Trajectory<Dim> &traj, int max_expand = -1,
                     decimal_t max_t = 0);
 
 private:
   /// Recover trajectory
-  Trajectory<Dim> recoverTraj(StatePtr<Dim> ptr,
-                              std::shared_ptr<StateSpace<Dim>> ss_ptr,
+  Trajectory<Dim> recoverTraj(StatePtr<Coord> ptr,
+                              std::shared_ptr<StateSpace<Dim, Coord>> ss_ptr,
                               const std::shared_ptr<env_base<Dim>> &ENV,
                               const Key &start_idx);
   /// Verbose flag
