@@ -312,9 +312,11 @@ class Primitive {
    *
    * Note: flag `use_xxx` is not set in this constructor
    */
-  Primitive(const vec_E<Vec6f>& cs, decimal_t t) : t_(t) {
+  Primitive(const vec_E<Vec6f>& cs, decimal_t t, Control::Control control) : t_(t), control_(control) {
     for (int i = 0; i < Dim; i++)
       prs_[i] = Primitive1D(cs[i]);
+    if(cs.size() == Dim+1)
+      pr_yaw_ = Primitive1D(cs[Dim]);
   }
 
   /**
@@ -490,16 +492,6 @@ class Primitive {
     return ps;
   }
 
-  /**
-   * @brief Retrieve coefficients
-   */
-  vec_E<Vec6f> coeffs() const {
-    vec_E<Vec6f> cs(Dim);
-    for (int k = 0; k < Dim; k++)
-      cs[k] = prs_[k].coeff();
-    return cs;
-  }
-
   /************************** Public members ************************/
   ///Duration
   decimal_t t_;
@@ -520,10 +512,12 @@ typedef Primitive<3> Primitive3D;
 /************************* Utils ******************************/
 ///Print all coefficients in primitive p
 template <int Dim>
-void print_coeffs(const Primitive<Dim>& p) {
-  printf("coeffs: t = %f\n", p.t());
+void print(const Primitive<Dim>& p) {
+  std::cout << "Primitive: " << std::endl;
+  std::cout << "t: " << p.t() << std::endl;
   for(int i = 0; i < Dim; i++)
-    std::cout << i << ":     " << p.traj(i).coeff().transpose() << std::endl;
+    std::cout << "dim[" << i << "]:     " << p.pr(i).coeff().transpose() << std::endl;
+  std::cout << "yaw: " << p.pr_yaw().coeff().transpose() << std::endl;
 }
 
 ///Print max dynamic infomation in primitive p

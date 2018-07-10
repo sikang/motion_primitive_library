@@ -50,8 +50,12 @@ template <int Dim> void PolyTraj<Dim>::addCoeff(const MatDNf<Dim> &coeff) {
   coefficients_.push_back(coeff);
 }
 
+template <int Dim> void PolyTraj<Dim>::setWaypoints(const vec_E<Waypoint<Dim>> &ws) {
+  waypoints_ = ws;
+}
+
 template <int Dim>
-void PolyTraj<Dim>::addTime(const std::vector<decimal_t> &dts) {
+void PolyTraj<Dim>::setTime(const std::vector<decimal_t> &dts) {
   waypoint_times_.clear();
   waypoint_times_.push_back(0);
   for (auto t : dts)
@@ -72,7 +76,7 @@ template <int Dim> vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
       coeffs.push_back(coeff.reverse());
     }
 
-    trajs[i] = Primitive<Dim>(coeffs, dts_[i]);
+    trajs[i] = Primitive<Dim>(coeffs, dts_[i], waypoints_.front().control);
   }
   return trajs;
 }

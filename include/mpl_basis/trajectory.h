@@ -245,6 +245,11 @@ class Trajectory {
       return ws;
     }
 
+    /// Get primitives
+    vec_E<Primitive<Dim>> getPrimitives() const {
+      return segs;
+    }
+
     ///Segments of primitives
     vec_E<Primitive<Dim>> segs;
     ///Time in virtual domain

@@ -17,7 +17,8 @@ template <int Dim>
 bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
                             const std::vector<decimal_t> &dts) {
   ptraj_->clear();
-  ptraj_->addTime(dts);
+  ptraj_->setWaypoints(waypoints);
+  ptraj_->setTime(dts);
 
   const unsigned int num_waypoints = waypoints.size();
   const unsigned int num_segments = num_waypoints - 1;

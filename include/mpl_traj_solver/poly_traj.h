@@ -19,10 +19,12 @@ class PolyTraj {
     PolyTraj();
     ///Clear
     void clear();
-    ///Set coefficients
-    void addCoeff(const MatDNf<Dim>& coeff);
+    ///Set waypoints
+    void setWaypoints(const vec_E<Waypoint<Dim>>& ws);
     ///Set time allocation
-    void addTime(const std::vector<decimal_t> &dts);
+    void setTime(const std::vector<decimal_t> &dts);
+    ///Add coefficients
+    void addCoeff(const MatDNf<Dim>& coeff);
     ///Convert to Primitive class
     vec_E<Primitive<Dim>> toPrimitives() const;
     ///Evaluate the waypoint at t
@@ -34,6 +36,7 @@ class PolyTraj {
   private:
     std::vector<decimal_t> waypoint_times_;
     std::vector<decimal_t> dts_;
+    vec_E<Waypoint<Dim>> waypoints_;
     std::deque<MatDNf<Dim>, Eigen::aligned_allocator<MatDNf<Dim>>> coefficients_;
 };
 
