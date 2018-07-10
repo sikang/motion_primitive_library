@@ -76,7 +76,7 @@ Three components are required to be set properly before running the planner:
 We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input.
 An example for 2D planning is given as:
 ```
-Waypoint2 start, goal; // Initialize start and goal as Waypoint 2D
+Waypoint2D start, goal; // Initialize start and goal as Waypoint2D
 start.pos = Vec3f(2.5, -3.5);
 start.use_pos = true;
 start.use_vel = true;

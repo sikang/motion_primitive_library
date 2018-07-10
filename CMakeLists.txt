@@ -29,16 +29,11 @@ endif()
 add_library(poly_solver src/mpl_traj_solver/poly_solver.cpp
   src/mpl_traj_solver/poly_traj.cpp)
 
-add_library(graph_search
-  src/mpl_planner/graph_search.cpp
-  src/mpl_planner/state_space.cpp)
-
 add_library(map_planner src/mpl_planner/map_planner.cpp)
-target_link_libraries(map_planner graph_search)
 
 add_library(ellipsoid_planner src/mpl_planner/ellipsoid_planner.cpp
   src/mpl_collision/decomp_util.cpp)
-target_link_libraries(ellipsoid_planner graph_search ${PCL_LIBRARIES})
+target_link_libraries(ellipsoid_planner ${PCL_LIBRARIES})
 
 include(CTest)
 
@@ -53,7 +48,7 @@ add_test(test_planner_2d_prior_traj test_planner_2d_prior_traj ${CMAKE_SOURCE_DI
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS poly_solver graph_search ellipsoid_planner map_planner
+install(TARGETS poly_solver map_planner ellipsoid_planner
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
