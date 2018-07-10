@@ -260,8 +260,8 @@ public:
       printf("[PlannerBase] set max num: %d\n", max_num_);
   }
   /// Set U
-  void setU(const vec_Vecf<Dim> &U) {
-    ENV_->set_U(U);
+  void setU(const vec_E<VecDf> &U) {
+    ENV_->set_u(U);
   }
   /// Set prior trajectory
   void setPriorTrajectory(const Trajectory<Dim> &traj) {

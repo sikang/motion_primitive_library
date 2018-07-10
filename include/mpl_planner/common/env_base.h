@@ -257,8 +257,8 @@ class env_base
       pr = Primitive<Dim>(curr, U_[action_id], dt_);
     }
 
-    ///Set max U in each axis
-    void set_U(const vec_Vecf<Dim>& U) {
+    ///Set control input
+    void set_u(const vec_E<VecDf>& U) {
       U_ = U;
     }
 
@@ -458,7 +458,7 @@ class env_base
     ///expanded nodes
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input
-    vec_Vecf<Dim> U_;
+    vec_E<VecDf> U_;
     ///Goal node
     Waypoint<Dim> goal_node_;
     ///Prior trajectory

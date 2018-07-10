@@ -214,8 +214,11 @@ class Primitive {
 
   /**
    * @brief Construct from an initial state p and an input control u for a given duration t
+   *
+   * if the dimension of u is greater than p, use the additional value for yaw
+   * control
    */
-  Primitive(const Waypoint<Dim> &p, const Vecf<Dim>& u, decimal_t t)
+  Primitive(const Waypoint<Dim> &p, const VecDf& u, decimal_t t)
     : t_(t), control_(p.control) {
       if (control_ == Control::SNP) {
         for (int i = 0; i < Dim; i++) {
@@ -232,19 +235,7 @@ class Primitive {
       } else if (control_ == Control::VEL) {
         for (int i = 0; i < Dim; i++)
           prs_[i] = Primitive1D(p.pos(i), u(i));
-      } else
-        printf("Null Primitive, check the control set-up of the Waypoint!\n");
-    }
-
-  /**
-   * @brief Construct from an initial state p and an input control u for a given duration t
-   *
-   * if the dimension of u is greater than p, use the additional value for yaw
-   * control
-   */
-  Primitive(const Waypoint<Dim> &p, const Vecf<Dim+1>& u, decimal_t t)
-    : t_(t), control_(p.control) {
-      if (control_ == Control::SNPxYAW) {
+      } else if (control_ == Control::SNPxYAW) {
         for (int i = 0; i < Dim; i++) {
           Vec4f vec;
           vec << p.pos(i), p.vel(i), p.acc(i), p.jrk(i);

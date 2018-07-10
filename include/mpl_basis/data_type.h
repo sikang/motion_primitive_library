@@ -50,12 +50,14 @@ typedef double decimal_t;
 ///Pre-allocated std::vector for Eigen using vec_E
 template <typename T>
 using vec_E = std::vector<T, Eigen::aligned_allocator<T>>;
-///Eigen 1D float vector
+///Eigen 1D float vector of size N
 template <int N>
 using Vecf = Eigen::Matrix<decimal_t, N, 1>;
-///Eigen 1D int vector
+///Eigen 1D int vector of size N
 template <int N>
 using Veci = Eigen::Matrix<int, N, 1>;
+///Eigen 1D float vector of dynamic size
+using VecDf = Eigen::Matrix<decimal_t, Eigen::Dynamic, 1>;
 ///MxN Eigen matrix
 template <int M, int N>
 using Matf = Eigen::Matrix<decimal_t, M, N>;

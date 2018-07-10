@@ -121,7 +121,7 @@ before start planning.
 An example for the control input `U` for 2D planning is given as following, in this case, `U` simply include 9 elements:
 ```
 decimal_t u_max = 0.5;
-vec_Vec2f U;
+vec_E<VecDf> U;
 const decimal_t du = u_max / num;
 for(decimal_t dx = -u_max; dx <= u_max; dx += du )
   for(decimal_t dy = -u_max; dy <= u_max; dy += du )

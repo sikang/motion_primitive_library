@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   // Initialize control input
   decimal_t u_max = 1.0;
   decimal_t du = u_max;
-  vec_Vec2f U;
+  vec_E<VecDf> U;
   for (decimal_t dx = -u_max; dx <= u_max; dx += du)
     for (decimal_t dy = -u_max; dy <= u_max; dy += du)
       U.push_back(Vec2f(dx, dy));
