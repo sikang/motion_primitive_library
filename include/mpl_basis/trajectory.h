@@ -69,7 +69,7 @@ class Trajectory {
         if (tau >= taus[id] && tau <= taus[id + 1]) {
           tau -= taus[id];
           for (int j = 0; j < Dim; j++) {
-            const auto pr = segs[id].traj(j);
+            const auto pr = segs[id].pr(j);
             p.pos(j) = pr.p(tau);
             p.vel(j) = pr.v(tau) / lambda;
             p.acc(j) = pr.a(tau) / lambda / lambda -
@@ -134,12 +134,12 @@ class Trajectory {
       for (int id = 0; id < (int)segs.size(); id++) {
         for (int i = 0; i < 3; i++) {
           if (segs[id].max_vel(i) > mv) {
-            std::vector<decimal_t> ts = segs[id].traj(i).extrema_vel(segs[id].t());
+            std::vector<decimal_t> ts = segs[id].pr(i).extrema_vel(segs[id].t());
             if (id != 0)
               ts.push_back(0);
             ts.push_back(segs[id].t());
             for (const auto &tv : ts) {
-              Vec4f p = segs[id].traj(i).evaluate(tv);
+              Vec4f p = segs[id].pr(i).evaluate(tv);
               decimal_t v = p(1);
               decimal_t lambda_v = fabs(v) / mv;
               if (lambda_v <= 1)
