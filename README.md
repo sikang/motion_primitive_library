@@ -24,10 +24,9 @@ $ sudo apt-get update
 $ sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
 ```
 
-
 #### A) Simple cmake
 ```sh
-mkdir build && cd build && cmake .. && make
+mkdir build && cd build && cmake .. && make -j4
 ```
 
 #### B) Using Catkin (not recognizable by catkin\_make)
@@ -72,7 +71,7 @@ target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
 ### Preparation
 Three components are required to be set properly before running the planner:
 
-#### 1) Start and Goal:
+#### 1) Set Start and Goal:
 We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input.
 An example for 2D planning is given as:
 ```
@@ -89,25 +88,35 @@ goal.use_acc = start.use_acc;
 goal.use_jrk = start.use_jrk;
 ```
 
-The flag `use_xxx` indicates the planner to plan in different control space. For example, the one above is control in acc space. Four options are provided by setting those flags as below:
+The flag `use_xxx` indicates the planner to plan in different control space. For example, the above example code sets the control in `ACC` space. Four options are provided by setting following flags:
 
-Vel | Acc | Jrk | Snp
-:-- | :-- | :-- | :--
-`use_pos = true` | `use_pos = true` | `use_pos = true` | `use_pos = true`
-`use_vel = false` | `use_vel = true` | `use_vel = true` | `use_vel = true`
-`use_acc = false` | `use_acc = false` | `use_acc = true` | `use_acc = true`
-`use_jrk = false` | `use_jrk = false` | `use_jrk = false` | `use_jrk = true`
+~   | VEL | ACC | JRK | SNP
+:-- | :-- | :-- | :-- | :--
+`use_pos=` | `true` | `true` | `true` | `true`
+`use_vel=` | `false` | `true` | `true` | `true`
+`use_acc=` | `false` | `false` | `true` | `true`
+`use_jrk=` | `false` | `false` | `false` | `true`
 
-#### 2) Set collision checking:
-For planner `MapPlanner`, we use `class MapUtil` to handle collision checking in a voxel map.
-An example for 2D collision checking based on `OccMapUtil` is given as:
+In equal, one can also set the attribute `control` of `Waypoint` for the same
+purpose:
+~  | VEL | ACC | JRK | SNP
+:--| :-- | :-- | :-- | :--
+`control=` | `Control::VEL` | `Control::ACC` | `Control::JRK` | `Control::SNP`
+
+#### 2) Set collision checking method:
+Any planner needs a collision checking function, there are several utils in this package to avoid obstacles in different representations. In the most common environment where obstacles are represented as voxels, we use `class MapUtil` which is a template class that adapts to 2D (`OccMapUtil`) and 3D (`VoxelMapUtil`) cases.
+An example for initializing a 2D collision checking `OccMapUtil` is given as:
 ```
-std::shared_ptr<MPL::OccMapUtil> map_util;
+std::shared_ptr<MPL::OccMapUtil> map_util; // Declare as a shared pointer
 map_util.reset(new MPL::OccMapUtil); // Initialize map_util
-map_util->setMap(origin, dim, data, resolution);
+map_util->setMap(origin, dim, data, resolution); // Set the map information
+...
+planner->setMapUtil(map_util); // Set collision checking util
 ```
 
 #### 3) Set control input:
+Our planner takes control input to generate primitives. User need to specify it
+before start planning.
 An example for the control input `U` for 2D planning is given as following, in this case, `U` simply include 9 elements:
 ```
 decimal_t u_max = 0.5;
@@ -116,74 +125,79 @@ const decimal_t du = u_max / num;
 for(decimal_t dx = -u_max; dx <= u_max; dx += du )
   for(decimal_t dy = -u_max; dy <= u_max; dy += du )
       U.push_back(Vec2f(dx, dy));
+...
+planner->setU(U); // Set control input
 ```
 
 ### Run the planner:
-After set up above 3 components, a planner can be initialized as:
+After setting up above 3 required components, a plan thread can be launched as:
 ```
-std::unique_ptr<MPL::OccMapPlanner> planner(new MPL::OccMapPlanner(true)); // Declare a 2D planner with verbose on
+std::unique_ptr<MPL::OccMapPlanner> planner(new MPL::OccMapPlanner(true)); // Declare a 2D planner with verbose
 planner->setMapUtil(map_util); // Set collision checking util
-planner->setEpsilon(1.0); // Set greedy param (default equal to 1)
-planner->setVmax(1.0); // Set max velocity
-planner->setAmax(1.0); // Set max acceleration
-planner->setUmax(u_max); // Set max control input
-planner->setDt(1.0); // Set dt for each primitive
-planner->setW(10); // Set weight of time
 planner->setU(U); // Set control input
-planner->setTol(0.5); // Tolerance for goal region, 0.5m in position
+planner->setDt(1.0); // Set dt for each primitive
 
 bool valid = planner->plan(start, goal); // Plan from start to goal
 ```
 
-## Test
-#### Example1 (simple planning):
-Run following command for test a 2D planning in a given map:
+## Test Examples
+#### Example1 (direct planning):
+After compiling by `cmake`, run following command for test a 2D planning in a given map:
 ```sh
 $ ./build/devel/lib/test_planner_2d ../data/corridor.yaml
 ```
 
 You should see following messages if it works properly:
 ```
-[MPPlanner] PLANNER VERBOSE ON
-[MPBaseUtil] set epsilon: 1.000000
-[MPBaseUtil] set v_max: 1.000000
-[MPBaseUtil] set a_max: 1.000000
-[MPBaseUtil] set u_max: 0.500000
-[MPBaseUtil] set dt: 1.000000
-[MPBaseUtil] set w: 10.000000
-[MPBaseUtil] set max num: -1
-[MPBaseUtil] set tol_dis: 0.500000
-[MPBaseUtil] set tol_vel: 0.000000
-[MPBaseUtil] set tol_acc: 0.000000
+[MapPlanner] PLANNER VERBOSE ON
+[PlannerBase] set v_max: 1.000000
+[PlannerBase] set a_max: 1.000000
+[PlannerBase] set dt: 1.000000
 Start:
 pos:  2.5 -3.5
 vel: 0 0
 acc: 0 0
 jrk: 0 0
-use_pos: 1
-use_vel: 1
-use_acc: 0
-use_jrk: 0
+use_pos | use_vel | use_acc | use_jrk:
+1 | 1 | 0 | 0
+control: 1100
+use acc!
 Goal:
 pos:  37 2.5
 vel: 0 0
 acc: 0 0
 jrk: 0 0
-use_pos: 1
-use_vel: 1
-use_acc: 0
-use_jrk: 0
-[MPBaseUtil] set effort in acc
+use_pos | use_vel | use_acc | use_jrk:
+1 | 1 | 0 | 0
+control: 1100
+use acc!
+
+++++++++++ PLANNER +++++++++++
++              dt: 1.00               +
++              ds: 0.0100               +
++              dv: 0.1000               +
++              da: 0.1000               +
++              dj: 0.1000               +
++               w: 10.00               +
++           v_max: 1.00               +
++           a_max: 1.00               +
++           j_max: -1.00               +
++           U num: 9                +
++         tol_dis: 0.50               +
++         tol_vel: 0.00               +
++         tol_acc: 0.00               +
++           alpha: 0                 +
+++++++++++ PLANNER +++++++++++
+
 Start from new node!
 goalNode fval: 361.213182, g: 352.000000!
-Expand [2618] nodes!
+Expand [2619] nodes!
 Reached Goal !!!!!!
 ...
-
-MP Planner takes: 65.000000 ms
-MP Planner expanded states: 2618
+MPL Planner takes: 51.000000 ms
+MPL Planner expanded states: 2619
 Total time T: 35.000000
-Total J:  J(1) = 41.416667, J(2) = 2.000000, J(3) = 0.000000, J(4) = 0.000000
+Total J:  J(VEL) = 41.416667, J(ACC) = 2.000000, J(JRK) = 0.000000, J(SNP) = 0.000000
 ```
 
 The output image `output.svg` is saved in the current folder:

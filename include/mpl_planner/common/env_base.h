@@ -272,11 +272,6 @@ class env_base
       j_max_ = j;
     }
 
-    ///Set max control in each axis
-    void set_u_max(decimal_t u) {
-      u_max_ = u;
-    }
-
     ///Set prior trajectory
     void set_prior_trajectory(const Trajectory<Dim>& traj) {
       prior_traj_ = traj;
@@ -372,7 +367,6 @@ class env_base
       printf("+           v_max: %.2f               +\n", v_max_);
       printf("+           a_max: %.2f               +\n", a_max_);
       printf("+           j_max: %.2f               +\n", j_max_);
-      printf("+           u_max: %.2f               +\n", u_max_);
       printf("+           U num: %zu                +\n", U_.size());
       printf("+         tol_dis: %.2f               +\n", tol_dis);
       printf("+         tol_vel: %.2f               +\n", tol_vel);
@@ -426,14 +420,12 @@ class env_base
     decimal_t w_{10};
     ///heuristic time offset
     int alpha_{0};
-    ///tolerance of position for goal region
-    decimal_t tol_dis{0.2};
+    ///tolerance of position for goal region, 0.5 is the default
+    decimal_t tol_dis{0.5};
     ///tolerance of velocity for goal region, 0 means no tolerance
     decimal_t tol_vel{0.0};
     ///tolerance of acceleration for goal region, 0 means no tolerance
     decimal_t tol_acc{0.0};
-    ///max control input
-    decimal_t u_max_{1.0};
     ///max velocity
     decimal_t v_max_{-1};
     ///max acceleration

@@ -192,12 +192,6 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set j_max: %f\n", j);
   }
-  /// Set max control in each axis
-  void setUmax(decimal_t u) {
-    ENV_->set_u_max(u);
-    if (planner_verbose_)
-      printf("[PlannerBase] set u_max: %f\n", u);
-  }
   /// Set max time step to explore
   void setTmax(decimal_t t) {
     max_t_ = t;

@@ -60,15 +60,10 @@ int main(int argc, char **argv) {
   std::unique_ptr<MPL::OccMapPlanner> planner(
       new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
-  planner->setEpsilon(1.0);      // Set greedy param (default equal to 1)
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
-  planner->setUmax(u_max);       // Set max control input
   planner->setDt(1.0);           // Set dt for each primitive
-  planner->setW(10);             // Set weight for time
-  planner->setMaxNum(-1);        // Set maximum allowed states
-  planner->setU(U);              // 2D discretization with 1
-  planner->setTol(0.5);          // Tolerance for goal region, 0.5m in position
+  planner->setU(U);              // Set control input
 
   // Planning
   Timer time(true);
@@ -153,8 +148,7 @@ int main(int argc, char **argv) {
       }
     }
     mapper.add(line);
-    mapper.map(
-        line,
+    mapper.map(line,
         "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
 
     // Draw states long trajectory

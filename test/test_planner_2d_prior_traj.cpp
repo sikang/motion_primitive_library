@@ -60,15 +60,10 @@ int main(int argc, char **argv) {
   std::unique_ptr<MPL::OccMapPlanner> planner(
       new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
-  planner->setEpsilon(1.0);      // Set greedy param (default equal to 1)
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
-  planner->setUmax(u_max);       // Set max control input
   planner->setDt(1.0);           // Set dt for each primitive
-  planner->setW(10);             // Set weight for time
-  planner->setMaxNum(-1);        // Set maximum allowed states
   planner->setU(U);              // Set control input
-  planner->setTol(0.5);          // Tolerance for goal region
 
   // Planning
   Timer time1(true);
@@ -105,14 +100,12 @@ int main(int argc, char **argv) {
   planner->setEpsilon(1.0);             // Set greedy param (default equal to 1)
   planner->setVmax(1.0);                // Set max velocity
   planner->setAmax(1.0);                // Set max acceleration
-  planner->setUmax(u_max);              // Set max control input
   planner->setDt(1.0);                  // Set dt for each primitive
   planner->setW(10);                    // Set weight for time
-  planner->setMaxNum(-1);               // Set maximum allowed states
   planner->setU(U);                     // Set control input
-  planner->setTol(0.5);                 // Tolerance for goal region
-  planner->setAlpha(alpha);
-  planner->setPriorTrajectory(prior_traj);
+  planner->setTol(0.5);                 // Set tolerance for goal region
+  planner->setAlpha(alpha);             // Set look ahead step
+  planner->setPriorTrajectory(prior_traj); // Set prior trajectory
 
   // Planning
   Timer time2(true);
