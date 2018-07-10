@@ -12,10 +12,14 @@
 /// Lookup table for control input
 namespace Control {
   enum Control {
-    VEL = 0b1000,
-    ACC = 0b1100,
-    JRK = 0b1110,
-    SNP = 0b1111
+    VEL = 0b10000,///<control input is vel
+    ACC = 0b11000,///<control input is acc
+    JRK = 0b11100,///<control input is jrk
+    SNP = 0b11110,///<control input is snp
+    VELxYAW = 0b10001,///<control input is vel and yaw
+    ACCxYAW = 0b11001,///<control input is acc and yaw
+    JRKxYAW = 0b11101,///<control input is jrk and yaw
+    SNPxYAW = 0b11111 ///<control input is snp and yaw
   };
 }
 
@@ -38,15 +42,17 @@ struct Waypoint {
   Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
+  decimal_t yaw; ///<yaw
 
   union {
     struct {
+      bool use_yaw : 1;///<If true, yaw will be used in primitive generation
       bool use_jrk : 1;///<If true, jrk will be used in primitive generation
       bool use_acc : 1;///<If true, acc will be used in primitive generation
       bool use_vel : 1;///<If true, vel will be used in primitive generation
       bool use_pos : 1;///<If true, pos will be used in primitive generation
     };
-    Control::Control control : 4;
+    Control::Control control : 5;
   };
 
   ///Print all attributes
@@ -57,10 +63,11 @@ struct Waypoint {
     std::cout << "vel: " << vel.transpose() << std::endl;
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
-    std::cout << "use_pos | use_vel | use_acc | use_jrk: " << std::endl;
+    std::cout << "yaw: " << yaw << std::endl;
+    std::cout << "use_pos | use_vel | use_acc | use_jrk | use_yaw : " << std::endl;
     std::cout << use_pos << " | " << use_vel << " | " <<
-      use_acc << " | " << use_jrk << std::endl;
-    std::bitset<4> x(control);
+      use_acc << " | " << use_jrk << " | " << use_yaw << std::endl;
+    std::bitset<5> x(control);
     std::cout << "control: " << x << std::endl;
     if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
@@ -70,6 +77,14 @@ struct Waypoint {
       std::cout << "use jrk!" << std::endl;
     else if(control == Control::SNP)
       std::cout << "use snp!" << std::endl;
+    else if(control == Control::VELxYAW)
+      std::cout << "use vel & yaw!" << std::endl;
+    else if(control == Control::ACCxYAW)
+      std::cout << "use acc & yaw!" << std::endl;
+    else if(control == Control::JRKxYAW)
+      std::cout << "use jrk & yaw!" << std::endl;
+    else if(control == Control::SNPxYAW)
+      std::cout << "use snp & yaw!" << std::endl;
     else
       std::cout << "use null!" << std::endl;
   }
@@ -93,6 +108,8 @@ struct Waypoint {
     if((this->use_acc || n.use_acc) && this->acc != n.acc)
       return false;
     if((this->use_jrk || n.use_jrk) && this->jrk != n.jrk)
+      return false;
+    if((this->use_yaw || n.use_yaw) && this->yaw != n.yaw)
       return false;
     return true;
   }

@@ -246,6 +246,13 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set epsilon: %f\n", epsilon_);
   }
+  /// Set greedy searching param
+  void setHeurIgnoreDynamics(bool ignore) {
+    ENV_->set_heur_ignore_dynamics(ignore);
+    if (planner_verbose_)
+      printf("[PlannerBase] set heur_ignore_dynamics: %d\n", ignore);
+  }
+
   /// Set max number of expansion
   void setMaxNum(int num) {
     max_num_ = num;

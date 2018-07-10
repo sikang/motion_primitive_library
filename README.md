@@ -82,28 +82,27 @@ start.use_pos = true;
 start.use_vel = true;
 start.use_acc = false;
 start.use_jrk = false;
+start.use_yaw = false;
 goal.pos = Vec3f(35, 2.5);
-goal.use_pos = start.use_pos;
-goal.use_vel = start.use_vel;
-goal.use_acc = start.use_acc;
-goal.use_jrk = start.use_jrk;
+goal.control = start.control;
 ```
 
-The flag `use_xxx` indicates the planner to plan in different control space. For example, the above example code sets the control in `ACC` space. Four options are provided by setting following flags:
+The flag `use_xxx` indicates the planner to plan in different control space. For example, the above example code sets the control in `ACC` space. Eight options are provided by setting following flags:
 
-~   | VEL | ACC | JRK | SNP
-:-- | :-- | :-- | :-- | :--
-`use_pos=` | `true` | `true` | `true` | `true`
-`use_vel=` | `false` | `true` | `true` | `true`
-`use_acc=` | `false` | `false` | `true` | `true`
-`use_jrk=` | `false` | `false` | `false` | `true`
+~   | VEL | ACC | JRK | SNP | VEL&YAW | ACC&YAW | JRK&YAW | SNP&YAW
+:-- | :-- | :-- | :-- | :-- | :------ | :------ | :------ | :------
+`use_pos:` | `true` | `true` | `true` | `true`  | `true`  | `true` | `true` | `true`
+`use_vel:` | `false` | `true` | `true` | `true` | `false` | `true` | `true` | `true`
+`use_acc:` | `false` | `false` | `true` | `true` | `false` | `false` | `true` | `true`
+`use_jrk:` | `false` | `false` | `false` | `true` | `false` | `false` | `false` | `true`
+`use_yaw:` | `false` | `false` | `false` | `false` | `true` | `true` | `true` | `true`
 
-In equal, one can also set the attribute `control` of `Waypoint` for the same
-purpose:
 
-~  | VEL | ACC | JRK | SNP
-:--| :-- | :-- | :-- | :--
-`control=` | `Control::VEL` | `Control::ACC` | `Control::JRK` | `Control::SNP`
+In equal, one can also set the attribute `control` of `Waypoint` for the same purpose:
+
+~  | VEL | ACC | JRK | SNP | VEL&YAW | ACC&YAW | JRK&YAW | SNP&YAW
+:--| :-- | :-- | :-- | :-- | :------ | :------ | :------ | :------
+`control:` | `Control::VEL` | `Control::ACC` | `Control::JRK` | `Control::SNP` | `Control::VELxYAW` | `Control::ACCxYAW` | `Control::JRKxYAW` | `Control::SNPxYAW`
 
 #### 2) Set collision checking method:
 Any planner needs a collision checking function, there are several utils in this package to avoid obstacles in different representations. In the most common environment where obstacles are represented as voxels, we use `class MapUtil` which is a template class that adapts to 2D (`OccMapUtil`) and 3D (`VoxelMapUtil`) cases.
@@ -160,46 +159,49 @@ pos:  2.5 -3.5
 vel: 0 0
 acc: 0 0
 jrk: 0 0
-use_pos | use_vel | use_acc | use_jrk:
-1 | 1 | 0 | 0
-control: 1100
+yaw: 0
+use_pos | use_vel | use_acc | use_jrk | use_yaw :
+1 | 1 | 0 | 0 | 0
+control: 11000
 use acc!
 Goal:
 pos:  37 2.5
 vel: 0 0
 acc: 0 0
 jrk: 0 0
-use_pos | use_vel | use_acc | use_jrk:
-1 | 1 | 0 | 0
-control: 1100
+yaw: 0
+use_pos | use_vel | use_acc | use_jrk | use_yaw :
+1 | 1 | 0 | 0 | 0
+control: 11000
 use acc!
 
-++++++++++ PLANNER +++++++++++
-+              dt: 1.00               +
-+              ds: 0.0100               +
-+              dv: 0.1000               +
-+              da: 0.1000               +
-+              dj: 0.1000               +
-+               w: 10.00               +
-+           v_max: 1.00               +
-+           a_max: 1.00               +
-+           j_max: -1.00               +
-+           U num: 9                +
-+         tol_dis: 0.50               +
-+         tol_vel: 0.00               +
-+         tol_acc: 0.00               +
-+           alpha: 0                 +
+++++++++++++++++++ PLANNER +++++++++++++++
++                  w: 10.00               +
++                 dt: 1.00               +
++                 ds: 0.0100               +
++                 dv: 0.1000               +
++                 da: 0.1000               +
++                 dj: 0.1000               +
++              v_max: 1.00               +
++              a_max: 1.00               +
++              j_max: -1.00               +
++              U num: 9                +
++            tol_dis: 0.50               +
++            tol_vel: 0.00               +
++            tol_acc: 0.00               +
++              alpha: 0                 +
++heur_ignore_dynamics: 1                 +
 ++++++++++ PLANNER +++++++++++
 
 Start from new node!
-goalNode fval: 361.213182, g: 352.000000!
-Expand [2619] nodes!
+goalNode fval: 358.000000, g: 353.000000!
+Expand [291] nodes!
 Reached Goal !!!!!!
 ...
-MPL Planner takes: 51.000000 ms
-MPL Planner expanded states: 2619
+MPL Planner takes: 5.000000 ms
+MPL Planner expanded states: 260
 Total time T: 35.000000
-Total J:  J(VEL) = 41.416667, J(ACC) = 2.000000, J(JRK) = 0.000000, J(SNP) = 0.000000
+Total J:  J(VEL) = 38.750000, J(ACC) = 3.000000, J(JRK) = 0.000000, J(SNP) = 0.000000
 ```
 
 The output image `output.svg` is saved in the current folder:

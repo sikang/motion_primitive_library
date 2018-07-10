@@ -59,6 +59,12 @@ class env_base
     /// calculate the cost from state to goal
     decimal_t cal_heur(const Waypoint<Dim>& state,
                        const Waypoint<Dim>& goal) const {
+      if(heur_ignore_dynamics_) {
+        if(v_max_ > 0)
+          return w_*(state.pos - goal.pos).norm() / v_max_;
+        else
+          return w_*(state.pos - goal.pos).norm();
+      }
       //return 0;
       //return w_*(state.pos - goal.pos).norm();
       if(state.control == Control::JRK && goal.control == Control::JRK) {
@@ -201,7 +207,6 @@ class env_base
 
         return cost;
       }
-
       else if(state.control == Control::VEL && goal.control == Control::VEL)
         return (w_ + 1) * (state.pos - goal.pos).norm();
       else
@@ -354,24 +359,30 @@ class env_base
       valid_region_ = valid_region;
     }
 
+    ///Set heur_ignore_dynamics
+    void set_heur_ignore_dynamics(bool ignore) {
+      heur_ignore_dynamics_ = ignore;
+    }
+
     ///Print out params
     void info() {
       printf(ANSI_COLOR_YELLOW "\n");
-      printf("++++++++++ PLANNER +++++++++++\n");
-      printf("+              dt: %.2f               +\n", dt_);
-      printf("+              ds: %.4f               +\n", ds_);
-      printf("+              dv: %.4f               +\n", dv_);
-      printf("+              da: %.4f               +\n", da_);
-      printf("+              dj: %.4f               +\n", dj_);
-      printf("+               w: %.2f               +\n", w_);
-      printf("+           v_max: %.2f               +\n", v_max_);
-      printf("+           a_max: %.2f               +\n", a_max_);
-      printf("+           j_max: %.2f               +\n", j_max_);
-      printf("+           U num: %zu                +\n", U_.size());
-      printf("+         tol_dis: %.2f               +\n", tol_dis);
-      printf("+         tol_vel: %.2f               +\n", tol_vel);
-      printf("+         tol_acc: %.2f               +\n", tol_acc);
-      printf("+           alpha: %d                 +\n", alpha_);
+      printf("++++++++++++++++++ PLANNER +++++++++++++++\n");
+      printf("+                  w: %.2f               +\n", w_);
+      printf("+                 dt: %.2f               +\n", dt_);
+      printf("+                 ds: %.4f               +\n", ds_);
+      printf("+                 dv: %.4f               +\n", dv_);
+      printf("+                 da: %.4f               +\n", da_);
+      printf("+                 dj: %.4f               +\n", dj_);
+      printf("+              v_max: %.2f               +\n", v_max_);
+      printf("+              a_max: %.2f               +\n", a_max_);
+      printf("+              j_max: %.2f               +\n", j_max_);
+      printf("+              U num: %zu                +\n", U_.size());
+      printf("+            tol_dis: %.2f               +\n", tol_dis);
+      printf("+            tol_vel: %.2f               +\n", tol_vel);
+      printf("+            tol_acc: %.2f               +\n", tol_acc);
+      printf("+              alpha: %d                 +\n", alpha_);
+      printf("+heur_ignore_dynamics: %d                 +\n", heur_ignore_dynamics_);
       printf("++++++++++ PLANNER +++++++++++\n");
       printf(ANSI_COLOR_RESET "\n");
     }
@@ -416,6 +427,8 @@ class env_base
     /// Get the valid region
     std::vector<bool> get_valid_region() const { return valid_region_; }
 
+    /// if enabled, ignore dynamics when calculate heuristic
+    bool heur_ignore_dynamics_{true};
     /// weight of time cost
     decimal_t w_{10};
     ///heuristic time offset

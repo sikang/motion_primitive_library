@@ -33,20 +33,19 @@ int main(int argc, char **argv) {
   start.vel = Vec2f::Zero();
   start.acc = Vec2f::Zero();
   start.jrk = Vec2f::Zero();
+  start.yaw = 0;
   start.use_pos = true;
   start.use_vel = true;
   start.use_acc = false;
   start.use_jrk = false;
+  start.use_yaw = false;
 
   goal.pos = Vec2f(reader.goal(0), reader.goal(1));
   goal.vel = Vec2f::Zero();
   goal.acc = Vec2f::Zero();
   goal.jrk = Vec2f::Zero();
-
-  goal.use_pos = start.use_pos;
-  goal.use_vel = start.use_vel;
-  goal.use_acc = start.use_acc;
-  goal.use_jrk = start.use_jrk;
+  goal.yaw = 0;
+  goal.control = start.control;
 
   // Initialize control input
   decimal_t u_max = 0.5;

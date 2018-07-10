@@ -3,29 +3,35 @@
 
 namespace Control {
 enum Control {
-  SNP = 0b1111,
-  VEL = 0b1000,
-  ACC = 0b1100,
-  JRK = 0b1110,
+  VEL = 0b10000,
+  ACC = 0b11000,
+  JRK = 0b11100,
+  SNP = 0b11110,
+  VELxYAW = 0b10001,
+  ACCxYAW = 0b11001,
+  JRKxYAW = 0b11101,
+  SNPxYAW = 0b11111
 };
 }
 
 typedef union {
   struct {
+    bool use_yaw: 1;
     bool use_jrk: 1;
     bool use_acc: 1;
     bool use_vel: 1;
     bool use_pos: 1;
   };
 
-  Control::Control use_xxx : 4;
+  Control::Control use_xxx : 5;
 
 } USE;
 
 void print(USE u) {
-  std::cout << "use_pos | use_vel | use_acc | use_jrk: " << std::endl;
-  std::cout << u.use_pos << " | " << u.use_vel << " | " << u.use_acc << " | " << u.use_jrk << std::endl;
-  std::bitset<4> x(u.use_xxx);
+  std::cout << "use_pos | use_vel | use_acc | use_jrk | use_yaw : " << std::endl;
+  std::cout << u.use_pos << " | " << u.use_vel << " | " << u.use_acc <<
+    " | " << u.use_jrk << " | " << u.use_yaw << std::endl;
+  std::bitset<5> x(u.use_xxx);
   std::cout << "raw use_xxx: " << u.use_xxx << std::endl;
   std::cout << "use_xxx: " << x << std::endl;
   if(u.use_xxx == Control::VEL)
@@ -36,6 +42,14 @@ void print(USE u) {
     std::cout << "use jrk!" << std::endl;
   else if(u.use_xxx == Control::SNP)
     std::cout << "use snp!" << std::endl;
+  else if(u.use_xxx == Control::VELxYAW)
+    std::cout << "use vel & yaw!" << std::endl;
+  else if(u.use_xxx == Control::ACCxYAW)
+    std::cout << "use acc & yaw!" << std::endl;
+  else if(u.use_xxx == Control::JRKxYAW)
+    std::cout << "use jrk & yaw!" << std::endl;
+  else if(u.use_xxx == Control::SNPxYAW)
+    std::cout << "use snp & yaw!" << std::endl;
   else
     std::cout << "use null!" << std::endl;
   //std::cout << "size of Control: " << sizeof(u.use_xxx) << std::endl;
@@ -44,7 +58,7 @@ void print(USE u) {
 int main() {
 
 
-  USE u1, u2, u3, u4, u5;
+  USE u1, u2, u3, u4, u5, u6;
 
   print(u1);
 
@@ -75,6 +89,16 @@ int main() {
   u5.use_jrk = true;
 
   print(u5);
+
+  u6.use_pos = true;
+  u6.use_vel = true;
+  u6.use_acc = true;
+  u6.use_jrk = true;
+  u6.use_yaw = true;
+
+  print(u6);
+
+
 
   std::cout << "VEL_CONTROL: " << Control::VEL << std::endl;
   std::cout << "ACC_CONTROL: " << Control::ACC << std::endl;
