@@ -1,4 +1,5 @@
 # MRSL Motion Primitive Library for quadrotor v1.0
+
 [![wercker status](https://app.wercker.com/status/ae575e9b5218e1f02684065445c6de66/s/master "wercker status")](https://app.wercker.com/project/byKey/ae575e9b5218e1f02684065445c6de66)
 - - -
 Motion Primitive Library is a search-based planner to compute dynamically feasible trajectories for a quadrotor flying in an obstacle-cluttered environment.
@@ -99,6 +100,7 @@ The flag `use_xxx` indicates the planner to plan in different control space. For
 
 In equal, one can also set the attribute `control` of `Waypoint` for the same
 purpose:
+
 ~  | VEL | ACC | JRK | SNP
 :--| :-- | :-- | :-- | :--
 `control=` | `Control::VEL` | `Control::ACC` | `Control::JRK` | `Control::SNP`

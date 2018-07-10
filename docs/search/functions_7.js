@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['j',['J',['../classPrimitive1D.html#abc56fc5926472e77769391e91a7023a3',1,'Primitive1D::J()'],['../classPrimitive.html#ac4b3b6582b5dca242a70c54d3b799142',1,'Primitive::J()'],['../classTrajectory.html#a4ec8083eed73731371cb562cb767b1bd',1,'Trajectory::J()'],['../classPrimitive1D.html#acff08a9452f91c3ca16addb6bdbaa044',1,'Primitive1D::j()']]]
+  ['j',['J',['../classPrimitive1D.html#a8480851eb591feff24a27f6965f9c46c',1,'Primitive1D::J()'],['../classPrimitive.html#a488d9f9d987bbbe6fd402094c8b95f9c',1,'Primitive::J()'],['../classTrajectory.html#a13b6d845bed12cf4d543e6d908306181',1,'Trajectory::J()'],['../classPrimitive1D.html#acff08a9452f91c3ca16addb6bdbaa044',1,'Primitive1D::j()']]]
 ];

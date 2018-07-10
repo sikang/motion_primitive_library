@@ -1,7 +1,8 @@
 var searchData=
 [
   ['plannerbase',['PlannerBase',['../classMPL_1_1PlannerBase.html',1,'MPL']]],
-  ['plannerbase_3c_203_20_3e',['PlannerBase&lt; 3 &gt;',['../classMPL_1_1PlannerBase.html',1,'MPL']]],
+  ['plannerbase_3c_203_2c_20waypoint3d_20_3e',['PlannerBase&lt; 3, Waypoint3D &gt;',['../classMPL_1_1PlannerBase.html',1,'MPL']]],
+  ['plannerbase_3c_20dim_2c_20waypoint_3c_20dim_20_3e_20_3e',['PlannerBase&lt; Dim, Waypoint&lt; Dim &gt; &gt;',['../classMPL_1_1PlannerBase.html',1,'MPL']]],
   ['polysolver',['PolySolver',['../classPolySolver.html',1,'']]],
   ['polytraj',['PolyTraj',['../classPolyTraj.html',1,'']]],
   ['primitive',['Primitive',['../classPrimitive.html',1,'']]],

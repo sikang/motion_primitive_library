@@ -132,9 +132,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="data__type_8h.html#a30c607180de5bc1b7c30f5cbaf9b188b">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#af8f42cd5e9ddae42275f61490a5f15af">sample</a> (int N) const </td></tr>
 <tr class="memdesc:af8f42cd5e9ddae42275f61490a5f15af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N+1 states using uniformed time. <br /></td></tr>
 <tr class="separator:af8f42cd5e9ddae42275f61490a5f15af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ec8083eed73731371cb562cb767b1bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a4ec8083eed73731371cb562cb767b1bd">J</a> (int i) const </td></tr>
-<tr class="memdesc:a4ec8083eed73731371cb562cb767b1bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_18.png"/>.  <a href="#a4ec8083eed73731371cb562cb767b1bd">More...</a><br /></td></tr>
-<tr class="separator:a4ec8083eed73731371cb562cb767b1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13b6d845bed12cf4d543e6d908306181"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a13b6d845bed12cf4d543e6d908306181">J</a> (Control::Control control) const </td></tr>
+<tr class="memdesc:a13b6d845bed12cf4d543e6d908306181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_18.png"/>.  <a href="#a13b6d845bed12cf4d543e6d908306181">More...</a><br /></td></tr>
+<tr class="separator:a13b6d845bed12cf4d543e6d908306181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d5825a789dd2676bab27fb976953606"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d5825a789dd2676bab27fb976953606"></a>
 std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a3d5825a789dd2676bab27fb976953606">getSegmentTimes</a> () const </td></tr>
 <tr class="memdesc:a3d5825a789dd2676bab27fb976953606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time for each segment. <br /></td></tr>
@@ -213,7 +213,7 @@ template&lt;int Dim&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a4ec8083eed73731371cb562cb767b1bd"></a>
+<a class="anchor" id="a13b6d845bed12cf4d543e6d908306181"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -225,8 +225,8 @@ template&lt;int Dim&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;::J </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
+          <td class="paramtype">Control::Control&#160;</td>
+          <td class="paramname"><em>control</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -240,7 +240,7 @@ template&lt;int Dim&gt; </div>
 <p>Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_18.png"/>. </p>
 <p>Return J is the summation of efforts in all three dimensions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i</td><td>effort is defined as <img class="formulaInl" alt="$i$" src="form_10.png"/>-th derivative of polynomial </td></tr>
+    <tr><td class="paramname">control</td><td>effort is defined as <img class="formulaInl" alt="$i$" src="form_10.png"/>-th derivative of polynomial </td></tr>
   </table>
   </dd>
 </dl>

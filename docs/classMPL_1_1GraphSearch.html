@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>MRSL Motion Primitive Library: MPL::GraphSearch&lt; Dim &gt; Class Template Reference</title>
+<title>MRSL Motion Primitive Library: MPL::GraphSearch&lt; Dim, Coord &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classMPL_1_1GraphSearch-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">MPL::GraphSearch&lt; Dim &gt; Class Template Reference</div>  </div>
+<div class="title">MPL::GraphSearch&lt; Dim, Coord &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -106,48 +106,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2ab65549a87a9ec1e2cf0a02206a4c18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a2ab65549a87a9ec1e2cf0a02206a4c18">GraphSearch</a> (bool verbose=false)</td></tr>
-<tr class="memdesc:a2ab65549a87a9ec1e2cf0a02206a4c18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple empty constructor.  <a href="#a2ab65549a87a9ec1e2cf0a02206a4c18">More...</a><br /></td></tr>
-<tr class="separator:a2ab65549a87a9ec1e2cf0a02206a4c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87a859e3900dc704009b9627ddb2e682"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a87a859e3900dc704009b9627ddb2e682">Astar</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;start_coord, <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> start_key, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim &gt;&gt; &amp;ss_ptr, <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt; &amp;traj, int max_expand=-1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> max_t=0)</td></tr>
-<tr class="memdesc:a87a859e3900dc704009b9627ddb2e682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Astar graph search.  <a href="#a87a859e3900dc704009b9627ddb2e682">More...</a><br /></td></tr>
-<tr class="separator:a87a859e3900dc704009b9627ddb2e682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25606f38bd904b91e82af55a4eff14d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a25606f38bd904b91e82af55a4eff14d4">LPAstar</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;start_coord, <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> start_key, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim &gt;&gt; &amp;ss_ptr, <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt; &amp;traj, int max_expand=-1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> max_t=0)</td></tr>
-<tr class="memdesc:a25606f38bd904b91e82af55a4eff14d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifelong Planning Astar graph search.  <a href="#a25606f38bd904b91e82af55a4eff14d4">More...</a><br /></td></tr>
-<tr class="separator:a25606f38bd904b91e82af55a4eff14d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcd7f8d3ef0dbef6a0c69be4c8b9a4c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#abcd7f8d3ef0dbef6a0c69be4c8b9a4c4">GraphSearch</a> (bool verbose=false)</td></tr>
+<tr class="memdesc:abcd7f8d3ef0dbef6a0c69be4c8b9a4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple empty constructor.  <a href="#abcd7f8d3ef0dbef6a0c69be4c8b9a4c4">More...</a><br /></td></tr>
+<tr class="separator:abcd7f8d3ef0dbef6a0c69be4c8b9a4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce7201bbbee0720704ac1580ae7ed9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a6ce7201bbbee0720704ac1580ae7ed9b">Astar</a> (const Coord &amp;start_coord, <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> start_key, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim, Coord &gt;&gt; &amp;ss_ptr, <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt; &amp;traj, int max_expand=-1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> max_t=0)</td></tr>
+<tr class="memdesc:a6ce7201bbbee0720704ac1580ae7ed9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Astar graph search.  <a href="#a6ce7201bbbee0720704ac1580ae7ed9b">More...</a><br /></td></tr>
+<tr class="separator:a6ce7201bbbee0720704ac1580ae7ed9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab440fa116a68769e4917afcb2399863b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#ab440fa116a68769e4917afcb2399863b">LPAstar</a> (const Coord &amp;start_coord, <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> start_key, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim, Coord &gt;&gt; &amp;ss_ptr, <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt; &amp;traj, int max_expand=-1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> max_t=0)</td></tr>
+<tr class="memdesc:ab440fa116a68769e4917afcb2399863b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifelong Planning Astar graph search.  <a href="#ab440fa116a68769e4917afcb2399863b">More...</a><br /></td></tr>
+<tr class="separator:ab440fa116a68769e4917afcb2399863b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:ae2e93f9ab1ea870786cd2119ebad4ba4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2e93f9ab1ea870786cd2119ebad4ba4"></a>
-<a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#ae2e93f9ab1ea870786cd2119ebad4ba4">recoverTraj</a> (<a class="el" href="namespaceMPL.html#a80aeb038e9b638b92bb0ab9a57e692a9">StatePtr</a>&lt; Dim &gt; ptr, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim &gt;&gt; ss_ptr, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, const <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> &amp;start_idx)</td></tr>
-<tr class="memdesc:ae2e93f9ab1ea870786cd2119ebad4ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recover trajectory. <br /></td></tr>
-<tr class="separator:ae2e93f9ab1ea870786cd2119ebad4ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d49047c68deb0c6fddb6a82ace014d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98d49047c68deb0c6fddb6a82ace014d"></a>
+<a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a98d49047c68deb0c6fddb6a82ace014d">recoverTraj</a> (<a class="el" href="namespaceMPL.html#a865b113366f403642fdea26c1dc97709">StatePtr</a>&lt; Coord &gt; ptr, std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim, Coord &gt;&gt; ss_ptr, const std::shared_ptr&lt; <a class="el" href="classMPL_1_1env__base.html">env_base</a>&lt; Dim &gt;&gt; &amp;ENV, const <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a> &amp;start_idx)</td></tr>
+<tr class="memdesc:a98d49047c68deb0c6fddb6a82ace014d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recover trajectory. <br /></td></tr>
+<tr class="separator:a98d49047c68deb0c6fddb6a82ace014d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a45eaac23950087cf3269a74c7fd61a39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45eaac23950087cf3269a74c7fd61a39"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a45eaac23950087cf3269a74c7fd61a39">verbose_</a> = false</td></tr>
-<tr class="memdesc:a45eaac23950087cf3269a74c7fd61a39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verbose flag. <br /></td></tr>
-<tr class="separator:a45eaac23950087cf3269a74c7fd61a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1963f5a261a5f83f52e5e64ea41d65ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1963f5a261a5f83f52e5e64ea41d65ff"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1GraphSearch.html#a1963f5a261a5f83f52e5e64ea41d65ff">verbose_</a> = false</td></tr>
+<tr class="memdesc:a1963f5a261a5f83f52e5e64ea41d65ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verbose flag. <br /></td></tr>
+<tr class="separator:a1963f5a261a5f83f52e5e64ea41d65ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;int Dim&gt;<br />
-class MPL::GraphSearch&lt; Dim &gt;</h3>
+<div class="textblock"><h3>template&lt;int Dim, typename Coord&gt;<br />
+class MPL::GraphSearch&lt; Dim, Coord &gt;</h3>
 
 <p><a class="el" href="classMPL_1_1GraphSearch.html" title="GraphSearch class. ">GraphSearch</a> class. </p>
 <p>Implement A* and Lifelong Planning A* </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2ab65549a87a9ec1e2cf0a02206a4c18"></a>
+<a class="anchor" id="abcd7f8d3ef0dbef6a0c69be4c8b9a4c4"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;int Dim&gt; </div>
+template&lt;int Dim, typename Coord &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMPL_1_1GraphSearch.html">MPL::GraphSearch</a>&lt; Dim &gt;::<a class="el" href="classMPL_1_1GraphSearch.html">GraphSearch</a> </td>
+          <td class="memname"><a class="el" href="classMPL_1_1GraphSearch.html">MPL::GraphSearch</a>&lt; Dim, Coord &gt;::<a class="el" href="classMPL_1_1GraphSearch.html">GraphSearch</a> </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>verbose</em> = <code>false</code></td><td>)</td>
@@ -172,16 +172,16 @@ template&lt;int Dim&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a87a859e3900dc704009b9627ddb2e682"></a>
+<a class="anchor" id="a6ce7201bbbee0720704ac1580ae7ed9b"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;int Dim&gt; </div>
+template&lt;int Dim, typename Coord &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> GraphSearch::Astar </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramtype">const Coord &amp;&#160;</td>
           <td class="paramname"><em>start_coord</em>, </td>
         </tr>
         <tr>
@@ -199,7 +199,7 @@ template&lt;int Dim&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim, Coord &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>ss_ptr</em>, </td>
         </tr>
         <tr>
@@ -246,16 +246,16 @@ template&lt;int Dim&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a25606f38bd904b91e82af55a4eff14d4"></a>
+<a class="anchor" id="ab440fa116a68769e4917afcb2399863b"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;int Dim&gt; </div>
+template&lt;int Dim, typename Coord &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> GraphSearch::LPAstar </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramtype">const Coord &amp;&#160;</td>
           <td class="paramname"><em>start_coord</em>, </td>
         </tr>
         <tr>
@@ -273,7 +273,7 @@ template&lt;int Dim&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim &gt;&gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structMPL_1_1StateSpace.html">StateSpace</a>&lt; Dim, Coord &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>ss_ptr</em>, </td>
         </tr>
         <tr>

@@ -22,8 +22,8 @@ var searchData=
   ['max_5facc',['max_acc',['../classPrimitive.html#a942567ef94981d635d78a24e6b2aedc1',1,'Primitive']]],
   ['max_5fattitude',['max_attitude',['../trajectory_8h.html#a1238ca5e64dd5e86f221e8f1668e16c0',1,'trajectory.h']]],
   ['max_5fjrk',['max_jrk',['../classPrimitive.html#ac348b448ecec2e281fb5cc18a0cf4871',1,'Primitive']]],
-  ['max_5fnum_5f',['max_num_',['../classMPL_1_1PlannerBase.html#ae04204b591abf72a9310dafd71c614a5',1,'MPL::PlannerBase']]],
-  ['max_5ft_5f',['max_t_',['../classMPL_1_1PlannerBase.html#ae19efc42ba91ce1d56c4de61b14009c4',1,'MPL::PlannerBase::max_t_()'],['../structMPL_1_1StateSpace.html#abb3222301c52a16d6c879c2a45407c11',1,'MPL::StateSpace::max_t_()']]],
+  ['max_5fnum_5f',['max_num_',['../classMPL_1_1PlannerBase.html#a3453917453091eacf0806d08a65d2766',1,'MPL::PlannerBase']]],
+  ['max_5ft_5f',['max_t_',['../classMPL_1_1PlannerBase.html#afefe5c92616ae36eeda34fbf0ef78b86',1,'MPL::PlannerBase::max_t_()'],['../structMPL_1_1StateSpace.html#ac8a2a7e44fb5c76e3657048dd8ae10c1',1,'MPL::StateSpace::max_t_()']]],
   ['max_5fvel',['max_vel',['../classPrimitive.html#a8eeed4532e07aa5d48587561ae5aece5',1,'Primitive']]],
   ['mpl',['MPL',['../namespaceMPL.html',1,'']]]
 ];

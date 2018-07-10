@@ -5,5 +5,5 @@ var searchData=
   ['lambda_5f',['lambda_',['../classTrajectory.html#a24a000bf7e3a68f675ea1e7470a32f34',1,'Trajectory']]],
   ['lambdaseg',['LambdaSeg',['../classLambdaSeg.html',1,'']]],
   ['lhm_5f',['lhm_',['../classMPL_1_1MapPlanner.html#af3528e181f7f808d2d80ca00e5858904',1,'MPL::MapPlanner']]],
-  ['lpastar',['LPAstar',['../classMPL_1_1GraphSearch.html#a25606f38bd904b91e82af55a4eff14d4',1,'MPL::GraphSearch']]]
+  ['lpastar',['LPAstar',['../classMPL_1_1GraphSearch.html#ab440fa116a68769e4917afcb2399863b',1,'MPL::GraphSearch']]]
 ];

@@ -136,9 +136,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive1D.html#a2b2f041e1dc06803e3817c0ccd068afa">Primitive1D</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> p1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> v1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> a1, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> p2, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> v2, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> a2, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> t)</td></tr>
 <tr class="memdesc:a2b2f041e1dc06803e3817c0ccd068afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct 1D primitive from an initial state (p1, v1, a1) to a goal state (p2, v2, a2), given duration t. <br /></td></tr>
 <tr class="separator:a2b2f041e1dc06803e3817c0ccd068afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc56fc5926472e77769391e91a7023a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive1D.html#abc56fc5926472e77769391e91a7023a3">J</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> t, int i) const </td></tr>
-<tr class="memdesc:abc56fc5926472e77769391e91a7023a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of 1D primitive for the given duration: <img class="formulaInl" alt="$J(t, i) = \int_0^t |p^{i}(t)|^2dt$" src="form_9.png"/>.  <a href="#abc56fc5926472e77769391e91a7023a3">More...</a><br /></td></tr>
-<tr class="separator:abc56fc5926472e77769391e91a7023a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8480851eb591feff24a27f6965f9c46c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive1D.html#a8480851eb591feff24a27f6965f9c46c">J</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> t, Control::Control control) const </td></tr>
+<tr class="memdesc:a8480851eb591feff24a27f6965f9c46c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of 1D primitive for the given duration: <img class="formulaInl" alt="$J(t, i) = \int_0^t |p^{i}(t)|^2dt$" src="form_9.png"/>.  <a href="#a8480851eb591feff24a27f6965f9c46c">More...</a><br /></td></tr>
+<tr class="separator:a8480851eb591feff24a27f6965f9c46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab50248ec4354ccecf39468d3af9652d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab50248ec4354ccecf39468d3af9652d8"></a>
 <a class="el" href="data__type_8h.html#a940b1af907878e3cb6d2f7694730ee01">Vec6f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPrimitive1D.html#ab50248ec4354ccecf39468d3af9652d8">coeff</a> () const </td></tr>
 <tr class="memdesc:ab50248ec4354ccecf39468d3af9652d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coffecients. <br /></td></tr>
@@ -294,7 +294,7 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abc56fc5926472e77769391e91a7023a3"></a>
+<a class="anchor" id="a8480851eb591feff24a27f6965f9c46c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -310,8 +310,8 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em>&#160;</td>
+          <td class="paramtype">Control::Control&#160;</td>
+          <td class="paramname"><em>control</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -330,7 +330,7 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">t</td><td>assume the duration is from 0 to t </td></tr>
-    <tr><td class="paramname">i</td><td>effort is defined as <img class="formulaInl" alt="$i$" src="form_10.png"/>-th derivative of polynomial </td></tr>
+    <tr><td class="paramname">control</td><td>effort is defined as <img class="formulaInl" alt="$i$" src="form_10.png"/>-th derivative of polynomial </td></tr>
   </table>
   </dd>
 </dl>
