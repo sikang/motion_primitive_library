@@ -35,11 +35,11 @@ namespace MPL {
 
 
       ///Check if the cell is free by index
-      bool isFree(int idx) { return map_[idx] == val_free; }
+      bool isFree(int idx) { return map_[idx] < val_occ && map_[idx] >= val_free; }
       ///Check if the cell is unknown by index
       bool isUnknown(int idx) { return map_[idx] == val_unknown; }
       ///Check if the cell is occupied by index
-      bool isOccupied(int idx) { return map_[idx] > val_free; }
+      bool isOccupied(int idx) { return map_[idx] == val_occ; }
 
       ///Check if the cell is outside by coordinate
       bool isOutside(const Veci<Dim> &pn) {
@@ -66,7 +66,7 @@ namespace MPL {
       bool isUnknown(const Veci<Dim> &pn) {
         if (isOutside(pn))
           return false;
-        return map_[getIndex(pn)] == val_unknown;
+        return isUnknown(getIndex(pn));
       }
 
       /**
