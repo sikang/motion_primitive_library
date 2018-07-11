@@ -37,6 +37,10 @@ target_link_libraries(ellipsoid_planner ${PCL_LIBRARIES})
 
 include(CTest)
 
+add_executable(test_traj_solver test/test_traj_solver.cpp)
+target_link_libraries(test_traj_solver poly_solver ${Boost_LIBRARIES})
+add_test(test_traj_solver test_traj_solver)
+
 add_executable(test_planner_2d test/test_planner_2d.cpp)
 target_link_libraries(test_planner_2d map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 add_test(test_planner_2d test_planner_2d ${CMAKE_SOURCE_DIR}/data/corridor.yaml)

@@ -70,7 +70,7 @@ template <int Dim> vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
     vec_E<Vec6f> coeffs;
     const MatDNf<Dim> &p = coefficients_[i];
     for (unsigned int j = 0; j < p.cols(); j++) {
-      Vec6f coeff;
+      Vec6f coeff(Vec6f::Zero());
       for (unsigned int k = 0; k < p.rows(); k++)
         coeff(k) = p(k, j) * factorial(k);
       coeffs.push_back(coeff.reverse());
