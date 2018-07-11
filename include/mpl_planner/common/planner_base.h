@@ -192,6 +192,12 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set j_max: %f\n", j);
   }
+  /// Set max jerk in each axis
+  void setYawmax(decimal_t yaw) {
+    ENV_->set_yaw_max(yaw);
+    if (planner_verbose_)
+      printf("[PlannerBase] set yaw_max: %f\n", yaw);
+  }
   /// Set max time step to explore
   void setTmax(decimal_t t) {
     max_t_ = t;

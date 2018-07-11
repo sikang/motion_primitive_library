@@ -337,7 +337,7 @@ class Primitive {
       if(p.use_jrk)
         p.jrk(k) = prs_[k].j(t);
       if(p.use_yaw)
-        p.yaw = pr_yaw_.p(t);
+        p.yaw = normalize_angle(pr_yaw_.p(t));
     }
     return p;
   }
@@ -460,6 +460,28 @@ class Primitive {
         return false;
     }
     return true;
+  }
+
+  /**
+   * @brief Check if the successor goes outside of the fov
+   * @param my is the semi-fov
+   *
+   */
+  bool validate_yaw(decimal_t my) const {
+    // ignore negative threshold
+    if (my < 0)
+      return true;
+    // check if angle between two ends exceed the threshold my
+    const auto p1 = evaluate(0);
+    const auto p2 = evaluate(t_);
+    const auto dp = (p2.pos - p1.pos).template topRows<2>();
+    if(dp.norm() < 1e-5)
+      return true;
+    else {
+      decimal_t yaw = std::atan2(dp(1), dp(0));
+      decimal_t dyaw = normalize_angle(yaw - p1.yaw);
+      return std::abs(dyaw) < my;
+    }
   }
 
   /**

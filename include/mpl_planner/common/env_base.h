@@ -21,20 +21,21 @@ typedef std::string Key;
  * @brief Base environment class
  */
 template <int Dim>
-class env_base
-{
+class env_base {
   public:
     ///Simple constructor
     env_base() {}
 
     ///Check if state hit the goal region, use L-1 norm
     virtual bool is_goal(const Waypoint<Dim>& state) const {
-      bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis;
-      if(goaled && goal_node_.use_vel && tol_vel > 0)
-        goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel;
-      if(goaled && goal_node_.use_acc && tol_acc > 0)
-        goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc;
-     return goaled;
+      bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis_;
+      if(goaled && goal_node_.use_vel && tol_vel_ > 0)
+        goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel_;
+      if(goaled && goal_node_.use_acc && tol_acc_ > 0)
+        goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc_;
+      if(goaled && goal_node_.use_yaw && tol_yaw_ > 0)
+        goaled = std::abs(state.yaw- goal_node_.yaw) <= tol_yaw_;
+      return goaled;
     }
 
     /**
@@ -222,7 +223,7 @@ class env_base
     }
 
     ///Convert a vec to a string
-    std::string toString(const Veci<Dim>& vec) const {
+    std::string to_string(const Veci<Dim>& vec) const {
       std::string str;
       for(int i = 0; i < Dim; i++)
         str += std::to_string(vec(i)) + "-";
@@ -232,23 +233,51 @@ class env_base
     ///Genegrate Key from state
     virtual Key state_to_idx(const Waypoint<Dim>& state) const {
       const Veci<Dim> pi = round(state.pos, ds_);
-      if(state.control == Control::ACC) {
+      if(state.control == Control::VEL)
+        return to_string(pi);
+      else if(state.control == Control::ACC) {
         const Veci<Dim> vi = round(state.vel, dv_);
-        return toString(pi) + toString(vi);
+        return to_string(pi) + to_string(vi);
       }
       else if(state.control == Control::JRK) {
         const Veci<Dim> vi = round(state.vel, dv_);
         const Veci<Dim> ai = round(state.acc, da_);
-        return toString(pi) + toString(vi) + toString(ai);
+        return to_string(pi) + to_string(vi) + to_string(ai);
       }
       else if(state.control == Control::SNP) {
         const Veci<Dim> vi = round(state.vel, dv_);
         const Veci<Dim> ai = round(state.acc, da_);
         const Veci<Dim> ji = round(state.jrk, dj_);
-        return toString(pi) + toString(vi) + toString(ai) + toString(ji);
+        return to_string(pi) + to_string(vi) + to_string(ai) + to_string(ji);
+      }
+      else if(state.control == Control::VELxYAW) {
+        int yawi = std::round(state.yaw/dyaw_);
+        return to_string(pi) +
+        std::to_string(yawi);
+      }
+       else if(state.control == Control::ACCxYAW) {
+        const Veci<Dim> vi = round(state.vel, dv_);
+        int yawi = std::round(state.yaw/dyaw_);
+        return to_string(pi) + to_string(vi) +
+          std::to_string(yawi);
+      }
+       else if(state.control == Control::JRKxYAW) {
+        const Veci<Dim> vi = round(state.vel, dv_);
+        const Veci<Dim> ai = round(state.acc, da_);
+        int yawi = std::round(state.yaw/dyaw_);
+        return to_string(pi) + to_string(vi) + to_string(ai) +
+          std::to_string(yawi);
+      }
+       else if(state.control == Control::SNPxYAW) {
+        const Veci<Dim> vi = round(state.vel, dv_);
+        const Veci<Dim> ai = round(state.acc, da_);
+        const Veci<Dim> ji = round(state.jrk, dj_);
+        int yawi = std::round(state.yaw/dyaw_);
+        return to_string(pi) + to_string(vi) + to_string(ai) + to_string(ji) +
+          std::to_string(yawi);
       }
       else
-        return toString(pi);
+        return "";
     }
 
     ///Recover trajectory
@@ -275,6 +304,11 @@ class env_base
     ///Set max acc in each axis
     void set_j_max(decimal_t j) {
       j_max_ = j;
+    }
+
+    ///Set max acc in each axis
+    void set_yaw_max(decimal_t yaw) {
+      yaw_max_ = yaw;
     }
 
     ///Set prior trajectory
@@ -307,25 +341,39 @@ class env_base
       dj_ = dj;
     }
 
+    ///Set dyaw
+    void set_dyaw(decimal_t dyaw) {
+      dyaw_ = dyaw;
+    }
 
     ///Set distance tolerance for goal region
     void set_tol_dis(decimal_t dis) {
-      tol_dis = dis;
+      tol_dis_ = dis;
     }
 
     ///Set velocity tolerance for goal region
     void set_tol_vel(decimal_t vel) {
-      tol_vel = vel;
+      tol_vel_ = vel;
     }
 
     ///Set acceleration tolerance for goal region
     void set_tol_acc(decimal_t acc) {
-      tol_acc = acc;
+      tol_acc_ = acc;
+    }
+
+    ///Set acceleration tolerance for goal region
+    void set_tol_yaw(decimal_t yaw) {
+      tol_yaw_ = yaw;
     }
 
     ///set weight for cost in time, usually no need to change
     void set_w(decimal_t w) {
       w_ = w;
+    }
+
+    ///set weight for cost in yaw, usually no need to change
+    void set_wyaw(decimal_t wyaw) {
+      wyaw_ = wyaw;
     }
 
     ///set weight for cost in time, usually no need to change
@@ -369,18 +417,21 @@ class env_base
       printf(ANSI_COLOR_YELLOW "\n");
       printf("++++++++++++++++++ PLANNER +++++++++++++++\n");
       printf("+                  w: %.2f               +\n", w_);
+      printf("+               wyaw: %.2f               +\n", wyaw_);
       printf("+                 dt: %.2f               +\n", dt_);
-      printf("+                 ds: %.4f               +\n", ds_);
-      printf("+                 dv: %.4f               +\n", dv_);
-      printf("+                 da: %.4f               +\n", da_);
-      printf("+                 dj: %.4f               +\n", dj_);
+      printf("+                 ds: %.2f               +\n", ds_);
+      printf("+                 dv: %.2f               +\n", dv_);
+      printf("+                 da: %.2f               +\n", da_);
+      printf("+                 dj: %.2f               +\n", dj_);
       printf("+              v_max: %.2f               +\n", v_max_);
       printf("+              a_max: %.2f               +\n", a_max_);
       printf("+              j_max: %.2f               +\n", j_max_);
+      printf("+            yaw_max: %.2f               +\n", yaw_max_);
       printf("+              U num: %zu                +\n", U_.size());
-      printf("+            tol_dis: %.2f               +\n", tol_dis);
-      printf("+            tol_vel: %.2f               +\n", tol_vel);
-      printf("+            tol_acc: %.2f               +\n", tol_acc);
+      printf("+            tol_dis: %.2f               +\n", tol_dis_);
+      printf("+            tol_vel: %.2f               +\n", tol_vel_);
+      printf("+            tol_acc: %.2f               +\n", tol_acc_);
+      printf("+            tol_yaw: %.2f               +\n", tol_yaw_);
       printf("+              alpha: %d                 +\n", alpha_);
       printf("+heur_ignore_dynamics: %d                 +\n", heur_ignore_dynamics_);
       printf("++++++++++ PLANNER +++++++++++\n");
@@ -431,20 +482,26 @@ class env_base
     bool heur_ignore_dynamics_{true};
     /// weight of time cost
     decimal_t w_{10};
+    /// weight of yaw
+    decimal_t wyaw_{1};
     ///heuristic time offset
     int alpha_{0};
     ///tolerance of position for goal region, 0.5 is the default
-    decimal_t tol_dis{0.5};
+    decimal_t tol_dis_{0.5};
     ///tolerance of velocity for goal region, 0 means no tolerance
-    decimal_t tol_vel{0.0};
+    decimal_t tol_vel_{0.0};
     ///tolerance of acceleration for goal region, 0 means no tolerance
-    decimal_t tol_acc{0.0};
+    decimal_t tol_acc_{0.0};
+    ///tolerance of yaw for goal region, 0 means no tolerance
+    decimal_t tol_yaw_{0.0};
     ///max velocity
     decimal_t v_max_{-1};
     ///max acceleration
     decimal_t a_max_{-1};
     ///max jerk
     decimal_t j_max_{-1};
+    ///max yaw
+    decimal_t yaw_max_{-1};
     ///duration of primitive
     decimal_t dt_{1.0};
     ///grid size in position
@@ -455,6 +512,8 @@ class env_base
     decimal_t da_{0.1};
     ///grid size in jerk
     decimal_t dj_{0.1};
+    ///grid size in yaw
+    decimal_t dyaw_{0.1};
     ///expanded nodes
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input

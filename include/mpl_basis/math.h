@@ -11,6 +11,14 @@
 #include <unsupported/Eigen/Polynomials>
 #include <iostream>
 
+inline decimal_t normalize_angle(decimal_t angle) {
+  while(angle > M_PI)
+    angle -= 2.0 * M_PI;
+  while(angle < -M_PI)
+    angle += 2.0 * M_PI;
+  return angle;
+}
+
 /// Quadratic equation: \f$b*t^2+c*t+d = 0\f$
 inline std::vector<decimal_t> quad(decimal_t b, decimal_t c, decimal_t d) {
   std::vector<decimal_t> dts;

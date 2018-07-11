@@ -90,8 +90,7 @@ public:
         // Get child
         StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
         if (!succNode_ptr) {
-          succNode_ptr = std::make_shared<State<Coord>>(
-            State<Coord>(succ_key[s], succ_coord[s]));
+          succNode_ptr = std::make_shared<State<Coord>>(succ_key[s], succ_coord[s]);
           succNode_ptr->t = currNode_ptr->t + ENV->dt_;
           succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
             ENV->get_heur(succNode_ptr->coord, succNode_ptr->t);
@@ -102,6 +101,7 @@ public:
            succNode_ptr->pred_action_cost.push_back(succ_cost[s]);
            */
         }
+
 
         /**
          * Comment following if build single connected graph

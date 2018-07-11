@@ -21,15 +21,13 @@ public:
 
   /// Check if state hit the goal region, use L-1 norm
   bool is_goal(const Waypoint<Dim> &state) const {
-    bool goaled =
-        (state.pos - this->goal_node_.pos).template lpNorm<Eigen::Infinity>() <=
-        this->tol_dis;
-    if (goaled && this->goal_node_.use_vel && this->tol_vel > 0)
-      goaled = (state.vel - this->goal_node_.vel)
-                   .template lpNorm<Eigen::Infinity>() <= this->tol_vel;
-    if (goaled && this->goal_node_.use_acc && this->tol_acc > 0)
-      goaled = (state.acc - this->goal_node_.acc)
-                   .template lpNorm<Eigen::Infinity>() <= this->tol_acc;
+    bool goaled = (state.pos - this->goal_node_.pos).template lpNorm<Eigen::Infinity>() <= this->tol_dis_;
+    if (goaled && this->goal_node_.use_vel && this->tol_vel_ > 0)
+      goaled = (state.vel - this->goal_node_.vel).template lpNorm<Eigen::Infinity>() <= this->tol_vel_;
+    if (goaled && this->goal_node_.use_acc && this->tol_acc_ > 0)
+      goaled = (state.acc - this->goal_node_.acc).template lpNorm<Eigen::Infinity>() <= this->tol_acc_;
+    if(goaled && this->goal_node_.use_yaw && this->tol_yaw_ > 0)
+      goaled = std::abs(state.yaw- this->goal_node_.yaw) <= this->tol_yaw_;
     if (goaled) {
       auto pns = map_util_->rayTrace(state.pos, this->goal_node_.pos);
       for (const auto &it : pns) {
@@ -157,24 +155,38 @@ public:
       Waypoint<Dim> tn = pr.evaluate(this->dt_);
       if (tn == curr)
         continue;
-      if (pr.validate_vel(this->v_max_) &&
-          pr.validate_acc(this->a_max_) &&
-          pr.validate_jrk(this->j_max_)) {
+      if (pr.control() == Control::ACC && !pr.validate_vel(this->v_max_))
+        continue;
+      if (pr.control() == Control::JRK &&
+          (!pr.validate_vel(this->v_max_) || !pr.validate_acc(this->a_max_)))
+        continue;
+      if (pr.control() == Control::SNP &&
+          (!pr.validate_vel(this->v_max_) || !pr.validate_acc(this->a_max_) ||
+           !pr.validate_jrk(this->j_max_)))
+        continue;
+      if (pr.control() == Control::VELxYAW && !pr.validate_yaw(this->yaw_max_))
+        continue;
+      if (pr.control() == Control::ACCxYAW &&
+          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_)))
+        continue;
+      if (pr.control() == Control::JRKxYAW &&
+          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_) ||
+           !pr.validate_acc(this->a_max_)))
+        continue;
+      if (pr.control() == Control::SNPxYAW &&
+          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_) ||
+           !pr.validate_acc(this->a_max_) || !pr.validate_jrk(this->j_max_)))
+        continue;
 
-        succ.push_back(tn);
-        succ_idx.push_back(this->state_to_idx(tn));
-        /*
-        decimal_t cost = is_free(pr)
-                             ? pr.J(curr.control) + this->w_ * this->dt_
-                             : std::numeric_limits<decimal_t>::infinity();
-                             */
-        decimal_t cost = traverse_primitive(pr);
-        if(!std::isinf(cost))
-          cost += pr.J(pr.control()) + this->w_ * this->dt_;
+      succ.push_back(tn);
+      succ_idx.push_back(this->state_to_idx(tn));
+      //std::cout << succ_idx.back() << std::endl;
+      decimal_t cost = curr.pos == tn.pos ? 0 : traverse_primitive(pr);
+      if (!std::isinf(cost))
+        cost += pr.J(pr.control()) + this->wyaw_ * pr.Jyaw() + this->w_ * this->dt_;
 
-        succ_cost.push_back(cost);
-        action_idx.push_back(i);
-      }
+      succ_cost.push_back(cost);
+      action_idx.push_back(i);
     }
   }
 
