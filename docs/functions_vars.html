@@ -98,7 +98,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_t"><span>t</span></a></li>
       <li><a href="#index_u"><span>u</span></a></li>
       <li><a href="#index_v"><span>v</span></a></li>
-      <li class="current"><a href="#index_w"><span>w</span></a></li>
+      <li><a href="#index_w"><span>w</span></a></li>
+      <li class="current"><a href="#index_y"><span>y</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -151,6 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>control_
 : <a class="el" href="classPrimitive.html#a64392514c8666d640bc50f6304581623">Primitive&lt; Dim &gt;</a>
+, <a class="el" href="classTrajSolver.html#a1408cded894ef27adc07fd1274ae90ff">TrajSolver&lt; Dim &gt;</a>
 </li>
 <li>coord
 : <a class="el" href="structMPL_1_1State.html#abca6fed90f908449b9c120a199c75484">MPL::State&lt; Coord &gt;</a>
@@ -178,8 +180,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classMPL_1_1env__base.html#a75662e4867f05ecc21cd1232d2126a11">MPL::env_base&lt; Dim &gt;</a>
 , <a class="el" href="structMPL_1_1StateSpace.html#ac127cf034e19d0d045c6a1271b1017b3">MPL::StateSpace&lt; Dim, Coord &gt;</a>
 </li>
+<li>dts_
+: <a class="el" href="classTrajSolver.html#a5f6a061cf9a0b7c2abdc9c52f6e6c287">TrajSolver&lt; Dim &gt;</a>
+</li>
 <li>dv_
 : <a class="el" href="classMPL_1_1env__base.html#ababafe58d96502406318e5b5ec8d3af1">MPL::env_base&lt; Dim &gt;</a>
+</li>
+<li>dyaw_
+: <a class="el" href="classMPL_1_1env__base.html#a88e9b2a2fc32f481fcfcac340209823d">MPL::env_base&lt; Dim &gt;</a>
 </li>
 </ul>
 
@@ -229,6 +237,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>heapkey
 : <a class="el" href="structMPL_1_1State.html#a410c45f875ea2fb2d11af8784b5e87a3">MPL::State&lt; Coord &gt;</a>
+</li>
+<li>heur_ignore_dynamics_
+: <a class="el" href="classMPL_1_1env__base.html#a12ccadddac2cf7cf643ce4af8982054c">MPL::env_base&lt; Dim &gt;</a>
 </li>
 <li>hm_
 : <a class="el" href="structMPL_1_1StateSpace.html#a4f333b19877bc0e2b6fe752c03b4bf5c">MPL::StateSpace&lt; Dim, Coord &gt;</a>
@@ -309,8 +320,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>path_
+: <a class="el" href="classTrajSolver.html#ab4ac82263fb85e417400be61d8fa871e">TrajSolver&lt; Dim &gt;</a>
+</li>
 <li>planner_verbose_
 : <a class="el" href="classMPL_1_1PlannerBase.html#a7cb4e18b6576241ab45fc33ebb5530bd">MPL::PlannerBase&lt; Dim, Coord &gt;</a>
+</li>
+<li>poly_solver_
+: <a class="el" href="classTrajSolver.html#a869cf17b3d339a1b66d5fd7742fedbbf">TrajSolver&lt; Dim &gt;</a>
 </li>
 <li>pos
 : <a class="el" href="structWaypoint.html#af63de420a521f105eea4ce098a51ad7e">Waypoint&lt; Dim &gt;</a>
@@ -332,6 +349,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>pq_
 : <a class="el" href="structMPL_1_1StateSpace.html#a43c750c08bd9ced7e57724b9d4b8b282">MPL::StateSpace&lt; Dim, Coord &gt;</a>
+</li>
+<li>pr_yaw_
+: <a class="el" href="classPrimitive.html#abd41b5f905e46efa0332fa539937627b">Primitive&lt; Dim &gt;</a>
 </li>
 <li>pred_action_cost
 : <a class="el" href="structMPL_1_1State.html#a37f962533dea7c6e68dfcdb36ffc513d">MPL::State&lt; Coord &gt;</a>
@@ -399,14 +419,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>taus
 : <a class="el" href="classTrajectory.html#a283d2293df0bdb4b525e403b6cd8eb10">Trajectory&lt; Dim &gt;</a>
 </li>
-<li>tol_acc
-: <a class="el" href="classMPL_1_1env__base.html#aa0ad200692915d19f763ea78982563ff">MPL::env_base&lt; Dim &gt;</a>
+<li>tol_acc_
+: <a class="el" href="classMPL_1_1env__base.html#ac49a422f3e1b826123a12389024b9c50">MPL::env_base&lt; Dim &gt;</a>
 </li>
-<li>tol_dis
-: <a class="el" href="classMPL_1_1env__base.html#a2b1d6761655696e3034084ce7fa801c1">MPL::env_base&lt; Dim &gt;</a>
+<li>tol_dis_
+: <a class="el" href="classMPL_1_1env__base.html#a3429ff774859e5d3021a7ebb79d4e14d">MPL::env_base&lt; Dim &gt;</a>
 </li>
-<li>tol_vel
-: <a class="el" href="classMPL_1_1env__base.html#a20f20d5b0c79b25de2241ceaed1c0da7">MPL::env_base&lt; Dim &gt;</a>
+<li>tol_vel_
+: <a class="el" href="classMPL_1_1env__base.html#a2a6216a2e0a6fcd1bf2942b145daa889">MPL::env_base&lt; Dim &gt;</a>
+</li>
+<li>tol_yaw_
+: <a class="el" href="classMPL_1_1env__base.html#aee3b399510cbd3dc9690d65f0c099673">MPL::env_base&lt; Dim &gt;</a>
 </li>
 <li>total_t_
 : <a class="el" href="classTrajectory.html#a08e10efee7e33c2618bb7727fa2d034b">Trajectory&lt; Dim &gt;</a>
@@ -422,7 +445,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>U_
-: <a class="el" href="classMPL_1_1env__base.html#a6b59fe3aaddac0262fc5cda74da2b35a">MPL::env_base&lt; Dim &gt;</a>
+: <a class="el" href="classMPL_1_1env__base.html#a632147ec3e706f2bf10fb196c9d0a38c">MPL::env_base&lt; Dim &gt;</a>
 </li>
 <li>use_acc
 : <a class="el" href="structWaypoint.html#a7f7b99a891660a96d67867ece28378e3">Waypoint&lt; Dim &gt;</a>
@@ -439,10 +462,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>use_vel
 : <a class="el" href="structWaypoint.html#af315790148c93d2a438949d649d08b83">Waypoint&lt; Dim &gt;</a>
 </li>
+<li>use_yaw
+: <a class="el" href="structWaypoint.html#ac0023df8bacdf49f6198ef6623d678ef">Waypoint&lt; Dim &gt;</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>v_
+: <a class="el" href="classTrajSolver.html#a422501c43459886aa58f022d50022e16">TrajSolver&lt; Dim &gt;</a>
+</li>
 <li>v_max_
 : <a class="el" href="classMPL_1_1env__base.html#adcd1fa1f64b3b836228d9a79f91dff0e">MPL::env_base&lt; Dim &gt;</a>
 </li>
@@ -473,6 +502,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
 <li>w_
 : <a class="el" href="classMPL_1_1env__base.html#a5c6a2e729131e36e72b51266d887ae8f">MPL::env_base&lt; Dim &gt;</a>
+</li>
+<li>waypoints_
+: <a class="el" href="classTrajSolver.html#a55ef39635075de3f942c50197535dc0d">TrajSolver&lt; Dim &gt;</a>
+</li>
+<li>wyaw_
+: <a class="el" href="classMPL_1_1env__base.html#ad47343816c81f60e207cd424a957c491">MPL::env_base&lt; Dim &gt;</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_y"></a>- y -</h3><ul>
+<li>yaw
+: <a class="el" href="structWaypoint.html#ad5c2f2b8f6dba96bb93faccde844e9a8">Waypoint&lt; Dim &gt;</a>
+</li>
+<li>yaw_max_
+: <a class="el" href="classMPL_1_1env__base.html#a6d1787397e20de82495fb9c381c14980">MPL::env_base&lt; Dim &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

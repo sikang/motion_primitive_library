@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWaypoint.html#aa40502a0517dbb938dc35a52acc89feb">Waypoint</a> ()</td></tr>
 <tr class="memdesc:aa40502a0517dbb938dc35a52acc89feb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor. <br /></td></tr>
 <tr class="separator:aa40502a0517dbb938dc35a52acc89feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d7eaadca98b8aa854e5953c8f983de7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWaypoint.html#a6d7eaadca98b8aa854e5953c8f983de7">Waypoint</a> (Control::Control c)</td></tr>
+<tr class="memitem:a6d7eaadca98b8aa854e5953c8f983de7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWaypoint.html#a6d7eaadca98b8aa854e5953c8f983de7">Waypoint</a> (<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> c)</td></tr>
 <tr class="memdesc:a6d7eaadca98b8aa854e5953c8f983de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple constructor.  <a href="#a6d7eaadca98b8aa854e5953c8f983de7">More...</a><br /></td></tr>
 <tr class="separator:a6d7eaadca98b8aa854e5953c8f983de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a960078be70ab5264b0a3ff408822800b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a960078be70ab5264b0a3ff408822800b"></a>
@@ -138,10 +138,18 @@ Public Attributes</h2></td></tr>
 <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWaypoint.html#a7966bc3955c4c0f880eea35a76e4c8ed">jrk</a></td></tr>
 <tr class="memdesc:a7966bc3955c4c0f880eea35a76e4c8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">jerk in <img class="formulaInl" alt="$R^{Dim}$" src="form_20.png"/> <br /></td></tr>
 <tr class="separator:a7966bc3955c4c0f880eea35a76e4c8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5c2f2b8f6dba96bb93faccde844e9a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5c2f2b8f6dba96bb93faccde844e9a8"></a>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWaypoint.html#ad5c2f2b8f6dba96bb93faccde844e9a8">yaw</a></td></tr>
+<tr class="memdesc:ad5c2f2b8f6dba96bb93faccde844e9a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">yaw <br /></td></tr>
+<tr class="separator:ad5c2f2b8f6dba96bb93faccde844e9a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13be57799e4e4900c0a5e31080c551d7"><td class="memItemLeft" ><a class="anchor" id="a13be57799e4e4900c0a5e31080c551d7"></a>
 union {</td></tr>
 <tr class="memitem:a104ecffffa56f658a27171c94c6fef9c"><td class="memItemLeft" ><a class="anchor" id="a104ecffffa56f658a27171c94c6fef9c"></a>
 &#160;&#160;&#160;struct {</td></tr>
+<tr class="memitem:a34f6b82c5d8bd84cef231d5ae51c0059"><td class="memItemLeft" >
+&#160;&#160;&#160;&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="structWaypoint.html#ac0023df8bacdf49f6198ef6623d678ef">use_yaw</a>: 1</td></tr>
+<tr class="memdesc:a34f6b82c5d8bd84cef231d5ae51c0059"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, yaw will be used in primitive generation. <br /></td></tr>
+<tr class="separator:a34f6b82c5d8bd84cef231d5ae51c0059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb0cd44fc726fe137a95a1a05288ae13"><td class="memItemLeft" >
 &#160;&#160;&#160;&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="structWaypoint.html#a7127a77813618058aaf31e706485fa1c">use_jrk</a>: 1</td></tr>
 <tr class="memdesc:acb0cd44fc726fe137a95a1a05288ae13"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, jrk will be used in primitive generation. <br /></td></tr>
@@ -161,7 +169,7 @@ union {</td></tr>
 <tr class="memitem:a104ecffffa56f658a27171c94c6fef9c"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr class="separator:a104ecffffa56f658a27171c94c6fef9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bf049bfba246cedf26f6a5b2ceb7daf"><td class="memItemLeft" >
-&#160;&#160;&#160;Control::Control&#160;&#160;&#160;<b>control</b>: 4</td></tr>
+&#160;&#160;&#160;<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;&#160;&#160;<b>control</b>: 5</td></tr>
 <tr class="separator:a3bf049bfba246cedf26f6a5b2ceb7daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13be57799e4e4900c0a5e31080c551d7"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr class="separator:a13be57799e4e4900c0a5e31080c551d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,7 +193,7 @@ template&lt;int Dim&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;::<a class="el" href="structWaypoint.html">Waypoint</a> </td>
           <td>(</td>
-          <td class="paramtype">Control::Control&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
           <td></td>
         </tr>

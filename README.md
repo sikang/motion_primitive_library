@@ -228,6 +228,8 @@ $ ./build/devel/lib/test_traj_solver
 ```
 ![Visualization](./data/example3.png)
 
+Here we generate three different trajectories using the same path and time allocation: the red one is minimum velocity trajectory, the green one is the minimum acceleration trajectory and the blue one is the minimum jerk trajectory.
+
 ## Doxygen
 For API, please refer to [Doxygen](https://sikang.github.io/motion_primitive_library).
 
