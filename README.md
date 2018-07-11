@@ -20,40 +20,42 @@ For technical details, refer to the original paper ["Search-based Motion Plannin
   - `YAML-CPP`: apt install libyaml-cpp-dev
 
 or simply run following commands:
-```sh
+```bash
 $ sudo apt-get update
 $ sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
 ```
 
 #### A) Simple cmake
-```sh
+```bash
 mkdir build && cd build && cmake .. && make -j4
 ```
 
 #### B) Using Catkin (not recognizable by catkin\_make)
-```sh
+```bash
 $ mv motion_primitive_library ~/catkin_ws/src
 $ cd ~/catkin_ws & catkin_make_isolated -DCMAKE_BUILD_TYPE=Release
 ```
 
 #### CTest
 Run following command in the `build` folder for testing the executables:
-```sh
+```bash
 $ make test
 ```
 
 If everything works, you should see the results as:
-```
+```bash
 Running tests...
-Test project /home/sikang/cpp_ws/src/mpl_ros/motion_primitive_library/build
-    Start 1: test_planner_2d
-1/2 Test #1: test_planner_2d ..................   Passed    0.93 sec
-    Start 2: test_planner_2d_prior_traj
-2/2 Test #2: test_planner_2d_prior_traj .......   Passed    1.00 sec
+Test project /home/sikang/thesis_ws/src/packages/mpl_ros/motion_primitive_library/build
+    Start 1: test_traj_solver
+1/3 Test #1: test_traj_solver .................   Passed    0.00 sec
+    Start 2: test_planner_2d
+2/3 Test #2: test_planner_2d ..................   Passed    0.84 sec
+    Start 3: test_planner_2d_prior_traj
+3/3 Test #3: test_planner_2d_prior_traj .......   Passed    0.89 sec
 
-100% tests passed, 0 tests failed out of 2
+100% tests passed, 0 tests failed out of 3
 
-Total Test time (real) =   1.94 sec
+Total Test time (real) =   1.73 sec
 ```
 
 #### Include in other projects:
@@ -75,7 +77,7 @@ Three components are required to be set properly before running the planner:
 #### 1) Set Start and Goal:
 We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input.
 An example for 2D planning is given as:
-```
+```c++
 Waypoint2D start, goal; // Initialize start and goal as Waypoint2D
 start.pos = Vec3f(2.5, -3.5);
 start.use_pos = true;
@@ -119,7 +121,7 @@ planner->setMapUtil(map_util); // Set collision checking util
 Our planner takes control input to generate primitives. User need to specify it
 before start planning.
 An example for the control input `U` for 2D planning is given as following, in this case, `U` simply include 9 elements:
-```
+```c++
 decimal_t u_max = 0.5;
 vec_E<VecDf> U;
 const decimal_t du = u_max / num;
@@ -132,7 +134,7 @@ planner->setU(U); // Set control input
 
 ### Run the planner:
 After setting up above 3 required components, a plan thread can be launched as:
-```
+```c++
 std::unique_ptr<MPL::OccMapPlanner> planner(new MPL::OccMapPlanner(true)); // Declare a 2D planner with verbose
 planner->setMapUtil(map_util); // Set collision checking util
 planner->setU(U); // Set control input
@@ -144,7 +146,7 @@ bool valid = planner->plan(start, goal); // Plan from start to goal
 ## Test Examples
 #### Example1 (direct planning):
 After compiling by `cmake`, run following command for test a 2D planning in a given map:
-```sh
+```bash
 $ ./build/devel/lib/test_planner_2d ../data/corridor.yaml
 ```
 
@@ -212,13 +214,19 @@ It is recommended to visualize the `svg` in web browser (for example, `firefox o
 
 #### Example2 (planning with a prior trajectory):
 Run following command for test a 2D planning, it first finds a trajector in low dimensional space (acceleration-driven), then it uses the planned trajectory to refine for a trajectory in high dimensional space (jerk-driven):
-```sh
+```bash
 $ ./build/devel/lib/test_planner_2d_prior_traj ../data/corridor.yaml
 ```
 
 In the following output image, the black curve is the prior trajectory:
 ![Visualization](./data/example2.png)
 
+#### Example3 (trajectory generation):
+Generate trajectory from a given path, without obstacles:
+```bash
+$ ./build/devel/lib/test_traj_solver
+```
+![Visualization](./data/example3.png)
 
 ## Doxygen
 For API, please refer to [Doxygen](https://sikang.github.io/motion_primitive_library).
