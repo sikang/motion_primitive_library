@@ -210,6 +210,33 @@ public:
     potential_weight_ = w;
   }
 
+  ///Print out params
+  void info() {
+      printf("++++++++++++++++++++ env_map ++++++++++++++++++\n");
+      printf("+                  w: %.2f               +\n", this->w_);
+      printf("+               wyaw: %.2f               +\n", this->wyaw_);
+      printf("+                 dt: %.2f               +\n", this->dt_);
+      printf("+                 ds: %.2f               +\n", this->ds_);
+      printf("+                 dv: %.2f               +\n", this->dv_);
+      printf("+                 da: %.2f               +\n", this->da_);
+      printf("+                 dj: %.2f               +\n", this->dj_);
+      printf("+              v_max: %.2f               +\n", this->v_max_);
+      printf("+              a_max: %.2f               +\n", this->a_max_);
+      printf("+              j_max: %.2f               +\n", this->j_max_);
+      printf("+            yaw_max: %.2f               +\n", this->yaw_max_);
+      printf("+              U num: %zu                +\n", this->U_.size());
+      printf("+            tol_dis: %.2f               +\n", this->tol_dis_);
+      printf("+            tol_vel: %.2f               +\n", this->tol_vel_);
+      printf("+            tol_acc: %.2f               +\n", this->tol_acc_);
+      printf("+            tol_yaw: %.2f               +\n", this->tol_yaw_);
+      printf("+              alpha: %d                 +\n", this->alpha_);
+      printf("+heur_ignore_dynamics: %d                 +\n", this->heur_ignore_dynamics_);
+      printf("+    potential_weight: %.2f                 +\n", potential_weight_);
+      printf("+     gradient_weight: %.2f                 +\n", gradient_weight_);
+      printf("++++++++++++++++++++ env_map ++++++++++++++++++\n");
+  }
+
+
 protected:
   /// Collision checking util
   std::shared_ptr<MapUtil<Dim>> map_util_;

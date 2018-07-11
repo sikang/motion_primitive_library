@@ -232,6 +232,8 @@ vec_Vec3f MapPlanner<Dim>::getGradientCloud(decimal_t h_max, int i) {
   const auto dim = this->map_util_->getDim();
   const decimal_t ratio = h_max / H_MAX;
   vec_Vec3f ps;
+  if(gradient_map_.empty())
+    return ps;
   Veci<Dim> n;
   if(Dim == 2) {
     for(n(0) = 0; n(0) < dim(0); n(0)++) {

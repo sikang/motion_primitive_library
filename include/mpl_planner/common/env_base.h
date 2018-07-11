@@ -413,9 +413,9 @@ class env_base {
     }
 
     ///Print out params
-    void info() {
+    virtual void info() {
       printf(ANSI_COLOR_YELLOW "\n");
-      printf("++++++++++++++++++ PLANNER +++++++++++++++\n");
+      printf("++++++++++++++++++++ env_base ++++++++++++++++++\n");
       printf("+                  w: %.2f               +\n", w_);
       printf("+               wyaw: %.2f               +\n", wyaw_);
       printf("+                 dt: %.2f               +\n", dt_);
@@ -434,7 +434,7 @@ class env_base {
       printf("+            tol_yaw: %.2f               +\n", tol_yaw_);
       printf("+              alpha: %d                 +\n", alpha_);
       printf("+heur_ignore_dynamics: %d                 +\n", heur_ignore_dynamics_);
-      printf("++++++++++ PLANNER +++++++++++\n");
+      printf("++++++++++++++++++++ env_base ++++++++++++++++++\n");
       printf(ANSI_COLOR_RESET "\n");
     }
 
