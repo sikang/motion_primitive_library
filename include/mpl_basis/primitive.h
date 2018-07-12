@@ -86,7 +86,7 @@ class Primitive1D {
    * @param t assume the duration is from 0 to t
    * @param control effort is defined as \f$i\f$-th derivative of polynomial
    */
-  decimal_t J(decimal_t t, Control::Control control) const {
+  decimal_t J(decimal_t t, const Control::Control& control) const {
     // i = 1, return integration of square of vel
     if (control == Control::VEL || control == Control::VELxYAW)
       return c(0) * c(0) / 5184 * power(t, 9) + c(0) * c(1) / 576 * power(t, 8) +
@@ -97,19 +97,19 @@ class Primitive1D {
         (c(3) * c(3) / 3 + c(2) * c(4) / 3) * power(t, 3) +
         c(3) * c(4) * t * t + c(4) * c(4) * t;
     // i = 2, return integration of square of acc
-    else if (control == Control::ACC || Control::ACCxYAW)
+    else if (control == Control::ACC || control == Control::ACCxYAW)
       return c(0) * c(0) / 252 * power(t, 7) + c(0) * c(1) / 36 * power(t, 6) +
         (c(1) * c(1) / 20 + c(0) * c(2) / 15) * power(t, 5) +
         (c(0) * c(3) / 12 + c(1) * c(2) / 4) * power(t, 4) +
         (c(2) * c(2) / 3 + c(1) * c(3) / 3) * power(t, 3) +
         c(2) * c(3) * t * t + c(3) * c(3) * t;
     // i = 3, return integration of square of jerk
-    else if (control == Control::JRK || Control::JRKxYAW)
+    else if (control == Control::JRK || control == Control::JRKxYAW)
       return c(0) * c(0) / 20 * power(t, 5) + c(0) * c(1) / 4 * power(t, 4) +
         (c(1) * c(1) + c(0) * c(2)) / 3 * power(t, 3) +
-        c(2) * c(2) * t * t +c(2) * c(2) * t;
+        c(2) * c(2) * t * t + c(2) * c(2) * t;
     // i = 4, return integration of square of snap
-    else if (control == Control::SNP || Control::SNPxYAW)
+    else if (control == Control::SNP || control == Control::SNPxYAW)
       return c(0) * c(0) / 3 * power(t, 3) + c(0) * c(1) * t * t +
         c(1) * c(1) * t;
     else
@@ -491,7 +491,7 @@ class Primitive {
    * Return J is the summation of efforts in all three dimensions and
    * \f$J(i) = \int_0^t |p^{i}(t)|^2dt\f$
    */
-  decimal_t J(Control::Control control) const {
+  decimal_t J(const Control::Control& control) const {
     decimal_t j = 0;
     for (const auto &pr : prs_)
       j += pr.J(t_, control);

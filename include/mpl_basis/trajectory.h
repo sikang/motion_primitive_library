@@ -217,19 +217,19 @@ class Trajectory {
      * Return J is the summation of efforts in all three dimensions
      * @param control effort is defined as \f$i\f$-th derivative of polynomial
      */
-    decimal_t J(Control::Control control) const {
-      decimal_t J = 0;
+    decimal_t J(const Control::Control& control) const {
+      decimal_t j = 0;
       for (const auto &seg : segs)
-        J += seg.J(control);
-      return J;
+        j += seg.J(control);
+      return j;
     }
 
     /// Return tota yaw efforts
     decimal_t Jyaw() const {
-      decimal_t J = 0;
+      decimal_t j = 0;
       for (const auto &seg : segs)
-        J += seg.Jyaw();
-      return J;
+        j += seg.Jyaw();
+      return j;
     }
 
 

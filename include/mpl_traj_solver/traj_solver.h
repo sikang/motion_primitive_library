@@ -49,7 +49,7 @@ public:
   }
 
   Trajectory<Dim> solve(bool verbose = false) {
-    if (waypoints_.size() != dts_.size() - 1)
+    if (waypoints_.size() != dts_.size() + 1)
       dts_ = allocate_time(path_, v_);
 
     if(verbose) {
