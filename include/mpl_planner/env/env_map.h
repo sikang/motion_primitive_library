@@ -231,8 +231,10 @@ public:
       printf("+            tol_yaw: %.2f               +\n", this->tol_yaw_);
       printf("+              alpha: %d                 +\n", this->alpha_);
       printf("+heur_ignore_dynamics: %d                 +\n", this->heur_ignore_dynamics_);
-      printf("+    potential_weight: %.2f                 +\n", potential_weight_);
-      printf("+     gradient_weight: %.2f                 +\n", gradient_weight_);
+      if(!potential_map_.empty())
+        printf("+    potential_weight: %.2f                 +\n", potential_weight_);
+      if(!gradient_map_.empty())
+        printf("+     gradient_weight: %.2f                 +\n", gradient_weight_);
       printf("++++++++++++++++++++ env_map ++++++++++++++++++\n");
   }
 

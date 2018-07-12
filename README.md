@@ -10,8 +10,10 @@ It does not assume a hovering initial condition and, hence, is suitable for fast
 
 For technical details, refer to the original paper ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/) that has been published in IROS 2017.
 
-## New Features
+## New Features in v1.0
   - Reformat the repo structure
+  - Add yaw primitive
+  - Add potential function to perturb trajectory
 
 ## Installation
 #### Prerequisite:
@@ -72,7 +74,7 @@ target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
 
 ## Example Usage
 ### Preparation
-Three components are required to be set properly before running the planner:
+To run the planner, three components are required to be set properly:
 
 #### 1) Set Start and Goal:
 We use the`class Waypoint` for the start and goal. A `Waypoint` contains coordinates of position, velocity, etc and the flag `use_xxx` to indicate the control input.
@@ -107,9 +109,10 @@ In equal, one can also set the attribute `control` of `Waypoint` for the same pu
 `control:` | `Control::VEL` | `Control::ACC` | `Control::JRK` | `Control::SNP` | `Control::VELxYAW` | `Control::ACCxYAW` | `Control::JRKxYAW` | `Control::SNPxYAW`
 
 #### 2) Set collision checking method:
-Any planner needs a collision checking function, there are several utils in this package to avoid obstacles in different representations. In the most common environment where obstacles are represented as voxels, we use `class MapUtil` which is a template class that adapts to 2D (`OccMapUtil`) and 3D (`VoxelMapUtil`) cases.
+Any planner needs a collision checking function, there are several utils in this package to checking collision for obstacles in different representations.
+In the most common environment where obstacles are represented as voxels, we use `class MapUtil` which is a template class that adapts to 2D (`OccMapUtil`) and 3D (`VoxelMapUtil`).
 An example for initializing a 2D collision checking `OccMapUtil` is given as:
-```
+```c++
 std::shared_ptr<MPL::OccMapUtil> map_util; // Declare as a shared pointer
 map_util.reset(new MPL::OccMapUtil); // Initialize map_util
 map_util->setMap(origin, dim, data, resolution); // Set the map information
@@ -117,9 +120,10 @@ map_util->setMap(origin, dim, data, resolution); // Set the map information
 planner->setMapUtil(map_util); // Set collision checking util
 ```
 
+Here `origin`, `dim`, `data` and `resolution` are user input.
+
 #### 3) Set control input:
-Our planner takes control input to generate primitives. User need to specify it
-before start planning.
+Our planner takes control input to generate primitives. User need to specify it before start planning.
 An example for the control input `U` for 2D planning is given as following, in this case, `U` simply include 9 elements:
 ```c++
 decimal_t u_max = 0.5;
