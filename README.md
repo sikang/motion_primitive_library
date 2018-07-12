@@ -151,7 +151,7 @@ bool valid = planner->plan(start, goal); // Plan from start to goal
 #### Example1 (direct planning):
 After compiling by `cmake`, run following command for test a 2D planning in a given map:
 ```bash
-$ ./build/devel/lib/test_planner_2d ../data/corridor.yaml
+$ ./build/test_planner_2d ./data/corridor.yaml
 ```
 
 You should see following messages if it works properly:
@@ -219,20 +219,31 @@ It is recommended to visualize the `svg` in web browser (for example, `firefox o
 #### Example2 (planning with a prior trajectory):
 Run following command for test a 2D planning, it first finds a trajector in low dimensional space (acceleration-driven), then it uses the planned trajectory to refine for a trajectory in high dimensional space (jerk-driven):
 ```bash
-$ ./build/devel/lib/test_planner_2d_prior_traj ../data/corridor.yaml
+$ ./build/test_planner_2d_prior_traj ./data/corridor.yaml
 ```
 
 In the following output image, the black curve is the prior trajectory:
 ![Visualization](./data/example2.png)
 
-#### Example3 (trajectory generation):
-Generate trajectory from a given path, without obstacles:
+#### Example3 (plan with yaw):
+In some cases, the robot needs to move forward within the FOV of the camera or
+range sensor such that the yaw needs to be considered when planning. `MapPlanner` handles the yaw constraint properly.
+Following image shows the output of running:
 ```bash
-$ ./build/devel/lib/test_traj_solver
+$ ./build/test_planner_2d_with_yaw ./data/corridor.yaml
 ```
 ![Visualization](./data/example3.png)
 
+#### Example4 (trajectory generation):
+Generate trajectory from a given path, without obstacles:
+```bash
+$ ./build/test_traj_solver
+```
+![Visualization](./data/example4.png)
+
 Here we generate three different trajectories using the same path and time allocation: the red one is minimum velocity trajectory, the green one is the minimum acceleration trajectory and the blue one is the minimum jerk trajectory.
+
+
 
 ## Doxygen
 For API, please refer to [Doxygen](https://sikang.github.io/motion_primitive_library).

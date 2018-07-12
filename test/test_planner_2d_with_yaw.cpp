@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
   start.use_vel = true;
   start.use_acc = false;
   start.use_jrk = false;
-  start.use_yaw = false;
+  start.use_yaw = true;
 
   goal.pos = Vec2f(reader.goal(0), reader.goal(1));
   goal.vel = Vec2f::Zero();
@@ -48,12 +48,14 @@ int main(int argc, char **argv) {
   goal.control = start.control;
 
   // Initialize control input
+  decimal_t u_yaw = 0.5;
   decimal_t u = 0.5;
   decimal_t du = u;
   vec_E<VecDf> U;
   for (decimal_t dx = -u; dx <= u; dx += du)
     for (decimal_t dy = -u; dy <= u; dy += du)
-      U.push_back(Vec2f(dx, dy));
+      for (decimal_t dyaw = -u_yaw; dyaw <= u_yaw; dyaw += u_yaw)
+        U.push_back(Vec3f(dx, dy, dyaw));
 
   // Initialize planner
   std::unique_ptr<MPL::OccMapPlanner> planner(
@@ -61,6 +63,7 @@ int main(int argc, char **argv) {
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
+  planner->setYawmax(0.7);       // Set yaw threshold
   planner->setDt(1.0);           // Set dt for each primitive
   planner->setU(U);              // Set control input
 
@@ -132,8 +135,9 @@ int main(int argc, char **argv) {
     Trajectory2D traj = planner->getTraj();
     double total_t = traj.getTotalTime();
     printf("Total time T: %f\n", total_t);
-    printf("Total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
-           traj.J(Control::VEL), traj.J(Control::ACC), traj.J(Control::JRK), traj.J(Control::SNP));
+    printf("Total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f, J(YAW) = %f\n",
+           traj.J(Control::VEL), traj.J(Control::ACC), traj.J(Control::JRK),
+           traj.J(Control::SNP), traj.Jyaw());
     int num = 200; // number of points on trajectory to draw
     const auto ws = traj.sample(num);
     boost::geometry::model::linestring<point_2d> line;
@@ -142,6 +146,31 @@ int main(int argc, char **argv) {
     mapper.add(line);
     mapper.map(line,
         "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
+    // Draw yaw
+    const auto ws_yaw = traj.sample(20);
+    decimal_t dyaw = 0.7;
+    Vec2f d(0.7, 0);
+    for (const auto& w: ws_yaw) {
+      decimal_t yaw = w.yaw;
+      decimal_t yaw1 = yaw + dyaw;
+      decimal_t yaw2 = yaw - dyaw;
+      Mat2f Ryaw1, Ryaw2;
+      Ryaw1 << cos(yaw1), -sin(yaw1), sin(yaw1), cos(yaw1);
+      Ryaw2 << cos(yaw2), -sin(yaw2), sin(yaw2), cos(yaw2);
+      Vec2f p1 = w.pos;
+      Vec2f p2 = w.pos + Ryaw1*d;
+      Vec2f p3 = w.pos + Ryaw2*d;
+      Vec2f p4 = (p2+p3)/2;
+      boost::geometry::model::linestring<point_2d> tria;
+      tria.push_back(point_2d(p1(0), p1(1)));
+      tria.push_back(point_2d(p2(0), p2(1)));
+      tria.push_back(point_2d(p3(0), p3(1)));
+      tria.push_back(point_2d(p1(0), p1(1)));
+      tria.push_back(point_2d(p4(0), p4(1)));
+      mapper.add(tria);
+      mapper.map(tria,
+                 "opacity:0.8;fill:none;stroke:rgb(212,0,0);stroke-width:2"); // Red
+    }
 
     // Draw states along trajectory
     for (const auto &pt : traj.getWaypoints()) {
@@ -153,8 +182,9 @@ int main(int argc, char **argv) {
   }
 
   // Write title at the lower right corner on canvas
-  mapper.text(point_2d(origin_x + range_x - 6, origin_y+0.8), "test_planner_2d",
+  mapper.text(point_2d(origin_x + range_x - 9, origin_y+0.8), "test_planner_2d_with_yaw",
               "fill-opacity:1.0;fill:rgb(10,10,250);");
+
 
   return 0;
 }

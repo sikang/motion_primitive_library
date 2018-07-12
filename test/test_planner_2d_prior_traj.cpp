@@ -48,11 +48,11 @@ int main(int argc, char **argv) {
   goal.control = start.control;
 
   // Initialize control input
-  decimal_t u_max = 1.0;
-  decimal_t du = u_max;
+  decimal_t u = 1.0;
+  decimal_t du = u;
   vec_E<VecDf> U;
-  for (decimal_t dx = -u_max; dx <= u_max; dx += du)
-    for (decimal_t dy = -u_max; dy <= u_max; dy += du)
+  for (decimal_t dx = -u; dx <= u; dx += du)
+    for (decimal_t dy = -u; dy <= u; dy += du)
       U.push_back(Vec2f(dx, dy));
 
   // Initialize planner
@@ -85,11 +85,11 @@ int main(int argc, char **argv) {
   start.use_jrk = false;
 
   // Reset control input
-  u_max = 0.5;
-  du = u_max;
+  u = 0.5;
+  du = u;
   U.clear();
-  for (decimal_t dx = -u_max; dx <= u_max; dx += du)
-    for (decimal_t dy = -u_max; dy <= u_max; dy += du)
+  for (decimal_t dx = -u; dx <= u; dx += du)
+    for (decimal_t dy = -u; dy <= u; dy += du)
       U.push_back(Vec2f(dx, dy));
 
   // Reset planner
@@ -176,28 +176,17 @@ int main(int argc, char **argv) {
     printf("Refined total J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
            traj.J(Control::VEL), traj.J(Control::ACC), traj.J(Control::JRK), traj.J(Control::SNP));
 
-    // printf("alpha: %d, ratio: %f\n", alpha, (10 * total_t +
-    // traj.J(1))/(10*prior_traj.getTotalTime() + prior_traj.J(1)));
-
     // Draw trajectory (Red thick line)
-    int num = 500; // number of points on trajectory to draw
-    double dt = total_t / num;
+    int num = 200; // number of points on trajectory to draw
+    const auto ws = traj.sample(num);
     boost::geometry::model::linestring<point_2d> line;
-    Vec2f prev_pt;
-    for (double t = 0; t <= total_t; t += dt) {
-      Waypoint2D w;
-      traj.evaluate(t, w);
-      if ((w.pos - prev_pt).norm() > 0.2) {
+    for (const auto& w: ws)
         line.push_back(point_2d(w.pos(0), w.pos(1)));
-        prev_pt = w.pos;
-      }
-    }
     mapper.add(line);
-    mapper.map(
-        line,
+    mapper.map(line,
         "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
 
-    // Draw states long trajectory
+    // Draw states along trajectory
     for (const auto &pt : traj.getWaypoints()) {
       point_2d a;
       boost::geometry::assign_values(a, pt.pos(0), pt.pos(1));
@@ -206,22 +195,19 @@ int main(int argc, char **argv) {
     }
 
     // Draw prior trajectory (Black thin line)
-    total_t = prior_traj.getTotalTime();
-    dt = total_t / num;
+    const auto prior_ws = prior_traj.sample(num);
     boost::geometry::model::linestring<point_2d> prior_line;
-    for (double t = 0; t <= total_t; t += dt) {
-      Waypoint2D w;
-      prior_traj.evaluate(t, w);
-      if ((w.pos - prev_pt).norm() > 0.2) {
+    for (const auto& w: prior_ws)
         prior_line.push_back(point_2d(w.pos(0), w.pos(1)));
-        prev_pt = w.pos;
-      }
-    }
     mapper.add(prior_line);
-    mapper.map(
-        prior_line,
+    mapper.map(prior_line,
         "opacity:1.0;fill:none;stroke:rgb(0,10,0);stroke-width:2"); // Black
   }
+
+  // Write title at the lower right corner on canvas
+  mapper.text(point_2d(origin_x + range_x - 9, origin_y+0.8), "test_planner_2d_prior_traj",
+              "fill-opacity:1.0;fill:rgb(10,10,250);");
+
 
   return 0;
 }

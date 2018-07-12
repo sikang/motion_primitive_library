@@ -224,6 +224,16 @@ class Trajectory {
       return J;
     }
 
+    /// Return tota yaw efforts
+    decimal_t Jyaw() const {
+      decimal_t J = 0;
+      for (const auto &seg : segs)
+        J += seg.Jyaw();
+      return J;
+    }
+
+
+
     ///Get time for each segment
     std::vector<decimal_t> getSegmentTimes() const {
       std::vector<decimal_t> dts;

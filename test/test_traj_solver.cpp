@@ -87,5 +87,26 @@ int main(int argc, char **argv) {
     mapper.map(pt, "fill-opacity:1.0;fill:rgb(255,0,0);", 10); // Red
   }
 
+  // Write title at the lower right corner on canvas
+  mapper.text(point_2d(4.0, -0.2), "test_traj_solver",
+              "fill-opacity:1.0;fill:rgb(10,10,250);");
+
+  mapper.text(point_2d(3.5, -0.4), "Red: ",
+              "fill-opacity:1.0;fill:rgb(237,10,63);");
+  mapper.text(point_2d(4.0, -0.4), "minimum velocity trajectory",
+              "fill-opacity:1.0;fill:rgb(0,0,0);");
+
+  mapper.text(point_2d(3.5, -0.6), "Green: ",
+              "fill-opacity:1.0;fill:rgb(94,140,49);");
+  mapper.text(point_2d(4.0, -0.6), "minimum acceleration trajectory",
+              "fill-opacity:1.0;fill:rgb(0,0,0);");
+
+  mapper.text(point_2d(3.5, -0.8), "Blue: ",
+              "fill-opacity:1.0;fill:rgb(118,215,234);");
+  mapper.text(point_2d(4.0, -0.8), "minimum jerk trajectory",
+              "fill-opacity:1.0;fill:rgb(0,0,0);");
+
+
+
   return 0;
 }

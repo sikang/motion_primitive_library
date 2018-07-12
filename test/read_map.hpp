@@ -48,7 +48,7 @@ public:
       const std::vector<int> &data = config[5]["data"].as<std::vector<int>>();
       data_.resize(data.size());
       for (unsigned int i = 0; i < data.size(); i++)
-        data_[i] = data[i] > 0 ? 1 : 0;
+        data_[i] = data[i] > 0 ? 100 : 0;
 
       exist_ = true;
     } catch (YAML::ParserException &e) {
