@@ -30,6 +30,7 @@ struct Waypoint {
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
+  decimal_t yaw_dot; ///<yaw velocity
 
   union {
     struct {

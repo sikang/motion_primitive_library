@@ -69,22 +69,17 @@ class Trajectory {
         if (tau >= taus[id] && tau <= taus[id + 1]) {
           tau -= taus[id];
           for (int j = 0; j < Dim; j++) {
-            p.control = segs[id].control();
             const auto pr = segs[id].pr(j);
-            if(p.use_pos)
-              p.pos(j) = pr.p(tau);
-            if(p.use_vel)
-              p.vel(j) = pr.v(tau) / lambda;
-            if(p.use_acc)
-              p.acc(j) = pr.a(tau) / lambda / lambda -
-                p.vel(j) * lambda_dot / lambda / lambda / lambda;
-            if(p.use_jrk)
-              p.jrk(j) = pr.j(tau) / lambda / lambda -
-                3 / power(lambda, 3) * p.acc(j) * p.acc(j) * lambda_dot +
-                3 / power(lambda, 4) * p.vel(j) * lambda_dot *
-                lambda_dot;
-            if(p.use_yaw)
-              p.yaw = normalize_angle(segs[id].pr_yaw().p(tau));
+            p.pos(j) = pr.p(tau);
+            p.vel(j) = pr.v(tau) / lambda;
+            p.acc(j) = pr.a(tau) / lambda / lambda -
+              p.vel(j) * lambda_dot / lambda / lambda / lambda;
+            p.jrk(j) = pr.j(tau) / lambda / lambda -
+              3 / power(lambda, 3) * p.acc(j) * p.acc(j) * lambda_dot +
+              3 / power(lambda, 4) * p.vel(j) * lambda_dot *
+              lambda_dot;
+            p.yaw = normalize_angle(segs[id].pr_yaw().p(tau));
+            p.yaw_dot = normalize_angle(segs[id].pr_yaw().v(tau));
           }
           return true;
         }
