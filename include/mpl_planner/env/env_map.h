@@ -153,31 +153,9 @@ public:
     for (unsigned int i = 0; i < this->U_.size(); i++) {
       Primitive<Dim> pr(curr, this->U_[i], this->dt_);
       Waypoint<Dim> tn = pr.evaluate(this->dt_);
-      if (tn == curr)
+      if (tn == curr || !validate_primitive(pr, this->v_max_, this->a_max_,
+                                            this->j_max_, this->yaw_max_))
         continue;
-      if (pr.control() == Control::ACC && !pr.validate_vel(this->v_max_))
-        continue;
-      if (pr.control() == Control::JRK &&
-          (!pr.validate_vel(this->v_max_) || !pr.validate_acc(this->a_max_)))
-        continue;
-      if (pr.control() == Control::SNP &&
-          (!pr.validate_vel(this->v_max_) || !pr.validate_acc(this->a_max_) ||
-           !pr.validate_jrk(this->j_max_)))
-        continue;
-      if (pr.control() == Control::VELxYAW && !pr.validate_yaw(this->yaw_max_))
-        continue;
-      if (pr.control() == Control::ACCxYAW &&
-          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_)))
-        continue;
-      if (pr.control() == Control::JRKxYAW &&
-          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_) ||
-           !pr.validate_acc(this->a_max_)))
-        continue;
-      if (pr.control() == Control::SNPxYAW &&
-          (!pr.validate_yaw(this->yaw_max_) || !pr.validate_vel(this->v_max_) ||
-           !pr.validate_acc(this->a_max_) || !pr.validate_jrk(this->j_max_)))
-        continue;
-
       succ.push_back(tn);
       succ_idx.push_back(this->state_to_idx(tn));
       //std::cout << succ_idx.back() << std::endl;

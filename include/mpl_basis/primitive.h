@@ -409,82 +409,6 @@ class Primitive {
   }
 
   /**
-   * @brief Check if the max velocity magnitude is within the threshold
-   * @param mv is the max threshold
-   *
-   * Use L1 norm for the maximum
-   */
-  bool validate_vel(decimal_t mv) const {
-    // ignore negative threshold
-    if (mv < 0)
-      return true;
-    // check if max vel is violating the constraint
-    for (int i = 0; i < Dim; i++) {
-      if (max_vel(i) > mv)
-        return false;
-    }
-    return true;
-  }
-
-  /**
-   * @brief Check if the max acceleration magnitude is within the threshold
-   * @param ma is the max threshold
-   *
-   * Use L1 norm for the maximum
-   */
-  bool validate_acc(decimal_t ma) const {
-    // ignore negative threshold
-    if (ma < 0)
-      return true;
-    // check if max acc is violating the constraint
-    for (int i = 0; i < Dim; i++) {
-      if (max_acc(i) > ma)
-        return false;
-    }
-    return true;
-  }
-
-  /**
-   * @brief Check if the max jerk magnitude is within the threshold
-   * @param mj is the max threshold
-   *
-   * Use L1 norm for the maximum
-   */
-  bool validate_jrk(decimal_t mj) const {
-    // ignore negative threshold
-    if (mj < 0)
-      return true;
-    // check if max jerk is violating the constraint
-    for (int i = 0; i < Dim; i++) {
-      if (max_jrk(i) > mj)
-        return false;
-    }
-    return true;
-  }
-
-  /**
-   * @brief Check if the successor goes outside of the fov
-   * @param my is the semi-fov
-   *
-   */
-  bool validate_yaw(decimal_t my) const {
-    // ignore negative threshold
-    if (my < 0)
-      return true;
-    // check if angle between two ends exceed the threshold my
-    const auto p1 = evaluate(0);
-    const auto p2 = evaluate(t_);
-    const auto dp = (p2.pos - p1.pos).template topRows<2>();
-    if(dp.norm() < 1e-5)
-      return true;
-    else {
-      decimal_t yaw = std::atan2(dp(1), dp(0));
-      decimal_t dyaw = normalize_angle(yaw - p1.yaw);
-      return std::abs(dyaw) < my;
-    }
-  }
-
-  /**
    * @brief Return total efforts for the given duration
    * @param control effort is defined as \f$i\f$-th derivative of polynomial
    *
@@ -532,6 +456,88 @@ typedef Primitive<2> Primitive2D;
 typedef Primitive<3> Primitive3D;
 
 /************************* Utils ******************************/
+/**
+ * @brief Check if the max velocity magnitude is within the threshold
+ * @param mv is the max threshold
+ *
+ * Use L1 norm for the maximum
+ */
+template <int Dim>
+bool validate_primitive(const Primitive<Dim>& pr,
+                        decimal_t mv  = 0, decimal_t ma = 0,
+                        decimal_t mj = 0, decimal_t myaw = 0) {
+  if (pr.control() == Control::ACC)
+    return validate_xxx(pr, mv, Control::VEL);
+  else if (pr.control() == Control::JRK)
+    return validate_xxx(pr, mv, Control::VEL) &&
+      validate_xxx(pr, ma, Control::ACC);
+  else if (pr.control() == Control::SNP)
+    return validate_xxx(pr, mv, Control::VEL) &&
+      validate_xxx(pr, ma, Control::ACC) &&
+      validate_xxx(pr, mj, Control::JRK);
+  else if (pr.control() == Control::VELxYAW)
+    return validate_yaw(pr, myaw);
+  else if (pr.control() == Control::ACCxYAW)
+    return validate_yaw(pr, myaw) &&
+      validate_xxx(pr, mv, Control::VEL);
+  else if (pr.control() == Control::JRKxYAW)
+    return validate_yaw(pr, myaw) &&
+      validate_xxx(pr, mv, Control::VEL) &&
+      validate_xxx(pr, ma, Control::ACC);
+  else if (pr.control() == Control::SNPxYAW)
+    return validate_yaw(pr, myaw) &&
+      validate_xxx(pr, mv, Control::VEL) &&
+      validate_xxx(pr, ma, Control::ACC) &&
+      validate_xxx(pr, mj, Control::JRK);
+  else
+    return true;
+}
+/**
+ * @brief Check if the max velocity magnitude is within the threshold
+ * @param mv is the max threshold
+ *
+ * Use L1 norm for the maximum
+ */
+template <int Dim>
+bool validate_xxx(const Primitive<Dim>& pr, decimal_t max, Control::Control xxx) {
+  if(max <= 0)
+    return true;
+  // check if max vel is violating the constraint
+  for (int i = 0; i < Dim; i++) {
+    if (xxx == Control::VEL && pr.max_vel(i) > max)
+      return false;
+    else if (xxx == Control::ACC && pr.max_acc(i) > max)
+      return false;
+    else if (xxx == Control::JRK && pr.max_jrk(i) > max)
+      return false;
+  }
+  return true;
+}
+
+/**
+ * @brief Check if the successor goes outside of the fov
+ * @param my is the semi-fov
+ *
+ */
+template <int Dim>
+bool validate_yaw(const Primitive<Dim>& pr, decimal_t my) {
+  // ignore negative threshold
+  if (my <= 0)
+    return true;
+  // check if angle between two ends exceed the threshold my
+  const auto p1 = pr.evaluate(0);
+  const auto p2 = pr.evaluate(pr.t());
+  const auto dp = (p2.pos - p1.pos).template topRows<2>();
+  if(dp.norm() < 1e-5)
+    return true;
+  else {
+    decimal_t yaw = std::atan2(dp(1), dp(0));
+    decimal_t dyaw = normalize_angle(yaw - p1.yaw);
+    return std::abs(dyaw) < my;
+  }
+}
+
+
 ///Print all coefficients in primitive p
 template <int Dim>
 void print(const Primitive<Dim>& p) {

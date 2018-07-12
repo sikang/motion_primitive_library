@@ -61,9 +61,7 @@ public:
     for (int i = 0; i < (int)U_.size(); i++) {
       Primitive3D pr(curr, U_[i], dt_);
       Waypoint3D tn = pr.evaluate(dt_);
-      if (pr.validate_vel(v_max_) &&
-          pr.validate_acc(a_max_) &&
-          pr.validate_jrk(j_max_)) {
+      if (validate_primitive(pr, v_max_, a_max_, j_max_)) {
         bool valid = map_util_->isFree(pr);
         if (valid) {
           // primitives_.push_back(pr);
