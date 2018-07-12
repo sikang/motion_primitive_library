@@ -228,6 +228,8 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
   return true;
 }
 
+template class PolySolver<1>;
+
 template class PolySolver<2>;
 
 template class PolySolver<3>;

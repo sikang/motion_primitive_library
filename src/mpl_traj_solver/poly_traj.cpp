@@ -95,6 +95,8 @@ template <int Dim> MatDNf<Dim> PolyTraj<Dim>::p() {
   return p;
 }
 
+template class PolyTraj<1>;
+
 template class PolyTraj<2>;
 
 template class PolyTraj<3>;

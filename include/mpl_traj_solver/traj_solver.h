@@ -7,20 +7,35 @@
 #include <mpl_traj_solver/poly_solver.h>
 #include <mpl_basis/trajectory.h>
 
+/// Trajectory generator
 template <int Dim> class TrajSolver {
 public:
-  TrajSolver(Control::Control control) : control_(control) {
+  /**
+   * @brief Constructor
+   * @param control define the control flag for start and end
+   * @param yaw_control define the control flag for yaw start and end
+   */
+  TrajSolver(Control::Control control,
+             Control::Control yaw_control = Control::VEL)
+      : control_(control), yaw_control_(yaw_control) {
     if(control == Control::VEL || control == Control::VELxYAW)
       poly_solver_.reset(new PolySolver<Dim>(0, 1));
-    if(control == Control::ACC || control == Control::ACCxYAW)
+    else if(control == Control::ACC || control == Control::ACCxYAW)
       poly_solver_.reset(new PolySolver<Dim>(1, 2));
-    if(control == Control::JRK || control == Control::JRKxYAW)
+    else if(control == Control::JRK || control == Control::JRKxYAW)
       poly_solver_.reset(new PolySolver<Dim>(2, 3));
     //Due to dimension issue, only workd up to thrid order
     //if(control == Control::SNP || control == Control::SNPxYAW)
-      //poly_solver_.reset(new PolySolver<Dim>(3, 4));
+    //poly_solver_.reset(new PolySolver<Dim>(3, 4));
+    if(yaw_control == Control::VEL)
+      yaw_solver_.reset(new PolySolver<1>(0, 1));
+    else if(yaw_control == Control::ACC)
+      yaw_solver_.reset(new PolySolver<1>(1, 2));
+    else if(yaw_control == Control::JRK)
+      yaw_solver_.reset(new PolySolver<1>(2, 3));
   }
 
+  /// Set waypoints directly, overwrite global vars
   void setWaypoints(const vec_E<Waypoint<Dim>> &ws) {
     path_.resize(ws.size());
     for (size_t i = 0; i < ws.size(); i++)
@@ -30,8 +45,10 @@ public:
 
   void setV(decimal_t v) { v_ = v; }
 
+  /// Set time allocation (optional), overwrite global dts, if not set, we will set a time allocation using L-inf
   void setDts(const std::vector<decimal_t> &dts) { dts_ = dts; }
 
+  /// Set waypoints from path, overwrite global vars, in this mode, the intermediate waypoints are with Control::VEL
   void setPath(const vec_Vecf<Dim>& path) {
     path_ = path;
 
@@ -41,6 +58,7 @@ public:
       waypoints_[i].vel = Vecf<Dim>::Zero();
       waypoints_[i].acc = Vecf<Dim>::Zero();
       waypoints_[i].jrk = Vecf<Dim>::Zero();
+      waypoints_[i].yaw = 0;
       waypoints_[i].control = Control::VEL;
     }
 
@@ -48,6 +66,7 @@ public:
     waypoints_.back().control = control_;
   }
 
+  /// Solve for trajectory
   Trajectory<Dim> solve(bool verbose = false) {
     if (waypoints_.size() != dts_.size() + 1)
       dts_ = allocate_time(path_, v_);
@@ -59,9 +78,27 @@ public:
         it.print();
     }
 
-    if(poly_solver_) {
+    if(poly_solver_ && yaw_solver_) {
+      // solve for pos
       poly_solver_->solve(waypoints_, dts_);
-      return Trajectory<Dim>(poly_solver_->getTrajectory()->toPrimitives());
+      auto traj = Trajectory<Dim>(poly_solver_->getTrajectory()->toPrimitives());
+      // solve for yaw
+      vec_E<Waypoint<1>> yaws;
+      for(const auto& it: waypoints_) {
+        Waypoint<1> yaw(Control::VEL);
+        yaw.pos(0) = it.yaw;
+        yaw.vel(0) = 0;
+        yaw.acc(0) = 0;
+        yaw.jrk(0) = 0;
+        yaws.push_back(yaw);
+      }
+      yaws.front().control = yaw_control_;
+      yaws.back().control = yaw_control_;
+      yaw_solver_->solve(yaws, dts_);
+      auto yaw_prs = yaw_solver_->getTrajectory()->toPrimitives();
+      for(size_t i = 0; i < traj.segs.size(); i++)
+        traj.segs[i].pr_yaw_ = yaw_prs[i].prs_[0];
+      return traj;
     }
     else {
       if(verbose)
@@ -103,9 +140,13 @@ private:
 
   /// Control constraints for start and goal
   Control::Control control_;
+  /// Control constraints for start and goal yaw
+  Control::Control yaw_control_;
 
   /// Poly solver
   std::unique_ptr<PolySolver<Dim>> poly_solver_;
+  /// Poly solver for yaw only
+  std::unique_ptr<PolySolver<1>> yaw_solver_;
 };
 
 ///TrajSolver for 2D
@@ -113,5 +154,4 @@ typedef TrajSolver<2> TrajSolver2D;
 
 ///TrajSolver for 3D
 typedef TrajSolver<3> TrajSolver3D;
-#
 #endif

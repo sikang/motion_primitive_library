@@ -291,8 +291,6 @@ class Trajectory {
       return j;
     }
 
-
-
     ///Get time for each segment
     std::vector<decimal_t> getSegmentTimes() const {
       std::vector<decimal_t> dts;
