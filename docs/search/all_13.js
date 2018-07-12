@@ -19,7 +19,7 @@ var searchData=
   ['trajectory_2eh',['trajectory.h',['../trajectory_8h.html',1,'']]],
   ['trajectory2d',['Trajectory2D',['../trajectory_8h.html#aa445083de7adeca74e1334bc6f13ec9c',1,'trajectory.h']]],
   ['trajectory3d',['Trajectory3D',['../trajectory_8h.html#af41c290bd6b57629976d7e448abf6f92',1,'trajectory.h']]],
-  ['trajsolver',['TrajSolver',['../classTrajSolver.html',1,'']]],
+  ['trajsolver',['TrajSolver',['../classTrajSolver.html',1,'TrajSolver&lt; Dim &gt;'],['../classTrajSolver.html#a36f7df095a525a2d362b6fcaee431a16',1,'TrajSolver::TrajSolver()']]],
   ['trajsolver2d',['TrajSolver2D',['../traj__solver_8h.html#a6a8478ebceed46458f216aee64b27ca9',1,'traj_solver.h']]],
   ['trajsolver3d',['TrajSolver3D',['../traj__solver_8h.html#a6190a75a6dd79f4b1c555b10feba1dba',1,'traj_solver.h']]],
   ['traverse_5fprimitive',['traverse_primitive',['../classMPL_1_1env__map.html#ac373c3af809da1177de7ca920d436774',1,'MPL::env_map']]],

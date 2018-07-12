@@ -20,7 +20,7 @@ var searchData=
   ['polytraj',['PolyTraj',['../classPolyTraj.html',1,'PolyTraj&lt; Dim &gt;'],['../classPolyTraj.html#ad12df6c77e33b767117169d2b8605fe4',1,'PolyTraj::PolyTraj()']]],
   ['polytraj2d',['PolyTraj2D',['../poly__traj_8h.html#af39053e2f11580427f8682cd1e114900',1,'poly_traj.h']]],
   ['polytraj3d',['PolyTraj3D',['../poly__traj_8h.html#ade906c4efac6ed2ead98df65f4952c9d',1,'poly_traj.h']]],
-  ['pos',['pos',['../structWaypoint.html#af63de420a521f105eea4ce098a51ad7e',1,'Waypoint']]],
+  ['pos',['pos',['../structCommand.html#a90de7cf427b5cba982ac95543e2415f0',1,'Command::pos()'],['../structWaypoint.html#af63de420a521f105eea4ce098a51ad7e',1,'Waypoint::pos()']]],
   ['potential_5fmap_5f',['potential_map_',['../classMPL_1_1env__map.html#ae596cf73659ff74a03723acba510616d',1,'MPL::env_map']]],
   ['potential_5fmap_5frange_5f',['potential_map_range_',['../classMPL_1_1MapPlanner.html#a2677ec6a3e0863a00bc5d413d8927220',1,'MPL::MapPlanner']]],
   ['potential_5fmask_5f',['potential_mask_',['../classMPL_1_1MapPlanner.html#a57edfafe70fb80930b97e5c27601966e',1,'MPL::MapPlanner']]],

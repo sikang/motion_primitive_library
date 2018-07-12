@@ -94,26 +94,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">TrajSolver&lt; Dim &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> generator.  
+ <a href="classTrajSolver.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="traj__solver_8h_source.html">traj_solver.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a80028edd35ee0e8ca67629dcb10bdc5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80028edd35ee0e8ca67629dcb10bdc5a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TrajSolver</b> (<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> control)</td></tr>
-<tr class="separator:a80028edd35ee0e8ca67629dcb10bdc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36f7df095a525a2d362b6fcaee431a16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a36f7df095a525a2d362b6fcaee431a16">TrajSolver</a> (<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> control, <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> yaw_control=<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2ea968f96b0d20e3c80728089cb45401531">Control::VEL</a>)</td></tr>
+<tr class="memdesc:a36f7df095a525a2d362b6fcaee431a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a36f7df095a525a2d362b6fcaee431a16">More...</a><br /></td></tr>
+<tr class="separator:a36f7df095a525a2d362b6fcaee431a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4908f5e5f792820688cf9675b88fa660"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4908f5e5f792820688cf9675b88fa660"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setWaypoints</b> (const <a class="el" href="data__type_8h.html#a30c607180de5bc1b7c30f5cbaf9b188b">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&gt; &amp;ws)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a4908f5e5f792820688cf9675b88fa660">setWaypoints</a> (const <a class="el" href="data__type_8h.html#a30c607180de5bc1b7c30f5cbaf9b188b">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&gt; &amp;ws)</td></tr>
+<tr class="memdesc:a4908f5e5f792820688cf9675b88fa660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set waypoints directly, overwrite global vars. <br /></td></tr>
 <tr class="separator:a4908f5e5f792820688cf9675b88fa660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac19cb6eed090945ebd4d847631434819"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac19cb6eed090945ebd4d847631434819"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setV</b> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> v)</td></tr>
 <tr class="separator:ac19cb6eed090945ebd4d847631434819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a18b04911e00ad28da5fe5070a73430"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a18b04911e00ad28da5fe5070a73430"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDts</b> (const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a6a18b04911e00ad28da5fe5070a73430">setDts</a> (const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
+<tr class="memdesc:a6a18b04911e00ad28da5fe5070a73430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time allocation (optional), overwrite global dts, if not set, we will set a time allocation using L-inf. <br /></td></tr>
 <tr class="separator:a6a18b04911e00ad28da5fe5070a73430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad69444b555306f3825f3fff3aec463f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad69444b555306f3825f3fff3aec463f5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPath</b> (const <a class="el" href="data__type_8h.html#a74599b2a677a5186ef71a2a690c6171d">vec_Vecf</a>&lt; Dim &gt; &amp;path)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#ad69444b555306f3825f3fff3aec463f5">setPath</a> (const <a class="el" href="data__type_8h.html#a74599b2a677a5186ef71a2a690c6171d">vec_Vecf</a>&lt; Dim &gt; &amp;path)</td></tr>
+<tr class="memdesc:ad69444b555306f3825f3fff3aec463f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set waypoints from path, overwrite global vars, in this mode, the intermediate waypoints are with <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2ea968f96b0d20e3c80728089cb45401531" title="control input is vel ">Control::VEL</a>. <br /></td></tr>
 <tr class="separator:ad69444b555306f3825f3fff3aec463f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b874da171422147e61b2b8f7ecb20dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b874da171422147e61b2b8f7ecb20dd"></a>
-<a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (bool verbose=false)</td></tr>
+<a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a9b874da171422147e61b2b8f7ecb20dd">solve</a> (bool verbose=false)</td></tr>
+<tr class="memdesc:a9b874da171422147e61b2b8f7ecb20dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve for trajectory. <br /></td></tr>
 <tr class="separator:a9b874da171422147e61b2b8f7ecb20dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cec851557e456de2ad15e94f675b314"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cec851557e456de2ad15e94f675b314"></a>
 <a class="el" href="data__type_8h.html#a74599b2a677a5186ef71a2a690c6171d">vec_Vecf</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a8cec851557e456de2ad15e94f675b314">getPath</a> () const </td></tr>
@@ -153,11 +162,70 @@ std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e
 <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a1408cded894ef27adc07fd1274ae90ff">control_</a></td></tr>
 <tr class="memdesc:a1408cded894ef27adc07fd1274ae90ff"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceControl.html" title="Lookup table for control input. ">Control</a> constraints for start and goal. <br /></td></tr>
 <tr class="separator:a1408cded894ef27adc07fd1274ae90ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c036ece00f28f43dba7d68812d84ae0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c036ece00f28f43dba7d68812d84ae0"></a>
+<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a5c036ece00f28f43dba7d68812d84ae0">yaw_control_</a></td></tr>
+<tr class="memdesc:a5c036ece00f28f43dba7d68812d84ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespaceControl.html" title="Lookup table for control input. ">Control</a> constraints for start and goal yaw. <br /></td></tr>
+<tr class="separator:a5c036ece00f28f43dba7d68812d84ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a869cf17b3d339a1b66d5fd7742fedbbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a869cf17b3d339a1b66d5fd7742fedbbf"></a>
 std::unique_ptr&lt; <a class="el" href="classPolySolver.html">PolySolver</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a869cf17b3d339a1b66d5fd7742fedbbf">poly_solver_</a></td></tr>
 <tr class="memdesc:a869cf17b3d339a1b66d5fd7742fedbbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poly solver. <br /></td></tr>
 <tr class="separator:a869cf17b3d339a1b66d5fd7742fedbbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab066a572809ee69de6205d1df69b1d34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab066a572809ee69de6205d1df69b1d34"></a>
+std::unique_ptr&lt; <a class="el" href="classPolySolver.html">PolySolver</a>&lt; 1 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#ab066a572809ee69de6205d1df69b1d34">yaw_solver_</a></td></tr>
+<tr class="memdesc:ab066a572809ee69de6205d1df69b1d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poly solver for yaw only. <br /></td></tr>
+<tr class="separator:ab066a572809ee69de6205d1df69b1d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;int Dim&gt;<br />
+class TrajSolver&lt; Dim &gt;</h3>
+
+<p><a class="el" href="classTrajectory.html" title="Trajectory class. ">Trajectory</a> generator. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a36f7df095a525a2d362b6fcaee431a16"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTrajSolver.html">TrajSolver</a>&lt; Dim &gt;::<a class="el" href="classTrajSolver.html">TrajSolver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td>
+          <td class="paramname"><em>control</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td>
+          <td class="paramname"><em>yaw_control</em> = <code><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2ea968f96b0d20e3c80728089cb45401531">Control::VEL</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">control</td><td>define the control flag for start and end </td></tr>
+    <tr><td class="paramname">yaw_control</td><td>define the control flag for yaw start and end </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/mpl_traj_solver/<a class="el" href="traj__solver_8h_source.html">traj_solver.h</a></li>
 </ul>

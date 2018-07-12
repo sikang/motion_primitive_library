@@ -126,6 +126,18 @@ typedef <a class="el" href="classPrimitive.html">Primitive</a>&lt; 3 &gt;&#160;<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4e7cc1831110e0cd23fa969236c8b9f5"><td class="memTemplParams" colspan="2">template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a4e7cc1831110e0cd23fa969236c8b9f5"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="primitive_8h.html#a4e7cc1831110e0cd23fa969236c8b9f5">validate_primitive</a> (const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;pr, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mv=0, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> ma=0, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> mj=0, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> myaw=0)</td></tr>
+<tr class="memdesc:a4e7cc1831110e0cd23fa969236c8b9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max velocity magnitude is within the threshold.  <a href="#a4e7cc1831110e0cd23fa969236c8b9f5">More...</a><br /></td></tr>
+<tr class="separator:a4e7cc1831110e0cd23fa969236c8b9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c969d8a20fa7dbda33f9206fedb0c38"><td class="memTemplParams" colspan="2">template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a2c969d8a20fa7dbda33f9206fedb0c38"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="primitive_8h.html#a2c969d8a20fa7dbda33f9206fedb0c38">validate_xxx</a> (const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;pr, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> max, <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> xxx)</td></tr>
+<tr class="memdesc:a2c969d8a20fa7dbda33f9206fedb0c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the max velocity magnitude is within the threshold.  <a href="#a2c969d8a20fa7dbda33f9206fedb0c38">More...</a><br /></td></tr>
+<tr class="separator:a2c969d8a20fa7dbda33f9206fedb0c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ca288bf912779e44fad52c5335cb199"><td class="memTemplParams" colspan="2">template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a1ca288bf912779e44fad52c5335cb199"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="primitive_8h.html#a1ca288bf912779e44fad52c5335cb199">validate_yaw</a> (const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;pr, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> my)</td></tr>
+<tr class="memdesc:a1ca288bf912779e44fad52c5335cb199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the successor goes outside of the fov.  <a href="#a1ca288bf912779e44fad52c5335cb199">More...</a><br /></td></tr>
+<tr class="separator:a1ca288bf912779e44fad52c5335cb199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3b71ca47e8823183e68290084939a66"><td class="memTemplParams" colspan="2"><a class="anchor" id="aa3b71ca47e8823183e68290084939a66"></a>
 template&lt;int Dim&gt; </td></tr>
 <tr class="memitem:aa3b71ca47e8823183e68290084939a66"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="primitive_8h.html#aa3b71ca47e8823183e68290084939a66">print</a> (const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;p)</td></tr>
@@ -144,7 +156,142 @@ template&lt;int Dim&gt; </td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classPrimitive.html" title="Primitive class. ">Primitive</a> classes. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a4e7cc1831110e0cd23fa969236c8b9f5"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool validate_primitive </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>mv</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>ma</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>mj</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>myaw</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the max velocity magnitude is within the threshold. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mv</td><td>is the max threshold</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Use L1 norm for the maximum </p>
+
+</div>
+</div>
+<a class="anchor" id="a2c969d8a20fa7dbda33f9206fedb0c38"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool validate_xxx </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td>
+          <td class="paramname"><em>xxx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the max velocity magnitude is within the threshold. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mv</td><td>is the max threshold</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Use L1 norm for the maximum </p>
+
+</div>
+</div>
+<a class="anchor" id="a1ca288bf912779e44fad52c5335cb199"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool validate_yaw </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classPrimitive.html">Primitive</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td>
+          <td class="paramname"><em>my</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the successor goes outside of the fov. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">my</td><td>is the semi-fov </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

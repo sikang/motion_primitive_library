@@ -3,7 +3,7 @@ var searchData=
   ['path_5f',['path_',['../classTrajSolver.html#ab4ac82263fb85e417400be61d8fa871e',1,'TrajSolver']]],
   ['planner_5fverbose_5f',['planner_verbose_',['../classMPL_1_1PlannerBase.html#a7cb4e18b6576241ab45fc33ebb5530bd',1,'MPL::PlannerBase']]],
   ['poly_5fsolver_5f',['poly_solver_',['../classTrajSolver.html#a869cf17b3d339a1b66d5fd7742fedbbf',1,'TrajSolver']]],
-  ['pos',['pos',['../structWaypoint.html#af63de420a521f105eea4ce098a51ad7e',1,'Waypoint']]],
+  ['pos',['pos',['../structCommand.html#a90de7cf427b5cba982ac95543e2415f0',1,'Command::pos()'],['../structWaypoint.html#af63de420a521f105eea4ce098a51ad7e',1,'Waypoint::pos()']]],
   ['potential_5fmap_5f',['potential_map_',['../classMPL_1_1env__map.html#ae596cf73659ff74a03723acba510616d',1,'MPL::env_map']]],
   ['potential_5fmap_5frange_5f',['potential_map_range_',['../classMPL_1_1MapPlanner.html#a2677ec6a3e0863a00bc5d413d8927220',1,'MPL::MapPlanner']]],
   ['potential_5fmask_5f',['potential_mask_',['../classMPL_1_1MapPlanner.html#a57edfafe70fb80930b97e5c27601966e',1,'MPL::MapPlanner']]],

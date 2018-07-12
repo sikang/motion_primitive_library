@@ -7,6 +7,7 @@ var searchData=
   ['checkvalidation',['checkValidation',['../classMPL_1_1PlannerBase.html#a392d037f4a8df3aac1bfcf4370f78572',1,'MPL::PlannerBase::checkValidation()'],['../structMPL_1_1StateSpace.html#a4749086e52e7fe8d2215b9b6c395d759',1,'MPL::StateSpace::checkValidation()']]],
   ['clear',['clear',['../classPolyTraj.html#aeef32c15c08d1cab7522dbfe5f68f479',1,'PolyTraj']]],
   ['coeff',['coeff',['../classPrimitive1D.html#ab50248ec4354ccecf39468d3af9652d8',1,'Primitive1D']]],
+  ['command',['Command',['../structCommand.html',1,'']]],
   ['compare_5fpair',['compare_pair',['../structMPL_1_1compare__pair.html',1,'MPL']]],
   ['control',['Control',['../namespaceControl.html',1,'Control'],['../classPrimitive.html#a1d3878618897613f82d224a6e2c15775',1,'Primitive::control()'],['../namespaceControl.html#af3600af994b25be7c568791eefdadf2e',1,'Control::Control()'],['../namespaceControl.html#af3600af994b25be7c568791eefdadf2e',1,'Control::Control()']]],
   ['control_2eh',['control.h',['../control_8h.html',1,'']]],
