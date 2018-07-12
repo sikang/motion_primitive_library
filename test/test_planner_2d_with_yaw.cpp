@@ -58,12 +58,13 @@ int main(int argc, char **argv) {
         U.push_back(Vec3f(dx, dy, dyaw));
 
   // Initialize planner
+  decimal_t yaw_max = 0.7;
   std::unique_ptr<MPL::OccMapPlanner> planner(
       new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
-  planner->setYawmax(0.7);       // Set yaw threshold
+  planner->setYawmax(yaw_max);       // Set yaw threshold
   planner->setDt(1.0);           // Set dt for each primitive
   planner->setU(U);              // Set control input
 
@@ -148,12 +149,11 @@ int main(int argc, char **argv) {
         "opacity:0.4;fill:none;stroke:rgb(212,0,0);stroke-width:5"); // Red
     // Draw yaw
     const auto ws_yaw = traj.sample(20);
-    decimal_t dyaw = 0.7;
     Vec2f d(0.7, 0);
     for (const auto& w: ws_yaw) {
       decimal_t yaw = w.yaw;
-      decimal_t yaw1 = yaw + dyaw;
-      decimal_t yaw2 = yaw - dyaw;
+      decimal_t yaw1 = yaw + yaw_max;
+      decimal_t yaw2 = yaw - yaw_max;
       Mat2f Ryaw1, Ryaw2;
       Ryaw1 << cos(yaw1), -sin(yaw1), sin(yaw1), cos(yaw1);
       Ryaw2 << cos(yaw2), -sin(yaw2), sin(yaw2), cos(yaw2);

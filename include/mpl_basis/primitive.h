@@ -524,17 +524,18 @@ bool validate_yaw(const Primitive<Dim>& pr, decimal_t my) {
   // ignore negative threshold
   if (my <= 0)
     return true;
-  // check if angle between two ends exceed the threshold my
-  const auto p1 = pr.evaluate(0);
-  const auto p2 = pr.evaluate(pr.t());
-  const auto dp = (p2.pos - p1.pos).template topRows<2>();
-  if(dp.norm() < 1e-5)
-    return true;
-  else {
-    decimal_t yaw = std::atan2(dp(1), dp(0));
-    decimal_t dyaw = normalize_angle(yaw - p1.yaw);
-    return std::abs(dyaw) < my;
+  // check velocity angle at two ends, compare with my
+  const auto ws = pr.sample(1);
+  for(const auto& w: ws) {
+    const auto v = w.vel.template topRows<2>();
+    if(v.norm() > 1e-5) { // if v is not zero
+      decimal_t vyaw = std::atan2(v(1), v(0));
+      decimal_t dyaw = normalize_angle(vyaw - w.yaw);
+      if(std::abs(dyaw) > my) // if exceed the threshold
+        return false;
+    }
   }
+  return true;
 }
 
 
