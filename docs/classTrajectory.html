@@ -132,9 +132,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="data__type_8h.html#a30c607180de5bc1b7c30f5cbaf9b188b">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#af8f42cd5e9ddae42275f61490a5f15af">sample</a> (int N) const </td></tr>
 <tr class="memdesc:af8f42cd5e9ddae42275f61490a5f15af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample N+1 states using uniformed time. <br /></td></tr>
 <tr class="separator:af8f42cd5e9ddae42275f61490a5f15af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13b6d845bed12cf4d543e6d908306181"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a13b6d845bed12cf4d543e6d908306181">J</a> (<a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> control) const </td></tr>
-<tr class="memdesc:a13b6d845bed12cf4d543e6d908306181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_18.png"/>.  <a href="#a13b6d845bed12cf4d543e6d908306181">More...</a><br /></td></tr>
-<tr class="separator:a13b6d845bed12cf4d543e6d908306181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab16be10786f5f94f866903ef66e09c16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#ab16be10786f5f94f866903ef66e09c16">J</a> (const <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> &amp;control) const </td></tr>
+<tr class="memdesc:ab16be10786f5f94f866903ef66e09c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total efforts of primitive for the given duration: <img class="formulaInl" alt="$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$" src="form_18.png"/>.  <a href="#ab16be10786f5f94f866903ef66e09c16">More...</a><br /></td></tr>
+<tr class="separator:ab16be10786f5f94f866903ef66e09c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a76de75eea306c7b7a7f6b2ff7eea7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a76de75eea306c7b7a7f6b2ff7eea7f"></a>
 <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajectory.html#a0a76de75eea306c7b7a7f6b2ff7eea7f">Jyaw</a> () const </td></tr>
 <tr class="memdesc:a0a76de75eea306c7b7a7f6b2ff7eea7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return tota yaw efforts. <br /></td></tr>
@@ -221,7 +221,7 @@ template&lt;int Dim&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a13b6d845bed12cf4d543e6d908306181"></a>
+<a class="anchor" id="ab16be10786f5f94f866903ef66e09c16"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -233,7 +233,7 @@ template&lt;int Dim&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;::J </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespaceControl.html#af3600af994b25be7c568791eefdadf2e">Control::Control</a> &amp;&#160;</td>
           <td class="paramname"><em>control</em></td><td>)</td>
           <td> const</td>
         </tr>
