@@ -49,15 +49,17 @@ If everything works, you should see the results as:
 Running tests...
 Test project /home/sikang/thesis_ws/src/packages/mpl_ros/motion_primitive_library/build
     Start 1: test_traj_solver
-1/3 Test #1: test_traj_solver .................   Passed    0.00 sec
+1/4 Test #1: test_traj_solver .................   Passed    0.00 sec
     Start 2: test_planner_2d
-2/3 Test #2: test_planner_2d ..................   Passed    0.84 sec
+2/4 Test #2: test_planner_2d ..................   Passed    0.91 sec
     Start 3: test_planner_2d_prior_traj
-3/3 Test #3: test_planner_2d_prior_traj .......   Passed    0.89 sec
+3/4 Test #3: test_planner_2d_prior_traj .......   Passed    0.91 sec
+    Start 4: test_planner_2d_with_yaw
+4/4 Test #4: test_planner_2d_with_yaw .........   Passed    0.90 sec
 
-100% tests passed, 0 tests failed out of 3
+100% tests passed, 0 tests failed out of 4
 
-Total Test time (real) =   1.73 sec
+Total Test time (real) =   2.73 sec
 ```
 
 #### Include in other projects:
@@ -68,9 +70,7 @@ include_directories(${MOTION_PRIMITIVE_LIBRARY_INCLUDE_DIRS})
 ...
 add_executable(test_xxx src/test_xxx.cpp)
 target_link_libraries(test_xxx ${MOTION_PRIMITIVE_LIBRARY_LIBRARIES})
-
 ```
-
 
 ## Example Usage
 ### Preparation
