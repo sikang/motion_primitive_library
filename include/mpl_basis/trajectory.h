@@ -11,6 +11,22 @@
 #include <mpl_basis/lambda.h>
 
 /**
+ * @brief Command class
+ *
+ * State includes position, velocity, acceleration and jerk in \f$R^n\f$, where the dimension \f$n\f$ can be either 2 or 3.
+ * Yaw and yaw_dot are also contained.
+ */
+template <int Dim>
+struct Command {
+  Vecf<Dim> pos; ///<position in \f$R^{Dim}\f$
+  Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
+  Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
+  Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
+  decimal_t yaw; ///<yaw
+  decimal_t yaw_dot; ///<yaw
+};
+
+/**
  * @brief Trajectory class
  *
  * A trajectory is composed by multiple end-to-end connected primitives, so-called piece-wise polynomials
@@ -44,12 +60,60 @@ class Trajectory {
     Lambda lambda() const { return lambda_; }
 
     /**
-     * @brief Evaluate state at t, return false if fails to evaluate
+     * @brief Return waypoint at time \f$t\f$
      *
      * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
-     * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution
+     * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution,
+     * in which a null Waypoint is returned
      */
-    bool evaluate(decimal_t time, Waypoint<Dim>& p) const {
+    Waypoint<Dim> evaluate(decimal_t time) const {
+      decimal_t tau = lambda_.getTau(time);
+      if (tau < 0)
+        tau = 0;
+      if (tau > total_t_)
+        tau = total_t_;
+
+      decimal_t lambda = 1;
+      decimal_t lambda_dot = 0;
+
+      if (lambda_.exist()) {
+        VirtualPoint vt = lambda_.evaluate(tau);
+        lambda = vt.p;
+        lambda_dot = vt.v;
+      }
+
+      for (int id = 0; id < (int)segs.size(); id++) {
+        if (tau >= taus[id] && tau <= taus[id + 1]) {
+          tau -= taus[id];
+          Waypoint<Dim> p(segs[id].control());
+          for (int j = 0; j < Dim; j++) {
+            const auto pr = segs[id].pr(j);
+            p.pos(j) = pr.p(tau);
+            p.vel(j) = pr.v(tau) / lambda;
+            p.acc(j) = pr.a(tau) / lambda / lambda -
+              p.vel(j) * lambda_dot / lambda / lambda / lambda;
+            p.jrk(j) = pr.j(tau) / lambda / lambda -
+              3 / power(lambda, 3) * p.acc(j) * p.acc(j) * lambda_dot +
+              3 / power(lambda, 4) * p.vel(j) * lambda_dot *
+              lambda_dot;
+            p.yaw = normalize_angle(segs[id].pr_yaw().p(tau));
+          }
+          return p;
+        }
+      }
+
+      printf("cannot find tau according to time: %f\n", time);
+      return Waypoint<Dim>();
+    }
+
+
+    /**
+     * @brief Evaluate command at t, return false if fails to evaluate
+     *
+     * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
+     * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution.
+     */
+    bool evaluate(decimal_t time, Command<Dim>& p) const {
       decimal_t tau = lambda_.getTau(time);
       if (tau < 0)
         tau = 0;
@@ -193,12 +257,12 @@ class Trajectory {
     /**
      * @brief Sample N+1 states using uniformed time
      */
-    vec_E<Waypoint<Dim>> sample(int N) const {
-      vec_E<Waypoint<Dim>> ps(N+1);
+    vec_E<Command<Dim>> sample(int N) const {
+      vec_E<Command<Dim>> ps(N+1);
 
       decimal_t dt = total_t_ / N;
       for (int i = 0; i <= N; i++) {
-        Waypoint<Dim> pt;
+        Command<Dim> pt;
         evaluate(i * dt, pt);
         ps[i] = pt;
       }
@@ -240,19 +304,11 @@ class Trajectory {
     /// Get intermediate waypoints on the trajectory
     vec_E<Waypoint<Dim>> getWaypoints() const {
       vec_E<Waypoint<Dim>> ws;
-      decimal_t time = 0;
-
-      Waypoint<Dim> start;
-      evaluate(time, start);
-      ws.push_back(start);
-      std::vector<decimal_t> dts = getSegmentTimes();
-      for (const auto &t : dts) {
-        time += t;
-        Waypoint<Dim> waypoint;
-        evaluate(time, waypoint);
-        ws.push_back(waypoint);
-      }
-
+      if(segs.empty())
+        return ws;
+      for (const auto &seg : segs)
+        ws.push_back(seg.evaluate(0));
+      ws.push_back(segs.back().evaluate(segs.back().t()));
       return ws;
     }
 
@@ -287,7 +343,7 @@ vec_Ellipsoid sample_ellipsoids(const Trajectory<Dim>& traj, const Vec3f& axe, i
 
   decimal_t dt = traj.getTotalTime() / N;
   for(decimal_t t = 0; t <= traj.getTotalTime(); t+= dt) {
-    Waypoint<Dim> pt;
+    Command<Dim> pt;
     if(traj.evaluate(t, pt))
       Es.push_back(generate_ellipsoid<Dim>(axe, pt.pos, pt.acc));
   }
@@ -304,7 +360,7 @@ void max_attitude(const Trajectory<Dim>& traj, int N) {
   decimal_t max_pitch = 0;
   decimal_t max_pitch_time = 0;
   for(decimal_t t = 0; t <= traj.getTotalTime(); t+= dt) {
-    Waypoint<Dim> pt;
+    Command<Dim> pt;
     if(traj.evaluate(t, pt)) {
       const Vec3f b3 = Dim == 2 ?
         (Vec3f(pt.acc(0), pt.acc(1), 0) +

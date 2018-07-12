@@ -15,6 +15,8 @@
  * @brief Waypoint base class
  *
  * State includes position, velocity, acceleration and jerk in \f$R^n\f$, where the dimension \f$n\f$ can be either 2 or 3.
+ * Yaw is contained by default.
+ * The anonymous union is used to set control flag.
  */
 template <int Dim>
 struct Waypoint {
@@ -30,7 +32,6 @@ struct Waypoint {
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
-  decimal_t yaw_dot; ///<yaw velocity
 
   union {
     struct {
@@ -52,11 +53,6 @@ struct Waypoint {
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
     std::cout << "yaw: " << yaw << std::endl;
-    std::cout << "use_pos | use_vel | use_acc | use_jrk | use_yaw : " << std::endl;
-    std::cout << use_pos << " | " << use_vel << " | " <<
-      use_acc << " | " << use_jrk << " | " << use_yaw << std::endl;
-    std::bitset<5> x(control);
-    std::cout << "control: " << x << std::endl;
     if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
     else if(control == Control::ACC)

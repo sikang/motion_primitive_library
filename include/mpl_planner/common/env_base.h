@@ -49,7 +49,7 @@ class env_base {
       Waypoint<Dim> goal_node = goal_node_;
       t += alpha_ * dt_;
       if(!prior_traj_.segs.empty() && t < prior_traj_.getTotalTime()) {
-        prior_traj_.evaluate(t, goal_node);
+        goal_node = prior_traj_.evaluate(t);
         goal_node.control = goal_node_.control;
         return cal_heur(state, goal_node) + w_ * (prior_traj_.getTotalTime() - t);
       }
