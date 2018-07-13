@@ -119,6 +119,13 @@ public:
       }
       else if (map_util_->isOccupied(pn))
         return std::numeric_limits<decimal_t>::infinity();
+      if(this->wyaw_ > 0) {
+        const auto v = pt.vel.template topRows<2>();
+        if(v.norm() > 1e-5) { // if v is not zero
+          decimal_t v_value = 1-v.normalized().dot(Vec2f(cos(pt.yaw), sin(pt.yaw)));
+          c += this->wyaw_ * v_value;
+        }
+      }
     }
 
     return c;
@@ -167,7 +174,8 @@ public:
       //std::cout << succ_idx.back() << std::endl;
       decimal_t cost = curr.pos == tn.pos ? 0 : traverse_primitive(pr);
       if (!std::isinf(cost))
-        cost += pr.J(pr.control()) + this->wyaw_ * pr.Jyaw() + this->w_ * this->dt_;
+        cost += pr.J(pr.control()) + this->w_ * this->dt_;
+        //cost += pr.J(pr.control()) + this->wyaw_ * pr.Jyaw() + this->w_ * this->dt_;
 
       succ_cost.push_back(cost);
       action_idx.push_back(i);
