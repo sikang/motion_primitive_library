@@ -23,7 +23,7 @@ struct Command {
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
-  decimal_t yaw_dot; ///<yaw
+  decimal_t yaw_dot; ///<yaw velocity
 };
 
 /**
@@ -50,17 +50,7 @@ class Trajectory {
     }
 
     /**
-     * @brief Return the total duration of the trajectory
-     */
-    decimal_t getTotalTime() const { return total_t_; }
-
-    /**
-     * @brief Retrieve scaling factor
-     */
-    Lambda lambda() const { return lambda_; }
-
-    /**
-     * @brief Return waypoint at time \f$t\f$
+     * @brief Evaluate Waypoint at time \f$t\f$
      *
      * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
      * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution,
@@ -108,9 +98,9 @@ class Trajectory {
 
 
     /**
-     * @brief Evaluate command at t, return false if fails to evaluate
+     * @brief Evaluate Command at \f$t\f$, return false if fails to evaluate
      *
-     * If t is out of scope, we set t to be the closer bound (0 or total_t_) and return the evaluation;
+     * If \f$t\f$ is out of scope, we set \f$t\f$ to be the closer bound (0 or total_t_) and return the evaluation;
      * The failure case is when lambda is ill-posed such that \f$t = \lambda(\tau)^{-1}\f$ has no solution.
      */
     bool evaluate(decimal_t time, Command<Dim>& p) const {
@@ -255,7 +245,7 @@ class Trajectory {
 
 
     /**
-     * @brief Sample N+1 states using uniformed time
+     * @brief Sample N+1 Command along trajectory using uniformed time
      */
     vec_E<Command<Dim>> sample(int N) const {
       vec_E<Command<Dim>> ps(N+1);
@@ -271,10 +261,14 @@ class Trajectory {
     }
 
     /**
-     * @brief Return total efforts of primitive for the given duration: \f$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt\f$
+     * @brief Return total efforts of Primitive for the given duration: \f$J(i) = \int_0^T |p^{i}(t)|^2dt\f$
+     * @param control Flag that indicates the order of derivative \f$i\f$
      *
-     * Return J is the summation of efforts in all three dimensions
-     * @param control effort is defined as \f$i\f$-th derivative of polynomial
+     * Return J is the summation of efforts in all three dimensions.
+     * `Control::VEL` or `Control::VELxYAW` corresponds to \f$i = 1\f$;
+     * `Control::ACC` or `Control::ACCxYAW` corresponds to \f$i = 2\f$;
+     * `Control::JRK` or `Control::JRKxYAW` corresponds to \f$i = 3\f$;
+     * `Control::SNP` or `Control::SNPxYAW` corresponds to \f$i = 4\f$.
      */
     decimal_t J(const Control::Control& control) const {
       decimal_t j = 0;
@@ -283,7 +277,12 @@ class Trajectory {
       return j;
     }
 
-    /// Return tota yaw efforts
+    /**
+     * @brief Return total yaw efforts for the given duration: \f$J_{yaw} = \int_0^T |\dot{\phi}(t)|^2dt\f$
+     *
+     * By default, the `Jyaw` is using `Control::VEL` to calculate.
+     */
+
     decimal_t Jyaw() const {
       decimal_t j = 0;
       for (const auto &seg : segs)
@@ -291,7 +290,7 @@ class Trajectory {
       return j;
     }
 
-    ///Get time for each segment
+    /// Get time of each segment
     std::vector<decimal_t> getSegmentTimes() const {
       std::vector<decimal_t> dts;
       for (int i = 0; i < (int)Ts.size() - 1; i++)
@@ -299,7 +298,7 @@ class Trajectory {
       return dts;
     }
 
-    /// Get intermediate waypoints on the trajectory
+    /// Get intermediate Waypoint on the trajectory
     vec_E<Waypoint<Dim>> getWaypoints() const {
       vec_E<Waypoint<Dim>> ws;
       if(segs.empty())
@@ -310,10 +309,18 @@ class Trajectory {
       return ws;
     }
 
-    /// Get primitives
+    /// Get Primitive array
     vec_E<Primitive<Dim>> getPrimitives() const {
       return segs;
     }
+
+    /**
+     * @brief Get the scaling factor Lambda
+     */
+    Lambda lambda() const { return lambda_; }
+
+    /// Get the total duration of Trajectory
+    decimal_t getTotalTime() const { return total_t_; }
 
     ///Segments of primitives
     vec_E<Primitive<Dim>> segs;

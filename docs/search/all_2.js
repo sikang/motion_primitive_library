@@ -9,7 +9,7 @@ var searchData=
   ['coeff',['coeff',['../classPrimitive1D.html#ab50248ec4354ccecf39468d3af9652d8',1,'Primitive1D']]],
   ['command',['Command',['../structCommand.html',1,'']]],
   ['compare_5fpair',['compare_pair',['../structMPL_1_1compare__pair.html',1,'MPL']]],
-  ['control',['Control',['../namespaceControl.html',1,'Control'],['../classPrimitive.html#a1d3878618897613f82d224a6e2c15775',1,'Primitive::control()'],['../namespaceControl.html#af3600af994b25be7c568791eefdadf2e',1,'Control::Control()'],['../namespaceControl.html#af3600af994b25be7c568791eefdadf2e',1,'Control::Control()']]],
+  ['control',['control',['../classPrimitive.html#a1d3878618897613f82d224a6e2c15775',1,'Primitive::control()'],['../control_8h.html#af3600af994b25be7c568791eefdadf2e',1,'Control::Control()']]],
   ['control_2eh',['control.h',['../control_8h.html',1,'']]],
   ['control_5f',['control_',['../classPrimitive.html#a64392514c8666d640bc50f6304581623',1,'Primitive::control_()'],['../classTrajSolver.html#a1408cded894ef27adc07fd1274ae90ff',1,'TrajSolver::control_()']]],
   ['coord',['coord',['../structMPL_1_1State.html#abca6fed90f908449b9c120a199c75484',1,'MPL::State']]],

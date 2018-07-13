@@ -6,7 +6,6 @@ var searchData=
   ['updategoal',['updateGoal',['../structMPL_1_1StateSpace.html#aa01aed2a0c32cbc9020f9e2c2996de1a',1,'MPL::StateSpace']]],
   ['updatenode',['updateNode',['../structMPL_1_1StateSpace.html#a6f537b733b4861d1f3d142e95f29ee76',1,'MPL::StateSpace']]],
   ['updatepotentialmap',['updatePotentialMap',['../classMPL_1_1MapPlanner.html#aba1dd74a30518535db1d49c1944b6670',1,'MPL::MapPlanner']]],
-  ['use',['USE',['../unionUSE.html',1,'']]],
   ['use_5facc',['use_acc',['../structWaypoint.html#a7f7b99a891660a96d67867ece28378e3',1,'Waypoint']]],
   ['use_5fjrk',['use_jrk',['../structWaypoint.html#a7127a77813618058aaf31e706485fa1c',1,'Waypoint']]],
   ['use_5flpastar_5f',['use_lpastar_',['../classMPL_1_1PlannerBase.html#a4450fea847ffe35591a4c3fd858b7ba6',1,'MPL::PlannerBase']]],

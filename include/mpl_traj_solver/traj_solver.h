@@ -35,7 +35,7 @@ public:
       yaw_solver_.reset(new PolySolver<1>(2, 3));
   }
 
-  /// Set waypoints directly, overwrite global vars
+  /// Set Waypoint array directly, overwrite global vars
   void setWaypoints(const vec_E<Waypoint<Dim>> &ws) {
     path_.resize(ws.size());
     for (size_t i = 0; i < ws.size(); i++)
@@ -43,12 +43,13 @@ public:
     waypoints_ = ws;
   }
 
+  /// Set velocity used for internal time allocation
   void setV(decimal_t v) { v_ = v; }
 
   /// Set time allocation (optional), overwrite global dts, if not set, we will set a time allocation using L-inf
   void setDts(const std::vector<decimal_t> &dts) { dts_ = dts; }
 
-  /// Set waypoints from path, overwrite global vars, in this mode, the intermediate waypoints are with Control::VEL
+  /// Set Waypoint array from path, overwrite global vars, in this mode, the intermediate Waypoint are with `Control::VEL`
   void setPath(const vec_Vecf<Dim>& path) {
     path_ = path;
 
@@ -109,12 +110,13 @@ public:
 
   /// Get the path used for time allocation
   vec_Vecf<Dim> getPath() const { return path_; }
-  /// Get the waypoints
+
+  /// Get the Waypoint array used to solve trajectory
   vec_E<Waypoint<Dim>> getWaypoints() const { return waypoints_; }
 
 
 private:
-  /// Time allocation from path and vel
+  /// Internal time allocation from path and vel using L-inf
   std::vector<decimal_t> allocate_time(const vec_Vecf<Dim> &pts, decimal_t v) {
     if (pts.size() < 2 || v <= 0)
       return std::vector<decimal_t>();
@@ -140,11 +142,13 @@ private:
 
   /// Control constraints for start and goal
   Control::Control control_;
+
   /// Control constraints for start and goal yaw
   Control::Control yaw_control_;
 
   /// Poly solver
   std::unique_ptr<PolySolver<Dim>> poly_solver_;
+
   /// Poly solver for yaw only
   std::unique_ptr<PolySolver<1>> yaw_solver_;
 };

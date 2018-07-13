@@ -5,8 +5,8 @@
 #ifndef MPL_CONTROL_H
 #define MPL_CONTROL_H
 
-/// Lookup table for control input
 namespace Control {
+  /// Enum for control input
   enum Control {
     VEL = 0b10000,///<control input is vel
     ACC = 0b11000,///<control input is acc

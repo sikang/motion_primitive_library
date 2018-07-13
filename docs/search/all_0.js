@@ -2,8 +2,8 @@ var searchData=
 [
   ['a',['a',['../classLambdaSeg.html#a412ec0de3a774b2f8a647aba718c9f6d',1,'LambdaSeg::a()'],['../classPrimitive1D.html#a5fe7de6c7a19bcd68e78b28c272355d3',1,'Primitive1D::a()']]],
   ['a_5fmax_5f',['a_max_',['../classMPL_1_1env__base.html#a7be6859be90f54ef175482d0aa6020c9',1,'MPL::env_base']]],
-  ['acc',['acc',['../structCommand.html#a1a0a22e1fece01c1b74e7d866197d90c',1,'Command::acc()'],['../structWaypoint.html#a648217ed387d4e226bec8ecb05bfefe8',1,'Waypoint::acc()'],['../namespaceControl.html#af3600af994b25be7c568791eefdadf2ea4b3e91d06392468a5267128e3d746447',1,'Control::ACC()']]],
-  ['accxyaw',['ACCxYAW',['../namespaceControl.html#af3600af994b25be7c568791eefdadf2ea7abe030d2c08e9b63bf14c77905be815',1,'Control']]],
+  ['acc',['acc',['../structCommand.html#a1a0a22e1fece01c1b74e7d866197d90c',1,'Command::acc()'],['../structWaypoint.html#a648217ed387d4e226bec8ecb05bfefe8',1,'Waypoint::acc()'],['../control_8h.html#af3600af994b25be7c568791eefdadf2ea72c86aadda4c0eeac1953f7227ac2a3b',1,'Control::ACC()']]],
+  ['accxyaw',['ACCxYAW',['../control_8h.html#af3600af994b25be7c568791eefdadf2ead52f1ed04f373ecf473ddd6b6a2df79c',1,'Control']]],
   ['addcoeff',['addCoeff',['../classPolyTraj.html#a32ee057ca68dd2559c1a773ee0e6a291',1,'PolyTraj']]],
   ['aff2f',['Aff2f',['../data__type_8h.html#a3b95b3d43bb8590852e0e74abaff3c6a',1,'data_type.h']]],
   ['aff3f',['Aff3f',['../data__type_8h.html#a99980a710976449f0a9d3d2ae8b8be87',1,'data_type.h']]],

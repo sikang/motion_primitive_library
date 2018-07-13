@@ -3,7 +3,6 @@ var searchData=
   ['t',['t',['../structMPL_1_1State.html#ae95e2204230e3bb0d058fd8ffd95876b',1,'MPL::State::t()'],['../classPrimitive.html#acd61ee223cd047bc43f63839133562d0',1,'Primitive::t()']]],
   ['t_5f',['t_',['../classPrimitive.html#a311d2629375c5805fa64ac5d930bb7b9',1,'Primitive']]],
   ['taus',['taus',['../classTrajectory.html#a283d2293df0bdb4b525e403b6cd8eb10',1,'Trajectory']]],
-  ['timer',['Timer',['../classTimer.html',1,'']]],
   ['tmap',['Tmap',['../namespaceMPL.html#aea66dec3dc00a80359e5c3963ccaa3e6',1,'MPL']]],
   ['to_5fstring',['to_string',['../classMPL_1_1env__base.html#acff78cbc91046444ac72db3fd9cfdcff',1,'MPL::env_base']]],
   ['tol_5facc_5f',['tol_acc_',['../classMPL_1_1env__base.html#ac49a422f3e1b826123a12389024b9c50',1,'MPL::env_base']]],

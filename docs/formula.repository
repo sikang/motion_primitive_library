@@ -15,8 +15,14 @@
 \form#14:$a$
 \form#15:$j$
 \form#16:$J(i) = \int_0^t |p^{i}(t)|^2dt$
-\form#17:$t = \lambda(\tau)^{-1}$
-\form#18:$J(i) = \int_0^t |p^{(i+1)}(t)|^2dt$
-\form#19:$R^n$
-\form#20:$R^{Dim}$
-\form#21:$t: 0 \rightarrow dt$
+\form#17:$R^n$
+\form#18:$R^{Dim}$
+\form#19:$t = \lambda(\tau)^{-1}$
+\form#20:$J(i) = \int_0^T |p^{(i+1)}(t)|^2dt$
+\form#21:$J_{yaw} = \int_0^T |\dot{\phi}(t)|^2dt$
+\form#22:$t: 0 \rightarrow dt$
+\form#23:$J(i) = \int_0^T |p^{i}(t)|^2dt$
+\form#24:$i = 1$
+\form#25:$i = 2$
+\form#26:$i = 3$
+\form#27:$i = 4$

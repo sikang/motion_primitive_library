@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['use',['USE',['../unionUSE.html',1,'']]]
+  ['virtualpoint',['VirtualPoint',['../structVirtualPoint.html',1,'']]]
 ];

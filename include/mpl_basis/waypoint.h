@@ -33,6 +33,13 @@ struct Waypoint {
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
 
+  /**
+   * @brief Control flag
+   *
+   * Anonymous union type that contains 5 bits as xxxxx,
+   * each bit from left to right is assigned to `use_pos`, `use_vel`, `use_acc`,
+   * `use_jrk` and `use_yaw`.
+   */
   union {
     struct {
       bool use_yaw : 1;///<If true, yaw will be used in primitive generation

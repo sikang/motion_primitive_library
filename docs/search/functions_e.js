@@ -57,6 +57,7 @@ var searchData=
   ['settmax',['setTmax',['../classMPL_1_1PlannerBase.html#a5aa28e84d194eb7a765296134d6a1b23',1,'MPL::PlannerBase']]],
   ['settol',['setTol',['../classMPL_1_1PlannerBase.html#a290238f44ca8f0c6720a31500cfe0404',1,'MPL::PlannerBase']]],
   ['setu',['setU',['../classMPL_1_1PlannerBase.html#ac3c6ed7d97f27b614c451d2402e3280e',1,'MPL::PlannerBase']]],
+  ['setv',['setV',['../classTrajSolver.html#ac19cb6eed090945ebd4d847631434819',1,'TrajSolver']]],
   ['setvalidregion',['setValidRegion',['../classMPL_1_1MapPlanner.html#a458d97981efddbab9172b43f23683a2b',1,'MPL::MapPlanner']]],
   ['setvmax',['setVmax',['../classMPL_1_1PlannerBase.html#a393765d409042d3a016b2c596a222ba3',1,'MPL::PlannerBase']]],
   ['setw',['setW',['../classMPL_1_1PlannerBase.html#a9959955f30ed7ffb6afa0aee15c5920a',1,'MPL::PlannerBase']]],
