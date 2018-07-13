@@ -46,7 +46,7 @@ var searchData=
   ['setjmax',['setJmax',['../classMPL_1_1PlannerBase.html#a63176689f71cc8e040585d9b67bc0a97',1,'MPL::PlannerBase']]],
   ['setlpastar',['setLPAstar',['../classMPL_1_1PlannerBase.html#a6618dea222e2fbb9141f88c3adbdee98',1,'MPL::PlannerBase']]],
   ['setmap',['setMap',['../classMPL_1_1MapUtil.html#ab9db84521ce45abed421c7cc0bd9b051',1,'MPL::MapUtil::setMap()'],['../classMPL_1_1EllipsoidPlanner.html#a3ead7900922d4b3e6647c41c656d2be1',1,'MPL::EllipsoidPlanner::setMap()']]],
-  ['setmaputil',['setMapUtil',['../classMPL_1_1MapPlanner.html#ae2483ce4445ed173d721097d3809a5cc',1,'MPL::MapPlanner']]],
+  ['setmaputil',['setMapUtil',['../classMPL_1_1MapPlanner.html#ab92847a1e1e894cdb82f7462beea2dd3',1,'MPL::MapPlanner']]],
   ['setmaxnum',['setMaxNum',['../classMPL_1_1PlannerBase.html#aee0722f1e0713f22164e719913f4c82b',1,'MPL::PlannerBase']]],
   ['setobstacles',['setObstacles',['../classDecompUtil.html#a7df54ef30f4efe5ce1198c9b6eeea813',1,'DecompUtil']]],
   ['setpath',['setPath',['../classTrajSolver.html#ad69444b555306f3825f3fff3aec463f5',1,'TrajSolver']]],

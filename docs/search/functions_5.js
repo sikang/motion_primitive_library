@@ -24,6 +24,7 @@ var searchData=
   ['getprimitives',['getPrimitives',['../classTrajectory.html#a30db0a2527de201305951ac9cba7d605',1,'Trajectory']]],
   ['getprimitivestogoal',['getPrimitivesToGoal',['../classMPL_1_1PlannerBase.html#ac4864a6acd284fc6638c434857d2527f',1,'MPL::PlannerBase']]],
   ['getres',['getRes',['../classMPL_1_1MapUtil.html#a8c6fd7ec55607a4e209e0faa43f18383',1,'MPL::MapUtil']]],
+  ['getsearchregion',['getSearchRegion',['../classMPL_1_1MapPlanner.html#a531a1deedea5475d08fd15b10f399d89',1,'MPL::MapPlanner']]],
   ['getsegmenttimes',['getSegmentTimes',['../classTrajectory.html#a3d5825a789dd2676bab27fb976953606',1,'Trajectory']]],
   ['getsubstatespace',['getSubStateSpace',['../classMPL_1_1PlannerBase.html#a5102ef9fb83bfbc507377a8a8d7d51c7',1,'MPL::PlannerBase::getSubStateSpace()'],['../structMPL_1_1StateSpace.html#a1d274ddcc580315baed042a145ba39be',1,'MPL::StateSpace::getSubStateSpace()']]],
   ['gettotaltime',['getTotalTime',['../classTrajectory.html#a668c059d98f06556cc10438b59afca1b',1,'Trajectory::getTotalTime()'],['../classPolyTraj.html#a99026645f3109e8f2c23117c2593641b',1,'PolyTraj::getTotalTime()']]],
@@ -31,7 +32,6 @@ var searchData=
   ['gettrajectory',['getTrajectory',['../classPolySolver.html#a2848755828e352354d6740bde24e43ae',1,'PolySolver']]],
   ['getunknowncloud',['getUnknownCloud',['../classMPL_1_1MapUtil.html#a3a07d60d7f9f2a9b8eaa76ca2cd6bbee',1,'MPL::MapUtil']]],
   ['getvalidprimitives',['getValidPrimitives',['../classMPL_1_1PlannerBase.html#adf22b2879fcd6cc7e0ce21c04b50842e',1,'MPL::PlannerBase']]],
-  ['getvalidregion',['getValidRegion',['../classMPL_1_1MapPlanner.html#a0e39a9994c1a853954ab7a7922975f97',1,'MPL::MapPlanner']]],
   ['getwaypoints',['getWaypoints',['../classTrajectory.html#ae19c27758aa17f62a5eee114184b540f',1,'Trajectory::getWaypoints()'],['../classTrajSolver.html#a57e79a60c5a1872f94791de14fbc9a05',1,'TrajSolver::getWaypoints()']]],
   ['graphsearch',['GraphSearch',['../classMPL_1_1GraphSearch.html#abcd7f8d3ef0dbef6a0c69be4c8b9a4c4',1,'MPL::GraphSearch']]]
 ];
