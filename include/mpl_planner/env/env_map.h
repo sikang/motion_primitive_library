@@ -119,7 +119,7 @@ public:
       }
       else if (map_util_->isOccupied(pn))
         return std::numeric_limits<decimal_t>::infinity();
-      if(this->wyaw_ > 0) {
+      if(this->wyaw_ > 0 && pt.use_yaw) {
         const auto v = pt.vel.template topRows<2>();
         if(v.norm() > 1e-5) { // if v is not zero
           decimal_t v_value = 1-v.normalized().dot(Vec2f(cos(pt.yaw), sin(pt.yaw)));
