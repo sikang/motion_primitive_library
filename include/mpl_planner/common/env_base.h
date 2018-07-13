@@ -34,7 +34,7 @@ class env_base {
       if(goaled && goal_node_.use_acc && tol_acc_ > 0)
         goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc_;
       if(goaled && goal_node_.use_yaw && tol_yaw_ > 0)
-        goaled = std::abs(state.yaw- goal_node_.yaw) <= tol_yaw_;
+        goaled = std::abs(state.yaw - goal_node_.yaw) <= tol_yaw_;
       return goaled;
     }
 
@@ -43,28 +43,26 @@ class env_base {
      * @param Waypoint current state coord
      * @param t current state time
      */
-    decimal_t get_heur(const Waypoint<Dim> &state, decimal_t t) const {
+    virtual decimal_t get_heur(const Waypoint<Dim> &state, decimal_t t) const {
       if (goal_node_ == state)
         return 0;
-      Waypoint<Dim> goal_node = goal_node_;
       t += alpha_ * dt_;
-      if(!prior_traj_.segs.empty() && t < prior_traj_.getTotalTime()) {
-        goal_node = prior_traj_.evaluate(t);
-        goal_node.control = goal_node_.control;
-        return cal_heur(state, goal_node) + w_ * (prior_traj_.getTotalTime() - t);
-      }
-
-      return cal_heur(state, goal_node);
+      size_t id = t / dt_;
+      if(!prior_traj_.empty() && id < prior_traj_.size())
+        return cal_heur(state, prior_traj_[id].first) + prior_traj_[id].second;
+      else
+        return cal_heur(state, goal_node_);
     }
 
     /// calculate the cost from state to goal
-    decimal_t cal_heur(const Waypoint<Dim>& state,
-                       const Waypoint<Dim>& goal) const {
+    virtual decimal_t cal_heur(const Waypoint<Dim>& state,
+                               const Waypoint<Dim>& goal) const {
       if(heur_ignore_dynamics_) {
-        if(v_max_ > 0)
-          return w_*(state.pos - goal.pos).norm() / v_max_;
+        if(v_max_ > 0) {
+          return w_*(state.pos - goal.pos).template lpNorm<Eigen::Infinity>() / v_max_;
+        }
         else
-          return w_*(state.pos - goal.pos).norm();
+          return w_*(state.pos - goal.pos).template lpNorm<Eigen::Infinity>();
       }
       //return 0;
       //return w_*(state.pos - goal.pos).norm();
@@ -312,8 +310,13 @@ class env_base {
     }
 
     ///Set prior trajectory
-    void set_prior_trajectory(const Trajectory<Dim>& traj) {
-      prior_traj_ = traj;
+    virtual void set_prior_trajectory(const Trajectory<Dim>& traj) {
+      prior_traj_.clear();
+      decimal_t total_time = traj.getTotalTime();
+      for(decimal_t t = 0; t < total_time; t += dt_) {
+        prior_traj_.push_back(std::make_pair(traj.evaluate(t),
+                                             w_*(total_time - t)));
+      }
     }
 
     ///Set dt for primitive
@@ -398,8 +401,10 @@ class env_base {
     }
 
     ///Set goal state
-    void set_goal(const Waypoint<Dim>& state) {
-      goal_node_ = state;
+    bool set_goal(const Waypoint<Dim>& state) {
+      if(prior_traj_.empty())
+        goal_node_ = state;
+      return prior_traj_.empty();
     }
 
     ///Set valid region
@@ -521,7 +526,7 @@ class env_base {
     ///Goal node
     Waypoint<Dim> goal_node_;
     ///Prior trajectory
-    Trajectory<Dim> prior_traj_;
+    vec_E<std::pair<Waypoint<Dim>, decimal_t>> prior_traj_;
     ///Valid region
     std::vector<bool> valid_region_;
 };

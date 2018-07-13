@@ -24,6 +24,7 @@ struct Command {
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
   decimal_t yaw_dot; ///<yaw velocity
+  decimal_t t;///Time \f$t\f$ wrt when evaluate
 };
 
 /**
@@ -134,6 +135,7 @@ class Trajectory {
               lambda_dot;
             p.yaw = normalize_angle(segs[id].pr_yaw().p(tau));
             p.yaw_dot = normalize_angle(segs[id].pr_yaw().v(tau));
+            p.t = time;
           }
           return true;
         }
@@ -251,11 +253,8 @@ class Trajectory {
       vec_E<Command<Dim>> ps(N+1);
 
       decimal_t dt = total_t_ / N;
-      for (int i = 0; i <= N; i++) {
-        Command<Dim> pt;
-        evaluate(i * dt, pt);
-        ps[i] = pt;
-      }
+      for (int i = 0; i <= N; i++)
+        evaluate(i * dt, ps[i]);
 
       return ps;
     }

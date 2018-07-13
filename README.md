@@ -202,12 +202,12 @@ use acc!
 Start from new node!
 goalNode fval: 358.000000, g: 353.000000!
 Expand [291] nodes!
-Reached Goal !!!!!!
 ...
-MPL Planner takes: 5.000000 ms
-MPL Planner expanded states: 260
+Reached Goal !!!!!!
+MPL Planner takes: 14.000000 ms
+MPL Planner expanded states: 614
 Total time T: 35.000000
-Total J:  J(VEL) = 38.750000, J(ACC) = 3.000000, J(JRK) = 0.000000, J(SNP) = 0.000000
+Total J:  J(VEL) = 36.750000, J(ACC) = 1.500000, J(JRK) = 0.000000, J(SNP) = 0.000000
 ```
 
 The output image `output.svg` is saved in the current folder:

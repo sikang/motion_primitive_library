@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
   start.vel = Vec2f::Zero();
   start.acc = Vec2f::Zero();
   start.jrk = Vec2f::Zero();
-  start.yaw = 0;
+  start.yaw = M_PI/2;
   start.use_pos = true;
   start.use_vel = true;
   start.use_acc = false;
