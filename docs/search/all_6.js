@@ -3,7 +3,7 @@ var searchData=
   ['g',['g',['../structMPL_1_1State.html#a98ad9a20bc869a21df69e6aeda9c2c93',1,'MPL::State']]],
   ['generate_5fellipsoid',['generate_ellipsoid',['../data__utils_8h.html#a59864e94c3e334090c0b47a75f8b49ef',1,'data_utils.h']]],
   ['get_5fdt',['get_dt',['../classMPL_1_1env__base.html#a26aa7258bd009dd0d117539e97080477',1,'MPL::env_base']]],
-  ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#a1c913f08a91d19988f5bae1f4004ed9e',1,'MPL::env_base']]],
+  ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#a3f1d7b3b986461d044cb9052cf8bdb86',1,'MPL::env_base']]],
   ['get_5fsucc',['get_succ',['../classMPL_1_1env__base.html#a77aac5d50100e7634f77bb820938d296',1,'MPL::env_base::get_succ()'],['../classMPL_1_1env__cloud.html#a6b0c7adf500148cce1c7992451c8b2c7',1,'MPL::env_cloud::get_succ()'],['../classMPL_1_1env__map.html#a2247408e095fd384fd2c38f200c30bbe',1,'MPL::env_map::get_succ()']]],
   ['get_5fvalid_5fregion',['get_valid_region',['../classMPL_1_1env__base.html#aebab080034ebcf8d64009b7a53e7f2c4',1,'MPL::env_base']]],
   ['getallprimitives',['getAllPrimitives',['../classMPL_1_1PlannerBase.html#af0819434cb4315949e9a8bb6ed70ba0f',1,'MPL::PlannerBase']]],
