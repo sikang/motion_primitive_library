@@ -9,7 +9,7 @@ template <int Dim> MapPlanner<Dim>::MapPlanner(bool verbose) {
 }
 
 template <int Dim>
-void MapPlanner<Dim>::setMapUtil(std::shared_ptr<MapUtil<Dim>> &map_util) {
+void MapPlanner<Dim>::setMapUtil(const std::shared_ptr<MapUtil<Dim>> &map_util) {
   this->ENV_.reset(new MPL::env_map<Dim>(map_util));
   map_util_ = map_util;
 }
@@ -94,7 +94,7 @@ void MapPlanner<Dim>::setValidRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>&
 }
 
 
-template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getValidRegion() const {
+template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getSearchRegion() const {
   const auto in_region = this->ENV_->get_valid_region();
   vec_Vecf<Dim> pts;
 	const auto dim = map_util_->getDim();
@@ -190,8 +190,8 @@ MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
 
 template <int Dim>
 vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
-  const auto data = this->map_util_->getMap();
-  const auto dim = this->map_util_->getDim();
+  const auto data = map_util_->getMap();
+  const auto dim = map_util_->getDim();
   const decimal_t ratio = h_max / H_MAX;
   vec_Vec3f ps;
 
@@ -199,10 +199,10 @@ vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
   if(Dim == 2) {
     for(n(0) = 0; n(0) < dim(0); n(0)++) {
       for(n(1) = 0; n(1) < dim(1); n(1)++) {
-        int idx = this->map_util_->getIndex(n);
+        int idx = map_util_->getIndex(n);
         if(data[idx] > 0) {
           decimal_t h = (decimal_t) data[idx] * ratio;
-          Vecf<Dim> pt2d = this->map_util_->intToFloat(n);
+          Vecf<Dim> pt2d = map_util_->intToFloat(n);
           ps.push_back(Vec3f(pt2d(0), pt2d(1), h));
         }
       }
@@ -212,9 +212,9 @@ vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
     for(n(0) = 0; n(0) < dim(0); n(0)++) {
       for(n(1) = 0; n(1) < dim(1); n(1)++) {
         for(n(2) = 0; n(2) < dim(2); n(2)++) {
-          int idx = this->map_util_->getIndex(n);
+          int idx = map_util_->getIndex(n);
           if(data[idx] > 0)  {
-            auto pt = this->map_util_->intToFloat(n);
+            auto pt = map_util_->intToFloat(n);
             Vec3f p;
             p << pt(0), pt(1), pt(2);
             ps.push_back(p);
@@ -228,8 +228,8 @@ vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
 
 template <int Dim>
 vec_Vec3f MapPlanner<Dim>::getGradientCloud(decimal_t h_max, int i) {
-  const auto data = this->map_util_->getMap();
-  const auto dim = this->map_util_->getDim();
+  const auto data = map_util_->getMap();
+  const auto dim = map_util_->getDim();
   const decimal_t ratio = h_max / H_MAX;
   vec_Vec3f ps;
   if(gradient_map_.empty())
@@ -238,9 +238,9 @@ vec_Vec3f MapPlanner<Dim>::getGradientCloud(decimal_t h_max, int i) {
   if(Dim == 2) {
     for(n(0) = 0; n(0) < dim(0); n(0)++) {
       for(n(1) = 0; n(1) < dim(1); n(1)++) {
-        int idx = this->map_util_->getIndex(n);
+        int idx = map_util_->getIndex(n);
         if(gradient_map_[idx].norm() > 0) {
-          Vecf<Dim> pt2d = this->map_util_->intToFloat(n);
+          Vecf<Dim> pt2d = map_util_->intToFloat(n);
           ps.push_back(Vec3f(pt2d(0), pt2d(1), gradient_map_[idx](i)*ratio));
         }
       }
@@ -252,30 +252,30 @@ vec_Vec3f MapPlanner<Dim>::getGradientCloud(decimal_t h_max, int i) {
 
 template <int Dim>
 vec_E<Vecf<Dim>> MapPlanner<Dim>::calculateGradient(const Veci<Dim>& coord1, const Veci<Dim>& coord2) {
-  const auto dim = this->map_util_->getDim();
-  const auto cmap = this->map_util_->getMap();
+  const auto dim = map_util_->getDim();
+  const auto cmap = map_util_->getMap();
 
-  int rn = std::ceil(potential_radius_(0)/this->map_util_->getRes());
+  int rn = std::ceil(potential_radius_(0)/map_util_->getRes());
 
   vec_E<Vecf<Dim>> g(dim(0) * dim(1), Vecf<Dim>::Zero());
   Veci<Dim> n;
   for(n(0) = coord1(0)-rn; n(0) < coord2(0)+rn; n(0)++) {
     for(n(1) = coord1(1)-rn; n(1) < coord2(1)+rn; n(1)++) {
-      if(this->map_util_->isOutside(n))
+      if(map_util_->isOutside(n))
         continue;
-      int idx = this->map_util_->getIndex(n);
+      int idx = map_util_->getIndex(n);
       auto nx1 = n; nx1(0) -= 1;
       auto nx2 = n; nx2(0) += 1;
-      int idx_x1 = this->map_util_->isOutside(nx1) ? -1 : this->map_util_->getIndex(nx1);
-      int idx_x2 = this->map_util_->isOutside(nx2) ? -1 : this->map_util_->getIndex(nx2);
+      int idx_x1 = map_util_->isOutside(nx1) ? -1 : map_util_->getIndex(nx1);
+      int idx_x2 = map_util_->isOutside(nx2) ? -1 : map_util_->getIndex(nx2);
 
       if(idx_x1 >= 0 && idx_x2 >= 0)
         g[idx](0) = 0.5 * (cmap[idx_x2] - cmap[idx_x1]);
 
       auto ny1 = n; ny1(1) -= 1;
       auto ny2 = n; ny2(1) += 1;
-      int idx_y1 = this->map_util_->isOutside(ny1) ? -1 : this->map_util_->getIndex(ny1);
-      int idx_y2 = this->map_util_->isOutside(ny2) ? -1 : this->map_util_->getIndex(ny2);
+      int idx_y1 = map_util_->isOutside(ny1) ? -1 : map_util_->getIndex(ny1);
+      int idx_y2 = map_util_->isOutside(ny2) ? -1 : map_util_->getIndex(ny2);
 
       if(idx_y1 >= 0 && idx_y2 >= 0)
         g[idx](1) = 0.5 * (cmap[idx_y2] - cmap[idx_y1]);
@@ -290,7 +290,7 @@ template <int Dim>
 void MapPlanner<Dim>::createMask(int pow) {
   potential_mask_.clear();
   // create mask
-  decimal_t res = this->map_util_->getRes();
+  decimal_t res = map_util_->getRes();
   decimal_t h_max = H_MAX;
   int rn = std::ceil(potential_radius_(0) / res);
   // printf("rn: %d\n", rn);
@@ -327,15 +327,15 @@ void MapPlanner<Dim>::createMask(int pow) {
 }
 
 template <int Dim>
-void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos) {
-  createMask(1);
+void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos, int pow) {
+  createMask(pow);
   // compute a 2D local potential map
-  const auto dim = this->map_util_->getDim();
+  const auto dim = map_util_->getDim();
   Veci<Dim> coord1 = Veci<Dim>::Zero();
   Veci<Dim> coord2 = dim;
   if(potential_map_range_.norm() > 0) {
-    coord1 = this->map_util_->floatToInt(pos - potential_map_range_);
-    coord2 = this->map_util_->floatToInt(pos + potential_map_range_);
+    coord1 = map_util_->floatToInt(pos - potential_map_range_);
+    coord2 = map_util_->floatToInt(pos + potential_map_range_);
     for(int i = 0; i < Dim; i++) {
       if(coord1(i) < 0)
         coord1(i) = 0;
@@ -349,21 +349,21 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos) {
     }
   }
 
-  std::vector<int8_t> map = this->map_util_->getMap();
+  std::vector<int8_t> map = map_util_->getMap();
   auto dmap = map;
 
   Veci<Dim> n;
   if(Dim == 2) {
     for(n(0) = coord1(0); n(0) < coord2(0); n(0)++) {
       for(n(1) = coord1(1); n(1) < coord2(1); n(1)++) {
-        int idx = this->map_util_->getIndex(n);
+        int idx = map_util_->getIndex(n);
         if(map[idx] > 0) {
           dmap[idx] = H_MAX;
           for(const auto& it: potential_mask_) {
             const Veci<Dim> new_n = n + it.first;
 
-            if(!this->map_util_->isOutside(new_n)) {
-              const int new_idx = this->map_util_->getIndex(new_n);
+            if(!map_util_->isOutside(new_n)) {
+              const int new_idx = map_util_->getIndex(new_n);
               dmap[new_idx] = std::max(dmap[new_idx], it.second);
             }
           }
@@ -375,14 +375,14 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos) {
 		for(n(0) = coord1(0); n(0) < coord2(0); n(0)++) {
 			for(n(1) = coord1(1); n(1) < coord2(1); n(1)++) {
 				for(n(2) = coord1(2); n(2) < coord2(2); n(2)++) {
-					int idx = this->map_util_->getIndex(n);
+					int idx = map_util_->getIndex(n);
 					if(map[idx] > 0) {
 						dmap[idx] = H_MAX;
 						for(const auto& it: potential_mask_) {
 							const Veci<Dim> new_n = n + it.first;
 
-							if(!this->map_util_->isOutside(new_n)) {
-								const int new_idx = this->map_util_->getIndex(new_n);
+							if(!map_util_->isOutside(new_n)) {
+								const int new_idx = map_util_->getIndex(new_n);
                 dmap[new_idx] = std::max(dmap[new_idx], it.second);
 							}
 						}
@@ -392,8 +392,8 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos) {
 		}
 	}
 
-	this->map_util_->setMap(this->map_util_->getOrigin(), dim, dmap, this->map_util_->getRes());
-  this->ENV_->set_potential_map(this->map_util_->getMap());
+	map_util_->setMap(map_util_->getOrigin(), dim, dmap, map_util_->getRes());
+  this->ENV_->set_potential_map(map_util_->getMap());
   //gradient_map_ = calculateGradient(coord1, coord2);
   //this->ENV_->set_gradient_map(gradient_map_);
 }

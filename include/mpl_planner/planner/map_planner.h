@@ -24,7 +24,7 @@ public:
    */
   MapPlanner(bool verbose);
   /// Set map util
-  virtual void setMapUtil(std::shared_ptr<MapUtil<Dim>> &map_util);
+  virtual void setMapUtil(const std::shared_ptr<MapUtil<Dim>> &map_util);
   /**
    * @brief Set valid region
    * @param path a sequence of waypoints from a path or trajectory
@@ -33,8 +33,8 @@ public:
    */
   void setValidRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense = false);
 
-  /// Get valid region
-  vec_Vecf<Dim> getValidRegion() const;
+  /// Get search region
+  vec_Vecf<Dim> getSearchRegion() const;
   /// Get linked voxels
   vec_Vecf<Dim> getLinkedNodes() const;
   /**
@@ -69,8 +69,9 @@ public:
   /**
    * @brief Generate potential map
    * @param pos center of the potential map range is zero, do global generation
+   * @param pow power of potential field
    */
-  void updatePotentialMap(const Vecf<Dim>& pos);
+  void updatePotentialMap(const Vecf<Dim>& pos, int pow = 1);
 
 protected:
   /// Create mask for potential
@@ -81,8 +82,11 @@ protected:
                                      const Veci<Dim>& coord2);
   /// Map util
   std::shared_ptr<MapUtil<Dim>> map_util_;
+
   /// Linked table that records voxel and corresponding primitives passed through
   mutable linkedHashMap lhm_;
+
+  /// Max value for potential
   int8_t H_MAX{100};
 
   /// Radius of potential for each voxel

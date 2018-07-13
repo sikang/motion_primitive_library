@@ -49,17 +49,19 @@ If everything works, you should see the results as:
 Running tests...
 Test project /home/sikang/thesis_ws/src/packages/mpl_ros/motion_primitive_library/build
     Start 1: test_traj_solver
-1/4 Test #1: test_traj_solver .................   Passed    0.00 sec
+1/5 Test #1: test_traj_solver .................   Passed    0.00 sec
     Start 2: test_planner_2d
-2/4 Test #2: test_planner_2d ..................   Passed    0.91 sec
+2/5 Test #2: test_planner_2d ..................   Passed    0.90 sec
     Start 3: test_planner_2d_prior_traj
-3/4 Test #3: test_planner_2d_prior_traj .......   Passed    0.91 sec
+3/5 Test #3: test_planner_2d_prior_traj .......   Passed    0.94 sec
     Start 4: test_planner_2d_with_yaw
-4/4 Test #4: test_planner_2d_with_yaw .........   Passed    0.90 sec
+4/5 Test #4: test_planner_2d_with_yaw .........   Passed    0.98 sec
+    Start 5: test_distance_map_planner_2d
+5/5 Test #5: test_distance_map_planner_2d .....   Passed    1.38 sec
 
-100% tests passed, 0 tests failed out of 4
+100% tests passed, 0 tests failed out of 5
 
-Total Test time (real) =   2.73 sec
+Total Test time (real) =   4.22 sec
 ```
 
 #### Include in other projects:
@@ -234,12 +236,25 @@ $ ./build/test_planner_2d_with_yaw ./data/corridor.yaml
 ```
 ![Visualization](./data/example3.png)
 
-#### Example4 (trajectory generation):
-Generate trajectory from a given path, without obstacles:
+#### Example4 (perturb trajectory with potential field):
+In practical case, the robot wants to stay away from obstacles even though the
+nominal trajectory is collision free. To add a soft constraint based on the
+distance towards obstacles, one technique is to use the artificial potential field.
+In this examplem, we show how easy it is to perturb a nominal trajectory based
+on our algorithm:
+```bash
+$ ./build/test_distance_map_planner_2d ./data/corridor.yaml
+```
+![Visualization](./data/example4.png)
+
+
+#### Example5 (trajectory generation):
+This example illustrate the `mpl_traj_solver` which is a smoothing tool to derive a smoother trajectory.
+An example of generating trajectory from a given path, without obstacles:
 ```bash
 $ ./build/test_traj_solver
 ```
-![Visualization](./data/example4.png)
+![Visualization](./data/example5.png)
 
 Here we generate three different trajectories using the same path and time allocation: the red one is minimum velocity trajectory, the green one is the minimum acceleration trajectory and the blue one is the minimum jerk trajectory.
 
