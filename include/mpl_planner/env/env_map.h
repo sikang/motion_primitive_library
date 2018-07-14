@@ -88,17 +88,15 @@ public:
       if (pr.max_vel(i) > max_v)
         max_v = pr.max_vel(i);
     }
-    int n = std::ceil(max_v * pr.t() / map_util_->getRes());
+    int n = std::max(5, (int)std::ceil(max_v * pr.t() / map_util_->getRes()));
     decimal_t c = 0;
-    const auto pts = pr.sample(n);
-    int prev_idx = -1;
-    for (const auto &pt : pts) {
+
+    decimal_t dt = pr.t() / n;
+    for (decimal_t t = 0; t < pr.t(); t += dt) {
+      const auto pt = pr.evaluate(t);
       const Veci<Dim> pn = map_util_->floatToInt(pt.pos);
       const int idx = map_util_->getIndex(pn);
-      if(prev_idx == idx)
-        continue;
-      else
-        prev_idx = idx;
+
       if (map_util_->isOutside(pn) ||
           (!this->valid_region_.empty() &&
           !this->valid_region_[idx]))
@@ -111,8 +109,8 @@ public:
       */
       if(!potential_map_.empty()) {
         if(potential_map_[idx] < 100 && potential_map_[idx] > 0) {
-          c += potential_weight_ * potential_map_[idx] +
-            gradient_weight_ * pt.vel.norm();
+          c += dt * (potential_weight_ * potential_map_[idx] +
+            gradient_weight_ * pt.vel.norm());
         }
         else if(potential_map_[idx] >= 100)
           return std::numeric_limits<decimal_t>::infinity();
@@ -123,7 +121,7 @@ public:
         const auto v = pt.vel.template topRows<2>();
         if(v.norm() > 1e-5) { // if v is not zero
           decimal_t v_value = 1-v.normalized().dot(Vec2f(cos(pt.yaw), sin(pt.yaw)));
-          c += this->wyaw_ * v_value;
+          c += this->wyaw_ * v_value * dt;
         }
       }
     }

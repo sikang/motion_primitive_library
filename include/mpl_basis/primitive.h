@@ -558,9 +558,9 @@ void print_max(const Primitive<Dim>& p) {
     max_a(i) = p.max_acc(i);
     max_j(i) = p.max_jrk(i);
   }
-  std::cout << "max_vel: ", max_v.transpose() << std::endl;;
-  std::cout << "max_acc: ", max_a.transpose() << std::endl;;
-  std::cout << "max_jrk: ", max_j.transpose() << std::endl;;
+  std::cout << "max_vel: " << max_v.transpose() << std::endl;;
+  std::cout << "max_acc: " << max_a.transpose() << std::endl;;
+  std::cout << "max_jrk: " << max_j.transpose() << std::endl;;
 }
 
 ///Sample N+1 ellipsoids along the primitive

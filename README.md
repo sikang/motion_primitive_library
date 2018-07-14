@@ -248,13 +248,22 @@ $ ./build/test_distance_map_planner_2d ./data/corridor.yaml
 ![Visualization](./data/example4.png)
 
 
-#### Example5 (trajectory generation):
+#### Example5 (perturb trajectory with potential field and yaw constraint):
+In a more comprehensive case, when the robot has limited FOV and sensing range,
+plan the trajectory that considers safety and yaw constraint:
+```bash
+$ ./build/test_distance_map_planner_2d_with_yaw ./data/corridor.yaml
+```
+
+![Visualization](./data/example5.png)
+
+#### Example6 (trajectory generation):
 This example illustrate the `mpl_traj_solver` which is a smoothing tool to derive a smoother trajectory.
 An example of generating trajectory from a given path, without obstacles:
 ```bash
 $ ./build/test_traj_solver
 ```
-![Visualization](./data/example5.png)
+![Visualization](./data/example6.png)
 
 Here we generate three different trajectories using the same path and time allocation: the red one is minimum velocity trajectory, the green one is the minimum acceleration trajectory and the blue one is the minimum jerk trajectory.
 

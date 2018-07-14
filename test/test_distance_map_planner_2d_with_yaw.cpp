@@ -77,13 +77,23 @@ int main(int argc, char **argv) {
 	vec_Vec2f path;
 	for(const auto& w: ws)
 		path.push_back(w.pos);
+
+  // Add yaw control input
+  decimal_t u_yaw = 0.5;
+  vec_E<VecDf> U_yaw;
+  for (decimal_t dx = -u; dx <= u; dx += du)
+    for (decimal_t dy = -u; dy <= u; dy += du)
+      for (decimal_t dyaw = -u_yaw; dyaw <= u_yaw; dyaw += u_yaw)
+        U_yaw.push_back(Vec3f(dx, dy, dyaw));
+
+
   // Initiaize planner as a distance map planner
 	planner.reset(new MPL::OccMapPlanner(true));
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
   planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
+  planner->setU(U_yaw);              // Set control input
   planner->setEpsilon(1.0);           // Set heursitic to zero
 
 	planner->setValidRegion(path, Vec2f(0.5, 0.5)); // Set search region around path
@@ -91,6 +101,10 @@ int main(int argc, char **argv) {
   planner->setPotentialWeight(1); // Set potential weight
   planner->setGradientWeight(0); // Set gradient weight
   planner->updatePotentialMap(start.pos); // Update potential map
+
+  decimal_t yaw_max = 0.5; // Set yaw max
+  start.use_yaw = true; // enable yaw
+  planner->setYawmax(yaw_max);       // Set yaw threshold
 
   // Planning
   Timer time_dist(true);
@@ -182,8 +196,8 @@ int main(int argc, char **argv) {
 		// Draw the trajectory
 		double total_t = traj_dist.getTotalTime();
 		printf("Total dist time T: %f\n", total_t);
-		printf("Total dist J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f\n",
-					 traj_dist.J(Control::VEL), traj_dist.J(Control::ACC), traj_dist.J(Control::JRK), traj_dist.J(Control::SNP));
+		printf("Total dist J:  J(VEL) = %f, J(ACC) = %f, J(JRK) = %f, J(SNP) = %f, J(YAW) = %f\n",
+					 traj_dist.J(Control::VEL), traj_dist.J(Control::ACC), traj_dist.J(Control::JRK), traj_dist.J(Control::SNP), traj_dist.Jyaw());
 		int num = 200; // number of points on trajectory to draw
 		const auto ws = traj_dist.sample(num);
 		boost::geometry::model::linestring<point_2d> line;
@@ -192,10 +206,37 @@ int main(int argc, char **argv) {
 		mapper.add(line);
 		mapper.map(line,
 							 "opacity:0.8;fill:none;stroke:rgb(10,10,250);stroke-width:5"); // Blue
+
+    // Draw yaw
+    const auto ws_yaw = traj_dist.sample(20);
+    Vec2f d(0.7, 0);
+    for (const auto& w: ws_yaw) {
+      decimal_t yaw = w.yaw;
+      decimal_t yaw1 = yaw + yaw_max;
+      decimal_t yaw2 = yaw - yaw_max;
+      Mat2f Ryaw1, Ryaw2;
+      Ryaw1 << cos(yaw1), -sin(yaw1), sin(yaw1), cos(yaw1);
+      Ryaw2 << cos(yaw2), -sin(yaw2), sin(yaw2), cos(yaw2);
+      Vec2f p1 = w.pos;
+      Vec2f p2 = w.pos + Ryaw1*d;
+      Vec2f p3 = w.pos + Ryaw2*d;
+      Vec2f p4 = (p2+p3)/2;
+      boost::geometry::model::linestring<point_2d> tria;
+      tria.push_back(point_2d(p1(0), p1(1)));
+      tria.push_back(point_2d(p2(0), p2(1)));
+      tria.push_back(point_2d(p3(0), p3(1)));
+      tria.push_back(point_2d(p1(0), p1(1)));
+      tria.push_back(point_2d(p4(0), p4(1)));
+      mapper.add(tria);
+      mapper.map(tria,
+                 "opacity:0.8;fill:none;stroke:rgb(212,0,0);stroke-width:2"); // Red
+    }
+
+
 	}
 
 	// Write title at the lower right corner on canvas
-	mapper.text(point_2d(origin_x + range_x - 11, origin_y+2.4), "test_distance_map_planner_2d",
+	mapper.text(point_2d(origin_x + range_x - 13.5, origin_y+2.4), "test_distance_map_planner_2d_with_yaw",
 							"fill-opacity:1.0;fill:rgb(10,10,250);");
 
   mapper.text(point_2d(origin_x + range_x - 13, origin_y+1.8), "Green: ",
