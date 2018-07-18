@@ -9,16 +9,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-deprecated-declara
 
 set(BUILD_SHARED_LIBS ON)
 
-find_package(PCL 1.7 REQUIRED)
-if(NOT "${PCL_LIBRARIES}" STREQUAL "")
-  list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
-endif()
 find_package(Eigen3 REQUIRED)
 find_package(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(YAMLCPP REQUIRED yaml-cpp)
-include_directories(${PCL_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR} include)
-link_directories(${PCL_LIBRARY_DIRS})
-add_definitions(${PCL_DEFINITIONS})
+include_directories(${EIGEN3_INCLUDE_DIR} include)
 
 if(YAMLCPP_FOUND)
   message(STATUS "Found yaml-cpp.")
@@ -30,10 +24,6 @@ add_library(poly_solver src/mpl_traj_solver/poly_solver.cpp
   src/mpl_traj_solver/poly_traj.cpp)
 
 add_library(map_planner src/mpl_planner/map_planner.cpp)
-
-add_library(ellipsoid_planner src/mpl_planner/ellipsoid_planner.cpp
-  src/mpl_collision/decomp_util.cpp)
-target_link_libraries(ellipsoid_planner ${PCL_LIBRARIES})
 
 include(CTest)
 
@@ -65,7 +55,7 @@ add_test(test_distance_map_planner_2d_with_yaw test_distance_map_planner_2d_with
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")
 
-install(TARGETS poly_solver map_planner ellipsoid_planner
+install(TARGETS poly_solver map_planner
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)

@@ -9,5 +9,4 @@ set(MOTION_PRIMITIVE_LIBRARY_INCLUDE_DIRS "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}
 
 set(MOTION_PRIMITIVE_LIBRARY_LIBRARIES
   "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libpoly_solver.so"
-  "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmap_planner.so"
-  "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libellipsoid_planner.so")
+  "${MOTION_PRIMITIVE_LIBRARY_CMAKE_DIR}/../../../lib/libmap_planner.so")

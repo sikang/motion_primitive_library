@@ -7,7 +7,7 @@ build:
       code: |
         export DEBIAN_FRONTEND=noninteractive
         sudo apt-get update
-        sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
+        sudo apt install -y libeigen3-dev libyaml-cpp-dev libproj-dev cmake
     - script:
       name: build
       code: |

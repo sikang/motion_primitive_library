@@ -1,4 +1,4 @@
-# MRSL Motion Primitive Library for quadrotor v1.0
+# MRSL Motion Primitive Library for quadrotor v1.1
 
 [![wercker status](https://app.wercker.com/status/ae575e9b5218e1f02684065445c6de66/s/master "wercker status")](https://app.wercker.com/project/byKey/ae575e9b5218e1f02684065445c6de66)
 - - -
@@ -10,21 +10,21 @@ It does not assume a hovering initial condition and, hence, is suitable for fast
 
 For technical details, refer to the original paper ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/) that has been published in IROS 2017.
 
-## New Features in v1.0
+## New Features in v1.1
   - Reformat the repo structure
   - Add yaw primitive
   - Add potential function to perturb trajectory
+  - Separate `ellipsoid_planner` to `mpl_ros`
 
 ## Installation
 #### Prerequisite:
-  - `PCL`: apt install libpcl-dev
   - `Eigen`: apt install libeigen3-dev
   - `YAML-CPP`: apt install libyaml-cpp-dev
 
 or simply run following commands:
 ```bash
 $ sudo apt-get update
-$ sudo apt install -y libeigen3-dev libpcl-dev libyaml-cpp-dev libproj-dev cmake
+$ sudo apt install -y libeigen3-dev libyaml-cpp-dev libproj-dev cmake
 ```
 
 #### A) Simple cmake
