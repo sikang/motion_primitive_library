@@ -3,7 +3,6 @@ var searchData=
   ['p',['p',['../classPrimitive1D.html#a2e67b1f67113d83f4f466066aca418be',1,'Primitive1D::p()'],['../classPolyTraj.html#ade84aef86cc05cf2e8f0d3cf5583c655',1,'PolyTraj::p()']]],
   ['plan',['plan',['../classMPL_1_1PlannerBase.html#a8c74bcbb9bd9b1a492ad54c3a5f732fc',1,'MPL::PlannerBase']]],
   ['plannerbase',['PlannerBase',['../classMPL_1_1PlannerBase.html#a1c604f18296e9b5e58f9d4cc7e2462ff',1,'MPL::PlannerBase']]],
-  ['polyhedra',['polyhedra',['../classDecompUtil.html#a2d6f9eeb5dc43f6de3bec69a0d9f0c09',1,'DecompUtil']]],
   ['polysolver',['PolySolver',['../classPolySolver.html#a9d8959bf5a5aa10e09eeff4fafad6412',1,'PolySolver']]],
   ['polytraj',['PolyTraj',['../classPolyTraj.html#ad12df6c77e33b767117169d2b8605fe4',1,'PolyTraj']]],
   ['power',['power',['../math_8h.html#a8a7fd3c51a3512fb0e8f4d70f8a93fac',1,'math.h']]],

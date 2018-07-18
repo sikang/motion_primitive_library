@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['occmapplanner',['OccMapPlanner',['../namespaceMPL.html#a3df478df06221cdbab15f9a96156b10f',1,'MPL']]]
+  ['stateptr',['StatePtr',['../namespaceMPL.html#a865b113366f403642fdea26c1dc97709',1,'MPL']]]
 ];

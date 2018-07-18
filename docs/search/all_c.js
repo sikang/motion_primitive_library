@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['mrsl_20motion_20primitive_20library_20for_20quadrotor_20v1_2e0',['MRSL Motion Primitive Library for quadrotor v1.0',['../index.html',1,'']]],
+  ['mrsl_20motion_20primitive_20library_20for_20quadrotor_20v1_2e1',['MRSL Motion Primitive Library for quadrotor v1.1',['../index.html',1,'']]],
   ['map_5f',['map_',['../classMPL_1_1MapUtil.html#a1d648f13d2103e173dd9e8c5d2147657',1,'MPL::MapUtil']]],
   ['map_5fplanner_2eh',['map_planner.h',['../map__planner_8h.html',1,'']]],
   ['map_5futil_2eh',['map_util.h',['../map__util_8h.html',1,'']]],
@@ -19,7 +19,6 @@ var searchData=
   ['matf',['Matf',['../data__type_8h.html#a1eeda0bad4efd3be8cb2da1941982410',1,'data_type.h']]],
   ['math_2eh',['math.h',['../math_8h.html',1,'']]],
   ['max_5facc',['max_acc',['../classPrimitive.html#a942567ef94981d635d78a24e6b2aedc1',1,'Primitive']]],
-  ['max_5fattitude',['max_attitude',['../trajectory_8h.html#a1238ca5e64dd5e86f221e8f1668e16c0',1,'trajectory.h']]],
   ['max_5fjrk',['max_jrk',['../classPrimitive.html#ac348b448ecec2e281fb5cc18a0cf4871',1,'Primitive']]],
   ['max_5fnum_5f',['max_num_',['../classMPL_1_1PlannerBase.html#a3453917453091eacf0806d08a65d2766',1,'MPL::PlannerBase']]],
   ['max_5ft_5f',['max_t_',['../classMPL_1_1PlannerBase.html#afefe5c92616ae36eeda34fbf0ef78b86',1,'MPL::PlannerBase::max_t_()'],['../structMPL_1_1StateSpace.html#ac8a2a7e44fb5c76e3657048dd8ae10c1',1,'MPL::StateSpace::max_t_()']]],

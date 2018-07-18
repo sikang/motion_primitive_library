@@ -1,7 +1,6 @@
 var searchData=
 [
   ['sample',['sample',['../classPrimitive.html#a0603cdd799aa72315c7d7d7720ee950c',1,'Primitive::sample()'],['../classTrajectory.html#ae4aa6ad4ffa3299913311d8ba6123b0d',1,'Trajectory::sample()']]],
-  ['sample_5fellipsoids',['sample_ellipsoids',['../primitive_8h.html#a7d2e2f194833d14bfd63575eea70e356',1,'sample_ellipsoids(const Primitive&lt; Dim &gt; &amp;pr, const Vec3f &amp;axe, int N):&#160;primitive.h'],['../trajectory_8h.html#a029800daef27281e2647e55cdbf34f69',1,'sample_ellipsoids(const Trajectory&lt; Dim &gt; &amp;traj, const Vec3f &amp;axe, int N):&#160;trajectory.h']]],
   ['scale',['scale',['../classTrajectory.html#a5f54099ed3abd448c571b20200f42b3a',1,'Trajectory']]],
   ['scale_5fdown',['scale_down',['../classTrajectory.html#a9bedf803b27daaca08d0e049a17fa41a',1,'Trajectory']]],
   ['set_5fa_5fmax',['set_a_max',['../classMPL_1_1env__base.html#a17295278edfcd6cbc265d01371aac43f',1,'MPL::env_base']]],
@@ -20,7 +19,6 @@ var searchData=
   ['set_5fpotential_5fmap',['set_potential_map',['../classMPL_1_1env__base.html#a53f9189d2e1e5dfb9fbd0163e8fd1ee6',1,'MPL::env_base::set_potential_map()'],['../classMPL_1_1env__map.html#a061bd8a136a679ee196455c8170269bc',1,'MPL::env_map::set_potential_map()']]],
   ['set_5fpotential_5fweight',['set_potential_weight',['../classMPL_1_1env__base.html#ae01a34b11afd9c21168d04a009f12248',1,'MPL::env_base::set_potential_weight()'],['../classMPL_1_1env__map.html#a4d832ec079d5ffe034aca016a9fa6227',1,'MPL::env_map::set_potential_weight()']]],
   ['set_5fprior_5ftrajectory',['set_prior_trajectory',['../classMPL_1_1env__base.html#a84764f976374a3964c5299ce837fa762',1,'MPL::env_base::set_prior_trajectory()'],['../classMPL_1_1env__map.html#a2d7be70921dce29559e33f3e59fc8c5a',1,'MPL::env_map::set_prior_trajectory()']]],
-  ['set_5fregion',['set_region',['../classDecompUtil.html#a5c5790c39aafee964213ad353521c8a3',1,'DecompUtil']]],
   ['set_5ftol_5facc',['set_tol_acc',['../classMPL_1_1env__base.html#a9d1c12973cfed2b1ceea81664008ed55',1,'MPL::env_base']]],
   ['set_5ftol_5fdis',['set_tol_dis',['../classMPL_1_1env__base.html#a1af16543b37182afc0ecbb22b0da6250',1,'MPL::env_base']]],
   ['set_5ftol_5fvel',['set_tol_vel',['../classMPL_1_1env__base.html#a868d8d096eff02ddc71dc7163271e671',1,'MPL::env_base']]],
@@ -44,10 +42,9 @@ var searchData=
   ['setheurignoredynamics',['setHeurIgnoreDynamics',['../classMPL_1_1PlannerBase.html#ac3036e0748a311270d8a9283546e1c44',1,'MPL::PlannerBase']]],
   ['setjmax',['setJmax',['../classMPL_1_1PlannerBase.html#a63176689f71cc8e040585d9b67bc0a97',1,'MPL::PlannerBase']]],
   ['setlpastar',['setLPAstar',['../classMPL_1_1PlannerBase.html#a6618dea222e2fbb9141f88c3adbdee98',1,'MPL::PlannerBase']]],
-  ['setmap',['setMap',['../classMPL_1_1MapUtil.html#ab9db84521ce45abed421c7cc0bd9b051',1,'MPL::MapUtil::setMap()'],['../classMPL_1_1EllipsoidPlanner.html#a3ead7900922d4b3e6647c41c656d2be1',1,'MPL::EllipsoidPlanner::setMap()']]],
+  ['setmap',['setMap',['../classMPL_1_1MapUtil.html#ab9db84521ce45abed421c7cc0bd9b051',1,'MPL::MapUtil']]],
   ['setmaputil',['setMapUtil',['../classMPL_1_1MapPlanner.html#ab92847a1e1e894cdb82f7462beea2dd3',1,'MPL::MapPlanner']]],
   ['setmaxnum',['setMaxNum',['../classMPL_1_1PlannerBase.html#aee0722f1e0713f22164e719913f4c82b',1,'MPL::PlannerBase']]],
-  ['setobstacles',['setObstacles',['../classDecompUtil.html#a7df54ef30f4efe5ce1198c9b6eeea813',1,'DecompUtil']]],
   ['setpath',['setPath',['../classTrajSolver.html#ad69444b555306f3825f3fff3aec463f5',1,'TrajSolver']]],
   ['setpotentialmaprange',['setPotentialMapRange',['../classMPL_1_1MapPlanner.html#a797e602e4ecfdf389ba28d13ab5748ba',1,'MPL::MapPlanner']]],
   ['setpotentialradius',['setPotentialRadius',['../classMPL_1_1MapPlanner.html#a997ae7ef2b3df2a940fc580423b2b577',1,'MPL::MapPlanner']]],

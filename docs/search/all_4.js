@@ -1,17 +1,9 @@
 var searchData=
 [
-  ['ellipsoid',['Ellipsoid',['../data__type_8h.html#ab79f3b8f2deea3f9f977cdc99cfc4a76',1,'data_type.h']]],
-  ['ellipsoid_5fplanner_2eh',['ellipsoid_planner.h',['../ellipsoid__planner_8h.html',1,'']]],
-  ['ellipsoidplanner',['EllipsoidPlanner',['../classMPL_1_1EllipsoidPlanner.html',1,'MPL']]],
-  ['ellipsoidplanner',['EllipsoidPlanner',['../classMPL_1_1EllipsoidPlanner.html#a9948341caae9db43a98bf3fbf0e739a0',1,'MPL::EllipsoidPlanner']]],
   ['env_5f',['ENV_',['../classMPL_1_1PlannerBase.html#a6beb2a3409ebbb1bf803ee88728a257d',1,'MPL::PlannerBase']]],
   ['env_5fbase',['env_base',['../classMPL_1_1env__base.html',1,'MPL']]],
   ['env_5fbase',['env_base',['../classMPL_1_1env__base.html#a73390f0939fc1efd123696f3e805f98e',1,'MPL::env_base']]],
   ['env_5fbase_2eh',['env_base.h',['../env__base_8h.html',1,'']]],
-  ['env_5fbase_3c_203_20_3e',['env_base&lt; 3 &gt;',['../classMPL_1_1env__base.html',1,'MPL']]],
-  ['env_5fcloud',['env_cloud',['../classMPL_1_1env__cloud.html',1,'MPL']]],
-  ['env_5fcloud',['env_cloud',['../classMPL_1_1env__cloud.html#aea16798a23c2f474b7edf07479446ee2',1,'MPL::env_cloud::env_cloud()'],['../classMPL_1_1env__cloud.html#a6d025f24092b1f84c9084faa4f0128b4',1,'MPL::env_cloud::env_cloud(const vec_Vec3f &amp;obs, decimal_t r, const Vec3f &amp;ori, const Vec3f &amp;dim)']]],
-  ['env_5fcloud_2eh',['env_cloud.h',['../env__cloud_8h.html',1,'']]],
   ['env_5fmap',['env_map',['../classMPL_1_1env__map.html',1,'MPL']]],
   ['env_5fmap',['env_map',['../classMPL_1_1env__map.html#a1c34f1f4e9c822470d3a15c88f3164fc',1,'MPL::env_map']]],
   ['env_5fmap_2eh',['env_map.h',['../env__map_8h.html',1,'']]],

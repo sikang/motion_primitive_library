@@ -122,10 +122,16 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a564d3623381dbe49c5b2bed5390b13be">getOrigin</a> ()</td></tr>
 <tr class="memdesc:a564d3623381dbe49c5b2bed5390b13be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get origin. <br /></td></tr>
 <tr class="separator:a564d3623381dbe49c5b2bed5390b13be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16590516cbe0a87d64c7d5781de0818d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16590516cbe0a87d64c7d5781de0818d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a16590516cbe0a87d64c7d5781de0818d">getIndex</a> (const <a class="el" href="data__type_8h.html#ac208833a6aa7ec29f39eb5ae142aaede">Veci</a>&lt; Dim &gt; &amp;pn)</td></tr>
-<tr class="memdesc:a16590516cbe0a87d64c7d5781de0818d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of a cell. <br /></td></tr>
-<tr class="separator:a16590516cbe0a87d64c7d5781de0818d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c8358e6d5280f6ded98d23ff070afd1"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0c8358e6d5280f6ded98d23ff070afd1"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:a0c8358e6d5280f6ded98d23ff070afd1"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==2, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a0c8358e6d5280f6ded98d23ff070afd1">getIndex</a> (const <a class="el" href="data__type_8h.html#ac208833a6aa7ec29f39eb5ae142aaede">Veci</a>&lt; Dim &gt; &amp;pn)</td></tr>
+<tr class="memdesc:a0c8358e6d5280f6ded98d23ff070afd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of a cell for 2D. <br /></td></tr>
+<tr class="separator:a0c8358e6d5280f6ded98d23ff070afd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5852d76edb6620502a142e854762b4c3"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5852d76edb6620502a142e854762b4c3"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:a5852d76edb6620502a142e854762b4c3"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==3, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a5852d76edb6620502a142e854762b4c3">getIndex</a> (const <a class="el" href="data__type_8h.html#ac208833a6aa7ec29f39eb5ae142aaede">Veci</a>&lt; Dim &gt; &amp;pn)</td></tr>
+<tr class="memdesc:a5852d76edb6620502a142e854762b4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of a cell for 3D. <br /></td></tr>
+<tr class="separator:a5852d76edb6620502a142e854762b4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9e605d2c37d47c60a9a8f923c746ddb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9e605d2c37d47c60a9a8f923c746ddb"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#ad9e605d2c37d47c60a9a8f923c746ddb">isFree</a> (int idx)</td></tr>
 <tr class="memdesc:ad9e605d2c37d47c60a9a8f923c746ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the cell is free by index. <br /></td></tr>
@@ -173,18 +179,36 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="data__type_8h.html#ab0b0b0b007b0ba902fb040a70b3744e6">vec_Veci</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#aca6d3fc883a0db14032d826c30a73aff">rayTrace</a> (const <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt; &amp;pt1, const <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt; &amp;pt2)</td></tr>
 <tr class="memdesc:aca6d3fc883a0db14032d826c30a73aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raytrace from float point pt1 to pt2. <br /></td></tr>
 <tr class="separator:aca6d3fc883a0db14032d826c30a73aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada5c314d515f74da6a5bb05095d1ad13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada5c314d515f74da6a5bb05095d1ad13"></a>
-<a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#ada5c314d515f74da6a5bb05095d1ad13">getCloud</a> ()</td></tr>
-<tr class="memdesc:ada5c314d515f74da6a5bb05095d1ad13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get occupied voxels. <br /></td></tr>
-<tr class="separator:ada5c314d515f74da6a5bb05095d1ad13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0783abbad34b109fdf65dcabab006d3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0783abbad34b109fdf65dcabab006d3e"></a>
-<a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a0783abbad34b109fdf65dcabab006d3e">getFreeCloud</a> ()</td></tr>
-<tr class="memdesc:a0783abbad34b109fdf65dcabab006d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free voxels. <br /></td></tr>
-<tr class="separator:a0783abbad34b109fdf65dcabab006d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a07d60d7f9f2a9b8eaa76ca2cd6bbee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a07d60d7f9f2a9b8eaa76ca2cd6bbee"></a>
-<a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a3a07d60d7f9f2a9b8eaa76ca2cd6bbee">getUnknownCloud</a> ()</td></tr>
-<tr class="memdesc:a3a07d60d7f9f2a9b8eaa76ca2cd6bbee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unknown voxels. <br /></td></tr>
-<tr class="separator:a3a07d60d7f9f2a9b8eaa76ca2cd6bbee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab43e53300d6c9be1bb43434ae7d0da65"><td class="memTemplParams" colspan="2"><a class="anchor" id="ab43e53300d6c9be1bb43434ae7d0da65"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:ab43e53300d6c9be1bb43434ae7d0da65"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==3, <a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#ab43e53300d6c9be1bb43434ae7d0da65">getCloud</a> ()</td></tr>
+<tr class="memdesc:ab43e53300d6c9be1bb43434ae7d0da65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get occupied voxels for 3D. <br /></td></tr>
+<tr class="separator:ab43e53300d6c9be1bb43434ae7d0da65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b33b97b48d7bbd7331e53911f701727"><td class="memTemplParams" colspan="2"><a class="anchor" id="a9b33b97b48d7bbd7331e53911f701727"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:a9b33b97b48d7bbd7331e53911f701727"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==2, <a class="el" href="data__type_8h.html#af640446aaa0ada84a270bd5639b36a7d">vec_Vec2f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a9b33b97b48d7bbd7331e53911f701727">getCloud</a> ()</td></tr>
+<tr class="memdesc:a9b33b97b48d7bbd7331e53911f701727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get occupied voxels for 2D. <br /></td></tr>
+<tr class="separator:a9b33b97b48d7bbd7331e53911f701727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3944032ebcbeb08bf877759f7976478"><td class="memTemplParams" colspan="2"><a class="anchor" id="aa3944032ebcbeb08bf877759f7976478"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:aa3944032ebcbeb08bf877759f7976478"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==3, <a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#aa3944032ebcbeb08bf877759f7976478">getFreeCloud</a> ()</td></tr>
+<tr class="memdesc:aa3944032ebcbeb08bf877759f7976478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free voxels for 3D. <br /></td></tr>
+<tr class="separator:aa3944032ebcbeb08bf877759f7976478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae380b8d5409f11c1b09d4e3ad3cd7063"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae380b8d5409f11c1b09d4e3ad3cd7063"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:ae380b8d5409f11c1b09d4e3ad3cd7063"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==2, <a class="el" href="data__type_8h.html#af640446aaa0ada84a270bd5639b36a7d">vec_Vec2f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#ae380b8d5409f11c1b09d4e3ad3cd7063">getFreeCloud</a> ()</td></tr>
+<tr class="memdesc:ae380b8d5409f11c1b09d4e3ad3cd7063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free voxels for 2D. <br /></td></tr>
+<tr class="separator:ae380b8d5409f11c1b09d4e3ad3cd7063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0acb62b37e39e3c35f5094a22881af"><td class="memTemplParams" colspan="2"><a class="anchor" id="aaa0acb62b37e39e3c35f5094a22881af"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:aaa0acb62b37e39e3c35f5094a22881af"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==3, <a class="el" href="data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b">vec_Vec3f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#aaa0acb62b37e39e3c35f5094a22881af">getUnknownCloud</a> ()</td></tr>
+<tr class="memdesc:aaa0acb62b37e39e3c35f5094a22881af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unknown voxels for 3D. <br /></td></tr>
+<tr class="separator:aaa0acb62b37e39e3c35f5094a22881af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a496f087a38c5f2fd9b3ae696058ab877"><td class="memTemplParams" colspan="2"><a class="anchor" id="a496f087a38c5f2fd9b3ae696058ab877"></a>
+template&lt;int U = Dim&gt; </td></tr>
+<tr class="memitem:a496f087a38c5f2fd9b3ae696058ab877"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; U==2, <a class="el" href="data__type_8h.html#af640446aaa0ada84a270bd5639b36a7d">vec_Vec2f</a> &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a496f087a38c5f2fd9b3ae696058ab877">getUnknownCloud</a> ()</td></tr>
+<tr class="memdesc:a496f087a38c5f2fd9b3ae696058ab877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unknown voxels for 2D. <br /></td></tr>
+<tr class="separator:a496f087a38c5f2fd9b3ae696058ab877"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55aab6aa5ffa8a257ee43d3f97a002cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55aab6aa5ffa8a257ee43d3f97a002cb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapUtil.html#a55aab6aa5ffa8a257ee43d3f97a002cb">dilate</a> (const <a class="el" href="data__type_8h.html#ab0b0b0b007b0ba902fb040a70b3744e6">vec_Veci</a>&lt; Dim &gt; &amp;dilate_neighbor)</td></tr>
 <tr class="memdesc:a55aab6aa5ffa8a257ee43d3f97a002cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dilate occupied cells. <br /></td></tr>

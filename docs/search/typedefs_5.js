@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key',['Key',['../namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e',1,'MPL']]]
+  ['occmapplanner',['OccMapPlanner',['../namespaceMPL.html#a3df478df06221cdbab15f9a96156b10f',1,'MPL']]]
 ];

@@ -16,6 +16,5 @@ var searchData=
   ['ansi_5fcolor_5fred',['ANSI_COLOR_RED',['../data__type_8h.html#a34995b955465f6bbb37c359173d50477',1,'data_type.h']]],
   ['ansi_5fcolor_5freset',['ANSI_COLOR_RESET',['../data__type_8h.html#a92a364c2b863dde1a024a77eac2a5b3b',1,'data_type.h']]],
   ['ansi_5fcolor_5fyellow',['ANSI_COLOR_YELLOW',['../data__type_8h.html#a5a123b382640b3aa65dd5db386002fbc',1,'data_type.h']]],
-  ['astar',['Astar',['../classMPL_1_1GraphSearch.html#a94570bd9f325d3b74a0906bafb681283',1,'MPL::GraphSearch']]],
-  ['axe_5f',['axe_',['../classDecompUtil.html#aeafc448eabc0774680e316d9ab892782',1,'DecompUtil']]]
+  ['astar',['Astar',['../classMPL_1_1GraphSearch.html#a94570bd9f325d3b74a0906bafb681283',1,'MPL::GraphSearch']]]
 ];

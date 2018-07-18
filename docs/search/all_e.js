@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['obs_5f',['obs_',['../classDecompUtil.html#af2e3033920ba7ccee4e4e0c9aa75540a',1,'DecompUtil']]],
   ['occmapplanner',['OccMapPlanner',['../namespaceMPL.html#a3df478df06221cdbab15f9a96156b10f',1,'MPL']]],
   ['operator_21_3d',['operator!=',['../structWaypoint.html#abce8397a4012b645a29e8954b2a579ee',1,'Waypoint']]],
   ['operator_3d_3d',['operator==',['../structWaypoint.html#a9a83fd287ce3eeba9af6a9cc86e1dca5',1,'Waypoint']]],

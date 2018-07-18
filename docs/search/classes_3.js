@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['face',['Face',['../classFace.html',1,'']]]
+  ['lambda',['Lambda',['../classLambda.html',1,'']]],
+  ['lambdaseg',['LambdaSeg',['../classLambdaSeg.html',1,'']]]
 ];

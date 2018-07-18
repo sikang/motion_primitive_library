@@ -14,7 +14,7 @@ For technical details, refer to the original paper ["Search-based Motion Plannin
   - Reformat the repo structure
   - Add yaw primitive
   - Add potential function to perturb trajectory
-  - Separate `ellipsoid_planner` to `mpl_ros`
+  - Separate `ellipsoid_planner` to [`mpl_ros`](https://github.com/sikang/mpl_ros.git)
 
 ## Installation
 #### Prerequisite:
@@ -150,7 +150,7 @@ bool valid = planner->plan(start, goal); // Plan from start to goal
 ```
 
 ## Test Examples
-#### Example1 (direct planning):
+#### Example1 (direct plan):
 After compiling by `cmake`, run following command for test a 2D planning in a given map:
 ```bash
 $ ./build/test_planner_2d ./data/corridor.yaml
@@ -218,7 +218,7 @@ The output image `output.svg` is saved in the current folder:
 
 It is recommended to visualize the `svg` in web browser (for example, `firefox output.svg`).
 
-#### Example2 (planning with a prior trajectory):
+#### Example2 (plan with a prior trajectory):
 Run following command for test a 2D planning, it first finds a trajector in low dimensional space (acceleration-driven), then it uses the planned trajectory to refine for a trajectory in high dimensional space (jerk-driven):
 ```bash
 $ ./build/test_planner_2d_prior_traj ./data/corridor.yaml
@@ -227,7 +227,7 @@ $ ./build/test_planner_2d_prior_traj ./data/corridor.yaml
 In the following output image, the black curve is the prior trajectory:
 ![Visualization](./data/example2.png)
 
-#### Example3 (plan with yaw):
+#### Example3 (plan with yaw constraint):
 In some cases, the robot needs to move forward within the FOV of the camera or
 range sensor such that the yaw needs to be considered when planning. `MapPlanner` handles the yaw constraint properly.
 Following image shows the output of running:

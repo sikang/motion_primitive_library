@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['graphsearch',['GraphSearch',['../classMPL_1_1GraphSearch.html',1,'MPL']]]
+  ['mapplanner',['MapPlanner',['../classMPL_1_1MapPlanner.html',1,'MPL']]],
+  ['maputil',['MapUtil',['../classMPL_1_1MapUtil.html',1,'MPL']]]
 ];

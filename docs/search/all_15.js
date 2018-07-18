@@ -17,7 +17,6 @@ var searchData=
   ['vec4f',['Vec4f',['../data__type_8h.html#a885809dc84c0c55d44fe4836f5cfa39b',1,'data_type.h']]],
   ['vec6f',['Vec6f',['../data__type_8h.html#a940b1af907878e3cb6d2f7694730ee01',1,'data_type.h']]],
   ['vec_5fe',['vec_E',['../data__type_8h.html#a30c607180de5bc1b7c30f5cbaf9b188b',1,'data_type.h']]],
-  ['vec_5fellipsoid',['vec_Ellipsoid',['../data__type_8h.html#a47ddb28a89d8b9f6aaa729f91e61dbec',1,'data_type.h']]],
   ['vec_5fvec2f',['vec_Vec2f',['../data__type_8h.html#af640446aaa0ada84a270bd5639b36a7d',1,'data_type.h']]],
   ['vec_5fvec2i',['vec_Vec2i',['../data__type_8h.html#a79168c9f029798876a1093e0e53bc36b',1,'data_type.h']]],
   ['vec_5fvec3f',['vec_Vec3f',['../data__type_8h.html#a62c46ed3e3ab6773b30439f9be38290b',1,'data_type.h']]],
@@ -30,8 +29,6 @@ var searchData=
   ['vel',['vel',['../structCommand.html#a6a7db4d1eb44141050e3c7dc691b1732',1,'Command::vel()'],['../structWaypoint.html#a91393e0d8d73afb9df512710e56f02a5',1,'Waypoint::vel()'],['../control_8h.html#af3600af994b25be7c568791eefdadf2eacfaf639c5da18a324ce378b59ec9bc30',1,'Control::VEL()']]],
   ['velxyaw',['VELxYAW',['../control_8h.html#af3600af994b25be7c568791eefdadf2eac5da965932ce198aa4b40a8e3def3852',1,'Control']]],
   ['verbose_5f',['verbose_',['../classMPL_1_1GraphSearch.html#a1963f5a261a5f83f52e5e64ea41d65ff',1,'MPL::GraphSearch']]],
-  ['virtual_5fwall',['virtual_wall',['../classDecompUtil.html#a461c30e5d07a9eb08155981789a07195',1,'DecompUtil']]],
   ['virtualpoint',['VirtualPoint',['../structVirtualPoint.html',1,'']]],
-  ['voxelmapplanner',['VoxelMapPlanner',['../namespaceMPL.html#ac02de4f028b372f4f0396ae3d67eac55',1,'MPL']]],
-  ['vs_5f',['Vs_',['../classDecompUtil.html#a85eb977460ea8ed0c69e5464e2b09540',1,'DecompUtil']]]
+  ['voxelmapplanner',['VoxelMapPlanner',['../namespaceMPL.html#ac02de4f028b372f4f0396ae3d67eac55',1,'MPL']]]
 ];
