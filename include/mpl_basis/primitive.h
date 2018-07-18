@@ -6,7 +6,7 @@
 #ifndef MPL_PRIMITIVE_H
 #define MPL_PRIMITIVE_H
 #include <mpl_basis/waypoint.h>
-#include <mpl_basis/data_utils.h>
+#include <mpl_basis/data_type.h>
 #include "math.h"
 
 /**
@@ -561,19 +561,6 @@ void print_max(const Primitive<Dim>& p) {
   std::cout << "max_vel: " << max_v.transpose() << std::endl;;
   std::cout << "max_acc: " << max_a.transpose() << std::endl;;
   std::cout << "max_jrk: " << max_j.transpose() << std::endl;;
-}
-
-///Sample N+1 ellipsoids along the primitive
-template <int Dim>
-vec_Ellipsoid sample_ellipsoids(const Primitive<Dim>& pr, const Vec3f& axe, int N) {
-  vec_Ellipsoid Es(N+1);
-  decimal_t dt = pr.t() / N;
-  for(int i = 0; i <= N; i++) {
-    const auto pt = pr.evaluate(i*dt);
-    Es[i] = generate_ellipsoid<Dim>(axe, pt.pos, pt.acc);
-  }
-
-  return Es;
 }
 
 #endif

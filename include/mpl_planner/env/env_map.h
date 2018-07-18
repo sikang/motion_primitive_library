@@ -53,10 +53,10 @@ public:
    */
   bool is_free(const Primitive<Dim> &pr) const {
     decimal_t max_v = 0;
-    if (Dim == 2)
-      max_v = std::max(pr.max_vel(0), pr.max_vel(1));
-    else if (Dim == 3)
-      max_v = std::max(std::max(pr.max_vel(0), pr.max_vel(1)), pr.max_vel(2));
+    for (int i = 0; i < Dim; i++) {
+      if (pr.max_vel(i) > max_v)
+        max_v = pr.max_vel(i);
+    }
     int n = std::ceil(max_v * pr.t() / map_util_->getRes());
     vec_E<Waypoint<Dim>> pts = pr.sample(n);
     for (const auto &pt : pts) {

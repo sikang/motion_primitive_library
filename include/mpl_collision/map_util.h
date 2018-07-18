@@ -27,11 +27,18 @@ namespace MPL {
       Veci<Dim> getDim() { return dim_; }
       ///Get origin
       Vecf<Dim> getOrigin() { return origin_d_; }
-      ///Get index of a cell
-      int getIndex(const Veci<Dim>& pn) {
-          return Dim == 2 ? pn(0) + dim_(0) * pn(1) :
-                            pn(0) + dim_(0) * pn(1) + dim_(0) * dim_(1) * pn(2);
-      }
+      ///Get index of a cell for 2D
+      template<int U = Dim>
+        typename std::enable_if<U == 2, int>::type
+        getIndex(const Veci<Dim>& pn) {
+          return pn(0) + dim_(0) * pn(1);
+        }
+      ///Get index of a cell for 3D
+      template<int U = Dim>
+        typename std::enable_if<U == 3, int>::type
+        getIndex(const Veci<Dim>& pn) {
+          return pn(0) + dim_(0) * pn(1) + dim_(0) * dim_(1) * pn(2);
+        }
 
 
       ///Check if the cell is free by index
@@ -129,11 +136,12 @@ namespace MPL {
         return pns;
       }
 
-      ///Get occupied voxels
-      vec_Vec3f getCloud() {
-        vec_Vecf<Dim> cloud;
-        Veci<Dim> n;
-        if(Dim == 3) {
+      ///Get occupied voxels for 3D
+      template<int U = Dim>
+        typename std::enable_if<U == 3, vec_Vec3f>::type
+        getCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               for (n(2) = 0; n(2) < dim_(2); n(2)++) {
@@ -142,24 +150,30 @@ namespace MPL {
               }
             }
           }
+          return cloud;
         }
-        else if (Dim == 2) {
+      ///Get occupied voxels for 2D
+      template<int U = Dim>
+        typename std::enable_if<U == 2, vec_Vec2f>::type
+        getCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
+
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               if (isOccupied(getIndex(n)))
                 cloud.push_back(intToFloat(n));
             }
           }
+          return cloud;
         }
 
-        return cloud;
-      }
-
-      ///Get free voxels
-      vec_Vec3f getFreeCloud() {
-        vec_Vecf<Dim> cloud;
-        Veci<Dim> n;
-        if(Dim == 3) {
+      ///Get free voxels for 3D
+      template<int U = Dim>
+        typename std::enable_if<U == 3, vec_Vec3f>::type
+        getFreeCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               for (n(2) = 0; n(2) < dim_(2); n(2)++) {
@@ -168,23 +182,30 @@ namespace MPL {
               }
             }
           }
+          return cloud;
         }
-        else if (Dim == 2) {
+
+      ///Get free voxels for 2D
+      template<int U = Dim>
+        typename std::enable_if<U == 2, vec_Vec2f>::type
+        getFreeCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               if (isFree(getIndex(n)))
                 cloud.push_back(intToFloat(n));
             }
           }
+          return cloud;
         }
 
-        return cloud;
-      }
-      ///Get unknown voxels
-      vec_Vec3f getUnknownCloud() {
-        vec_Vecf<Dim> cloud;
-        Veci<Dim> n;
-        if(Dim == 3) {
+      ///Get unknown voxels for 3D
+      template<int U = Dim>
+        typename std::enable_if<U == 3, vec_Vec3f>::type
+        getUnknownCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               for (n(2) = 0; n(2) < dim_(2); n(2)++) {
@@ -193,18 +214,23 @@ namespace MPL {
               }
             }
           }
+          return cloud;
         }
-        else if (Dim == 2) {
+
+      ///Get unknown voxels for 2D
+      template<int U = Dim>
+        typename std::enable_if<U == 2, vec_Vec2f>::type
+        getUnknownCloud() {
+          vec_Vecf<Dim> cloud;
+          Veci<Dim> n;
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               if (isUnknown(getIndex(n)))
                 cloud.push_back(intToFloat(n));
             }
           }
+          return cloud;
         }
-
-        return cloud;
-      }
 
       ///Dilate occupied cells
       void dilate(const vec_Veci<Dim>& dilate_neighbor) {

@@ -114,29 +114,4 @@ typedef Eigen::Transform<decimal_t, 2, Eigen::Affine> Aff2f;
 ///Allias of Eigen::Affine3d
 typedef Eigen::Transform<decimal_t, 3, Eigen::Affine> Aff3f;
 
-///Ellipsoid: first is the Affine Transform, second is the center
-typedef std::pair<Mat3f, Vec3f> Ellipsoid;
-///Vector of Ellipsoids
-typedef vec_E<Ellipsoid> vec_Ellipsoid;
-
-///Face class
-class Face {
-  public:
-    Vec3f p;
-    Vec3f n;
-    bool pass;
-
-    //EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-    Face(Vec3f _p, Vec3f _n):
-      p(_p), n(_n), pass(true) {}
-    Face(Vec3f _p, Vec3f _n, bool _pass):
-      p(_p), n(_n), pass(_pass) {}
-};
-
-///Polyhedron, consists of faces
-typedef vec_E<Face> Polyhedron; // composed by planes with form (p, n)
-///Vector of Polyhedron
-typedef vec_E<Polyhedron> Polyhedra;
-///Extreme points of a polyhedron
-typedef vec_E<vec_Vec3f> BoundVec3f; // compose by extreme points
 #endif
