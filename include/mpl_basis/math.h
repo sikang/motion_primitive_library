@@ -32,27 +32,27 @@ inline std::vector<decimal_t> quad(decimal_t b, decimal_t c, decimal_t d) {
   }
 }
 
-///Cubic equation: \f$a*t^3+b*t^2+c*t+d = 0\f$
-inline std::vector<decimal_t> cubic(decimal_t a, decimal_t b, decimal_t c, decimal_t d) {
+/// Cubic equation: \f$a*t^3+b*t^2+c*t+d = 0\f$
+inline std::vector<decimal_t> cubic(decimal_t a, decimal_t b, decimal_t c,
+                                    decimal_t d) {
   std::vector<decimal_t> dts;
 
   decimal_t a2 = b / a;
   decimal_t a1 = c / a;
   decimal_t a0 = d / a;
-  //printf("a: %f, b: %f, c: %f, d: %f\n", a, b, c, d);
+  // printf("a: %f, b: %f, c: %f, d: %f\n", a, b, c, d);
 
-  decimal_t Q = (3*a1-a2*a2)/9;
-  decimal_t R = (9*a1*a2-27*a0-2*a2*a2*a2)/54;
-  decimal_t D = Q*Q*Q + R*R;
-  //printf("R: %f, Q: %f, D: %f\n", R, Q, D);
-  if(D > 0) {
-    decimal_t S = std::cbrt(R+sqrt(D));
-    decimal_t T = std::cbrt(R-sqrt(D));
-    //printf("S: %f, T: %f\n", S, T);
-    dts.push_back(-a2/3+(S+T));
+  decimal_t Q = (3 * a1 - a2 * a2) / 9;
+  decimal_t R = (9 * a1 * a2 - 27 * a0 - 2 * a2 * a2 * a2) / 54;
+  decimal_t D = Q * Q * Q + R * R;
+  // printf("R: %f, Q: %f, D: %f\n", R, Q, D);
+  if (D > 0) {
+    decimal_t S = std::cbrt(R + sqrt(D));
+    decimal_t T = std::cbrt(R - sqrt(D));
+    // printf("S: %f, T: %f\n", S, T);
+    dts.push_back(-a2 / 3 + (S + T));
     return dts;
-  }
-  else if(D == 0) {
+  } else if (D == 0) {
     decimal_t S = std::cbrt(R);
     dts.push_back(-a2/3+S+S);
     dts.push_back(-a2/3-S);
@@ -67,9 +67,9 @@ inline std::vector<decimal_t> cubic(decimal_t a, decimal_t b, decimal_t c, decim
   }
 }
 
-
-///Quartic equation: \f$a*t^4+b*t^3+c*t^2+d*t+e = 0\f$
-inline std::vector<decimal_t> quartic(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e) {
+/// Quartic equation: \f$a*t^4+b*t^3+c*t^2+d*t+e = 0\f$
+inline std::vector<decimal_t> quartic(decimal_t a, decimal_t b, decimal_t c,
+                                      decimal_t d, decimal_t e) {
   std::vector<decimal_t> dts;
 
   decimal_t a3 = b / a;
@@ -131,33 +131,58 @@ inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c,
     return ts;
 }
 
-///A more general solver for \f$a*t^6+b*t^5+c*t^4+d*t^3+e*t^2+f*t+g = 0\f$
-inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c, decimal_t d, decimal_t e, decimal_t f, decimal_t g){
+/// General solver for \f$a*t^5+b*t^4+c*t^3+d*t^2+e*t+f = 0\f$
+inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c,
+                                    decimal_t d, decimal_t e, decimal_t f) {
   std::vector<decimal_t> ts;
-  if(a == 0 && b == 0)
-    return solve(c, d, e, f, g);
+  if (a == 0)
+    return solve(b, c, d, e, f);
   else {
-  Eigen::VectorXd coeff(7);
-  coeff << g, f, e, d, c, b, a;
-  Eigen::PolynomialSolver<double, 6> solver;
-  solver.compute(coeff);
+    Eigen::VectorXd coeff(6);
+    coeff << f, e, d, c, b, a;
+    Eigen::PolynomialSolver<double, 5> solver;
+    solver.compute(coeff);
 
-  const Eigen::PolynomialSolver<double, 6>::RootsType & r = solver.roots();
-  std::vector<decimal_t> ts;
-  //std::cout << coeff.transpose() << std::endl;
-  for(int i =0;i<r.rows();++i)
-  {
-    if(r[i].imag()==0) {
-      //std::cout << r[i] << std::endl;
-      ts.push_back(r[i].real());
+    const Eigen::PolynomialSolver<double, 5>::RootsType &r = solver.roots();
+    std::vector<decimal_t> ts;
+    // std::cout << coeff.transpose() << std::endl;
+    for (int i = 0; i < r.rows(); ++i) {
+      if (r[i].imag() == 0) {
+        // std::cout << r[i] << std::endl;
+        ts.push_back(r[i].real());
+      }
     }
-  }
 
-  return ts;
+    return ts;
   }
 }
 
+/// General solver for \f$a*t^6+b*t^5+c*t^4+d*t^3+e*t^2+f*t+g = 0\f$
+inline std::vector<decimal_t> solve(decimal_t a, decimal_t b, decimal_t c,
+                                    decimal_t d, decimal_t e, decimal_t f,
+                                    decimal_t g) {
+  std::vector<decimal_t> ts;
+  if (a == 0 && b == 0)
+    return solve(c, d, e, f, g);
+  else {
+    Eigen::VectorXd coeff(7);
+    coeff << g, f, e, d, c, b, a;
+    Eigen::PolynomialSolver<double, 6> solver;
+    solver.compute(coeff);
 
+    const Eigen::PolynomialSolver<double, 6>::RootsType &r = solver.roots();
+    std::vector<decimal_t> ts;
+    // std::cout << coeff.transpose() << std::endl;
+    for (int i = 0; i < r.rows(); ++i) {
+      if (r[i].imag() == 0) {
+        // std::cout << r[i] << std::endl;
+        ts.push_back(r[i].real());
+      }
+    }
+
+    return ts;
+  }
+}
 
 ///Return \f$n!\f$
 inline int factorial(int n) {
@@ -182,32 +207,30 @@ inline decimal_t power(decimal_t t, int n) {
 }
 
 template <typename Derived>
-typename Derived::PlainObject pseudoInverse(Eigen::MatrixBase<Derived> const &m)
-{
+typename Derived::PlainObject
+pseudoInverse(Eigen::MatrixBase<Derived> const &m) {
   // JacobiSVD: thin U and V are only available when your matrix has a dynamic
   // number of columns.
-  constexpr auto flags = (Derived::ColsAtCompileTime == Eigen::Dynamic) ?
-                             (Eigen::ComputeThinU | Eigen::ComputeThinV) :
-                             (Eigen::ComputeFullU | Eigen::ComputeFullV);
+  constexpr auto flags = (Derived::ColsAtCompileTime == Eigen::Dynamic)
+                             ? (Eigen::ComputeThinU | Eigen::ComputeThinV)
+                             : (Eigen::ComputeFullU | Eigen::ComputeFullV);
   Eigen::JacobiSVD<typename Derived::PlainObject> m_svd(m, flags);
   // std::cout << "singular values: " << m_svd.singularValues().transpose()
   //           << "\n";
   return m_svd.solve(Derived::PlainObject::Identity(m.rows(), m.rows()));
 }
 
-  template <typename Derived>
-typename Derived::PlainObject matrixSquareRoot(
-    Eigen::MatrixBase<Derived> const &mat, bool semidefinite_mat = false)
-{
-  if(!semidefinite_mat)
-  {
+template <typename Derived>
+typename Derived::PlainObject
+matrixSquareRoot(Eigen::MatrixBase<Derived> const &mat,
+                 bool semidefinite_mat = false) {
+  if (!semidefinite_mat) {
     Eigen::LLT<typename Derived::PlainObject> cov_chol{mat};
-    if(cov_chol.info() == Eigen::Success)
+    if (cov_chol.info() == Eigen::Success)
       return cov_chol.matrixL();
   }
   Eigen::LDLT<typename Derived::PlainObject> cov_chol{mat};
-  if(cov_chol.info() == Eigen::Success)
-  {
+  if (cov_chol.info() == Eigen::Success) {
     typename Derived::PlainObject const L = cov_chol.matrixL();
     auto const P = cov_chol.transpositionsP();
     auto const D_sqrt = cov_chol.vectorD().array().sqrt().matrix().asDiagonal();
@@ -215,5 +238,4 @@ typename Derived::PlainObject matrixSquareRoot(
   }
   return Derived::PlainObject::Zero(mat.rows(), mat.cols());
 }
-
 
