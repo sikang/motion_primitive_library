@@ -167,6 +167,7 @@ public:
       if (tn == curr || !validate_primitive(pr, this->v_max_, this->a_max_,
                                             this->j_max_, this->yaw_max_))
         continue;
+      tn.t = curr.t + this->dt_;
       succ.push_back(tn);
       succ_idx.push_back(this->state_to_idx(tn));
       //std::cout << succ_idx.back() << std::endl;
@@ -283,6 +284,7 @@ public:
       printf("+                 dv: %.2f               +\n", this->dv_);
       printf("+                 da: %.2f               +\n", this->da_);
       printf("+                 dj: %.2f               +\n", this->dj_);
+      printf("+              t_max: %.2f               +\n", this->t_max_);
       printf("+              v_max: %.2f               +\n", this->v_max_);
       printf("+              a_max: %.2f               +\n", this->a_max_);
       printf("+              j_max: %.2f               +\n", this->j_max_);
@@ -292,7 +294,6 @@ public:
       printf("+            tol_vel: %.2f               +\n", this->tol_vel_);
       printf("+            tol_acc: %.2f               +\n", this->tol_acc_);
       printf("+            tol_yaw: %.2f               +\n", this->tol_yaw_);
-      printf("+              alpha: %d                 +\n", this->alpha_);
       printf("+heur_ignore_dynamics: %d                 +\n", this->heur_ignore_dynamics_);
       if(!potential_map_.empty())
         printf("+    potential_weight: %.2f                 +\n", potential_weight_);
@@ -314,7 +315,7 @@ protected:
   /// Weight of potential value
   decimal_t potential_weight_{0.1};
   /// Weight of gradient value
-  decimal_t gradient_weight_{0.1};
+  decimal_t gradient_weight_{0.0};
 };
 }
 

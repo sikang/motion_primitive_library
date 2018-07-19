@@ -93,7 +93,6 @@ int main(int argc, char **argv) {
       U.push_back(Vec2f(dx, dy));
 
   // Reset planner
-  int alpha = 0;
   planner.reset(new MPL::OccMapPlanner(true)); // Declare a mp planner using voxel map
   planner->setMapUtil(map_util);        // Set collision checking function
   planner->setEpsilon(1.0);             // Set greedy param (default equal to 1)
@@ -103,7 +102,6 @@ int main(int argc, char **argv) {
   planner->setW(10);                    // Set weight for time
   planner->setU(U);                     // Set control input
   planner->setTol(0.5);                 // Set tolerance for goal region
-  planner->setAlpha(alpha);             // Set look ahead step
   planner->setPriorTrajectory(prior_traj); // Set prior trajectory
 
   // Planning

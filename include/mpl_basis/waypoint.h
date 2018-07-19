@@ -32,6 +32,7 @@ struct Waypoint {
   Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
   decimal_t yaw; ///<yaw
+  decimal_t t{0}; ///<time
 
   /**
    * @brief Control flag
@@ -60,6 +61,7 @@ struct Waypoint {
     std::cout << "acc: " << acc.transpose() << std::endl;
     std::cout << "jrk: " << jrk.transpose() << std::endl;
     std::cout << "yaw: " << yaw << std::endl;
+    std::cout << "t: " << t << std::endl;
     if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
     else if(control == Control::ACC)
@@ -86,12 +88,6 @@ struct Waypoint {
    * Compare the attribute if corresponding `use_xxx` of both Waypoints is true.
    */
   virtual bool operator==(const Waypoint<Dim>& n) const {
-    /*
-    return this->pos == n.pos &&
-      this->vel == n.vel &&
-      this->acc == n.acc &&
-      this->jrk == n.jrk;
-      */
     if((this->use_pos || n.use_pos) && this->pos != n.pos)
       return false;
     if((this->use_vel || n.use_vel) && this->vel != n.vel)
@@ -103,6 +99,7 @@ struct Waypoint {
     if((this->use_yaw || n.use_yaw) && this->yaw != n.yaw)
       return false;
     return true;
+    //return this->t == n.t;
   }
 
   ///Check if two waypoints are not equivalent

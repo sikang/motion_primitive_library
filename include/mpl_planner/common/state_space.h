@@ -37,8 +37,6 @@ template <typename Coord> struct State {
   Key hashkey; // discrete coordinates of this node
   /// state
   Coord coord;
-  /// minimum arrival time
-  decimal_t t;
   /// coordinates of successors
   vec_E<Coord> succ_coord;
   /// hashkey of successors
@@ -112,7 +110,7 @@ template <int Dim, typename Coord> struct StateSpace {
     currNode_ptr->pred_action_cost.clear();
     currNode_ptr->pred_action_id.clear();
     currNode_ptr->pred_hashkey.clear();
-    currNode_ptr->t = 0;
+    currNode_ptr->coord.t = 0;
 
     for (auto &it : hm_) {
       it.second->g = std::numeric_limits<decimal_t>::infinity();
@@ -120,7 +118,7 @@ template <int Dim, typename Coord> struct StateSpace {
       it.second->pred_action_cost.clear();
       it.second->pred_action_id.clear();
       it.second->pred_hashkey.clear();
-      it.second->t = 0;
+      it.second->coord.t = 0;
     }
 
     currNode_ptr->g = 0;
@@ -136,7 +134,7 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr = epq.top().second;
       epq.pop();
 
-      if (currNode_ptr->t == max_t_) {
+      if (currNode_ptr->coord.t == max_t_) {
         currNode_ptr->iterationclosed = false;
         currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
         currNode_ptr->succ_coord.clear();
@@ -170,7 +168,7 @@ template <int Dim, typename Coord> struct StateSpace {
           currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
 
         if (tentative_rhs < succNode_ptr->rhs) {
-          succNode_ptr->t = currNode_ptr->t + dt_;
+          succNode_ptr->coord.t = currNode_ptr->coord.t + dt_;
           succNode_ptr->rhs = tentative_rhs;
           if (succNode_ptr->iterationclosed) {
             succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
@@ -266,7 +264,7 @@ template <int Dim, typename Coord> struct StateSpace {
             hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
           currNode_ptr->rhs =
             hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
-          currNode_ptr->t = hm_[pred_key]->t + dt_;
+          currNode_ptr->coord.t = hm_[pred_key]->coord.t + dt_;
         }
       }
     }

@@ -201,6 +201,7 @@ public:
   /// Set max time step to explore
   void setTmax(decimal_t t) {
     max_t_ = t;
+    ENV_->set_t_max(t);
     if (planner_verbose_)
       printf("[PlannerBase] set max time: %f\n", t);
   }
@@ -239,12 +240,6 @@ public:
     ENV_->set_w(w);
     if (planner_verbose_)
       printf("[PlannerBase] set w: %f\n", w);
-  }
-  /// Set alpha in time offset
-  void setAlpha(int alpha) {
-    ENV_->set_alpha(alpha);
-    if (planner_verbose_)
-      printf("[PlannerBase] set alpha: %d\n", alpha);
   }
   /// Set greedy searching param
   void setEpsilon(decimal_t eps) {

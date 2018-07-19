@@ -53,9 +53,8 @@ public:
       if (verbose_)
         printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
       currNode_ptr = std::make_shared<State<Coord>>(start_key, start_coord);
-      currNode_ptr->t = 0;
       currNode_ptr->g = 0;
-      currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(start_coord, currNode_ptr->t);
+      currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(start_coord);
       decimal_t fval = currNode_ptr->g + ss_ptr->eps_ * currNode_ptr->h;
       currNode_ptr->heapkey =
         ss_ptr->pq_.push(std::make_pair(fval, currNode_ptr));
@@ -91,9 +90,7 @@ public:
         StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
         if (!succNode_ptr) {
           succNode_ptr = std::make_shared<State<Coord>>(succ_key[s], succ_coord[s]);
-          succNode_ptr->t = currNode_ptr->t + ENV->dt_;
-          succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
-            ENV->get_heur(succNode_ptr->coord, succNode_ptr->t);
+          succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(succNode_ptr->coord);
           /*
            * Comment this block if build multiple connected graph
            succNode_ptr->pred_hashkey.push_back(currNode_ptr->hashkey);
@@ -123,7 +120,6 @@ public:
            succNode_ptr->pred_action_id.front() = succ_act_id[s];
            succNode_ptr->pred_action_cost.front() = succ_cost[s];
            */
-          succNode_ptr->t = currNode_ptr->t + ENV->dt_;
           succNode_ptr->g = tentative_gval; // Update gval
 
           decimal_t fval = succNode_ptr->g + (ss_ptr->eps_) * succNode_ptr->h;
@@ -157,7 +153,7 @@ public:
         break;
 
       // If maximum time reached, abort!
-      if (max_t > 0 && currNode_ptr->t >= max_t && !std::isinf(currNode_ptr->g)) {
+      if (max_t > 0 && currNode_ptr->coord.t >= max_t && !std::isinf(currNode_ptr->g)) {
         if (verbose_)
           printf(ANSI_COLOR_GREEN
                  "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET,
@@ -236,11 +232,9 @@ public:
       if (verbose_)
         printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
       currNode_ptr = std::make_shared<State<Coord>>(start_key, start_coord);
-      currNode_ptr->t = 0;
       currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
       currNode_ptr->rhs = 0;
-      currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
-        ENV->get_heur(start_coord, currNode_ptr->t);
+      currNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(start_coord);
       currNode_ptr->heapkey = ss_ptr->pq_.push(
         std::make_pair(ss_ptr->calculateKey(currNode_ptr), currNode_ptr));
       currNode_ptr->iterationopened = true;
@@ -251,8 +245,7 @@ public:
     // Initialize goal node
     StatePtr<Coord> goalNode_ptr = std::make_shared<State<Coord>>(Key(), Coord());
     if (!ss_ptr->best_child_.empty() &&
-        (ss_ptr->best_child_.back()->t >= max_t ||
-         ENV->is_goal(ss_ptr->best_child_.back()->coord)))
+         ENV->is_goal(ss_ptr->best_child_.back()->coord))
       goalNode_ptr = ss_ptr->best_child_.back();
 
     int expand_iteration = 0;
@@ -294,9 +287,7 @@ public:
         StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_key[s]];
         if (!(succNode_ptr)) {
           succNode_ptr = std::make_shared<State<Coord>>(succ_key[s], succ_coord[s]);
-          succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 :
-            ENV->get_heur(succNode_ptr->coord,
-                          currNode_ptr->t + ENV->dt_); // compute heuristic
+          succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(succNode_ptr->coord);
         }
 
         // store the hashkey
@@ -324,8 +315,7 @@ public:
       }
 
       // If goal reached or maximum time reached, terminate!
-      if (ENV->is_goal(currNode_ptr->coord) ||
-          (max_t > 0 && currNode_ptr->t == max_t))
+      if (ENV->is_goal(currNode_ptr->coord) || max_t > 0)
         goalNode_ptr = currNode_ptr;
 
       // If maximum expansion reached, abort!
@@ -367,7 +357,7 @@ public:
       else
         printf(ANSI_COLOR_GREEN
                "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET,
-               goalNode_ptr->t);
+               goalNode_ptr->coord.t);
     }
 
     // auto start = std::chrono::high_resolution_clock::now();
@@ -394,8 +384,8 @@ private:
   vec_E<Primitive<Dim>> prs;
   while (!currNode_ptr->pred_hashkey.empty()) {
     if (verbose_) {
-      std::cout << "t: " << currNode_ptr->t << " --> "
-                << currNode_ptr->t - ss_ptr->dt_ << std::endl;
+      std::cout << "t: " << currNode_ptr->coord.t << " --> "
+                << currNode_ptr->coord.t - ss_ptr->dt_ << std::endl;
       printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
              currNode_ptr->h);
     }

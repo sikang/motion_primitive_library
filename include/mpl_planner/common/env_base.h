@@ -28,6 +28,8 @@ class env_base {
 
     ///Check if state hit the goal region, use L-1 norm
     virtual bool is_goal(const Waypoint<Dim>& state) const {
+      if(state.t >= t_max_)
+        return true;
       bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis_;
       if(goaled && goal_node_.use_vel && tol_vel_ > 0)
         goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel_;
@@ -43,11 +45,10 @@ class env_base {
      * @param Waypoint current state coord
      * @param t current state time
      */
-    virtual decimal_t get_heur(const Waypoint<Dim> &state, decimal_t t) const {
+    virtual decimal_t get_heur(const Waypoint<Dim> &state) const {
       if (goal_node_ == state)
         return 0;
-      t += alpha_ * dt_;
-      size_t id = t / dt_;
+      size_t id = state.t / dt_;
       if(!prior_traj_.empty() && id < prior_traj_.size())
         return cal_heur(state, prior_traj_[id].first) + prior_traj_[id].second;
       else
@@ -395,9 +396,9 @@ class env_base {
     virtual void set_gradient_map(const vec_E<Vecf<Dim>>& map) {
     }
 
-    ///Set alpha
-    void set_alpha(int alpha) {
-      alpha_ = alpha;
+    ///Set max time
+    void set_t_max(int t) {
+      t_max_ = t;
     }
 
     ///Set goal state
@@ -428,6 +429,7 @@ class env_base {
       printf("+                 dv: %.2f               +\n", dv_);
       printf("+                 da: %.2f               +\n", da_);
       printf("+                 dj: %.2f               +\n", dj_);
+      printf("+              t_max: %.2f               +\n", t_max_);
       printf("+              v_max: %.2f               +\n", v_max_);
       printf("+              a_max: %.2f               +\n", a_max_);
       printf("+              j_max: %.2f               +\n", j_max_);
@@ -437,7 +439,6 @@ class env_base {
       printf("+            tol_vel: %.2f               +\n", tol_vel_);
       printf("+            tol_acc: %.2f               +\n", tol_acc_);
       printf("+            tol_yaw: %.2f               +\n", tol_yaw_);
-      printf("+              alpha: %d                 +\n", alpha_);
       printf("+heur_ignore_dynamics: %d                 +\n", heur_ignore_dynamics_);
       printf("++++++++++++++++++++ env_base ++++++++++++++++++\n");
       printf(ANSI_COLOR_RESET "\n");
@@ -489,8 +490,6 @@ class env_base {
     decimal_t w_{10};
     /// weight of yaw
     decimal_t wyaw_{1};
-    ///heuristic time offset
-    int alpha_{0};
     ///tolerance of position for goal region, 0.5 is the default
     decimal_t tol_dis_{0.5};
     ///tolerance of velocity for goal region, 0 means no tolerance
@@ -507,6 +506,8 @@ class env_base {
     decimal_t j_max_{-1};
     ///max yaw
     decimal_t yaw_max_{-1};
+    ///max time
+    decimal_t t_max_{std::numeric_limits<decimal_t>::infinity()};
     ///duration of primitive
     decimal_t dt_{1.0};
     ///grid size in position
