@@ -1,7 +1,7 @@
 var searchData=
 [
   ['get_5fdt',['get_dt',['../classMPL_1_1env__base.html#a26aa7258bd009dd0d117539e97080477',1,'MPL::env_base']]],
-  ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#a3f1d7b3b986461d044cb9052cf8bdb86',1,'MPL::env_base']]],
+  ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#a9de2452cdd3961c9218f74c9553f101b',1,'MPL::env_base']]],
   ['get_5fsucc',['get_succ',['../classMPL_1_1env__base.html#a77aac5d50100e7634f77bb820938d296',1,'MPL::env_base::get_succ()'],['../classMPL_1_1env__map.html#a2247408e095fd384fd2c38f200c30bbe',1,'MPL::env_map::get_succ()']]],
   ['get_5fvalid_5fregion',['get_valid_region',['../classMPL_1_1env__base.html#aebab080034ebcf8d64009b7a53e7f2c4',1,'MPL::env_base']]],
   ['getallprimitives',['getAllPrimitives',['../classMPL_1_1PlannerBase.html#af0819434cb4315949e9a8bb6ed70ba0f',1,'MPL::PlannerBase']]],

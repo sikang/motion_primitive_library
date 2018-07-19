@@ -8,7 +8,6 @@ var searchData=
   ['aff2f',['Aff2f',['../data__type_8h.html#a3b95b3d43bb8590852e0e74abaff3c6a',1,'data_type.h']]],
   ['aff3f',['Aff3f',['../data__type_8h.html#a99980a710976449f0a9d3d2ae8b8be87',1,'data_type.h']]],
   ['allocate_5ftime',['allocate_time',['../classTrajSolver.html#a0cd1fa73c97167f4c015ceb673beca11',1,'TrajSolver']]],
-  ['alpha_5f',['alpha_',['../classMPL_1_1env__base.html#ad7e738fa9098491dd29255f6ffa0e7bb',1,'MPL::env_base']]],
   ['ansi_5fcolor_5fblue',['ANSI_COLOR_BLUE',['../data__type_8h.html#aca16e6a49eb51333c5fd3eee19487315',1,'data_type.h']]],
   ['ansi_5fcolor_5fcyan',['ANSI_COLOR_CYAN',['../data__type_8h.html#a8d0b0043e152438bb39b918a1f98c65f',1,'data_type.h']]],
   ['ansi_5fcolor_5fgreen',['ANSI_COLOR_GREEN',['../data__type_8h.html#a966c72d8d733c7734c6c784753d894c7',1,'data_type.h']]],

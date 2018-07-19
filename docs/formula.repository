@@ -24,3 +24,4 @@
 \form#23:$i = 3$
 \form#24:$i = 4$
 \form#25:$J_{yaw} = \int_0^T |\dot{\phi}(t)|^2dt$
+\form#26:$a*t^5+b*t^4+c*t^3+d*t^2+e*t+f = 0$

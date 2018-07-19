@@ -46,22 +46,25 @@ $ make test
 
 If everything works, you should see the results as:
 ```bash
+Total Test time (real) =   4.22 sec
 Running tests...
 Test project /home/sikang/thesis_ws/src/packages/mpl_ros/motion_primitive_library/build
     Start 1: test_traj_solver
-1/5 Test #1: test_traj_solver .................   Passed    0.00 sec
+1/6 Test #1: test_traj_solver ........................   Passed    0.00 sec
     Start 2: test_planner_2d
-2/5 Test #2: test_planner_2d ..................   Passed    0.90 sec
+2/6 Test #2: test_planner_2d .........................   Passed    0.92 sec
     Start 3: test_planner_2d_prior_traj
-3/5 Test #3: test_planner_2d_prior_traj .......   Passed    0.94 sec
+3/6 Test #3: test_planner_2d_prior_traj ..............   Passed    0.93 sec
     Start 4: test_planner_2d_with_yaw
-4/5 Test #4: test_planner_2d_with_yaw .........   Passed    0.98 sec
+4/6 Test #4: test_planner_2d_with_yaw ................   Passed    0.96 sec
     Start 5: test_distance_map_planner_2d
-5/5 Test #5: test_distance_map_planner_2d .....   Passed    1.38 sec
+5/6 Test #5: test_distance_map_planner_2d ............   Passed    1.33 sec
+    Start 6: test_distance_map_planner_2d_with_yaw
+6/6 Test #6: test_distance_map_planner_2d_with_yaw ...   Passed    2.39 sec
 
-100% tests passed, 0 tests failed out of 5
+100% tests passed, 0 tests failed out of 6
 
-Total Test time (real) =   4.22 sec
+Total Test time (real) =   6.54 sec
 ```
 
 #### Include in other projects:
@@ -162,27 +165,7 @@ You should see following messages if it works properly:
 [PlannerBase] set v_max: 1.000000
 [PlannerBase] set a_max: 1.000000
 [PlannerBase] set dt: 1.000000
-Start:
-pos:  2.5 -3.5
-vel: 0 0
-acc: 0 0
-jrk: 0 0
-yaw: 0
-use_pos | use_vel | use_acc | use_jrk | use_yaw :
-1 | 1 | 0 | 0 | 0
-control: 11000
-use acc!
-Goal:
-pos:  37 2.5
-vel: 0 0
-acc: 0 0
-jrk: 0 0
-yaw: 0
-use_pos | use_vel | use_acc | use_jrk | use_yaw :
-1 | 1 | 0 | 0 | 0
-control: 11000
-use acc!
-
+...
 ++++++++++++++++++ PLANNER +++++++++++++++
 +                  w: 10.00               +
 +                 dt: 1.00               +
@@ -206,8 +189,8 @@ goalNode fval: 358.000000, g: 353.000000!
 Expand [291] nodes!
 ...
 Reached Goal !!!!!!
-MPL Planner takes: 14.000000 ms
-MPL Planner expanded states: 614
+MPL Planner takes: 9.000000 ms
+MPL Planner expanded states: 615
 Total time T: 35.000000
 Total J:  J(VEL) = 36.750000, J(ACC) = 1.500000, J(JRK) = 0.000000, J(SNP) = 0.000000
 ```
