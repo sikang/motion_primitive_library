@@ -43,11 +43,11 @@ struct Waypoint {
    */
   union {
     struct {
-      bool use_yaw : 1;///<If true, yaw will be used in primitive generation
-      bool use_jrk : 1;///<If true, jrk will be used in primitive generation
-      bool use_acc : 1;///<If true, acc will be used in primitive generation
-      bool use_vel : 1;///<If true, vel will be used in primitive generation
       bool use_pos : 1;///<If true, pos will be used in primitive generation
+      bool use_vel : 1;///<If true, vel will be used in primitive generation
+      bool use_acc : 1;///<If true, acc will be used in primitive generation
+      bool use_jrk : 1;///<If true, jrk will be used in primitive generation
+      bool use_yaw : 1;///<If true, yaw will be used in primitive generation
     };
     Control::Control control : 5;
   };

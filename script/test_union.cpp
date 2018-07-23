@@ -3,24 +3,24 @@
 
 namespace Control {
 enum Control {
-  VEL = 0b10000,
-  ACC = 0b11000,
-  JRK = 0b11100,
-  SNP = 0b11110,
+  VEL = 0b00001,
+  ACC = 0b00011,
+  JRK = 0b00111,
+  SNP = 0b01111,
   VELxYAW = 0b10001,
-  ACCxYAW = 0b11001,
-  JRKxYAW = 0b11101,
+  ACCxYAW = 0b10011,
+  JRKxYAW = 0b10111,
   SNPxYAW = 0b11111
 };
 }
 
 typedef union {
   struct {
-    bool use_yaw: 1;
-    bool use_jrk: 1;
-    bool use_acc: 1;
-    bool use_vel: 1;
     bool use_pos: 1;
+    bool use_vel: 1;
+    bool use_acc: 1;
+    bool use_jrk: 1;
+    bool use_yaw: 1;
   };
 
   Control::Control use_xxx : 5;
