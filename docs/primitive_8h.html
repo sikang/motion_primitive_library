@@ -199,7 +199,10 @@ template&lt;int Dim&gt; </div>
 <p>Check if the max velocity magnitude is within the threshold. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mv</td><td>is the max threshold</td></tr>
+    <tr><td class="paramname">mv</td><td>is the max threshold for velocity </td></tr>
+    <tr><td class="paramname">ma</td><td>is the max threshold for acceleration </td></tr>
+    <tr><td class="paramname">mj</td><td>is the max threshold for jerk </td></tr>
+    <tr><td class="paramname">myaw</td><td>is the max threshold for yaw</td></tr>
   </table>
   </dd>
 </dl>
@@ -279,7 +282,7 @@ template&lt;int Dim&gt; </div>
 <p>Check if the successor goes outside of the fov. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">my</td><td>is the semi-fov </td></tr>
+    <tr><td class="paramname">my</td><td>is the value of semi-fov </td></tr>
   </table>
   </dd>
 </dl>

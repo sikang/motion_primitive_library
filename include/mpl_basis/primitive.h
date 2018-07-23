@@ -458,7 +458,10 @@ typedef Primitive<3> Primitive3D;
 /************************* Utils ******************************/
 /**
  * @brief Check if the max velocity magnitude is within the threshold
- * @param mv is the max threshold
+ * @param mv is the max threshold for velocity
+ * @param ma is the max threshold for acceleration
+ * @param mj is the max threshold for jerk
+ * @param myaw is the max threshold for yaw
  *
  * Use L1 norm for the maximum
  */
@@ -516,7 +519,7 @@ bool validate_xxx(const Primitive<Dim>& pr, decimal_t max, Control::Control xxx)
 
 /**
  * @brief Check if the successor goes outside of the fov
- * @param my is the semi-fov
+ * @param my is the value of semi-fov
  *
  */
 template <int Dim>
@@ -525,13 +528,20 @@ bool validate_yaw(const Primitive<Dim>& pr, decimal_t my) {
   if (my <= 0)
     return true;
   // check velocity angle at two ends, compare with my
-  const auto ws = pr.sample(1);
+  vec_E<Waypoint<Dim>> ws(2);
+  ws[0] = pr.evaluate(0);
+  ws[1] = pr.evaluate(pr.t());
   for(const auto& w: ws) {
     const auto v = w.vel.template topRows<2>();
-    if(v.norm() > 1e-5) { // if v is not zero
+    if(v(0) != 0 || v(1) != 0) { // if v is not zero
+      /*
       decimal_t vyaw = std::atan2(v(1), v(0));
       decimal_t dyaw = normalize_angle(vyaw - w.yaw);
       if(std::abs(dyaw) > my) // if exceed the threshold
+        return false;
+        */
+      decimal_t d = v.normalized().dot(Vec2f(cos(w.yaw), sin(w.yaw)));
+      if(d < cos(my))
         return false;
     }
   }
