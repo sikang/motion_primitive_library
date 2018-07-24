@@ -121,7 +121,6 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getSearchRegion() const {
   return pts;
 }
 
-/*
 template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
   lhm_.clear();
   vec_Vecf<Dim> linked_pts;
@@ -129,8 +128,8 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
     if (!it.second)
       continue;
     // check pred array
-    for (unsigned int i = 0; i < it.second->pred_hashkey.size(); i++) {
-      Key key = it.second->pred_hashkey[i];
+    for (unsigned int i = 0; i < it.second->pred_coord.size(); i++) {
+      auto key = it.second->pred_coord[i];
       Primitive<Dim> pr;
       this->ENV_->forward_action(this->ss_ptr_->hm_[key]->coord,
                                  it.second->pred_action_id[i], pr);
@@ -147,7 +146,7 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
         if (id != prev_id) {
           linked_pts.push_back(
               map_util_->intToFloat(map_util_->floatToInt(w.pos)));
-          lhm_[id].push_back(std::make_pair(it.second->hashkey, i));
+          lhm_[id].push_back(std::make_pair(it.second->coord, i));
           prev_id = id;
         }
       }
@@ -160,7 +159,7 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
 template <int Dim>
 vec_E<Primitive<Dim>>
 MapPlanner<Dim>::updateBlockedNodes(const vec_Veci<Dim> &blocked_pns) {
-  std::vector<std::pair<Key, int>> blocked_nodes;
+  std::vector<std::pair<Waypoint<Dim>, int>> blocked_nodes;
   for (const auto &it : blocked_pns) {
     int id = map_util_->getIndex(it);
     auto search = lhm_.find(id);
@@ -176,7 +175,7 @@ MapPlanner<Dim>::updateBlockedNodes(const vec_Veci<Dim> &blocked_pns) {
 template <int Dim>
 vec_E<Primitive<Dim>>
 MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
-  std::vector<std::pair<Key, int>> cleared_nodes;
+  std::vector<std::pair<Waypoint<Dim>, int>> cleared_nodes;
   for (const auto &it : cleared_pns) {
     int id = map_util_->getIndex(it);
     auto search = lhm_.find(id);
@@ -189,7 +188,6 @@ MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
   return this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
 }
 
-*/
 template <int Dim>
 vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
   const auto data = map_util_->getMap();

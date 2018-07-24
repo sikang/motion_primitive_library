@@ -89,7 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">waypoint.h File Reference</div>  </div>
 </div><!--header-->
@@ -99,8 +100,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;bitset&gt;</code><br />
-<code>#include &lt;<a class="el" href="control_8h_source.html">mpl_basis/control.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="data__type_8h_source.html">mpl_basis/data_type.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="control_8h_source.html">control.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="data__type_8h_source.html">data_type.h</a>&quot;</code><br />
+<code>#include &lt;boost/functional/hash.hpp&gt;</code><br />
 </div>
 <p><a href="waypoint_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -120,6 +122,22 @@ typedef <a class="el" href="structWaypoint.html">Waypoint</a>&lt; 2 &gt;&#160;</
 typedef <a class="el" href="structWaypoint.html">Waypoint</a>&lt; 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="waypoint_8h.html#a1e186c9e84106b0d20d3972954bda9ac">Waypoint3D</a></td></tr>
 <tr class="memdesc:a1e186c9e84106b0d20d3972954bda9ac"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> for 3D. <br /></td></tr>
 <tr class="separator:a1e186c9e84106b0d20d3972954bda9ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a0d8460fc701c0a4568800f9adacb24e8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0d8460fc701c0a4568800f9adacb24e8"></a>
+template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a0d8460fc701c0a4568800f9adacb24e8"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><b>hash_value</b> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;key)</td></tr>
+<tr class="separator:a0d8460fc701c0a4568800f9adacb24e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e2365f7c0ac8d5e2a570d688fc318f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a44e2365f7c0ac8d5e2a570d688fc318f"></a>
+template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a44e2365f7c0ac8d5e2a570d688fc318f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;l, const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;r)</td></tr>
+<tr class="separator:a44e2365f7c0ac8d5e2a570d688fc318f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e63b2f41e584d58909454ec7d7b5af2"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3e63b2f41e584d58909454ec7d7b5af2"></a>
+template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a3e63b2f41e584d58909454ec7d7b5af2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="waypoint_8h.html#a3e63b2f41e584d58909454ec7d7b5af2">operator!=</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;l, const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;r)</td></tr>
+<tr class="memdesc:a3e63b2f41e584d58909454ec7d7b5af2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two waypoints are not equivalent. <br /></td></tr>
+<tr class="separator:a3e63b2f41e584d58909454ec7d7b5af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> classes. </p>

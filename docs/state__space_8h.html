@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;boost/heap/d_ary_heap.hpp&gt;</code><br />
 <code>#include &lt;<a class="el" href="env__base_8h_source.html">mpl_planner/common/env_base.h</a>&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;boost/unordered_map.hpp&gt;</code><br />
 </div>
 <p><a href="state__space_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -134,11 +134,11 @@ template&lt;typename Coord &gt; </td></tr>
 <tr class="memitem:a865b113366f403642fdea26c1dc97709"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a865b113366f403642fdea26c1dc97709">MPL::StatePtr</a> = std::shared_ptr&lt; State&lt; Coord &gt;&gt;</td></tr>
 <tr class="memdesc:a865b113366f403642fdea26c1dc97709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare StatePtr. <br /></td></tr>
 <tr class="separator:a865b113366f403642fdea26c1dc97709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8af66e38feca237914d96da9915dc92"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae8af66e38feca237914d96da9915dc92"></a>
+<tr class="memitem:a836cdc0db071ddefbfbef2f8509777ad"><td class="memTemplParams" colspan="2"><a class="anchor" id="a836cdc0db071ddefbfbef2f8509777ad"></a>
 template&lt;typename Coord &gt; </td></tr>
-<tr class="memitem:ae8af66e38feca237914d96da9915dc92"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ae8af66e38feca237914d96da9915dc92">MPL::hashMap</a> = std::unordered_map&lt; Key, StatePtr&lt; Coord &gt;&gt;</td></tr>
-<tr class="memdesc:ae8af66e38feca237914d96da9915dc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
-<tr class="separator:ae8af66e38feca237914d96da9915dc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836cdc0db071ddefbfbef2f8509777ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a836cdc0db071ddefbfbef2f8509777ad">MPL::hashMap</a> = boost::unordered_map&lt; Coord, StatePtr&lt; Coord &gt;, boost::hash&lt; Coord &gt;&gt;</td></tr>
+<tr class="memdesc:a836cdc0db071ddefbfbef2f8509777ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
+<tr class="separator:a836cdc0db071ddefbfbef2f8509777ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>state space class for graph search </p>

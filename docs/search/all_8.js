@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['increasecost',['increaseCost',['../structMPL_1_1StateSpace.html#ae1b09af381ebaa8bd7db75386fc766cb',1,'MPL::StateSpace']]],
+  ['increasecost',['increaseCost',['../structMPL_1_1StateSpace.html#ae60af51d94188cdf11ed6ed858df0cb2',1,'MPL::StateSpace']]],
   ['info',['info',['../classMPL_1_1MapUtil.html#a6665ddfe9f960665fb4678a3a68e991c',1,'MPL::MapUtil::info()'],['../classMPL_1_1env__base.html#a71279da308c3215d1fb8b98cda425fc3',1,'MPL::env_base::info()'],['../classMPL_1_1env__map.html#ae21503c9a6461602c4e7e09db66b8111',1,'MPL::env_map::info()']]],
   ['initialized',['initialized',['../classMPL_1_1PlannerBase.html#ad1f53ba457eefe18ab92f6ca9b716527',1,'MPL::PlannerBase']]],
   ['inttofloat',['intToFloat',['../classMPL_1_1MapUtil.html#a1c9c3fa76b255ee2f0d6b82f6f373429',1,'MPL::MapUtil']]],

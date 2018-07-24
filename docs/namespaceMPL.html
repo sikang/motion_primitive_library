@@ -134,9 +134,6 @@ typedef <a class="el" href="classMPL_1_1MapUtil.html">MapUtil</a>&lt; 2 &gt;&#16
 <tr class="memitem:a662f4d1417abdf26e87a488a9c0acd4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a662f4d1417abdf26e87a488a9c0acd4d"></a>
 typedef <a class="el" href="classMPL_1_1MapUtil.html">MapUtil</a>&lt; 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>VoxelMapUtil</b></td></tr>
 <tr class="separator:a662f4d1417abdf26e87a488a9c0acd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac469f005b0bd9eccdf4b379519e3143e"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a></td></tr>
-<tr class="memdesc:ac469f005b0bd9eccdf4b379519e3143e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for node.  <a href="#ac469f005b0bd9eccdf4b379519e3143e">More...</a><br /></td></tr>
-<tr class="separator:ac469f005b0bd9eccdf4b379519e3143e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7a7d0551686c6af6b68c9b72a0f4411"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac7a7d0551686c6af6b68c9b72a0f4411"></a>
 template&lt;typename state &gt; </td></tr>
 <tr class="memitem:ac7a7d0551686c6af6b68c9b72a0f4411"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ac7a7d0551686c6af6b68c9b72a0f4411">priorityQueue</a> = boost::heap::d_ary_heap&lt; std::pair&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>, std::shared_ptr&lt; state &gt;&gt;, boost::heap::mutable_&lt; true &gt;, boost::heap::arity&lt; 2 &gt;, boost::heap::compare&lt; <a class="el" href="structMPL_1_1compare__pair.html">compare_pair</a>&lt; state &gt;&gt;&gt;</td></tr>
@@ -147,14 +144,15 @@ template&lt;typename Coord &gt; </td></tr>
 <tr class="memitem:a865b113366f403642fdea26c1dc97709"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a865b113366f403642fdea26c1dc97709">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="structMPL_1_1State.html">State</a>&lt; Coord &gt;&gt;</td></tr>
 <tr class="memdesc:a865b113366f403642fdea26c1dc97709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare StatePtr. <br /></td></tr>
 <tr class="separator:a865b113366f403642fdea26c1dc97709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8af66e38feca237914d96da9915dc92"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae8af66e38feca237914d96da9915dc92"></a>
+<tr class="memitem:a836cdc0db071ddefbfbef2f8509777ad"><td class="memTemplParams" colspan="2"><a class="anchor" id="a836cdc0db071ddefbfbef2f8509777ad"></a>
 template&lt;typename Coord &gt; </td></tr>
-<tr class="memitem:ae8af66e38feca237914d96da9915dc92"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#ae8af66e38feca237914d96da9915dc92">hashMap</a> = std::unordered_map&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, <a class="el" href="namespaceMPL.html#a865b113366f403642fdea26c1dc97709">StatePtr</a>&lt; Coord &gt;&gt;</td></tr>
-<tr class="memdesc:ae8af66e38feca237914d96da9915dc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
-<tr class="separator:ae8af66e38feca237914d96da9915dc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a818319895f28cc784958e7e7c893294c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a818319895f28cc784958e7e7c893294c"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>linkedHashMap</b> = std::unordered_map&lt; int, std::vector&lt; std::pair&lt; <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">Key</a>, int &gt;&gt;&gt;</td></tr>
-<tr class="separator:a818319895f28cc784958e7e7c893294c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836cdc0db071ddefbfbef2f8509777ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a836cdc0db071ddefbfbef2f8509777ad">hashMap</a> = boost::unordered_map&lt; Coord, <a class="el" href="namespaceMPL.html#a865b113366f403642fdea26c1dc97709">StatePtr</a>&lt; Coord &gt;, boost::hash&lt; Coord &gt;&gt;</td></tr>
+<tr class="memdesc:a836cdc0db071ddefbfbef2f8509777ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
+<tr class="separator:a836cdc0db071ddefbfbef2f8509777ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a9419dfd9f7c5b90a07da25132fe17"><td class="memTemplParams" colspan="2"><a class="anchor" id="a08a9419dfd9f7c5b90a07da25132fe17"></a>
+template&lt;int Dim&gt; </td></tr>
+<tr class="memitem:a08a9419dfd9f7c5b90a07da25132fe17"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>linkedHashMap</b> = std::unordered_map&lt; int, std::vector&lt; std::pair&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;, int &gt;&gt;&gt;</td></tr>
+<tr class="separator:a08a9419dfd9f7c5b90a07da25132fe17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3df478df06221cdbab15f9a96156b10f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3df478df06221cdbab15f9a96156b10f"></a>
 typedef <a class="el" href="classMPL_1_1MapPlanner.html">MapPlanner</a>&lt; 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a3df478df06221cdbab15f9a96156b10f">OccMapPlanner</a></td></tr>
 <tr class="memdesc:a3df478df06221cdbab15f9a96156b10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Planner for 2D OccMap. <br /></td></tr>
@@ -166,23 +164,7 @@ typedef <a class="el" href="classMPL_1_1MapPlanner.html">MapPlanner</a>&lt; 3 &g
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Motion planning base util class. </p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ac469f005b0bd9eccdf4b379519e3143e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::string <a class="el" href="namespaceMPL.html#ac469f005b0bd9eccdf4b379519e3143e">MPL::Key</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Key for node. </p>
-<p>We use string as the Key for indexing, by default the Key refers to 'pos-vel-acc-...' </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
