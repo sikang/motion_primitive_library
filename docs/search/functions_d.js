@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['raytrace',['rayTrace',['../classMPL_1_1MapUtil.html#aca6d3fc883a0db14032d826c30a73aff',1,'MPL::MapUtil']]],
-  ['recovertraj',['recoverTraj',['../classMPL_1_1GraphSearch.html#a2fb7dc217a4f4013a14d462ba17babd6',1,'MPL::GraphSearch']]],
-  ['reset',['reset',['../classMPL_1_1PlannerBase.html#ae055d0a32479e43d93fb17eceae86fbf',1,'MPL::PlannerBase']]],
-  ['round',['round',['../classMPL_1_1env__base.html#a2a77651c3f22da7ed055ca7c171bce7d',1,'MPL::env_base']]]
+  ['quad',['quad',['../math_8h.html#a5b1ef571b298b14e320d7d9f31528871',1,'math.h']]],
+  ['quartic',['quartic',['../math_8h.html#a11e53038927f416e637df83d4a0b18bc',1,'math.h']]]
 ];

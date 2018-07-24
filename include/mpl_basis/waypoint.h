@@ -24,21 +24,21 @@ struct Waypoint {
   Waypoint() {}
   /**
    * @brief Simple constructor
-   * @param c control input
+   * @param c control value
    */
   Waypoint(Control::Control c) : control(c) {}
-  Vecf<Dim> pos; ///<position in \f$R^{Dim}\f$
-  Vecf<Dim> vel; ///<velocity in \f$R^{Dim}\f$
-  Vecf<Dim> acc; ///<acceleration in \f$R^{Dim}\f$
-  Vecf<Dim> jrk; ///<jerk in \f$R^{Dim}\f$
+  Vecf<Dim> pos; ///<position in \f$R^{n}\f$
+  Vecf<Dim> vel; ///<velocity in \f$R^{n}\f$
+  Vecf<Dim> acc; ///<acceleration in \f$R^{n}\f$
+  Vecf<Dim> jrk; ///<jerk in \f$R^{n}\f$
   decimal_t yaw; ///<yaw
-  decimal_t t{0}; ///<time
+  decimal_t t{0}; ///<time when reaching this waypoint in graph search
 
   /**
    * @brief Control flag
    *
    * Anonymous union type that contains 5 bits as xxxxx,
-   * each bit from left to right is assigned to `use_pos`, `use_vel`, `use_acc`,
+   * each bit from right to left is assigned to `use_pos`, `use_vel`, `use_acc`,
    * `use_jrk` and `use_yaw`.
    */
   union {
@@ -49,7 +49,7 @@ struct Waypoint {
       bool use_jrk : 1;///<If true, jrk will be used in primitive generation
       bool use_yaw : 1;///<If true, yaw will be used in primitive generation
     };
-    Control::Control control : 5;
+    Control::Control control : 5;///<Control value
   };
 
   ///Print all attributes
@@ -87,18 +87,10 @@ struct Waypoint {
     else
       std::cout << "use null!" << std::endl;
   }
+};
 
-  /**
-   * @brief  Check if two waypoints are equivalent
-   *
-   * Compare the attribute if corresponding `use_xxx` of both Waypoints is true.
-   */
- // bool operator==(const Waypoint<Dim>& n) const;
-
- };
-
-template <int Dim>
-std::size_t hash_value(const Waypoint<Dim> &key) {
+/// Generate hash value for Waypoint class
+template <int Dim> std::size_t hash_value(const Waypoint<Dim> &key) {
   std::size_t val = 0;
   for (int i = 0; i < Dim; i++) {
     if (key.use_pos) {
@@ -127,6 +119,11 @@ std::size_t hash_value(const Waypoint<Dim> &key) {
   return val;
 }
 
+/**
+ * @brief  Check if two waypoints are equivalent
+ *
+ * using the hash value
+ */
 template <int Dim>
 bool operator==(const Waypoint<Dim>& l, const Waypoint<Dim>& r) {
   return hash_value(l) == hash_value(r);
