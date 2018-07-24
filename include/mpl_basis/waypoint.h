@@ -7,9 +7,9 @@
 #define MPL_WAYPOINT_H
 #include <iostream>
 #include <bitset>
-#include <mpl_basis/control.h>
-#include <mpl_basis/data_type.h>
-
+#include "control.h"
+#include "data_type.h"
+#include <boost/functional/hash.hpp>
 
 /**
  * @brief Waypoint base class
@@ -107,6 +107,35 @@ struct Waypoint {
     return !(*this == n);
   }
 };
+
+template <int Dim>
+std::size_t hash_value(const Waypoint<Dim> &key) {
+  std::size_t val = 0;
+  for (int i = 0; i < Dim; i++) {
+    if (key.use_pos) {
+      int id = std::round(key.pos(i)/0.01);
+      boost::hash_combine(val, id);
+    }
+    if (key.use_vel) {
+      int id = std::round(key.vel(i)/0.1);
+      boost::hash_combine(val, id);
+    }
+    if (key.use_acc) {
+      int id = std::round(key.acc(i)/0.1);
+      boost::hash_combine(val, id);
+    }
+    if (key.use_jrk) {
+      int id = std::round(key.jrk(i)/0.1);
+      boost::hash_combine(val, id);
+    }
+  }
+  if (key.use_yaw) {
+    int id = std::round(key.yaw/0.1);
+    boost::hash_combine(val, id);
+  }
+
+  return val;
+}
 
 ///Waypoint for 2D
 typedef Waypoint<2> Waypoint2D;

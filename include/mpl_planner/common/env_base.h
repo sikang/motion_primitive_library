@@ -11,13 +11,6 @@
 namespace MPL {
 
 /**
- * @brief Key for node
- *
- * We use string as the Key for indexing, by default the Key refers to 'pos-vel-acc-...'
- */
-typedef std::string Key;
-
-/**
  * @brief Base environment class
  */
 template <int Dim>
@@ -229,56 +222,6 @@ class env_base {
       return str;
     }
 
-    ///Genegrate Key from state
-    virtual Key state_to_idx(const Waypoint<Dim>& state) const {
-      const Veci<Dim> pi = round(state.pos, ds_);
-      if(state.control == Control::VEL)
-        return to_string(pi);
-      else if(state.control == Control::ACC) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        return to_string(pi) + to_string(vi);
-      }
-      else if(state.control == Control::JRK) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        const Veci<Dim> ai = round(state.acc, da_);
-        return to_string(pi) + to_string(vi) + to_string(ai);
-      }
-      else if(state.control == Control::SNP) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        const Veci<Dim> ai = round(state.acc, da_);
-        const Veci<Dim> ji = round(state.jrk, dj_);
-        return to_string(pi) + to_string(vi) + to_string(ai) + to_string(ji);
-      }
-      else if(state.control == Control::VELxYAW) {
-        int yawi = std::round(state.yaw/dyaw_);
-        return to_string(pi) +
-        std::to_string(yawi);
-      }
-       else if(state.control == Control::ACCxYAW) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        int yawi = std::round(state.yaw/dyaw_);
-        return to_string(pi) + to_string(vi) +
-          std::to_string(yawi);
-      }
-       else if(state.control == Control::JRKxYAW) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        const Veci<Dim> ai = round(state.acc, da_);
-        int yawi = std::round(state.yaw/dyaw_);
-        return to_string(pi) + to_string(vi) + to_string(ai) +
-          std::to_string(yawi);
-      }
-       else if(state.control == Control::SNPxYAW) {
-        const Veci<Dim> vi = round(state.vel, dv_);
-        const Veci<Dim> ai = round(state.acc, da_);
-        const Veci<Dim> ji = round(state.jrk, dj_);
-        int yawi = std::round(state.yaw/dyaw_);
-        return to_string(pi) + to_string(vi) + to_string(ai) + to_string(ji) +
-          std::to_string(yawi);
-      }
-      else
-        return "";
-    }
-
     ///Recover trajectory
     void forward_action( const Waypoint<Dim>& curr,
                         int action_id, Primitive<Dim>& pr) const {
@@ -465,20 +408,14 @@ class env_base {
      * @brief Get successor
      * @param curr The node to expand
      * @param succ The array stores valid successors
-     * @param succ_idx The array stores successors' Key
      * @param succ_cost The array stores cost along valid edges
      * @param action_idx The array stores corresponding idx of control for each
      * successor
      */
     virtual void get_succ(const Waypoint<Dim> &curr, vec_E<Waypoint<Dim>> &succ,
-                          std::vector<Key> &succ_idx,
                           std::vector<decimal_t> &succ_cost,
                           std::vector<int> &action_idx) const {
       printf("Used Null get_succ()\n");
-      succ.push_back(curr);
-      succ_idx.push_back(state_to_idx(curr));
-      succ_cost.push_back(0);
-      action_idx.push_back(0);
     }
 
     /// Get the valid region

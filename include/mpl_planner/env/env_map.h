@@ -136,7 +136,6 @@ public:
    *
    * @param curr The node to expand
    * @param succ The array stores valid successors
-   * @param succ_idx The array stores successors' Key
    * @param succ_cost The array stores cost along valid edges
    * @param action_idx The array stores corresponding idx of control input
    * for each successor
@@ -146,10 +145,9 @@ public:
    * one hits obstacles).
    */
   void get_succ(const Waypoint<Dim> &curr, vec_E<Waypoint<Dim>> &succ,
-                std::vector<Key> &succ_idx, std::vector<decimal_t> &succ_cost,
+                std::vector<decimal_t> &succ_cost,
                 std::vector<int> &action_idx) const {
     succ.clear();
-    succ_idx.clear();
     succ_cost.clear();
     action_idx.clear();
 
@@ -169,8 +167,6 @@ public:
         continue;
       tn.t = curr.t + this->dt_;
       succ.push_back(tn);
-      succ_idx.push_back(this->state_to_idx(tn));
-      //std::cout << succ_idx.back() << std::endl;
       decimal_t cost = curr.pos == tn.pos ? 0 : traverse_primitive(pr);
       if (!std::isinf(cost))
         cost += pr.J(pr.control()) + this->w_ * this->dt_;

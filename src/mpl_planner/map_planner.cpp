@@ -121,6 +121,7 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getSearchRegion() const {
   return pts;
 }
 
+/*
 template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
   lhm_.clear();
   vec_Vecf<Dim> linked_pts;
@@ -188,6 +189,7 @@ MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
   return this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
 }
 
+*/
 template <int Dim>
 vec_Vec3f MapPlanner<Dim>::getPotentialCloud(decimal_t h_max) {
   const auto data = map_util_->getMap();
@@ -402,4 +404,4 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos, int pow) {
 
 template class MapPlanner<2>;
 
-template class MapPlanner<3>;
+//template class MapPlanner<3>;
