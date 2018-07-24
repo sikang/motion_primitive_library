@@ -170,30 +170,6 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set dt: %f\n", dt);
   }
-  /// Set ds for each primitive
-  void setDs(decimal_t ds) {
-    ENV_->set_ds(ds);
-    if (planner_verbose_)
-      printf("[PlannerBase] set ds: %f\n", ds);
-  }
-  /// Set dv for each primitive
-  void setDv(decimal_t dv) {
-    ENV_->set_dv(dv);
-    if (planner_verbose_)
-      printf("[PlannerBase] set dv: %f\n", dv);
-  }
-  /// Set da for each primitive
-  void setDa(decimal_t da) {
-    ENV_->set_da(da);
-    if (planner_verbose_)
-      printf("[PlannerBase] set da: %f\n", da);
-  }
-  /// Set dj for each primitive
-  void setDj(decimal_t dj) {
-    ENV_->set_dj(dj);
-    if (planner_verbose_)
-      printf("[PlannerBase] set dj: %f\n", dj);
-  }
   /// Set weight for cost in time
   void setW(decimal_t w) {
     ENV_->set_w(w);

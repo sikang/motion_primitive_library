@@ -56,12 +56,18 @@ struct Waypoint {
   virtual void print(std::string str = "") const {
     if(!str.empty())
       std::cout << str << std::endl;
-    std::cout << "pos: " << pos.transpose() << std::endl;
-    std::cout << "vel: " << vel.transpose() << std::endl;
-    std::cout << "acc: " << acc.transpose() << std::endl;
-    std::cout << "jrk: " << jrk.transpose() << std::endl;
-    std::cout << "yaw: " << yaw << std::endl;
-    std::cout << "t: " << t << std::endl;
+    if(use_pos)
+      std::cout << "pos: " << pos.transpose() << std::endl;
+    if(use_vel)
+      std::cout << "vel: " << vel.transpose() << std::endl;
+    if(use_acc)
+      std::cout << "acc: " << acc.transpose() << std::endl;
+    if(use_jrk)
+      std::cout << "jrk: " << jrk.transpose() << std::endl;
+    if(use_yaw)
+      std::cout << "yaw: " << yaw << std::endl;
+    std::cout << " t: " << t << std::endl;
+
     if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
     else if(control == Control::ACC)
@@ -87,26 +93,9 @@ struct Waypoint {
    *
    * Compare the attribute if corresponding `use_xxx` of both Waypoints is true.
    */
-  virtual bool operator==(const Waypoint<Dim>& n) const {
-    if((this->use_pos || n.use_pos) && this->pos != n.pos)
-      return false;
-    if((this->use_vel || n.use_vel) && this->vel != n.vel)
-      return false;
-    if((this->use_acc || n.use_acc) && this->acc != n.acc)
-      return false;
-    if((this->use_jrk || n.use_jrk) && this->jrk != n.jrk)
-      return false;
-    if((this->use_yaw || n.use_yaw) && this->yaw != n.yaw)
-      return false;
-    return true;
-    //return this->t == n.t;
-  }
+ // bool operator==(const Waypoint<Dim>& n) const;
 
-  ///Check if two waypoints are not equivalent
-  bool operator!=(const Waypoint<Dim>& n) {
-    return !(*this == n);
-  }
-};
+ };
 
 template <int Dim>
 std::size_t hash_value(const Waypoint<Dim> &key) {
@@ -129,6 +118,7 @@ std::size_t hash_value(const Waypoint<Dim> &key) {
       boost::hash_combine(val, id);
     }
   }
+
   if (key.use_yaw) {
     int id = std::round(key.yaw/0.1);
     boost::hash_combine(val, id);
@@ -136,6 +126,18 @@ std::size_t hash_value(const Waypoint<Dim> &key) {
 
   return val;
 }
+
+template <int Dim>
+bool operator==(const Waypoint<Dim>& l, const Waypoint<Dim>& r) {
+  return hash_value(l) == hash_value(r);
+}
+
+///Check if two waypoints are not equivalent
+template <int Dim>
+bool operator!=(const Waypoint<Dim>& l, const Waypoint<Dim>& r) {
+  return hash_value(l) != hash_value(r);
+}
+
 
 ///Waypoint for 2D
 typedef Waypoint<2> Waypoint2D;

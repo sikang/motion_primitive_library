@@ -276,10 +276,6 @@ public:
       printf("+                  w: %.2f               +\n", this->w_);
       printf("+               wyaw: %.2f               +\n", this->wyaw_);
       printf("+                 dt: %.2f               +\n", this->dt_);
-      printf("+                 ds: %.2f               +\n", this->ds_);
-      printf("+                 dv: %.2f               +\n", this->dv_);
-      printf("+                 da: %.2f               +\n", this->da_);
-      printf("+                 dj: %.2f               +\n", this->dj_);
       printf("+              t_max: %.2f               +\n", this->t_max_);
       printf("+              v_max: %.2f               +\n", this->v_max_);
       printf("+              a_max: %.2f               +\n", this->a_max_);

@@ -268,31 +268,6 @@ class env_base {
       dt_ = dt;
     }
 
-    ///Set ds
-    void set_ds(decimal_t ds) {
-      ds_ = ds;
-    }
-
-    ///Set dv
-    void set_dv(decimal_t dv) {
-      dv_ = dv;
-    }
-
-    ///Set da
-    void set_da(decimal_t da) {
-      da_ = da;
-    }
-
-    ///Set dj
-    void set_dj(decimal_t dj) {
-      dj_ = dj;
-    }
-
-    ///Set dyaw
-    void set_dyaw(decimal_t dyaw) {
-      dyaw_ = dyaw;
-    }
-
     ///Set distance tolerance for goal region
     void set_tol_dis(decimal_t dis) {
       tol_dis_ = dis;
@@ -368,10 +343,6 @@ class env_base {
       printf("+                  w: %.2f               +\n", w_);
       printf("+               wyaw: %.2f               +\n", wyaw_);
       printf("+                 dt: %.2f               +\n", dt_);
-      printf("+                 ds: %.2f               +\n", ds_);
-      printf("+                 dv: %.2f               +\n", dv_);
-      printf("+                 da: %.2f               +\n", da_);
-      printf("+                 dj: %.2f               +\n", dj_);
       printf("+              t_max: %.2f               +\n", t_max_);
       printf("+              v_max: %.2f               +\n", v_max_);
       printf("+              a_max: %.2f               +\n", a_max_);
@@ -447,16 +418,6 @@ class env_base {
     decimal_t t_max_{std::numeric_limits<decimal_t>::infinity()};
     ///duration of primitive
     decimal_t dt_{1.0};
-    ///grid size in position
-    decimal_t ds_{0.01};
-    ///grid size in velocity
-    decimal_t dv_{0.1};
-    ///grid size in acceleration
-    decimal_t da_{0.1};
-    ///grid size in jerk
-    decimal_t dj_{0.1};
-    ///grid size in yaw
-    decimal_t dyaw_{0.1};
     ///expanded nodes
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input
