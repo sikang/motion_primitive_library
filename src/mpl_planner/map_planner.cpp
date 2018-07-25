@@ -402,4 +402,4 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos, int pow) {
 
 template class MapPlanner<2>;
 
-//template class MapPlanner<3>;
+template class MapPlanner<3>;

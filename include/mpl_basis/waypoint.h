@@ -27,6 +27,7 @@ struct Waypoint {
    * @param c control value
    */
   Waypoint(Control::Control c) : control(c) {}
+
   Vecf<Dim> pos; ///<position in \f$R^{n}\f$
   Vecf<Dim> vel; ///<velocity in \f$R^{n}\f$
   Vecf<Dim> acc; ///<acceleration in \f$R^{n}\f$
@@ -52,6 +53,8 @@ struct Waypoint {
     Control::Control control : 5;///<Control value
   };
 
+  bool enable_t{false};
+
   ///Print all attributes
   virtual void print(std::string str = "") const {
     if(!str.empty())
@@ -66,7 +69,8 @@ struct Waypoint {
       std::cout << "jrk: " << jrk.transpose() << std::endl;
     if(use_yaw)
       std::cout << "yaw: " << yaw << std::endl;
-    std::cout << " t: " << t << std::endl;
+    if(enable_t)
+      std::cout << " t: " << t << std::endl;
 
     if(control == Control::VEL)
       std::cout << "use vel!" << std::endl;
@@ -113,6 +117,11 @@ template <int Dim> std::size_t hash_value(const Waypoint<Dim> &key) {
 
   if (key.use_yaw) {
     int id = std::round(key.yaw/0.1);
+    boost::hash_combine(val, id);
+  }
+
+  if (key.enable_t) {
+    int id = std::round(key.t/0.1);
     boost::hash_combine(val, id);
   }
 
