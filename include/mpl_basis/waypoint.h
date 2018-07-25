@@ -53,7 +53,7 @@ struct Waypoint {
     Control::Control control : 5;///<Control value
   };
 
-  bool enable_t{false};
+  bool enable_t{false};///<if enabled, use \f$t\f$ when calculating hash_value
 
   ///Print all attributes
   virtual void print(std::string str = "") const {
