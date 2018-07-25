@@ -64,29 +64,17 @@ class Trajectory {
       if (tau > total_t_)
         tau = total_t_;
 
-      decimal_t lambda = 1;
-      decimal_t lambda_dot = 0;
-
-      if (lambda_.exist()) {
-        VirtualPoint vt = lambda_.evaluate(tau);
-        lambda = vt.p;
-        lambda_dot = vt.v;
-      }
-
-      for (int id = 0; id < (int)segs.size(); id++) {
-        if (tau >= taus[id] && tau <= taus[id + 1]) {
+      for (size_t id = 0; id < segs.size(); id++) {
+        if ((tau >= taus[id] && tau < taus[id + 1]) ||
+            id == segs.size() - 1) {
           tau -= taus[id];
           Waypoint<Dim> p(segs[id].control());
           for (int j = 0; j < Dim; j++) {
             const auto pr = segs[id].pr(j);
             p.pos(j) = pr.p(tau);
-            p.vel(j) = pr.v(tau) / lambda;
-            p.acc(j) = pr.a(tau) / lambda / lambda -
-              p.vel(j) * lambda_dot / lambda / lambda / lambda;
-            p.jrk(j) = pr.j(tau) / lambda / lambda -
-              3 / power(lambda, 3) * p.acc(j) * p.acc(j) * lambda_dot +
-              3 / power(lambda, 4) * p.vel(j) * lambda_dot *
-              lambda_dot;
+            p.vel(j) = pr.v(tau);
+            p.acc(j) = pr.a(tau);
+            p.jrk(j) = pr.j(tau);
             p.yaw = normalize_angle(segs[id].pr_yaw().p(tau));
           }
           return p;
@@ -120,7 +108,7 @@ class Trajectory {
         lambda_dot = vt.v;
       }
 
-      for (int id = 0; id < (int)segs.size(); id++) {
+      for (size_t id = 0; id < segs.size(); id++) {
         if (tau >= taus[id] && tau <= taus[id + 1]) {
           tau -= taus[id];
           for (int j = 0; j < Dim; j++) {

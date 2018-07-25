@@ -328,14 +328,10 @@ class Primitive {
   Waypoint<Dim> evaluate(decimal_t t) const {
     Waypoint<Dim> p(control_);
     for (int k = 0; k < Dim; k++) {
-      if(p.use_pos)
-        p.pos(k) = prs_[k].p(t);
-      if(p.use_vel)
-        p.vel(k) = prs_[k].v(t);
-      if(p.use_acc)
-        p.acc(k) = prs_[k].a(t);
-      if(p.use_jrk)
-        p.jrk(k) = prs_[k].j(t);
+      p.pos(k) = prs_[k].p(t);
+      p.vel(k) = prs_[k].v(t);
+      p.acc(k) = prs_[k].a(t);
+      p.jrk(k) = prs_[k].j(t);
       if(p.use_yaw)
         p.yaw = normalize_angle(pr_yaw_.p(t));
     }
