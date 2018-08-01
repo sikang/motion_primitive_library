@@ -308,7 +308,8 @@ public:
       }
 
       // If goal reached or maximum time reached, terminate!
-      if (ENV->is_goal(currNode_ptr->coord) || max_t > 0)
+      if (ENV->is_goal(currNode_ptr->coord) ||
+        (max_t > 0 && currNode_ptr->coord.t == max_t))
         goalNode_ptr = currNode_ptr;
 
       // If maximum expansion reached, abort!
