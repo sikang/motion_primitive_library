@@ -152,13 +152,6 @@ public:
     action_idx.clear();
 
     //this->expanded_nodes_.push_back(curr.pos);
-
-    /*
-    const Veci<Dim> pn = map_util_->floatToInt(curr.pos);
-    if (map_util_->isOutside(pn))
-      return;
-      */
-
     for (unsigned int i = 0; i < this->U_.size(); i++) {
       Primitive<Dim> pr(curr, this->U_[i], this->dt_);
       Waypoint<Dim> tn = pr.evaluate(this->dt_);
@@ -169,13 +162,13 @@ public:
       succ.push_back(tn);
       decimal_t cost = curr.pos == tn.pos ? 0 : traverse_primitive(pr);
       if (!std::isinf(cost))
-        cost += pr.J(pr.control()) + this->w_ * this->dt_;
-        //cost += pr.J(pr.control()) + this->wyaw_ * pr.Jyaw() + this->w_ * this->dt_;
+        cost += this->calculate_intrinsic_cost(pr);
 
       succ_cost.push_back(cost);
       action_idx.push_back(i);
     }
   }
+
 
   /// Set gradient map
   void set_gradient_map(const vec_E<Vecf<Dim>>& map) {

@@ -44,14 +44,14 @@ public:
    *
    * The function returns affected primitives for debug purpose
    */
-  vec_E<Primitive<Dim>> updateBlockedNodes(const vec_Veci<Dim> &pns);
+  void updateBlockedNodes(const vec_Veci<Dim> &pns);
   /**
    * @brief Update edge costs according to the new cleared nodes
    * @param pns the new cleared voxels
    *
    * The function returns affected primitives for debug purpose
    */
-  vec_E<Primitive<Dim>> updateClearedNodes(const vec_Veci<Dim> &pns);
+  void updateClearedNodes(const vec_Veci<Dim> &pns);
 
   /// Set potential radius
   void setPotentialRadius(const Vecf<Dim>& radius);
