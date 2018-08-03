@@ -34,14 +34,11 @@ public:
    * @param traj output trajectory
    * @param max_expand max number of expanded states, default value is -1 which
    * means there is no limitation
-   * @param max_t max time horizon of expanded states, default value is -1 which
-   * means there is no limitation
    */
   decimal_t Astar(const Coord &start_coord,
                   const std::shared_ptr<env_base<Dim>> &ENV,
                   std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr,
-                  Trajectory<Dim> &traj, int max_expand = -1,
-                  decimal_t max_t = 0) {
+                  Trajectory<Dim> &traj, int max_expand = -1) {
     // Check if done
     if (ENV->is_goal(start_coord))
       return 0;
@@ -150,16 +147,7 @@ public:
       if (ENV->is_goal(currNode_ptr->coord))
         break;
 
-      // If maximum time reached, abort!
-      if (max_t > 0 && currNode_ptr->coord.t >= max_t && !std::isinf(currNode_ptr->g)) {
-        if (verbose_)
-          printf(ANSI_COLOR_GREEN
-                 "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET,
-                 max_t);
-        break;
-      }
-
-      // If maximum expansion reached, abort!
+       // If maximum expansion reached, abort!
       if (max_expand > 0 && expand_iteration >= max_expand) {
         printf(ANSI_COLOR_RED
                "MaxExpandStep [%d] Reached!!!!!!\n\n" ANSI_COLOR_RESET,
@@ -203,14 +191,11 @@ public:
    * @param traj output trajectory
    * @param max_expand max number of expanded states, default value is -1 which
    * means there is no limitation
-   * @param max_t max time horizon of expanded states, default value is -1 which
-   * means there is no limitation
    */
   decimal_t LPAstar(const Coord &start_coord,
                     const std::shared_ptr<env_base<Dim>> &ENV,
                     std::shared_ptr<StateSpace<Dim, Coord>> &ss_ptr,
-                    Trajectory<Dim> &traj, int max_expand = -1,
-                    decimal_t max_t = 0) {
+                    Trajectory<Dim> &traj, int max_expand = -1) {
     // Check if done
     if (ENV->is_goal(start_coord)) {
       if (verbose_)
@@ -218,10 +203,6 @@ public:
                "Start is inside goal region!\n" ANSI_COLOR_RESET);
       return 0;
     }
-
-    // set Tmax in ss_ptr
-    ss_ptr->max_t_ =
-      max_t > 0 ? max_t : std::numeric_limits<decimal_t>::infinity();
 
     // Initialize start node
     StatePtr<Coord> currNode_ptr = ss_ptr->hm_[start_coord];
@@ -308,7 +289,7 @@ public:
       }
 
       // If goal reached or maximum time reached, terminate!
-      if (ENV->is_goal(currNode_ptr->coord) || max_t > 0)
+      if (ENV->is_goal(currNode_ptr->coord))
         goalNode_ptr = currNode_ptr;
 
       // If maximum expansion reached, abort!
@@ -348,19 +329,13 @@ public:
       if (ENV->is_goal(goalNode_ptr->coord))
         printf(ANSI_COLOR_GREEN "Reached Goal !!!!!!\n\n" ANSI_COLOR_RESET);
       else
-        printf(ANSI_COLOR_GREEN
-               "MaxExpandTime [%f] Reached!!!!!!\n\n" ANSI_COLOR_RESET,
-               goalNode_ptr->coord.t);
+        printf(ANSI_COLOR_RED
+               "Terminated for unknown reason!!!!!!\n\n" ANSI_COLOR_RESET);
     }
 
     // auto start = std::chrono::high_resolution_clock::now();
     //****** Recover trajectory
     traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_coord);
-
-    // std::chrono::duration<decimal_t> elapsed_seconds =
-    // std::chrono::high_resolution_clock::now() - start;
-    // printf("time for recovering: %f, expand: %d\n", elapsed_seconds.count(),
-    // expand_iteration);
 
     ss_ptr->expand_iteration_ = expand_iteration;
     return goalNode_ptr->g;
@@ -377,8 +352,8 @@ private:
   vec_E<Primitive<Dim>> prs;
   while (!currNode_ptr->pred_coord.empty()) {
     if (verbose_) {
-      std::cout << "t: " << currNode_ptr->coord.t << " --> "
-                << currNode_ptr->coord.t - ss_ptr->dt_ << std::endl;
+      std::cout << "t: " << currNode_ptr->coord.t
+                << " pos: " << currNode_ptr->coord.pos.transpose() << std::endl;
       printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
              currNode_ptr->h);
     }
@@ -388,10 +363,6 @@ private:
     decimal_t min_g = std::numeric_limits<decimal_t>::infinity();
     for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
       Coord key = currNode_ptr->pred_coord[i];
-      // std::cout << "action id: " << currNode_ptr->pred_action_id[i] << "
-      // parent g: " << ss_ptr->hm_[key]->g << " action cost: " <<
-      // currNode_ptr->pred_action_cost[i] << " parent key: " <<key <<
-      // std::endl;
       if (min_rhs > ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
         min_rhs = ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i];
         min_g = ss_ptr->hm_[key]->g;
@@ -413,13 +384,6 @@ private:
       Primitive<Dim> pr;
       ENV->forward_action(currNode_ptr->coord, action_idx, pr);
       prs.push_back(pr);
-      if (verbose_) {
-        // std::cout << "parent t: " << currNode_ptr->t << " key: " << key <<
-        // std::endl;
-        // printf("Take action id: %d,  action cost: J: [%f, %f, %f]\n",
-        // action_idx, pr.J(0), pr.J(1), pr.J(2));
-        // print_coeffs(pr);
-      }
     } else {
       if (verbose_) {
         printf(ANSI_COLOR_RED

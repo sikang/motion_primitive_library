@@ -84,8 +84,6 @@ template <int Dim, typename Coord> struct StateSpace {
   decimal_t dt_;
   /// The best trajectory from previous plan
   vec_E<StatePtr<Coord>> best_child_;
-  /// Maximum time of the valid trajectories
-  decimal_t max_t_ = std::numeric_limits<decimal_t>::infinity();
   /// Number of expansion iteration
   int expand_iteration_ = 0;
 
@@ -101,6 +99,8 @@ template <int Dim, typename Coord> struct StateSpace {
       return;
 
     StatePtr<Coord> currNode_ptr = best_child_[time_step];
+    const auto init_t = currNode_ptr->coord.t;
+
     currNode_ptr->pred_action_cost.clear();
     currNode_ptr->pred_action_id.clear();
     currNode_ptr->pred_coord.clear();
@@ -125,14 +125,6 @@ template <int Dim, typename Coord> struct StateSpace {
     while (!epq.empty()) {
       currNode_ptr = epq.top().second;
       epq.pop();
-
-      if (currNode_ptr->coord.t == max_t_) {
-        currNode_ptr->iterationclosed = false;
-        currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
-        currNode_ptr->succ_coord.clear();
-        currNode_ptr->succ_action_cost.clear();
-        currNode_ptr->succ_action_id.clear();
-      }
 
       for (unsigned int i = 0; i < currNode_ptr->succ_coord.size(); i++) {
         Coord succ_coord = currNode_ptr->succ_coord[i];
@@ -169,13 +161,21 @@ template <int Dim, typename Coord> struct StateSpace {
       }
     }
 
-    hm_ = new_hm;
+    hm_.clear();
     pq_.clear();
-    for (auto &it : hm_) {
+    for (auto &it : new_hm) {
+      it.second->coord.t -= init_t;
+      for(auto& itt: it.second->pred_coord)
+        itt.t -= init_t;
+      for(auto& itt: it.second->succ_coord)
+        itt.t -= init_t;
+      hm_[it.second->coord] = it.second;
       if (it.second->iterationopened && !it.second->iterationclosed)
         it.second->heapkey =
           pq_.push(std::make_pair(calculateKey(it.second), it.second));
     }
+    //printf("new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
+
   }
 
   /// Increase the cost of actions
@@ -237,8 +237,6 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
       for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
         Coord pred_key = currNode_ptr->pred_coord[i];
-        if(!hm_[pred_key])
-          std::cout << "hm[pred_key] does not exist!" << std::endl;
         if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
           currNode_ptr->rhs =
             hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];

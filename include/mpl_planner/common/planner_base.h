@@ -162,7 +162,6 @@ public:
   }
   /// Set max time step to explore
   void setTmax(decimal_t t) {
-    max_t_ = t;
     ENV_->set_t_max(t);
     if (planner_verbose_)
       printf("[PlannerBase] set max time: %f\n", t);
@@ -265,9 +264,9 @@ public:
 
     ss_ptr_->dt_ = ENV_->get_dt();
     if (use_lpastar_)
-      traj_cost_ = planner_ptr->LPAstar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
+      traj_cost_ = planner_ptr->LPAstar(start, ENV_, ss_ptr_, traj_, max_num_);
     else
-      traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
+      traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_);
 
     if (traj_.segs.empty()) {
       if (planner_verbose_)
@@ -291,8 +290,6 @@ protected:
   decimal_t epsilon_ = 1.0;
   /// Maxmum number of expansion, -1 means no limitation
   int max_num_ = -1;
-  /// Maxmum time horizon of expansion, 0 means no limitation
-  decimal_t max_t_ = 0;
   /// Enable LPAstar for planning
   bool use_lpastar_ = false;
   /// Enabled to display debug message
