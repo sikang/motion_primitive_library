@@ -62,8 +62,7 @@ public:
         for (unsigned int i = 0; i < it.second->pred_coord.size(); i++) {
           Coord key = it.second->pred_coord[i];
           Primitive<Dim> pr;
-          ENV_->forward_action(ss_ptr_->hm_[key]->coord,
-                               it.second->pred_action_id[i], pr);
+          ENV_->forward_action(key, it.second->pred_action_id[i], pr);
           prs.push_back(pr);
         }
       }

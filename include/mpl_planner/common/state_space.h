@@ -104,7 +104,6 @@ template <int Dim, typename Coord> struct StateSpace {
     currNode_ptr->pred_action_cost.clear();
     currNode_ptr->pred_action_id.clear();
     currNode_ptr->pred_coord.clear();
-    currNode_ptr->coord.t = 0;
 
     for (auto &it : hm_) {
       it.second->g = std::numeric_limits<decimal_t>::infinity();
@@ -112,7 +111,6 @@ template <int Dim, typename Coord> struct StateSpace {
       it.second->pred_action_cost.clear();
       it.second->pred_action_id.clear();
       it.second->pred_coord.clear();
-      it.second->coord.t = 0;
     }
 
     currNode_ptr->g = 0;
@@ -144,7 +142,7 @@ template <int Dim, typename Coord> struct StateSpace {
           succNode_ptr = hm_[succ_coord];
 
         int id = -1;
-        for (unsigned int i = 0; i < succNode_ptr->pred_coord.size(); i++) {
+        for (size_t i = 0; i < succNode_ptr->pred_coord.size(); i++) {
           if (succNode_ptr->pred_coord[i] == currNode_ptr->coord) {
             id = i;
             break;
@@ -161,7 +159,6 @@ template <int Dim, typename Coord> struct StateSpace {
           currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
 
         if (tentative_rhs < succNode_ptr->rhs) {
-          succNode_ptr->coord.t = currNode_ptr->coord.t + dt_;
           succNode_ptr->rhs = tentative_rhs;
           if (succNode_ptr->iterationclosed) {
             succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
@@ -215,8 +212,7 @@ template <int Dim, typename Coord> struct StateSpace {
       if (std::isinf(succNode_ptr->pred_action_cost[i])) {
         Coord parent_key = succNode_ptr->pred_coord[i];
         Primitive<Dim> pr;
-        ENV->forward_action(hm_[parent_key]->coord,
-                            succNode_ptr->pred_action_id[i], pr);
+        ENV->forward_action(parent_key, succNode_ptr->pred_action_id[i], pr);
         if (ENV->is_free(pr)) {
           succNode_ptr->pred_action_cost[i] = ENV->calculate_intrinsic_cost(pr);
           updateNode(succNode_ptr);
@@ -241,11 +237,11 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
       for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
         Coord pred_key = currNode_ptr->pred_coord[i];
-        if (currNode_ptr->rhs >
-            hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
+        if(!hm_[pred_key])
+          std::cout << "hm[pred_key] does not exist!" << std::endl;
+        if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
           currNode_ptr->rhs =
             hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
-          currNode_ptr->coord.t = hm_[pred_key]->coord.t + dt_;
         }
       }
     }
@@ -280,15 +276,6 @@ template <int Dim, typename Coord> struct StateSpace {
       if (!it.second)
         std::cout << "error!!! null element at key: " << it.first << std::endl;
     }
-
-    /*
-       for(const auto& it: pq_) {
-       if(it.second->t >= 9)
-       printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n"
-       ANSI_COLOR_RESET,
-       it.second->t, it.second->g, it.second->rhs, it.second->h);
-       }
-       */
 
     //****** Check rhs and g value of close set
     printf("Check rhs and g value of closeset\n");
