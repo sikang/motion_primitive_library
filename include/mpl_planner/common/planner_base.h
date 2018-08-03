@@ -116,6 +116,10 @@ public:
   void getSubStateSpace(int time_step) {
     ss_ptr_->getSubStateSpace(time_step);
   }
+  /// Get trajectory total cost
+  decimal_t getTrajCost() const {
+    return traj_cost_;
+  }
   /// Check tree validation
   void checkValidation() {
     ss_ptr_->checkValidation(ss_ptr_->hm_);
@@ -182,7 +186,7 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set epsilon: %f\n", epsilon_);
   }
-  /// Set greedy searching param
+  /// Calculate heuristic using dynamics
   void setHeurIgnoreDynamics(bool ignore) {
     ENV_->set_heur_ignore_dynamics(ignore);
     if (planner_verbose_)
@@ -262,9 +266,9 @@ public:
 
     ss_ptr_->dt_ = ENV_->get_dt();
     if (use_lpastar_)
-      planner_ptr->LPAstar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
+      traj_cost_ = planner_ptr->LPAstar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
     else
-      planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
+      traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_, max_t_);
 
     if (traj_.segs.empty()) {
       if (planner_verbose_)
@@ -282,6 +286,8 @@ protected:
   std::shared_ptr<MPL::StateSpace<Dim, Coord>> ss_ptr_;
   /// Optimal trajectory
   Trajectory<Dim> traj_;
+  /// Total cost of final trajectory
+  decimal_t traj_cost_;
   /// Greedy searching parameter
   decimal_t epsilon_ = 1.0;
   /// Maxmum number of expansion, -1 means no limitation
