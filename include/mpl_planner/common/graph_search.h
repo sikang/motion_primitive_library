@@ -177,8 +177,10 @@ public:
     }
 
     ss_ptr->expand_iteration_ = expand_iteration;
-    traj = recoverTraj(currNode_ptr, ss_ptr, ENV, start_coord);
-    return currNode_ptr->g;
+    if(recoverTraj(currNode_ptr, ss_ptr, ENV, start_coord, traj))
+      return currNode_ptr->g;
+    else
+      return std::numeric_limits<decimal_t>::infinity();
   }
 
 
@@ -333,81 +335,90 @@ public:
                "Terminated for unknown reason!!!!!!\n\n" ANSI_COLOR_RESET);
     }
 
+    ss_ptr->expand_iteration_ = expand_iteration;
     // auto start = std::chrono::high_resolution_clock::now();
     //****** Recover trajectory
-    traj = recoverTraj(goalNode_ptr, ss_ptr, ENV, start_coord);
-
-    ss_ptr->expand_iteration_ = expand_iteration;
-    return goalNode_ptr->g;
+    if(recoverTraj(goalNode_ptr, ss_ptr, ENV, start_coord, traj))
+      return goalNode_ptr->g;
+    else
+      return std::numeric_limits<decimal_t>::infinity();
   }
 private:
   /// Recover trajectory
-  Trajectory<Dim> recoverTraj(
-    StatePtr<Coord> currNode_ptr,
-    std::shared_ptr<StateSpace<Dim, Coord>> ss_ptr,
-    const std::shared_ptr<env_base<Dim>> &ENV, const Coord& start_key) {
-  // Recover trajectory
-  ss_ptr->best_child_.clear();
+  bool recoverTraj(StatePtr<Coord> currNode_ptr,
+                   std::shared_ptr<StateSpace<Dim, Coord>> ss_ptr,
+                   const std::shared_ptr<env_base<Dim>> &ENV,
+                   const Coord &start_key, Trajectory<Dim> &traj) {
+    // Recover trajectory
+    ss_ptr->best_child_.clear();
+    bool find_traj = false;
 
-  vec_E<Primitive<Dim>> prs;
-  while (!currNode_ptr->pred_coord.empty()) {
-    if (verbose_) {
-      std::cout << "t: " << currNode_ptr->coord.t
-                << " pos: " << currNode_ptr->coord.pos.transpose() << std::endl;
-      printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
-             currNode_ptr->h);
-    }
-    ss_ptr->best_child_.push_back(currNode_ptr);
-    int min_id = -1;
-    decimal_t min_rhs = std::numeric_limits<decimal_t>::infinity();
-    decimal_t min_g = std::numeric_limits<decimal_t>::infinity();
-    for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
-      Coord key = currNode_ptr->pred_coord[i];
-      if (min_rhs > ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
-        min_rhs = ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i];
-        min_g = ss_ptr->hm_[key]->g;
-        min_id = i;
-      } else if (!std::isinf(currNode_ptr->pred_action_cost[i]) &&
-                 min_rhs ==
-                     ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
-        if (min_g < ss_ptr->hm_[key]->g) {
+    vec_E<Primitive<Dim>> prs;
+    while (!currNode_ptr->pred_coord.empty()) {
+      if (verbose_) {
+        std::cout << "t: " << currNode_ptr->coord.t
+                  << " pos: " << currNode_ptr->coord.pos.transpose()
+                  << std::endl;
+        printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
+               currNode_ptr->h);
+      }
+      ss_ptr->best_child_.push_back(currNode_ptr);
+      int min_id = -1;
+      decimal_t min_rhs = std::numeric_limits<decimal_t>::infinity();
+      decimal_t min_g = std::numeric_limits<decimal_t>::infinity();
+      for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
+        Coord key = currNode_ptr->pred_coord[i];
+        if (min_rhs > ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i]) {
+          min_rhs = ss_ptr->hm_[key]->g + currNode_ptr->pred_action_cost[i];
           min_g = ss_ptr->hm_[key]->g;
           min_id = i;
-        }
-      }
-    }
-
-    if (min_id >= 0) {
-      Coord key = currNode_ptr->pred_coord[min_id];
-      int action_idx = currNode_ptr->pred_action_id[min_id];
-      currNode_ptr = ss_ptr->hm_[key];
-      Primitive<Dim> pr;
-      ENV->forward_action(currNode_ptr->coord, action_idx, pr);
-      prs.push_back(pr);
-    } else {
-      if (verbose_) {
-        printf(ANSI_COLOR_RED
-               "Trace back failure, the number of predecessors is %zu: \n",
-               currNode_ptr->pred_coord.size());
-        for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
-          Coord key = currNode_ptr->pred_coord[i];
-          printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i,
-                 ss_ptr->hm_[key]->g, currNode_ptr->pred_action_cost[i]);
+        } else if (!std::isinf(currNode_ptr->pred_action_cost[i]) &&
+                   min_rhs ==
+                       ss_ptr->hm_[key]->g +
+                           currNode_ptr->pred_action_cost[i]) {
+          if (min_g < ss_ptr->hm_[key]->g) {
+            min_g = ss_ptr->hm_[key]->g;
+            min_id = i;
+          }
         }
       }
 
-      break;
+      if (min_id >= 0) {
+        Coord key = currNode_ptr->pred_coord[min_id];
+        int action_idx = currNode_ptr->pred_action_id[min_id];
+        currNode_ptr = ss_ptr->hm_[key];
+        Primitive<Dim> pr;
+        ENV->forward_action(currNode_ptr->coord, action_idx, pr);
+        prs.push_back(pr);
+      } else {
+        if (verbose_) {
+          printf(ANSI_COLOR_RED
+                 "Trace back failure, the number of predecessors is %zu: \n",
+                 currNode_ptr->pred_coord.size());
+          for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
+            Coord key = currNode_ptr->pred_coord[i];
+            printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i,
+                   ss_ptr->hm_[key]->g, currNode_ptr->pred_action_cost[i]);
+          }
+        }
+
+        break;
+      }
+
+      if (currNode_ptr->coord == start_key) {
+        ss_ptr->best_child_.push_back(currNode_ptr);
+        find_traj = true;
+        break;
+      }
     }
 
-    if (currNode_ptr->coord == start_key) {
-      ss_ptr->best_child_.push_back(currNode_ptr);
-      break;
-    }
-  }
-
-  std::reverse(prs.begin(), prs.end());
-  std::reverse(ss_ptr->best_child_.begin(), ss_ptr->best_child_.end());
-  return Trajectory<Dim>(prs);
+    std::reverse(prs.begin(), prs.end());
+    std::reverse(ss_ptr->best_child_.begin(), ss_ptr->best_child_.end());
+    if (find_traj)
+      traj = Trajectory<Dim>(prs);
+    else
+      traj = Trajectory<Dim>();
+    return find_traj;
 }
   /// Verbose flag
   bool verbose_ = false;
