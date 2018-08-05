@@ -408,6 +408,14 @@ private:
       if (currNode_ptr->coord == start_key) {
         ss_ptr->best_child_.push_back(currNode_ptr);
         find_traj = true;
+        if (verbose_) {
+          std::cout << "t: " << currNode_ptr->coord.t
+            << " pos: " << currNode_ptr->coord.pos.transpose()
+            << std::endl;
+          printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
+                 currNode_ptr->h);
+        }
+
         break;
       }
     }

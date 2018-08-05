@@ -113,6 +113,8 @@ template <int Dim, typename Coord> struct StateSpace {
       it.second->pred_coord.clear();
     }
 
+    //printf("getSubstatespace hm: %zu\n", hm_.size());
+
     currNode_ptr->g = 0;
     currNode_ptr->rhs = 0;
 
@@ -174,7 +176,7 @@ template <int Dim, typename Coord> struct StateSpace {
         it.second->heapkey =
           pq_.push(std::make_pair(calculateKey(it.second), it.second));
     }
-    //printf("new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
+    //printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
 
   }
 

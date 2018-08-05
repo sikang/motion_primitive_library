@@ -69,7 +69,7 @@ public:
     }
 
     if (planner_verbose_)
-      printf("number of states in hm: %zu, number of prs: %zu\n",
+      printf("getAllPrimitives number of states in hm: %zu, number of prs: %zu\n",
              ss_ptr_->hm_.size(), prs.size());
 
     return prs;
@@ -268,7 +268,7 @@ public:
     else
       traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_);
 
-    if (traj_.segs.empty()) {
+    if (std::isinf(traj_cost_)) {
       if (planner_verbose_)
         printf(ANSI_COLOR_RED "[MPPlanner] Cannot find a traj!" ANSI_COLOR_RESET
                "\n");

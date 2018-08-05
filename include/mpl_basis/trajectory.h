@@ -290,9 +290,14 @@ class Trajectory {
       vec_E<Waypoint<Dim>> ws;
       if(segs.empty())
         return ws;
-      for (const auto &seg : segs)
+      decimal_t t = 0;
+      for (const auto &seg : segs) {
         ws.push_back(seg.evaluate(0));
+        ws.back().t = t;
+        t += seg.t();
+      }
       ws.push_back(segs.back().evaluate(segs.back().t()));
+      ws.back().t = t;
       return ws;
     }
 
