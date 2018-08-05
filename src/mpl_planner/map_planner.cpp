@@ -157,8 +157,7 @@ template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getLinkedNodes() const {
 }
 
 template <int Dim>
-vec_E<Primitive<Dim>>
-MapPlanner<Dim>::updateBlockedNodes(const vec_Veci<Dim> &blocked_pns) {
+void MapPlanner<Dim>::updateBlockedNodes(const vec_Veci<Dim> &blocked_pns) {
   std::vector<std::pair<Waypoint<Dim>, int>> blocked_nodes;
   for (const auto &it : blocked_pns) {
     int id = map_util_->getIndex(it);
@@ -169,12 +168,11 @@ MapPlanner<Dim>::updateBlockedNodes(const vec_Veci<Dim> &blocked_pns) {
     }
   }
 
-  return this->ss_ptr_->increaseCost(blocked_nodes, this->ENV_);
+  this->ss_ptr_->increaseCost(blocked_nodes);
 }
 
 template <int Dim>
-vec_E<Primitive<Dim>>
-MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
+void MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
   std::vector<std::pair<Waypoint<Dim>, int>> cleared_nodes;
   for (const auto &it : cleared_pns) {
     int id = map_util_->getIndex(it);
@@ -185,7 +183,7 @@ MapPlanner<Dim>::updateClearedNodes(const vec_Veci<Dim> &cleared_pns) {
     }
   }
 
-  return this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
+  this->ss_ptr_->decreaseCost(cleared_nodes, this->ENV_);
 }
 
 template <int Dim>

@@ -370,6 +370,10 @@ class env_base {
       return true;
     }
 
+    virtual decimal_t calculate_intrinsic_cost(const Primitive<Dim>& pr) const {
+      return pr.J(pr.control()) + w_ * dt_;
+    }
+
     ///Retrieve dt
     decimal_t get_dt() const {
       return dt_;
@@ -418,8 +422,6 @@ class env_base {
     decimal_t t_max_{std::numeric_limits<decimal_t>::infinity()};
     ///duration of primitive
     decimal_t dt_{1.0};
-    ///expanded nodes
-    mutable vec_Vecf<Dim> expanded_nodes_;
     ///Array of constant control input
     vec_E<VecDf> U_;
     ///Goal node
@@ -428,6 +430,9 @@ class env_base {
     vec_E<std::pair<Waypoint<Dim>, decimal_t>> prior_traj_;
     ///Valid region
     std::vector<bool> valid_region_;
+    ///expanded nodes for debug
+    mutable vec_Vecf<Dim> expanded_nodes_;
+
 };
 }
 

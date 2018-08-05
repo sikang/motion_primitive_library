@@ -84,8 +84,6 @@ template <int Dim, typename Coord> struct StateSpace {
   decimal_t dt_;
   /// The best trajectory from previous plan
   vec_E<StatePtr<Coord>> best_child_;
-  /// Maximum time of the valid trajectories
-  decimal_t max_t_ = std::numeric_limits<decimal_t>::infinity();
   /// Number of expansion iteration
   int expand_iteration_ = 0;
 
@@ -101,10 +99,11 @@ template <int Dim, typename Coord> struct StateSpace {
       return;
 
     StatePtr<Coord> currNode_ptr = best_child_[time_step];
+    const auto init_t = currNode_ptr->coord.t;
+
     currNode_ptr->pred_action_cost.clear();
     currNode_ptr->pred_action_id.clear();
     currNode_ptr->pred_coord.clear();
-    currNode_ptr->coord.t = 0;
 
     for (auto &it : hm_) {
       it.second->g = std::numeric_limits<decimal_t>::infinity();
@@ -112,8 +111,9 @@ template <int Dim, typename Coord> struct StateSpace {
       it.second->pred_action_cost.clear();
       it.second->pred_action_id.clear();
       it.second->pred_coord.clear();
-      it.second->coord.t = 0;
     }
+
+    //printf("getSubstatespace hm: %zu\n", hm_.size());
 
     currNode_ptr->g = 0;
     currNode_ptr->rhs = 0;
@@ -128,14 +128,6 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr = epq.top().second;
       epq.pop();
 
-      if (currNode_ptr->coord.t == max_t_) {
-        currNode_ptr->iterationclosed = false;
-        currNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
-        currNode_ptr->succ_coord.clear();
-        currNode_ptr->succ_action_cost.clear();
-        currNode_ptr->succ_action_id.clear();
-      }
-
       for (unsigned int i = 0; i < currNode_ptr->succ_coord.size(); i++) {
         Coord succ_coord = currNode_ptr->succ_coord[i];
 
@@ -144,7 +136,7 @@ template <int Dim, typename Coord> struct StateSpace {
           succNode_ptr = hm_[succ_coord];
 
         int id = -1;
-        for (unsigned int i = 0; i < succNode_ptr->pred_coord.size(); i++) {
+        for (size_t i = 0; i < succNode_ptr->pred_coord.size(); i++) {
           if (succNode_ptr->pred_coord[i] == currNode_ptr->coord) {
             id = i;
             break;
@@ -161,7 +153,6 @@ template <int Dim, typename Coord> struct StateSpace {
           currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
 
         if (tentative_rhs < succNode_ptr->rhs) {
-          succNode_ptr->coord.t = currNode_ptr->coord.t + dt_;
           succNode_ptr->rhs = tentative_rhs;
           if (succNode_ptr->iterationclosed) {
             succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
@@ -172,19 +163,25 @@ template <int Dim, typename Coord> struct StateSpace {
       }
     }
 
-    hm_ = new_hm;
+    hm_.clear();
     pq_.clear();
-    for (auto &it : hm_) {
+    for (auto &it : new_hm) {
+      it.second->coord.t -= init_t;
+      for(auto& itt: it.second->pred_coord)
+        itt.t -= init_t;
+      for(auto& itt: it.second->succ_coord)
+        itt.t -= init_t;
+      hm_[it.second->coord] = it.second;
       if (it.second->iterationopened && !it.second->iterationclosed)
         it.second->heapkey =
           pq_.push(std::make_pair(calculateKey(it.second), it.second));
     }
+    //printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
+
   }
 
   /// Increase the cost of actions
-  vec_E<Primitive<Dim>> increaseCost(std::vector<std::pair<Coord, int>> states,
-                                     const std::shared_ptr<env_base<Dim>> &ENV) {
-    vec_E<Primitive<Dim>> prs;
+  void increaseCost(std::vector<std::pair<Coord, int>> states) {
     for (const auto &affected_node : states) {
       // update edge
       StatePtr<Coord> &succNode_ptr = hm_[affected_node.first];
@@ -195,10 +192,6 @@ template <int Dim, typename Coord> struct StateSpace {
         updateNode(succNode_ptr);
 
         Coord parent_key = succNode_ptr->pred_coord[i];
-        Primitive<Dim> pr;
-        ENV->forward_action(hm_[parent_key]->coord,
-                            succNode_ptr->pred_action_id[i], pr);
-        prs.push_back(pr);
 
         int succ_act_id = hm_[affected_node.first]->pred_action_id[i];
         for (unsigned int j = 0; j < hm_[parent_key]->succ_action_id.size();
@@ -211,24 +204,19 @@ template <int Dim, typename Coord> struct StateSpace {
         }
       }
     }
-
-    return prs;
   }
   /// Decrease the cost of actions
-  vec_E<Primitive<Dim>> decreaseCost(std::vector<std::pair<Coord, int>> states,
-                                     const std::shared_ptr<env_base<Dim>> &ENV) {
-    vec_E<Primitive<Dim>> prs;
+  void decreaseCost(std::vector<std::pair<Coord, int>> states,
+                    const std::shared_ptr<env_base<Dim>> &ENV) {
     for (const auto &affected_node : states) {
       StatePtr<Coord> &succNode_ptr = hm_[affected_node.first];
       const int i = affected_node.second;
       if (std::isinf(succNode_ptr->pred_action_cost[i])) {
         Coord parent_key = succNode_ptr->pred_coord[i];
         Primitive<Dim> pr;
-        ENV->forward_action(hm_[parent_key]->coord,
-                            succNode_ptr->pred_action_id[i], pr);
+        ENV->forward_action(parent_key, succNode_ptr->pred_action_id[i], pr);
         if (ENV->is_free(pr)) {
-          prs.push_back(pr);
-          succNode_ptr->pred_action_cost[i] = pr.J(pr.control()) + ENV->w_ * dt_;
+          succNode_ptr->pred_action_cost[i] = ENV->calculate_intrinsic_cost(pr);
           updateNode(succNode_ptr);
           int succ_act_id = succNode_ptr->pred_action_id[i];
           for (unsigned int j = 0; j < hm_[parent_key]->succ_action_id.size();
@@ -242,8 +230,6 @@ template <int Dim, typename Coord> struct StateSpace {
         }
       }
     }
-
-    return prs;
   }
   /// Update the node in the graph
   void updateNode(StatePtr<Coord> &currNode_ptr) {
@@ -253,11 +239,9 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
       for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
         Coord pred_key = currNode_ptr->pred_coord[i];
-        if (currNode_ptr->rhs >
-            hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
+        if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
           currNode_ptr->rhs =
             hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
-          currNode_ptr->coord.t = hm_[pred_key]->coord.t + dt_;
         }
       }
     }
@@ -285,14 +269,6 @@ template <int Dim, typename Coord> struct StateSpace {
     return std::min(node->g, node->rhs) + eps_ * node->h;
   }
 
-  /// Check if the trajectory is blocked by new obstacle
-  bool isBlocked() {
-    for (const auto &ptr : best_child_) {
-      if (ptr->g != ptr->rhs)
-        return true;
-    }
-    return false;
-  }
   /// Internal function to check if the graph is valid
   void checkValidation(const hashMap<Coord> &hm) {
     //****** Check if there is null element in succ graph
@@ -300,15 +276,6 @@ template <int Dim, typename Coord> struct StateSpace {
       if (!it.second)
         std::cout << "error!!! null element at key: " << it.first << std::endl;
     }
-
-    /*
-       for(const auto& it: pq_) {
-       if(it.second->t >= 9)
-       printf(ANSI_COLOR_RED "error!!!!!!!! t: %f, g: %f, rhs: %f, h: %f\n"
-       ANSI_COLOR_RESET,
-       it.second->t, it.second->g, it.second->rhs, it.second->h);
-       }
-       */
 
     //****** Check rhs and g value of close set
     printf("Check rhs and g value of closeset\n");
