@@ -253,7 +253,7 @@ public:
       if (!initialized()) {
         if (planner_verbose_)
           printf(ANSI_COLOR_CYAN
-                 "[MPPlanner] reset planner state space!" ANSI_COLOR_RESET "\n");
+                 "[PlannerBase] reset planner state space!" ANSI_COLOR_RESET "\n");
         ss_ptr_.reset(new MPL::StateSpace<Dim, Coord>(epsilon_));
       }
     }
@@ -270,7 +270,7 @@ public:
 
     if (std::isinf(traj_cost_)) {
       if (planner_verbose_)
-        printf(ANSI_COLOR_RED "[MPPlanner] Cannot find a traj!" ANSI_COLOR_RESET
+        printf(ANSI_COLOR_RED "[PlannerBase] Cannot find a traj!" ANSI_COLOR_RESET
                "\n");
       return false;
     }

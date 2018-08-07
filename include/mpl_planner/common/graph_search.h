@@ -225,8 +225,24 @@ public:
     // Initialize goal node
     StatePtr<Coord> goalNode_ptr = std::make_shared<State<Coord>>(Coord());
     if (!ss_ptr->best_child_.empty() &&
-         ENV->is_goal(ss_ptr->best_child_.back()->coord))
+         ENV->is_goal(ss_ptr->best_child_.back()->coord)) {
       goalNode_ptr = ss_ptr->best_child_.back();
+      if (verbose_) {
+        printf(ANSI_COLOR_GREEN "Use existing goal!\n" ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_GREEN
+               "goalNode fval: %f, g: %f, rhs: %f!\n" ANSI_COLOR_RESET,
+               ss_ptr->calculateKey(goalNode_ptr), goalNode_ptr->g,
+               goalNode_ptr->rhs);
+      }
+    }
+    else {
+      goalNode_ptr->g = std::numeric_limits<decimal_t>::infinity();
+      goalNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
+      goalNode_ptr->h = 0;
+      if(verbose_)
+        printf("goalNode key: %f\n", ss_ptr->calculateKey(goalNode_ptr));
+
+    }
 
     int expand_iteration = 0;
     while (ss_ptr->pq_.top().first < ss_ptr->calculateKey(goalNode_ptr) ||
@@ -245,34 +261,28 @@ public:
       }
 
       // Get successors
-      vec_E<Coord> succ_coord = currNode_ptr->succ_coord;
-      std::vector<decimal_t> succ_cost = currNode_ptr->succ_action_cost;
-      std::vector<int> succ_act_id = currNode_ptr->succ_action_id;
+      vec_E<Coord> succ_coord;// = currNode_ptr->succ_coord;
+      std::vector<decimal_t> succ_cost;// = currNode_ptr->succ_action_cost;
+      std::vector<int> succ_act_id;// = currNode_ptr->succ_action_id;
 
-      bool explored = false;
-      if (currNode_ptr->succ_coord.empty()) {
-        explored = true;
-        ENV->get_succ(currNode_ptr->coord, succ_coord, succ_cost, succ_act_id);
-        currNode_ptr->succ_coord.resize(succ_coord.size());
-        currNode_ptr->succ_action_id.resize(succ_coord.size());
-        currNode_ptr->succ_action_cost.resize(succ_coord.size());
-      }
+      ENV->get_succ(currNode_ptr->coord, succ_coord, succ_cost, succ_act_id);
+      currNode_ptr->succ_coord.resize(succ_coord.size());
+      currNode_ptr->succ_action_id.resize(succ_coord.size());
+      currNode_ptr->succ_action_cost.resize(succ_coord.size());
 
       // Process successors
-      for (unsigned s = 0; s < succ_coord.size(); ++s) {
+      for (size_t s = 0; s < succ_coord.size(); ++s) {
         // Get child
         StatePtr<Coord> &succNode_ptr = ss_ptr->hm_[succ_coord[s]];
-        if (!(succNode_ptr)) {
+        if (!succNode_ptr) {
           succNode_ptr = std::make_shared<State<Coord>>(succ_coord[s]);
           succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(succNode_ptr->coord);
         }
 
         // store the hashkey
-        if (explored) {
-          currNode_ptr->succ_coord[s] = succ_coord[s];
-          currNode_ptr->succ_action_id[s] = succ_act_id[s];
-          currNode_ptr->succ_action_cost[s] = succ_cost[s];
-        }
+        currNode_ptr->succ_coord[s] = succ_coord[s];
+        currNode_ptr->succ_action_id[s] = succ_act_id[s];
+        currNode_ptr->succ_action_cost[s] = succ_cost[s];
 
         int id = -1;
         for (unsigned int i = 0; i < succNode_ptr->pred_coord.size(); i++) {
@@ -339,7 +349,7 @@ public:
     // auto start = std::chrono::high_resolution_clock::now();
     //****** Recover trajectory
     if(recoverTraj(goalNode_ptr, ss_ptr, ENV, start_coord, traj))
-      return goalNode_ptr->g;
+      return goalNode_ptr->g - ss_ptr->start_g_;
     else
       return std::numeric_limits<decimal_t>::infinity();
   }
@@ -358,6 +368,7 @@ private:
       if (verbose_) {
         std::cout << "t: " << currNode_ptr->coord.t
                   << " pos: " << currNode_ptr->coord.pos.transpose()
+                  << " vel: " << currNode_ptr->coord.vel.transpose()
                   << std::endl;
         printf("g: %f, rhs: %f, h: %f\n", currNode_ptr->g, currNode_ptr->rhs,
                currNode_ptr->h);
@@ -392,13 +403,14 @@ private:
         prs.push_back(pr);
       } else {
         if (verbose_) {
-          printf(ANSI_COLOR_RED
-                 "Trace back failure, the number of predecessors is %zu: \n",
+          printf(ANSI_COLOR_RED "Trace back failure, the number of "
+                                "predecessors is %zu: \n" ANSI_COLOR_RESET,
                  currNode_ptr->pred_coord.size());
-          for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
+          for (size_t i = 0; i < currNode_ptr->pred_coord.size(); i++) {
             Coord key = currNode_ptr->pred_coord[i];
-            printf("i: %d, gvalue: %f, cost: %f\n" ANSI_COLOR_RESET, i,
-                   ss_ptr->hm_[key]->g, currNode_ptr->pred_action_cost[i]);
+            printf("i: %zu, t: %f, g: %f, rhs: %f, action cost: %f\n" ANSI_COLOR_RESET,
+                   i, key.t, ss_ptr->hm_[key]->g, ss_ptr->hm_[key]->rhs,
+                   currNode_ptr->pred_action_cost[i]);
           }
         }
 

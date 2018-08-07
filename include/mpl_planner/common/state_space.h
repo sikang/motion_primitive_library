@@ -86,10 +86,22 @@ template <int Dim, typename Coord> struct StateSpace {
   vec_E<StatePtr<Coord>> best_child_;
   /// Number of expansion iteration
   int expand_iteration_ = 0;
+  /// Start time
+  decimal_t start_t_{0};
+  /// Start g value
+  decimal_t start_g_{0};
+  /// Start rhs value
+  decimal_t start_rhs_{0};
 
   /// Simple constructor
   StateSpace(decimal_t eps = 1) : eps_(eps) {}
 
+  decimal_t getInitTime() const {
+    if(best_child_.empty())
+      return 0;
+    else
+      return best_child_.front()->coord.t;
+  }
   /**
    * @brief Get the subtree
    * @param time_step indicates the root of the subtree (best_child_[time_step])
@@ -99,7 +111,9 @@ template <int Dim, typename Coord> struct StateSpace {
       return;
 
     StatePtr<Coord> currNode_ptr = best_child_[time_step];
-    const auto init_t = currNode_ptr->coord.t;
+    start_g_ = currNode_ptr->g;
+    start_rhs_ = currNode_ptr->rhs;
+    start_t_ = currNode_ptr->coord.t;
 
     currNode_ptr->pred_action_cost.clear();
     currNode_ptr->pred_action_id.clear();
@@ -115,25 +129,29 @@ template <int Dim, typename Coord> struct StateSpace {
 
     //printf("getSubstatespace hm: %zu\n", hm_.size());
 
-    currNode_ptr->g = 0;
-    currNode_ptr->rhs = 0;
+    currNode_ptr->g = start_g_;
+    currNode_ptr->rhs = start_rhs_;
 
     hashMap<Coord> new_hm;
     priorityQueue<State<Coord>> epq;
     currNode_ptr->heapkey =
-      epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
+        epq.push(std::make_pair(currNode_ptr->rhs, currNode_ptr));
     new_hm[currNode_ptr->coord] = currNode_ptr;
 
     while (!epq.empty()) {
       currNode_ptr = epq.top().second;
       epq.pop();
 
-      for (unsigned int i = 0; i < currNode_ptr->succ_coord.size(); i++) {
+      for (size_t i = 0; i < currNode_ptr->succ_coord.size(); i++) {
         Coord succ_coord = currNode_ptr->succ_coord[i];
 
         StatePtr<Coord> &succNode_ptr = new_hm[succ_coord];
         if (!succNode_ptr)
           succNode_ptr = hm_[succ_coord];
+        if (!succNode_ptr) {
+          printf("critical bug!!!!\n\n");
+          succ_coord.print("Does not exist!");
+        }
 
         int id = -1;
         for (size_t i = 0; i < succNode_ptr->pred_coord.size(); i++) {
@@ -153,7 +171,7 @@ template <int Dim, typename Coord> struct StateSpace {
           currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
 
         if (tentative_rhs < succNode_ptr->rhs) {
-          succNode_ptr->rhs = tentative_rhs;
+            succNode_ptr->rhs = tentative_rhs;
           if (succNode_ptr->iterationclosed) {
             succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
             succNode_ptr->heapkey =
@@ -163,21 +181,19 @@ template <int Dim, typename Coord> struct StateSpace {
       }
     }
 
-    hm_.clear();
+    hm_ = new_hm;
     pq_.clear();
     for (auto &it : new_hm) {
-      it.second->coord.t -= init_t;
-      for(auto& itt: it.second->pred_coord)
-        itt.t -= init_t;
-      for(auto& itt: it.second->succ_coord)
-        itt.t -= init_t;
-      hm_[it.second->coord] = it.second;
-      if (it.second->iterationopened && !it.second->iterationclosed)
+      if (it.second->iterationopened && !it.second->iterationclosed) {
+       // state->succ_coord.clear();
+       // state->succ_action_cost.clear();
+       // state->succ_action_id.clear();
         it.second->heapkey =
           pq_.push(std::make_pair(calculateKey(it.second), it.second));
+      }
     }
-    //printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
 
+    //printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
   }
 
   /// Increase the cost of actions
@@ -192,10 +208,8 @@ template <int Dim, typename Coord> struct StateSpace {
         updateNode(succNode_ptr);
 
         Coord parent_key = succNode_ptr->pred_coord[i];
-
-        int succ_act_id = hm_[affected_node.first]->pred_action_id[i];
-        for (unsigned int j = 0; j < hm_[parent_key]->succ_action_id.size();
-             j++) {
+        int succ_act_id = succNode_ptr->pred_action_id[i];
+        for (size_t j = 0; j < hm_[parent_key]->succ_action_id.size(); j++) {
           if (succ_act_id == hm_[parent_key]->succ_action_id[j]) {
             hm_[parent_key]->succ_action_cost[j] =
               std::numeric_limits<decimal_t>::infinity();
@@ -219,8 +233,7 @@ template <int Dim, typename Coord> struct StateSpace {
           succNode_ptr->pred_action_cost[i] = ENV->calculate_intrinsic_cost(pr);
           updateNode(succNode_ptr);
           int succ_act_id = succNode_ptr->pred_action_id[i];
-          for (unsigned int j = 0; j < hm_[parent_key]->succ_action_id.size();
-               j++) {
+          for (size_t j = 0; j < hm_[parent_key]->succ_action_id.size(); j++) {
             if (succ_act_id == hm_[parent_key]->succ_action_id[j]) {
               hm_[parent_key]->succ_action_cost[j] =
                 succNode_ptr->pred_action_cost[i];
@@ -235,14 +248,13 @@ template <int Dim, typename Coord> struct StateSpace {
   void updateNode(StatePtr<Coord> &currNode_ptr) {
     // if currNode is not start, update its rhs
     // start rhs is assumed to be 0
-    if (currNode_ptr->rhs != 0) {
+    if (currNode_ptr->rhs != start_rhs_) {
       currNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
-      for (unsigned int i = 0; i < currNode_ptr->pred_coord.size(); i++) {
+      for (size_t i = 0; i < currNode_ptr->pred_coord.size(); i++) {
         Coord pred_key = currNode_ptr->pred_coord[i];
-        if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i]) {
+        if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i])
           currNode_ptr->rhs =
-            hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
-        }
+              hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
       }
     }
 
@@ -253,8 +265,6 @@ template <int Dim, typename Coord> struct StateSpace {
     }
 
     // if currNode's g value is not equal to its rhs, put it into openset
-    // if(currNode_ptr->g != currNode_ptr->rhs || !currNode_ptr->iterationopened)
-    // {
     if (currNode_ptr->g != currNode_ptr->rhs) {
       decimal_t fval = calculateKey(currNode_ptr);
       currNode_ptr->heapkey = pq_.push(std::make_pair(fval, currNode_ptr));
@@ -270,17 +280,37 @@ template <int Dim, typename Coord> struct StateSpace {
   }
 
   /// Internal function to check if the graph is valid
-  void checkValidation(const hashMap<Coord> &hm) {
+  void checkValidation(const hashMap<Coord> hm) {
     //****** Check if there is null element in succ graph
     for (const auto &it : hm) {
-      if (!it.second)
-        std::cout << "error!!! null element at key: " << it.first << std::endl;
+      if (!it.second) {
+        std::cout << "error!!! detect null element!" << std::endl;
+        it.first.print("Not exist!");
+      }
+      else {
+        bool null_succ = false;
+        for(size_t i = 0; i < it.second->succ_coord.size(); i++) {
+          if(hm.find(it.second->succ_coord[i]) == hm.end()) {
+            std::cout << "error!!! detect null succ !" << std::endl;
+            //it.second->succ_coord[i].print("Not exist!");
+            null_succ = true;
+          }
+        }
+        if(null_succ) {
+          it.first.print("From this pred:");
+          printf("rhs: %f, g: %f, open: %d, closed: %d\n\n\n",
+                 it.second->rhs, it.second->g,
+                 it.second->iterationopened, it.second->iterationclosed);
+        }
+
+      }
     }
+    return;
 
     //****** Check rhs and g value of close set
     printf("Check rhs and g value of closeset\n");
     int close_cnt = 0;
-    for (const auto &it : hm) {
+    for (const auto &it : hm_) {
       if (it.second->iterationopened && it.second->iterationclosed) {
         printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
         close_cnt++;
@@ -290,7 +320,7 @@ template <int Dim, typename Coord> struct StateSpace {
     // Check rhs and g value of open set
     printf("Check rhs and g value of openset\n");
     int open_cnt = 0;
-    for (const auto &it : hm) {
+    for (const auto &it : hm_) {
       if (it.second->iterationopened && !it.second->iterationclosed) {
         printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
         open_cnt++;
@@ -300,27 +330,18 @@ template <int Dim, typename Coord> struct StateSpace {
     // Check rhs and g value of null set
     printf("Check rhs and g value of nullset\n");
     int null_cnt = 0;
-    for (const auto &it : hm) {
+    for (const auto &it : hm_) {
       if (!it.second->iterationopened) {
         printf("g: %f, rhs: %f\n", it.second->g, it.second->rhs);
         null_cnt++;
       }
     }
 
-    printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", hm.size(),
+    printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", hm_.size(),
            open_cnt, close_cnt, null_cnt);
-
   }
 
-  /**
-   * @brief Update goal
-   * @param ENV pointer of `env_base' class
-   * @param goal if changed, use new goal to calculate heuristic
-   */
-  void updateGoal(std::shared_ptr<env_base<Dim>> &ENV,
-                  const Coord &goal); // TODO: leave as null for now
-
-  };
+};
 }
 
 #endif
