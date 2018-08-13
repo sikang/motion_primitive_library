@@ -27,6 +27,12 @@ struct Command {
   decimal_t t;///Time \f$t\f$ wrt when evaluate
 };
 
+/// Command 2D
+typedef Command<2> Command2D;
+
+/// Command 3D
+typedef Command<3> Command3D;
+
 /**
  * @brief Trajectory class
  *

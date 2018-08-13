@@ -32,7 +32,7 @@ struct Waypoint {
   Vecf<Dim> vel; ///<velocity in \f$R^{n}\f$
   Vecf<Dim> acc; ///<acceleration in \f$R^{n}\f$
   Vecf<Dim> jrk; ///<jerk in \f$R^{n}\f$
-  decimal_t yaw; ///<yaw
+  decimal_t yaw{0}; ///<yaw
   decimal_t t{0}; ///<time when reaching this waypoint in graph search
 
   /**
@@ -56,7 +56,7 @@ struct Waypoint {
   bool enable_t{false};///<if enabled, use \f$t\f$ when calculating hash_value
 
   ///Print all attributes
-  virtual void print(std::string str = "") const {
+  void print(std::string str = "") const {
     if(!str.empty())
       std::cout << str << std::endl;
     if(use_pos)

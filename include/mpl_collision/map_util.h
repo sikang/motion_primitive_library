@@ -233,10 +233,11 @@ namespace MPL {
         }
 
       ///Dilate occupied cells
-      void dilate(const vec_Veci<Dim>& dilate_neighbor) {
-        Tmap map = map_;
-        Veci<Dim> n = Veci<Dim>::Zero();
-        if(Dim == 3) {
+      template<int U = Dim>
+        typename std::enable_if<U == 3>::type
+        dilate(const vec_Veci<Dim>& dilate_neighbor) {
+          Tmap map = map_;
+          Veci<Dim> n = Veci<Dim>::Zero();
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               for (n(2) = 0; n(2) < dim_(2); n(2)++) {
@@ -249,8 +250,14 @@ namespace MPL {
               }
             }
           }
+          map_ = map;
         }
-        else if(Dim == 2) {
+
+      template<int U = Dim>
+        typename std::enable_if<U == 2>::type
+        dilate(const vec_Veci<Dim>& dilate_neighbor) {
+          Tmap map = map_;
+          Veci<Dim> n = Veci<Dim>::Zero();
           for (n(0) = 0; n(0) < dim_(0); n(0)++) {
             for (n(1) = 0; n(1) < dim_(1); n(1)++) {
               if (isOccupied(getIndex(n))) {
@@ -261,10 +268,10 @@ namespace MPL {
               }
             }
           }
+
+          map_ = map;
         }
 
-        map_ = map;
-      }
 
       ///Free unknown voxels
       void freeUnknown() {
