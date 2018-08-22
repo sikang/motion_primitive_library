@@ -5,15 +5,16 @@ template <int Dim> PolyTraj<Dim>::PolyTraj() {}
 template <int Dim> Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
   if (time < 0)
     time = 0;
-  int cur_idx = -1;
+  else if (time > waypoint_times_.back())
+    time = waypoint_times_.back();
+
+  unsigned int cur_idx = 0;
   for (unsigned int i = 1; i < waypoint_times_.size(); i++) {
     if (time <= waypoint_times_[i]) {
       cur_idx = i - 1;
       break;
     }
   }
-  if (cur_idx == -1)
-    time = waypoint_times_.back();
 
   const decimal_t t_traj = time - waypoint_times_[cur_idx];
   const MatDNf<Dim> &p = coefficients_[cur_idx];
