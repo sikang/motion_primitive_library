@@ -186,9 +186,9 @@ class Primitive1D {
   std::vector<decimal_t> extrema_j(decimal_t t) const {
     std::vector<decimal_t> ts;
     if (c(0) != 0) {
-      decimal_t t = -c(1) * 2 / c(0);
-      if (t > 0 && t < t)
-        ts.push_back(t);
+      decimal_t t_sol = -c(1) * 2 / c(0);
+      if (t_sol > 0 && t_sol < t)
+        ts.push_back(t_sol);
     }
     return ts;
   }
