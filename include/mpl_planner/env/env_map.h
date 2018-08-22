@@ -21,13 +21,18 @@ public:
 
   /// Check if state hit the goal region, use L-1 norm
   bool is_goal(const Waypoint<Dim> &state) const {
-    bool goaled = (state.pos - this->goal_node_.pos).template lpNorm<Eigen::Infinity>() <= this->tol_dis_;
-    if (goaled && this->goal_node_.use_vel && this->tol_vel_ > 0)
-      goaled = (state.vel - this->goal_node_.vel).template lpNorm<Eigen::Infinity>() <= this->tol_vel_;
-    if (goaled && this->goal_node_.use_acc && this->tol_acc_ > 0)
-      goaled = (state.acc - this->goal_node_.acc).template lpNorm<Eigen::Infinity>() <= this->tol_acc_;
-    if(goaled && this->goal_node_.use_yaw && this->tol_yaw_ > 0)
-      goaled = std::abs(state.yaw- this->goal_node_.yaw) <= this->tol_yaw_;
+    bool goaled =
+        (state.pos - this->goal_node_.pos).template lpNorm<Eigen::Infinity>() <=
+        this->tol_pos_;
+
+    if (goaled && this->tol_vel_ >= 0)
+      goaled = (state.vel - this->goal_node_.vel)
+                   .template lpNorm<Eigen::Infinity>() <= this->tol_vel_;
+    if (goaled && this->tol_acc_ >= 0)
+      goaled = (state.acc - this->goal_node_.acc)
+                   .template lpNorm<Eigen::Infinity>() <= this->tol_acc_;
+    if (goaled && this->tol_yaw_ >= 0)
+      goaled = std::abs(state.yaw - this->goal_node_.yaw) <= this->tol_yaw_;
     if (goaled) {
       auto pns = map_util_->rayTrace(state.pos, this->goal_node_.pos);
       for (const auto &it : pns) {
@@ -275,7 +280,7 @@ public:
       printf("+              j_max: %.2f               +\n", this->j_max_);
       printf("+            yaw_max: %.2f               +\n", this->yaw_max_);
       printf("+              U num: %zu                +\n", this->U_.size());
-      printf("+            tol_dis: %.2f               +\n", this->tol_dis_);
+      printf("+            tol_pos: %.2f               +\n", this->tol_pos_);
       printf("+            tol_vel: %.2f               +\n", this->tol_vel_);
       printf("+            tol_acc: %.2f               +\n", this->tol_acc_);
       printf("+            tol_yaw: %.2f               +\n", this->tol_yaw_);

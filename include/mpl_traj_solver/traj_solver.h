@@ -16,14 +16,14 @@ public:
    * @param yaw_control define the control flag for yaw start and end
    */
   TrajSolver(Control::Control control,
-             Control::Control yaw_control = Control::VEL)
+             Control::Control yaw_control = Control::VEL, bool debug = false)
       : control_(control), yaw_control_(yaw_control) {
     if(control == Control::VEL || control == Control::VELxYAW)
-      poly_solver_.reset(new PolySolver<Dim>(0, 1));
+      poly_solver_.reset(new PolySolver<Dim>(0, 1, debug));
     else if(control == Control::ACC || control == Control::ACCxYAW)
-      poly_solver_.reset(new PolySolver<Dim>(1, 2));
+      poly_solver_.reset(new PolySolver<Dim>(1, 2, debug));
     else if(control == Control::JRK || control == Control::JRKxYAW)
-      poly_solver_.reset(new PolySolver<Dim>(2, 3));
+      poly_solver_.reset(new PolySolver<Dim>(2, 3, debug));
     //Due to dimension issue, only workd up to thrid order
     //if(control == Control::SNP || control == Control::SNPxYAW)
     //poly_solver_.reset(new PolySolver<Dim>(3, 4));
@@ -114,6 +114,8 @@ public:
   /// Get the Waypoint array used to solve trajectory
   vec_E<Waypoint<Dim>> getWaypoints() const { return waypoints_; }
 
+  /// Get the time allocation
+  std::vector<decimal_t> getDts() const { return dts_; }
 
 private:
   /// Internal time allocation from path and vel using L-inf

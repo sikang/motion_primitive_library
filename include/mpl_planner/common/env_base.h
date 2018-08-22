@@ -23,12 +23,12 @@ class env_base {
     virtual bool is_goal(const Waypoint<Dim>& state) const {
       if(state.t >= t_max_)
         return true;
-      bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_dis_;
-      if(goaled && goal_node_.use_vel && tol_vel_ > 0)
+      bool goaled = (state.pos - goal_node_.pos).template lpNorm<Eigen::Infinity>() <= tol_pos_;
+      if(goaled && tol_vel_ >= 0)
         goaled = (state.vel - goal_node_.vel).template lpNorm<Eigen::Infinity>() <= tol_vel_;
-      if(goaled && goal_node_.use_acc && tol_acc_ > 0)
+      if(goaled && tol_acc_ >= 0)
         goaled = (state.acc - goal_node_.acc).template lpNorm<Eigen::Infinity>() <= tol_acc_;
-      if(goaled && goal_node_.use_yaw && tol_yaw_ > 0)
+      if(goaled && tol_yaw_ >= 0)
         goaled = std::abs(state.yaw - goal_node_.yaw) <= tol_yaw_;
       return goaled;
     }
@@ -269,8 +269,8 @@ class env_base {
     }
 
     ///Set distance tolerance for goal region
-    void set_tol_dis(decimal_t dis) {
-      tol_dis_ = dis;
+    void set_tol_pos(decimal_t pos) {
+      tol_pos_ = pos;
     }
 
     ///Set velocity tolerance for goal region
@@ -349,7 +349,7 @@ class env_base {
       printf("+              j_max: %.2f               +\n", j_max_);
       printf("+            yaw_max: %.2f               +\n", yaw_max_);
       printf("+              U num: %zu                +\n", U_.size());
-      printf("+            tol_dis: %.2f               +\n", tol_dis_);
+      printf("+            tol_pos: %.2f               +\n", tol_pos_);
       printf("+            tol_vel: %.2f               +\n", tol_vel_);
       printf("+            tol_acc: %.2f               +\n", tol_acc_);
       printf("+            tol_yaw: %.2f               +\n", tol_yaw_);
@@ -403,13 +403,13 @@ class env_base {
     /// weight of yaw
     decimal_t wyaw_{1};
     ///tolerance of position for goal region, 0.5 is the default
-    decimal_t tol_dis_{0.5};
+    decimal_t tol_pos_{0.5};
     ///tolerance of velocity for goal region, 0 means no tolerance
-    decimal_t tol_vel_{0.0};
+    decimal_t tol_vel_{-1};
     ///tolerance of acceleration for goal region, 0 means no tolerance
-    decimal_t tol_acc_{0.0};
+    decimal_t tol_acc_{-1};
     ///tolerance of yaw for goal region, 0 means no tolerance
-    decimal_t tol_yaw_{0.0};
+    decimal_t tol_yaw_{-1};
     ///max velocity
     decimal_t v_max_{-1};
     ///max acceleration

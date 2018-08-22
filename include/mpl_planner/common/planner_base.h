@@ -99,6 +99,46 @@ public:
     }
     return ps;
   }
+  /// Get points at certain state
+  vec_Vecf<Dim> getStates(const Coord& state) const {
+    vec_Vecf<Dim> ps;
+    vec_Vecf<Dim> vels;
+    vec_Vecf<Dim> accs;
+    for (const auto &it : ss_ptr_->hm_) {
+      if (it.second) {
+        auto coord = it.second->coord;
+        bool add = true;
+        if(state.use_vel && (state.vel - coord.vel).norm() > 1e-3)
+          add = false;
+        if(state.use_acc && (state.acc - coord.acc).norm() > 1e-3)
+          add = false;
+        if(state.use_jrk && (state.jrk - coord.jrk).norm() > 1e-3)
+          add = false;
+        if(add) {
+          //std::cout << "add pos: " << coord.pos.transpose() <<
+          //  " vel: " << coord.vel.transpose() <<
+          //  " acc: " << coord.acc.transpose() << std::endl;
+          ps.push_back(coord.pos);
+          bool new_vel = true;
+          for(const auto& it: vels) {
+            if((it - coord.vel).norm() < 1e-3) {
+              new_vel = false;
+              break;
+            }
+          }
+
+          if(new_vel)
+            vels.push_back(coord.vel);
+        }
+      }
+    }
+
+    for(const auto& it: vels)
+      std::cout << "vel: " << it.transpose() << std::endl;
+    std::cout << "=========================" << std::endl;
+    return ps;
+  }
+
   /// Get expanded points, for A* it should be the same as the close set
   vec_Vecf<Dim> getExpandedNodes() const {
     return ENV_->expanded_nodes_;
@@ -208,12 +248,12 @@ public:
       printf("[PlannerBase] set prior trajectory\n");
   }
   /// Set tolerance in geometric and dynamic spaces
-  void setTol(decimal_t tol_dis, decimal_t tol_vel = 0, decimal_t tol_acc = 0) {
-    ENV_->set_tol_dis(tol_dis);
+  void setTol(decimal_t tol_pos, decimal_t tol_vel = -1, decimal_t tol_acc = -1) {
+    ENV_->set_tol_pos(tol_pos);
     ENV_->set_tol_vel(tol_vel);
     ENV_->set_tol_acc(tol_acc);
     if (planner_verbose_) {
-      printf("[PlannerBase] set tol_dis: %f\n", tol_dis);
+      printf("[PlannerBase] set tol_pos: %f\n", tol_pos);
       printf("[PlannerBase] set tol_vel: %f\n", tol_vel);
       printf("[PlannerBase] set tol_acc: %f\n", tol_acc);
     }

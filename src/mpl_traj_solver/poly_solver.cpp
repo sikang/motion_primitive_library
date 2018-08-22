@@ -6,6 +6,10 @@ PolySolver<Dim>::PolySolver(unsigned int smooth_derivative_order,
     : N_(2 * (smooth_derivative_order + 1)), R_(minimize_derivative),
       debug_(debug) {
   ptraj_ = std::make_shared<PolyTraj<Dim>>();
+  if(debug_) {
+    std::cout << "smooth_derivative_order: " << smooth_derivative_order << std::endl;
+    std::cout << "minimize_derivative: " << minimize_derivative << std::endl;
+  }
 }
 
 template <int Dim>

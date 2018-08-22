@@ -256,7 +256,7 @@ vec_E<Vecf<Dim>> MapPlanner<Dim>::calculateGradient(const Veci<Dim>& coord1, con
   int rn = std::ceil(potential_radius_(0)/map_util_->getRes());
 
   vec_E<Vecf<Dim>> g(dim(0) * dim(1), Vecf<Dim>::Zero());
-  Veci<Dim> n;
+  Veci<Dim> n = Veci<Dim>::Zero();
   for(n(0) = coord1(0)-rn; n(0) < coord2(0)+rn; n(0)++) {
     for(n(1) = coord1(1)-rn; n(1) < coord2(1)+rn; n(1)++) {
       if(map_util_->isOutside(n))
