@@ -44,7 +44,7 @@ class Trajectory {
     /**
      * @brief Empty constructor
      */
-    Trajectory() {}
+    Trajectory() : total_t_(0) {}
     /**
      * @brief Construct from multiple primitives
      */

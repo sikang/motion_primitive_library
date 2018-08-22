@@ -21,17 +21,17 @@
 template <int Dim>
 struct Waypoint {
   /// Empty constructor
-  Waypoint() {}
+  Waypoint() : control(Control::NONE) {}
   /**
    * @brief Simple constructor
    * @param c control value
    */
   Waypoint(Control::Control c) : control(c) {}
 
-  Vecf<Dim> pos; ///<position in \f$R^{n}\f$
-  Vecf<Dim> vel; ///<velocity in \f$R^{n}\f$
-  Vecf<Dim> acc; ///<acceleration in \f$R^{n}\f$
-  Vecf<Dim> jrk; ///<jerk in \f$R^{n}\f$
+  Vecf<Dim> pos{Vecf<Dim>::Zero()}; ///<position in \f$R^{n}\f$
+  Vecf<Dim> vel{Vecf<Dim>::Zero()}; ///<velocity in \f$R^{n}\f$
+  Vecf<Dim> acc{Vecf<Dim>::Zero()}; ///<acceleration in \f$R^{n}\f$
+  Vecf<Dim> jrk{Vecf<Dim>::Zero()}; ///<jerk in \f$R^{n}\f$
   decimal_t yaw{0}; ///<yaw
   decimal_t t{0}; ///<time when reaching this waypoint in graph search
 

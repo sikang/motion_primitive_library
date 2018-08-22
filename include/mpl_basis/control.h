@@ -8,6 +8,7 @@
 namespace Control {
   /// Enum for control input
   enum Control {
+    NONE = 0, ///<default uninitialized value
     VEL = 0b00001,///<control input is vel
     ACC = 0b00011,///<control input is acc
     JRK = 0b00111,///<control input is jrk
