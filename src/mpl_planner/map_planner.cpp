@@ -35,7 +35,7 @@ void MapPlanner<Dim>::setGradientWeight(decimal_t w) {
 }
 
 template <int Dim>
-void MapPlanner<Dim>::setValidRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense) {
+void MapPlanner<Dim>::setSearchRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense) {
   // create cells along path
   vec_Veci<Dim> ps;
   if(!dense) {

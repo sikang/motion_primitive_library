@@ -27,12 +27,12 @@ public:
   /// Set map util
   virtual void setMapUtil(const std::shared_ptr<MapUtil<Dim>> &map_util);
   /**
-   * @brief Set valid region
+   * @brief Set search region
    * @param path a sequence of waypoints from a path or trajectory
    * @param search_radius the search distance in each axis
    * @param dense if true, do ray cast between two consecutive points in path
    */
-  void setValidRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense = false);
+  void setSearchRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense = false);
 
   /// Get search region
   vec_Vecf<Dim> getSearchRegion() const;
