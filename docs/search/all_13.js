@@ -1,9 +1,8 @@
 var searchData=
 [
   ['u_5f',['U_',['../classMPL_1_1env__base.html#a632147ec3e706f2bf10fb196c9d0a38c',1,'MPL::env_base']]],
-  ['updateblockednodes',['updateBlockedNodes',['../classMPL_1_1MapPlanner.html#a46eaaba21f9097762352e0be0d20118b',1,'MPL::MapPlanner']]],
-  ['updateclearednodes',['updateClearedNodes',['../classMPL_1_1MapPlanner.html#a4d06273b87bd066448d1931521d7e5b7',1,'MPL::MapPlanner']]],
-  ['updategoal',['updateGoal',['../structMPL_1_1StateSpace.html#aa01aed2a0c32cbc9020f9e2c2996de1a',1,'MPL::StateSpace']]],
+  ['updateblockednodes',['updateBlockedNodes',['../classMPL_1_1MapPlanner.html#aa0b71418ed9aab840c9273d56f5ee2c5',1,'MPL::MapPlanner']]],
+  ['updateclearednodes',['updateClearedNodes',['../classMPL_1_1MapPlanner.html#acc5f891374e37b7f4edc382a5319cf81',1,'MPL::MapPlanner']]],
   ['updatenode',['updateNode',['../structMPL_1_1StateSpace.html#a6f537b733b4861d1f3d142e95f29ee76',1,'MPL::StateSpace']]],
   ['updatepotentialmap',['updatePotentialMap',['../classMPL_1_1MapPlanner.html#ae8cc7ad712a73f51e50f94b761115da4',1,'MPL::MapPlanner']]],
   ['use_5facc',['use_acc',['../structWaypoint.html#a7f7b99a891660a96d67867ece28378e3',1,'Waypoint']]],

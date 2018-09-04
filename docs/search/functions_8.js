@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['j',['J',['../classPrimitive1D.html#a234748f83e8d83152f9883e28c24db9b',1,'Primitive1D::J()'],['../classPrimitive.html#a6be8bf06d3f3145951955f3cf82b18f5',1,'Primitive::J()'],['../classTrajectory.html#ab16be10786f5f94f866903ef66e09c16',1,'Trajectory::J()'],['../classPrimitive1D.html#acff08a9452f91c3ca16addb6bdbaa044',1,'Primitive1D::j()']]],
-  ['jyaw',['Jyaw',['../classPrimitive.html#ac463f792975b2c8ec765323d1ac06169',1,'Primitive::Jyaw()'],['../classTrajectory.html#a0a76de75eea306c7b7a7f6b2ff7eea7f',1,'Trajectory::Jyaw()']]]
+  ['j',['J',['../classPrimitive1D.html#ad17a8bcb8b6a6de3346e0f635d604dd0',1,'Primitive1D::J()'],['../classPrimitive.html#abebf08092f0450f9dc2796f4b231cf2a',1,'Primitive::J()'],['../classTrajectory.html#a5e1f42b3d5a4efa3ec52e9ffebb5504d',1,'Trajectory::J()'],['../classPrimitive1D.html#a34ad2e359b51fafff4a1fa9f84970bc7',1,'Primitive1D::j()']]],
+  ['jyaw',['Jyaw',['../classPrimitive.html#ababd7cd249729297b22d28d63a7f2c49',1,'Primitive::Jyaw()'],['../classTrajectory.html#abbd2605d622c7e3fc6556f88d686bf02',1,'Trajectory::Jyaw()']]]
 ];

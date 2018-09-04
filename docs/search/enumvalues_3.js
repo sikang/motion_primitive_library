@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vel',['VEL',['../control_8h.html#af3600af994b25be7c568791eefdadf2eacfaf639c5da18a324ce378b59ec9bc30',1,'Control']]],
-  ['velxyaw',['VELxYAW',['../control_8h.html#af3600af994b25be7c568791eefdadf2eac5da965932ce198aa4b40a8e3def3852',1,'Control']]]
+  ['snp',['SNP',['../control_8h.html#af3600af994b25be7c568791eefdadf2ead0c08f6b92d9b7cfe392322c75e4620c',1,'Control']]],
+  ['snpxyaw',['SNPxYAW',['../control_8h.html#af3600af994b25be7c568791eefdadf2eab55a3e8019f3292b6cfbb28c687e7975',1,'Control']]]
 ];
