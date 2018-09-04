@@ -218,6 +218,12 @@ public:
     if (planner_verbose_)
       printf("[PlannerBase] set w: %f\n", w);
   }
+  /// Set weight for cost in time
+  void setWyaw(decimal_t w) {
+    ENV_->set_wyaw(w);
+    if (planner_verbose_)
+      printf("[PlannerBase] set wyaw: %f\n", w);
+  }
   /// Set greedy searching param
   void setEpsilon(decimal_t eps) {
     epsilon_ = eps;
