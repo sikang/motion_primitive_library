@@ -156,7 +156,7 @@ public:
     succ_cost.clear();
     action_idx.clear();
 
-    //this->expanded_nodes_.push_back(curr.pos);
+    this->expanded_nodes_.push_back(curr.pos);
     for (unsigned int i = 0; i < this->U_.size(); i++) {
       Primitive<Dim> pr(curr, this->U_[i], this->dt_);
       Waypoint<Dim> tn = pr.evaluate(this->dt_);
@@ -166,8 +166,10 @@ public:
       tn.t = curr.t + this->dt_;
       succ.push_back(tn);
       decimal_t cost = curr.pos == tn.pos ? 0 : traverse_primitive(pr);
-      if (!std::isinf(cost))
+      if (!std::isinf(cost)) {
         cost += this->calculate_intrinsic_cost(pr);
+        this->expanded_edges_.push_back(pr);
+      }
 
       succ_cost.push_back(cost);
       action_idx.push_back(i);

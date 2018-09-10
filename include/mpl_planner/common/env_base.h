@@ -432,6 +432,8 @@ class env_base {
     std::vector<bool> valid_region_;
     ///expanded nodes for debug
     mutable vec_Vecf<Dim> expanded_nodes_;
+    ///expanded edges for debug
+    mutable vec_E<Primitive<Dim>> expanded_edges_;
 
 };
 }

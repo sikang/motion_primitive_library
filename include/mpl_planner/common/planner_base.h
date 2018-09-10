@@ -139,9 +139,13 @@ public:
     return ps;
   }
 
-  /// Get expanded points, for A* it should be the same as the close set
+  /// Get expanded nodes, for A* it should be the same as the close set
   vec_Vecf<Dim> getExpandedNodes() const {
     return ENV_->expanded_nodes_;
+  }
+  /// Get expanded edges, for A* it should be the same as the close set
+  vec_E<Primitive<Dim>> getExpandedEdges() const {
+    return ENV_->expanded_edges_;
   }
   /// Get number of expanded nodes
   int getExpandedNum() const {
@@ -307,6 +311,7 @@ public:
     ENV_->set_goal(goal);
 
     ENV_->expanded_nodes_.clear();
+    ENV_->expanded_edges_.clear();
 
     ss_ptr_->dt_ = ENV_->get_dt();
     if (use_lpastar_)

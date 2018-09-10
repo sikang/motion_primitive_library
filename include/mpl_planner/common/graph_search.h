@@ -260,15 +260,31 @@ public:
         ss_ptr->updateNode(currNode_ptr);
       }
 
+#if 1
       // Get successors
+      vec_E<Coord> succ_coord = currNode_ptr->succ_coord;
+      std::vector<decimal_t> succ_cost = currNode_ptr->succ_action_cost;
+      std::vector<int> succ_act_id = currNode_ptr->succ_action_id;
+
+      bool explored = !currNode_ptr->succ_coord.empty();
+      if (!explored) {
+        ENV->get_succ(currNode_ptr->coord, succ_coord, succ_cost, succ_act_id);
+        currNode_ptr->succ_coord.resize(succ_coord.size());
+        currNode_ptr->succ_action_id.resize(succ_coord.size());
+        currNode_ptr->succ_action_cost.resize(succ_coord.size());
+      }
+
+#else
       vec_E<Coord> succ_coord;// = currNode_ptr->succ_coord;
       std::vector<decimal_t> succ_cost;// = currNode_ptr->succ_action_cost;
       std::vector<int> succ_act_id;// = currNode_ptr->succ_action_id;
+
 
       ENV->get_succ(currNode_ptr->coord, succ_coord, succ_cost, succ_act_id);
       currNode_ptr->succ_coord.resize(succ_coord.size());
       currNode_ptr->succ_action_id.resize(succ_coord.size());
       currNode_ptr->succ_action_cost.resize(succ_coord.size());
+#endif
 
       // Process successors
       for (size_t s = 0; s < succ_coord.size(); ++s) {
@@ -279,7 +295,7 @@ public:
           succNode_ptr->h = ss_ptr->eps_ == 0 ? 0 : ENV->get_heur(succNode_ptr->coord);
         }
 
-        // store the hashkey
+        // Store the hashkey
         currNode_ptr->succ_coord[s] = succ_coord[s];
         currNode_ptr->succ_action_id[s] = succ_act_id[s];
         currNode_ptr->succ_action_cost[s] = succ_cost[s];
@@ -300,7 +316,7 @@ public:
         ss_ptr->updateNode(succNode_ptr);
       }
 
-      // If goal reached or maximum time reached, terminate!
+      // If goal reached, terminate!
       if (ENV->is_goal(currNode_ptr->coord))
         goalNode_ptr = currNode_ptr;
 
