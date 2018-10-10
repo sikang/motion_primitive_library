@@ -10,6 +10,7 @@ var searchData=
   ['epsilon_5f',['epsilon_',['../classMPL_1_1PlannerBase.html#a435534a9b3d1f3aed060ac38d47ddf03',1,'MPL::PlannerBase']]],
   ['evaluate',['evaluate',['../classPrimitive.html#a2654dd3b648c5e3ee7839344a8d9e730',1,'Primitive::evaluate()'],['../classTrajectory.html#aec62c9d9b1a35202df2072ea3efcef09',1,'Trajectory::evaluate(decimal_t time) const'],['../classTrajectory.html#a4a31376506a13df82691e2f67125f25e',1,'Trajectory::evaluate(decimal_t time, Command&lt; Dim &gt; &amp;p) const'],['../classPolyTraj.html#a38b02c6a5fe698e0b34d77d70c3660b4',1,'PolyTraj::evaluate()']]],
   ['expand_5fiteration_5f',['expand_iteration_',['../structMPL_1_1StateSpace.html#ac6aa935f88447d9c107500b6cacd572f',1,'MPL::StateSpace']]],
+  ['expanded_5fedges_5f',['expanded_edges_',['../classMPL_1_1env__base.html#a1d96af4d1aa7e1a15924316fae89174e',1,'MPL::env_base']]],
   ['expanded_5fnodes_5f',['expanded_nodes_',['../classMPL_1_1env__base.html#a407c61fa8bfdefc3012546f0c412acd3',1,'MPL::env_base']]],
   ['extrema_5fa',['extrema_a',['../classPrimitive1D.html#a3408c9bdfe45a2501c105a8f39852d54',1,'Primitive1D']]],
   ['extrema_5fj',['extrema_j',['../classPrimitive1D.html#ac3a4509b8b34645f1e902ebe7fe5b531',1,'Primitive1D']]],

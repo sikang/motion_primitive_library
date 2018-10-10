@@ -10,6 +10,7 @@ var searchData=
   ['getcloud',['getCloud',['../classMPL_1_1MapUtil.html#ab43e53300d6c9be1bb43434ae7d0da65',1,'MPL::MapUtil::getCloud()'],['../classMPL_1_1MapUtil.html#a9b33b97b48d7bbd7331e53911f701727',1,'MPL::MapUtil::getCloud()']]],
   ['getdim',['getDim',['../classMPL_1_1MapUtil.html#a82c24a60a065d865a85e69feef3c7d48',1,'MPL::MapUtil']]],
   ['getdts',['getDts',['../classTrajSolver.html#af7cf3431f22a130fc5bcd2cf6b99d067',1,'TrajSolver']]],
+  ['getexpandededges',['getExpandedEdges',['../classMPL_1_1PlannerBase.html#a1deb4b2f9fa5268a7b72e79215263586',1,'MPL::PlannerBase']]],
   ['getexpandednodes',['getExpandedNodes',['../classMPL_1_1PlannerBase.html#ac76d9a2c4eaac2563462337be37b9703',1,'MPL::PlannerBase']]],
   ['getexpandednum',['getExpandedNum',['../classMPL_1_1PlannerBase.html#a15105e3314272c846f646313b3617725',1,'MPL::PlannerBase']]],
   ['getfreecloud',['getFreeCloud',['../classMPL_1_1MapUtil.html#aa3944032ebcbeb08bf877759f7976478',1,'MPL::MapUtil::getFreeCloud()'],['../classMPL_1_1MapUtil.html#ae380b8d5409f11c1b09d4e3ad3cd7063',1,'MPL::MapUtil::getFreeCloud()']]],
