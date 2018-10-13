@@ -34,8 +34,14 @@ void MapPlanner<Dim>::setGradientWeight(decimal_t w) {
   this->ENV_->set_gradient_weight(w);
 }
 
+
 template <int Dim>
-void MapPlanner<Dim>::setSearchRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>& search_radius, bool dense) {
+void MapPlanner<Dim>::setSearchRadius(const Vecf<Dim>& search_radius) {
+  search_radius_ = search_radius;
+}
+
+template <int Dim>
+void MapPlanner<Dim>::setSearchRegion(const vec_Vecf<Dim>& path, bool dense) {
   // create cells along path
   vec_Veci<Dim> ps;
   if(!dense) {
@@ -53,7 +59,7 @@ void MapPlanner<Dim>::setSearchRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>
   // create mask
   Veci<Dim> rn;
   for(int i = 0; i < Dim; i++)
-    rn(i) = std::ceil(search_radius(i) / map_util_->getRes());
+    rn(i) = std::ceil(search_radius_(i) / map_util_->getRes());
   vec_Veci<Dim> ns;
   Veci<Dim> n;
   if(Dim == 2) {
@@ -88,14 +94,14 @@ void MapPlanner<Dim>::setSearchRegion(const vec_Vecf<Dim>& path, const Vecf<Dim>
 		}
 	}
 
-	this->ENV_->set_valid_region(in_region);
+	this->ENV_->set_search_region(in_region);
 	if (this->planner_verbose_)
-		printf("[MapPlanner] set valid region\n");
+		printf("[MapPlanner] set search region\n");
 }
 
 
 template <int Dim> vec_Vecf<Dim> MapPlanner<Dim>::getSearchRegion() const {
-  const auto in_region = this->ENV_->get_valid_region();
+  const auto in_region = this->ENV_->get_search_region();
   vec_Vecf<Dim> pts;
 	const auto dim = map_util_->getDim();
   Veci<Dim> n;
@@ -285,7 +291,7 @@ vec_E<Vecf<Dim>> MapPlanner<Dim>::calculateGradient(const Veci<Dim>& coord1, con
 }
 
 template <int Dim>
-void MapPlanner<Dim>::createMask(int pow) {
+void MapPlanner<Dim>::createMask() {
   potential_mask_.clear();
   // create mask
   decimal_t res = map_util_->getRes();
@@ -300,7 +306,7 @@ void MapPlanner<Dim>::createMask(int pow) {
         if (std::hypot(n(0), n(1)) > rn)
           continue;
         decimal_t h =
-          h_max * std::pow((1 - (decimal_t)std::hypot(n(0), n(1)) / rn), pow);
+          h_max * std::pow((1 - (decimal_t)std::hypot(n(0), n(1)) / rn), pow_);
         if (h > 1e-3)
           potential_mask_.push_back(std::make_pair(n, (int8_t)h));
       }
@@ -315,7 +321,7 @@ void MapPlanner<Dim>::createMask(int pow) {
           decimal_t h =
             h_max * std::pow((1 - (decimal_t)std::hypot(n(0), n(1)) / rn) *
                              (1 - (decimal_t)std::abs(n(2)) / hn),
-                             pow);
+                             pow_);
           if (h > 1e-3)
             potential_mask_.push_back(std::make_pair(n, (int8_t)h));
         }
@@ -325,8 +331,8 @@ void MapPlanner<Dim>::createMask(int pow) {
 }
 
 template <int Dim>
-void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos, int pow) {
-  createMask(pow);
+void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos) {
+  createMask();
   // compute a 2D local potential map
   const auto dim = map_util_->getDim();
   Veci<Dim> coord1 = Veci<Dim>::Zero();
@@ -396,6 +402,47 @@ void MapPlanner<Dim>::updatePotentialMap(const Vecf<Dim>& pos, int pow) {
   //this->ENV_->set_gradient_map(gradient_map_);
 }
 
+template <int Dim>
+bool MapPlanner<Dim>::iterativePlan(const Waypoint<Dim> &start,
+                                    const Waypoint<Dim> &goal,
+                                    const Trajectory<Dim> &raw_traj,
+                                    int max_num) {
+  bool verbose = this->planner_verbose_;
+  this->planner_verbose_ = false;
+  this->traj_ = raw_traj;
+  double prev_traj_cost_ = 0;
+
+  int cnt = 0;
+  while(cnt < max_num) {
+    cnt ++;
+    // Create a path from planned traj
+    const auto ws = this->traj_.getWaypoints();
+    vec_Vecf<Dim> path;
+    for(const auto& w: ws)
+      path.push_back(w.pos);
+    setSearchRegion(path, false);
+
+    if(!this->plan(start, goal)) {
+      if(verbose)
+        printf("[MapPlanner] fails the [%d] plan!\n", cnt);
+      this->planner_verbose_ = verbose;
+      return false;
+    }
+
+    if(prev_traj_cost_ == this->traj_cost_) {
+      if(verbose)
+        printf(
+            "[MapPlanner] Converged after %d iterations! Trajectory cost: %f\n",
+            cnt, this->traj_cost_);
+      break;
+    }
+    else
+      prev_traj_cost_ = this->traj_cost_;
+  }
+
+  this->planner_verbose_ = verbose;
+  return true;
+}
 
 
 template class MapPlanner<2>;

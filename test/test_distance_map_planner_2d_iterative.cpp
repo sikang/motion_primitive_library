@@ -56,49 +56,40 @@ int main(int argc, char **argv) {
 
   // Initialize planner
   std::unique_ptr<MPL::OccMapPlanner> planner(
-      new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
+      new MPL::OccMapPlanner(false)); // Declare a 2D planner
+  planner->setMapUtil(map_util);      // Set collision checking function
+  planner->setVmax(1.0);              // Set max velocity
+  planner->setAmax(1.0);              // Set max acceleration
+  planner->setDt(1.0);                // Set dt for each primitive
+  planner->setU(U);                   // Set control input
 
   // Planning
   Timer time(true);
   bool valid = planner->plan(start, goal); // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
-	printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
-	const Trajectory2D traj = planner->getTraj();
+  const Trajectory2D traj = planner->getTraj();
 
-
-  // Create a path from planned traj
-	const auto ws = traj.getWaypoints();
-	vec_Vec2f path;
-	for(const auto& w: ws)
-		path.push_back(w.pos);
   // Initiaize planner as a distance map planner
-	planner.reset(new MPL::OccMapPlanner(true));
+  planner.reset(new MPL::OccMapPlanner(true));
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
   planner->setDt(1.0);           // Set dt for each primitive
   planner->setU(U);              // Set control input
-  planner->setEpsilon(1.0);           // Set heursitic to zero
+  planner->setEpsilon(1.0);      // Set heursitic to zero
 
-	planner->setSearchRadius(Vec2f(0.5, 0.5)); // Set search region radius
-	planner->setSearchRegion(path); // Set search region around path
-	planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
-  planner->setPotentialWeight(1); // Set potential weight
-  planner->setGradientWeight(0); // Set gradient weight
-  planner->updatePotentialMap(start.pos); // Update potential map
+  planner->setSearchRadius(Vec2f(0.5, 0.5));    // Set search region radius
+  planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
+  planner->setPotentialWeight(0.1);             // Set potential weight
+  planner->setGradientWeight(0);                // Set gradient weight
+  planner->updatePotentialMap(start.pos);       // Update potential map
 
   // Planning
   Timer time_dist(true);
-  bool valid_dist = planner->plan(start, goal); // Plan from start to goal
+  bool valid_dist = planner->iterativePlan(start, goal, traj, 10); // Plan from start to goal
   double dt_dist = time_dist.Elapsed().count();
-  printf("MPL Distance Planner takes: %f ms\n", dt_dist);
-	printf("MPL Distance Planner expanded states: %zu\n", planner->getCloseSet().size());
+  printf("MPL Distance Planner iterative plan takes: %f ms\n", dt_dist);
 	const Trajectory2D traj_dist = planner->getTraj();
 
   // Plot the result in svg image
@@ -156,7 +147,7 @@ int main(int argc, char **argv) {
 
   // Draw searched region
   for (const auto &pt : planner->getSearchRegion()) {
- // for (const auto &pt : planner->getCloseSet()) {
+    // for (const auto &pt : planner->getCloseSet()) {
     point_2d a;
     boost::geometry::assign_values(a, pt(0), pt(1));
     mapper.add(a);

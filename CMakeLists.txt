@@ -51,6 +51,10 @@ add_executable(test_distance_map_planner_2d_with_yaw test/test_distance_map_plan
 target_link_libraries(test_distance_map_planner_2d_with_yaw map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
 add_test(test_distance_map_planner_2d_with_yaw test_distance_map_planner_2d_with_yaw ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
+add_executable(test_distance_map_planner_2d_iterative test/test_distance_map_planner_2d_iterative.cpp)
+target_link_libraries(test_distance_map_planner_2d_iterative map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
+add_test(test_distance_map_planner_2d_iterative test_distance_map_planner_2d_iterative ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
+
 
 install(FILES "${PROJECT_NAME}Config.cmake" "${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION "share/${PROJECT_NAME}/cmake")

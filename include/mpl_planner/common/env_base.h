@@ -326,9 +326,9 @@ class env_base {
       return prior_traj_.empty();
     }
 
-    ///Set valid region
-    void set_valid_region(const std::vector<bool>& valid_region) {
-      valid_region_ = valid_region;
+    ///Set valid search region (tunnel constraint)
+    void set_search_region(const std::vector<bool>& search_region) {
+      search_region_ = search_region;
     }
 
     ///Set heur_ignore_dynamics
@@ -394,7 +394,7 @@ class env_base {
     }
 
     /// Get the valid region
-    std::vector<bool> get_valid_region() const { return valid_region_; }
+    std::vector<bool> get_search_region() const { return search_region_; }
 
     /// if enabled, ignore dynamics when calculate heuristic
     bool heur_ignore_dynamics_{true};
@@ -428,8 +428,8 @@ class env_base {
     Waypoint<Dim> goal_node_;
     ///Prior trajectory
     vec_E<std::pair<Waypoint<Dim>, decimal_t>> prior_traj_;
-    ///Valid region
-    std::vector<bool> valid_region_;
+    ///Valid search region (tunnel constraint)
+    std::vector<bool> search_region_;
     ///expanded nodes for debug
     mutable vec_Vecf<Dim> expanded_nodes_;
     ///expanded edges for debug

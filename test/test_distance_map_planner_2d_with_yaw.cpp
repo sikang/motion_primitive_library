@@ -96,7 +96,8 @@ int main(int argc, char **argv) {
   planner->setU(U_yaw);              // Set control input
   planner->setEpsilon(1.0);           // Set heursitic to zero
 
-	planner->setSearchRegion(path, Vec2f(0.5, 0.5)); // Set search region around path
+	planner->setSearchRadius(Vec2f(0.5, 0.5)); // Set search region radius
+	planner->setSearchRegion(path); // Set search region around path
 	planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
   planner->setPotentialWeight(1); // Set potential weight
   planner->setGradientWeight(0); // Set gradient weight

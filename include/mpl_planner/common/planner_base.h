@@ -329,7 +329,7 @@ public:
     return true;
   }
 protected:
-  /// Env class
+  /// Environment class
   std::shared_ptr<MPL::env_base<Dim>> ENV_;
   /// Planner workspace
   std::shared_ptr<MPL::StateSpace<Dim, Coord>> ss_ptr_;

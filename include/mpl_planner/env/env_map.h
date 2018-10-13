@@ -68,14 +68,15 @@ public:
       Veci<Dim> pn = map_util_->floatToInt(pt.pos);
       if (map_util_->isOccupied(pn) || map_util_->isOutside(pn))
         return false;
-      if(!this->valid_region_.empty() && !this->valid_region_[map_util_->getIndex(pn)])
+      if (!this->search_region_.empty() &&
+          !this->search_region_[map_util_->getIndex(pn)])
         return false;
     }
 
     return true;
   }
 
- /**
+  /**
    * @brief Accumulate the cost along the primitive
    *
    * Sample points along the primitive, and sum up the cost of each point;
@@ -103,8 +104,7 @@ public:
       const int idx = map_util_->getIndex(pn);
 
       if (map_util_->isOutside(pn) ||
-          (!this->valid_region_.empty() &&
-          !this->valid_region_[idx]))
+          (!this->search_region_.empty() && !this->search_region_[idx]))
         return std::numeric_limits<decimal_t>::infinity();
       /*
       decimal_t v_value = gradient_map_[idx].dot(pt.vel);
@@ -124,8 +124,9 @@ public:
         return std::numeric_limits<decimal_t>::infinity();
       if(this->wyaw_ > 0 && pt.use_yaw) {
         const auto v = pt.vel.template topRows<2>();
-        if(v.norm() > 1e-5) { // if v is not zero
-          decimal_t v_value = 1-v.normalized().dot(Vec2f(cos(pt.yaw), sin(pt.yaw)));
+        if (v.norm() > 1e-5) { // if v is not zero
+          decimal_t v_value =
+              1 - v.normalized().dot(Vec2f(cos(pt.yaw), sin(pt.yaw)));
           c += this->wyaw_ * v_value * dt;
         }
       }
@@ -133,8 +134,6 @@ public:
 
     return c;
   }
-
-
 
   /**
    * @brief Get successor
