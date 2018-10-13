@@ -1,4 +1,4 @@
-# MRSL Motion Primitive Library for quadrotor v1.1
+# MRSL Motion Primitive Library for quadrotor v1.2
 
 [![wercker status](https://app.wercker.com/status/ae575e9b5218e1f02684065445c6de66/s/master "wercker status")](https://app.wercker.com/project/byKey/ae575e9b5218e1f02684065445c6de66)
 - - -
@@ -9,6 +9,10 @@ The proposed approach is able to generate resolution-complete (i.e., optimal in 
 It does not assume a hovering initial condition and, hence, is suitable for fast online re-planning while the robot is moving.
 
 For technical details, refer to the original paper ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/) that has been published in IROS 2017.
+
+## New Features in v1.2
+  - Add iterative plan in MapPlanner
+  - Remove dependence on SDL library, using OpenCV for plotting
 
 ## New Features in v1.1
   - Reformat the repo structure

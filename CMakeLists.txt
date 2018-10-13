@@ -10,9 +10,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-deprecated-declara
 set(BUILD_SHARED_LIBS ON)
 
 find_package(Eigen3 REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(YAMLCPP REQUIRED yaml-cpp)
-include_directories(${EIGEN3_INCLUDE_DIR} include)
+include_directories(${EIGEN3_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS} include)
 
 if(YAMLCPP_FOUND)
   message(STATUS "Found yaml-cpp.")
@@ -32,7 +33,7 @@ target_link_libraries(test_traj_solver poly_solver ${Boost_LIBRARIES})
 add_test(test_traj_solver test_traj_solver)
 
 add_executable(test_planner_2d test/test_planner_2d.cpp)
-target_link_libraries(test_planner_2d map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(test_planner_2d map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES} ${OpenCV_LIBS})
 add_test(test_planner_2d test_planner_2d ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
 add_executable(test_planner_2d_prior_traj test/test_planner_2d_prior_traj.cpp)
