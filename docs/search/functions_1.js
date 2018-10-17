@@ -7,6 +7,6 @@ var searchData=
   ['clear',['clear',['../classPolyTraj.html#aeef32c15c08d1cab7522dbfe5f68f479',1,'PolyTraj']]],
   ['coeff',['coeff',['../classPrimitive1D.html#a72caa53b8186c20682493f36933fea6e',1,'Primitive1D']]],
   ['control',['control',['../classPrimitive.html#aa9c00e6dfba12ffc83523e010881ff8f',1,'Primitive']]],
-  ['createmask',['createMask',['../classMPL_1_1MapPlanner.html#af68ce84bd904c06df8e91ded4351f0fb',1,'MPL::MapPlanner']]],
+  ['createmask',['createMask',['../classMPL_1_1MapPlanner.html#a0d763e074c13166cb433a4043c101d8d',1,'MPL::MapPlanner']]],
   ['cubic',['cubic',['../math_8h.html#af270499b7f6d6b2bb04528b3d46adec3',1,'math.h']]]
 ];

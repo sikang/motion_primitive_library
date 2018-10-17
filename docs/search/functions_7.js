@@ -9,5 +9,6 @@ var searchData=
   ['isfree',['isFree',['../classMPL_1_1MapUtil.html#ad9e605d2c37d47c60a9a8f923c746ddb',1,'MPL::MapUtil::isFree(int idx)'],['../classMPL_1_1MapUtil.html#ac5d033df8f6d5e272013f09d3f97e0a7',1,'MPL::MapUtil::isFree(const Veci&lt; Dim &gt; &amp;pn)']]],
   ['isoccupied',['isOccupied',['../classMPL_1_1MapUtil.html#a48cbebcc7b755058a32329a2f27ff15b',1,'MPL::MapUtil::isOccupied(int idx)'],['../classMPL_1_1MapUtil.html#adc64550bc69a8dd51ed836ebb5313489',1,'MPL::MapUtil::isOccupied(const Veci&lt; Dim &gt; &amp;pn)']]],
   ['isoutside',['isOutside',['../classMPL_1_1MapUtil.html#a27d4f42e2e00a5a82ed457f494ad35ec',1,'MPL::MapUtil']]],
-  ['isunknown',['isUnknown',['../classMPL_1_1MapUtil.html#a3c710ff628ef11206f52051a0106c8f5',1,'MPL::MapUtil::isUnknown(int idx)'],['../classMPL_1_1MapUtil.html#a02ecab633ca752895fe76d5eb252bd1b',1,'MPL::MapUtil::isUnknown(const Veci&lt; Dim &gt; &amp;pn)']]]
+  ['isunknown',['isUnknown',['../classMPL_1_1MapUtil.html#a3c710ff628ef11206f52051a0106c8f5',1,'MPL::MapUtil::isUnknown(int idx)'],['../classMPL_1_1MapUtil.html#a02ecab633ca752895fe76d5eb252bd1b',1,'MPL::MapUtil::isUnknown(const Veci&lt; Dim &gt; &amp;pn)']]],
+  ['iterativeplan',['iterativePlan',['../classMPL_1_1MapPlanner.html#a8f4cb540fe4221366bcfb1ec14d77f7f',1,'MPL::MapPlanner']]]
 ];

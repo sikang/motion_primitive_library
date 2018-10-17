@@ -2,8 +2,8 @@ var searchData=
 [
   ['get_5fdt',['get_dt',['../classMPL_1_1env__base.html#a1f189e95f1445250ed2af48d0be09014',1,'MPL::env_base']]],
   ['get_5fheur',['get_heur',['../classMPL_1_1env__base.html#a3f5a3aa9e6be63c4bbfe96e09b56a68b',1,'MPL::env_base']]],
+  ['get_5fsearch_5fregion',['get_search_region',['../classMPL_1_1env__base.html#a2ce7924f21de1136dec56c9c2027ba71',1,'MPL::env_base']]],
   ['get_5fsucc',['get_succ',['../classMPL_1_1env__base.html#a79b4bcc2a220c691b742593ca7fd4217',1,'MPL::env_base::get_succ()'],['../classMPL_1_1env__map.html#ad508bed13e2c697cb14a597615424d9f',1,'MPL::env_map::get_succ()']]],
-  ['get_5fvalid_5fregion',['get_valid_region',['../classMPL_1_1env__base.html#aa4ce8e387312bdbfcab528f27e3b973c',1,'MPL::env_base']]],
   ['getallprimitives',['getAllPrimitives',['../classMPL_1_1PlannerBase.html#a7da6da04cd5b6bcc6f85160bf3e9cf4d',1,'MPL::PlannerBase']]],
   ['getcloseset',['getCloseSet',['../classMPL_1_1PlannerBase.html#ad165246a0ee466cbebedd22e8b8681f1',1,'MPL::PlannerBase']]],
   ['getcloud',['getCloud',['../classMPL_1_1MapUtil.html#ab43e53300d6c9be1bb43434ae7d0da65',1,'MPL::MapUtil::getCloud()'],['../classMPL_1_1MapUtil.html#a9b33b97b48d7bbd7331e53911f701727',1,'MPL::MapUtil::getCloud()']]],

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['search_5fradius_5f',['search_radius_',['../classMPL_1_1MapPlanner.html#ac0d4d0e4ed0ee9ce7b4cbb86baaa9701',1,'MPL::MapPlanner']]],
+  ['search_5fregion_5f',['search_region_',['../classMPL_1_1env__base.html#a8873f64d0e619a9945fc3be17b88c227',1,'MPL::env_base']]],
   ['segs',['segs',['../classTrajectory.html#a1740804394e9c3d87e1cb86fd8034a20',1,'Trajectory']]],
   ['ss_5fptr_5f',['ss_ptr_',['../classMPL_1_1PlannerBase.html#a41f668e0f6edbc307ec66e655b84f683',1,'MPL::PlannerBase']]],
   ['start_5fg_5f',['start_g_',['../structMPL_1_1StateSpace.html#a5dc3ecf1aa68f2c6ec934a3e2dd29693',1,'MPL::StateSpace']]],

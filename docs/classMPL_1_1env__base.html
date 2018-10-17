@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MRSL Motion Primitive Library
-   &#160;<span id="projectnumber">1.1</span>
+   &#160;<span id="projectnumber">1.2</span>
    </div>
    <div id="projectbrief">A motion primitive library for generating trajectory for mobile robots</div>
   </td>
@@ -192,10 +192,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a82c7c82438a5133e63fa208813a76e28">set_goal</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;state)</td></tr>
 <tr class="memdesc:a82c7c82438a5133e63fa208813a76e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set goal state. <br /></td></tr>
 <tr class="separator:a82c7c82438a5133e63fa208813a76e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54694a0b8d96b0d6d76a94fd07196c13"><td class="memItemLeft" align="right" valign="top"><a id="a54694a0b8d96b0d6d76a94fd07196c13"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a54694a0b8d96b0d6d76a94fd07196c13">set_valid_region</a> (const std::vector&lt; bool &gt; &amp;valid_region)</td></tr>
-<tr class="memdesc:a54694a0b8d96b0d6d76a94fd07196c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set valid region. <br /></td></tr>
-<tr class="separator:a54694a0b8d96b0d6d76a94fd07196c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac736731d272b0b66b0a160e1c2e9a39c"><td class="memItemLeft" align="right" valign="top"><a id="ac736731d272b0b66b0a160e1c2e9a39c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#ac736731d272b0b66b0a160e1c2e9a39c">set_search_region</a> (const std::vector&lt; bool &gt; &amp;search_region)</td></tr>
+<tr class="memdesc:ac736731d272b0b66b0a160e1c2e9a39c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set valid search region (tunnel constraint) <br /></td></tr>
+<tr class="separator:ac736731d272b0b66b0a160e1c2e9a39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b401fb26c98e874b926795e0d15ab2b"><td class="memItemLeft" align="right" valign="top"><a id="a2b401fb26c98e874b926795e0d15ab2b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a2b401fb26c98e874b926795e0d15ab2b">set_heur_ignore_dynamics</a> (bool ignore)</td></tr>
 <tr class="memdesc:a2b401fb26c98e874b926795e0d15ab2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set heur_ignore_dynamics. <br /></td></tr>
@@ -222,10 +222,10 @@ virtual <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266
 <tr class="memitem:a79b4bcc2a220c691b742593ca7fd4217"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a79b4bcc2a220c691b742593ca7fd4217">get_succ</a> (const <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt; &amp;curr, <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;&gt; &amp;succ, std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;succ_cost, std::vector&lt; int &gt; &amp;action_idx) const</td></tr>
 <tr class="memdesc:a79b4bcc2a220c691b742593ca7fd4217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get successor.  <a href="#a79b4bcc2a220c691b742593ca7fd4217">More...</a><br /></td></tr>
 <tr class="separator:a79b4bcc2a220c691b742593ca7fd4217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4ce8e387312bdbfcab528f27e3b973c"><td class="memItemLeft" align="right" valign="top"><a id="aa4ce8e387312bdbfcab528f27e3b973c"></a>
-std::vector&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#aa4ce8e387312bdbfcab528f27e3b973c">get_valid_region</a> () const</td></tr>
-<tr class="memdesc:aa4ce8e387312bdbfcab528f27e3b973c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the valid region. <br /></td></tr>
-<tr class="separator:aa4ce8e387312bdbfcab528f27e3b973c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce7924f21de1136dec56c9c2027ba71"><td class="memItemLeft" align="right" valign="top"><a id="a2ce7924f21de1136dec56c9c2027ba71"></a>
+std::vector&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a2ce7924f21de1136dec56c9c2027ba71">get_search_region</a> () const</td></tr>
+<tr class="memdesc:a2ce7924f21de1136dec56c9c2027ba71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the valid region. <br /></td></tr>
+<tr class="separator:a2ce7924f21de1136dec56c9c2027ba71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -293,10 +293,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; std::pair&lt; <a class="el" href="structWaypoint.html">Waypoint</a>&lt; Dim &gt;, <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#ad12eb1d6268bebc2542a875a3278551a">prior_traj_</a></td></tr>
 <tr class="memdesc:ad12eb1d6268bebc2542a875a3278551a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prior trajectory. <br /></td></tr>
 <tr class="separator:ad12eb1d6268bebc2542a875a3278551a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af47e7b36d9963c922a50cba6940b6ad7"><td class="memItemLeft" align="right" valign="top"><a id="af47e7b36d9963c922a50cba6940b6ad7"></a>
-std::vector&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#af47e7b36d9963c922a50cba6940b6ad7">valid_region_</a></td></tr>
-<tr class="memdesc:af47e7b36d9963c922a50cba6940b6ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid region. <br /></td></tr>
-<tr class="separator:af47e7b36d9963c922a50cba6940b6ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8873f64d0e619a9945fc3be17b88c227"><td class="memItemLeft" align="right" valign="top"><a id="a8873f64d0e619a9945fc3be17b88c227"></a>
+std::vector&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a8873f64d0e619a9945fc3be17b88c227">search_region_</a></td></tr>
+<tr class="memdesc:a8873f64d0e619a9945fc3be17b88c227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid search region (tunnel constraint) <br /></td></tr>
+<tr class="separator:a8873f64d0e619a9945fc3be17b88c227"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a407c61fa8bfdefc3012546f0c412acd3"><td class="memItemLeft" align="right" valign="top"><a id="a407c61fa8bfdefc3012546f0c412acd3"></a>
 <a class="el" href="data__type_8h.html#a0a3b37beb40c06edc02cb4b7339f2b96">vec_Vecf</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1env__base.html#a407c61fa8bfdefc3012546f0c412acd3">expanded_nodes_</a></td></tr>
 <tr class="memdesc:a407c61fa8bfdefc3012546f0c412acd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">expanded nodes for debug <br /></td></tr>

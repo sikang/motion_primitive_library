@@ -9,8 +9,8 @@ The proposed approach is able to generate resolution-complete (i.e., optimal in 
 It does not assume a hovering initial condition and, hence, is suitable for fast online re-planning while the robot is moving.
 
 More details about the algorithm can be found in following publications:
- - ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/)
- - ["Towards Search-based Motion Planning for Micro Aerial Vehicles"](https://arxiv.org/abs/1810.03071)
+ - S. Liu, N. Atanasov, K. Mohta, and V. Kumar, ["Search-based Motion Planning for Quadrotors using Linear Quadratic Minimum Time Control"](http://ieeexplore.ieee.org/document/8206119/), IROS 2017
+ - S. Liu, K. Mohta, N. Atanasov, and V. Kumar, ["Towards Search-based Motion Planning for Micro Aerial Vehicles"](https://arxiv.org/abs/1810.03071), arxiv 2018
 
 ## New Features in v1.2
   - Add iterative plan in MapPlanner

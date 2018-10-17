@@ -15,6 +15,6 @@ var searchData=
   ['control_2eh',['control.h',['../control_8h.html',1,'']]],
   ['control_5f',['control_',['../classPrimitive.html#a64392514c8666d640bc50f6304581623',1,'Primitive::control_()'],['../classTrajSolver.html#a1408cded894ef27adc07fd1274ae90ff',1,'TrajSolver::control_()']]],
   ['coord',['coord',['../structMPL_1_1State.html#abca6fed90f908449b9c120a199c75484',1,'MPL::State']]],
-  ['createmask',['createMask',['../classMPL_1_1MapPlanner.html#af68ce84bd904c06df8e91ded4351f0fb',1,'MPL::MapPlanner']]],
+  ['createmask',['createMask',['../classMPL_1_1MapPlanner.html#a0d763e074c13166cb433a4043c101d8d',1,'MPL::MapPlanner']]],
   ['cubic',['cubic',['../math_8h.html#af270499b7f6d6b2bb04528b3d46adec3',1,'math.h']]]
 ];

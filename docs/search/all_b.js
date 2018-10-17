@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['mrsl_20motion_20primitive_20library_20for_20quadrotor_20v1_2e1',['MRSL Motion Primitive Library for quadrotor v1.1',['../index.html',1,'']]],
+  ['mrsl_20motion_20primitive_20library_20for_20quadrotor_20v1_2e2',['MRSL Motion Primitive Library for quadrotor v1.2',['../index.html',1,'']]],
   ['map_5f',['map_',['../classMPL_1_1MapUtil.html#a1d648f13d2103e173dd9e8c5d2147657',1,'MPL::MapUtil']]],
   ['map_5fplanner_2eh',['map_planner.h',['../map__planner_8h.html',1,'']]],
   ['map_5futil_2eh',['map_util.h',['../map__util_8h.html',1,'']]],

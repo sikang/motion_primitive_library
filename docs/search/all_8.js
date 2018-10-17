@@ -11,5 +11,6 @@ var searchData=
   ['isoutside',['isOutside',['../classMPL_1_1MapUtil.html#a27d4f42e2e00a5a82ed457f494ad35ec',1,'MPL::MapUtil']]],
   ['isunknown',['isUnknown',['../classMPL_1_1MapUtil.html#a3c710ff628ef11206f52051a0106c8f5',1,'MPL::MapUtil::isUnknown(int idx)'],['../classMPL_1_1MapUtil.html#a02ecab633ca752895fe76d5eb252bd1b',1,'MPL::MapUtil::isUnknown(const Veci&lt; Dim &gt; &amp;pn)']]],
   ['iterationclosed',['iterationclosed',['../structMPL_1_1State.html#a63d5ba39e20bc8b80b368bd591ae51c4',1,'MPL::State']]],
-  ['iterationopened',['iterationopened',['../structMPL_1_1State.html#a59399cbac1498f52f8d2d9bc64848288',1,'MPL::State']]]
+  ['iterationopened',['iterationopened',['../structMPL_1_1State.html#a59399cbac1498f52f8d2d9bc64848288',1,'MPL::State']]],
+  ['iterativeplan',['iterativePlan',['../classMPL_1_1MapPlanner.html#a8f4cb540fe4221366bcfb1ec14d77f7f',1,'MPL::MapPlanner']]]
 ];

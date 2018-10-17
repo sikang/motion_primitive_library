@@ -9,6 +9,7 @@ var searchData=
   ['potential_5fmask_5f',['potential_mask_',['../classMPL_1_1MapPlanner.html#a57edfafe70fb80930b97e5c27601966e',1,'MPL::MapPlanner']]],
   ['potential_5fradius_5f',['potential_radius_',['../classMPL_1_1MapPlanner.html#a4a53a77c9f6e7e8a310dc88f88930102',1,'MPL::MapPlanner']]],
   ['potential_5fweight_5f',['potential_weight_',['../classMPL_1_1env__map.html#a3475ee37b51c1289a49726794b5b4451',1,'MPL::env_map']]],
+  ['pow_5f',['pow_',['../classMPL_1_1MapPlanner.html#ad8d57f43e3c67b23534b22e35f089978',1,'MPL::MapPlanner']]],
   ['pq_5f',['pq_',['../structMPL_1_1StateSpace.html#a43c750c08bd9ced7e57724b9d4b8b282',1,'MPL::StateSpace']]],
   ['pr_5fyaw_5f',['pr_yaw_',['../classPrimitive.html#abd41b5f905e46efa0332fa539937627b',1,'Primitive']]],
   ['pred_5faction_5fcost',['pred_action_cost',['../structMPL_1_1State.html#a37f962533dea7c6e68dfcdb36ffc513d',1,'MPL::State']]],
