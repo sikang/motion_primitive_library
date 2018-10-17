@@ -28,7 +28,7 @@ add_library(map_planner src/mpl_planner/map_planner.cpp)
 
 include(CTest)
 
-add_definitions(-DOPENCV_WINDOW=1)
+add_definitions(-DOPENCV_WINDOW=0)
 
 add_executable(test_traj_solver test/test_traj_solver.cpp)
 target_link_libraries(test_traj_solver poly_solver ${OpenCV_LIBS})
