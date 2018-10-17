@@ -10,6 +10,7 @@
 #define blue cv::Scalar(255, 0, 0)
 #define green cv::Scalar(0, 255, 0)
 #define cyan cv::Scalar(255, 255, 0)
+#define magenta cv::Scalar(255, 0, 255)
 
 /// Opencv drawing helper
 class OpenCVDrawing {
@@ -65,6 +66,25 @@ class OpenCVDrawing {
         const auto pn2 = map_util_->floatToInt(it[i+1]);
           cv::line(img_, cv::Point(pn1(0), pn1(1)),
                    cv::Point(pn2(0), pn2(1)), color, line_width);
+        }
+      }
+    }
+
+    /// Draw potential map
+    void drawPotential(cv::Scalar c1, cv::Scalar c2) {
+      const auto dim = map_util_->getDim();
+      const auto data = map_util_->getMap();
+      for(int x = 0; x < dim(0); x ++) {
+        for(int y = 0; y < dim(1); y ++) {
+          Vec2i pn(x, y);
+          decimal_t occ = (decimal_t) data[map_util_->getIndex(Vec2i(x,y))]/100;
+          if(occ <= 0 || occ >= 1)
+            continue;
+          cv::Scalar color(0, 0, 0);
+          color[0] = occ * c1[0] + (1-occ) * c2[0];
+          color[1] = occ * c1[1] + (1-occ) * c2[1];
+          color[2] = occ * c1[2] + (1-occ) * c2[2];
+          cv::rectangle(img_, cv::Point(x, y), cv::Point(x, y), color, 1);
         }
       }
     }

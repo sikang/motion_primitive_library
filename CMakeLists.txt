@@ -45,15 +45,15 @@ target_link_libraries(test_planner_2d_with_yaw map_planner ${YAMLCPP_LIBRARIES} 
 add_test(test_planner_2d_with_yaw test_planner_2d_with_yaw ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
 add_executable(test_distance_map_planner_2d test/test_distance_map_planner_2d.cpp)
-target_link_libraries(test_distance_map_planner_2d map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(test_distance_map_planner_2d map_planner ${YAMLCPP_LIBRARIES} ${OpenCV_LIBS})
 add_test(test_distance_map_planner_2d test_distance_map_planner_2d ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
 add_executable(test_distance_map_planner_2d_with_yaw test/test_distance_map_planner_2d_with_yaw.cpp)
-target_link_libraries(test_distance_map_planner_2d_with_yaw map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(test_distance_map_planner_2d_with_yaw map_planner ${YAMLCPP_LIBRARIES} ${OpenCV_LIBS})
 add_test(test_distance_map_planner_2d_with_yaw test_distance_map_planner_2d_with_yaw ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
 add_executable(test_distance_map_planner_2d_iterative test/test_distance_map_planner_2d_iterative.cpp)
-target_link_libraries(test_distance_map_planner_2d_iterative map_planner ${YAMLCPP_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(test_distance_map_planner_2d_iterative map_planner ${YAMLCPP_LIBRARIES} ${OpenCV_LIBS})
 add_test(test_distance_map_planner_2d_iterative test_distance_map_planner_2d_iterative ${CMAKE_SOURCE_DIR}/data/corridor.yaml)
 
 
