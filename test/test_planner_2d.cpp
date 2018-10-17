@@ -81,10 +81,14 @@ int main(int argc, char **argv) {
   // draw trajectory
   if(valid)
     opencv_drawing.drawTraj(planner->getTraj(), red, 2);
-  // show the plot
-  opencv_drawing.show(file_name);
-  // save the plot
-  opencv_drawing.save(file_name + ".jpg");
+
+  if(OPENCV_WINDOW) {
+    // show the plot
+    opencv_drawing.show(file_name);
+  } else {
+    // save the plot
+    opencv_drawing.save(file_name + ".jpg");
+  }
 
   return 0;
 }

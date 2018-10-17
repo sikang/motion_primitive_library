@@ -51,11 +51,14 @@ int main(int argc, char **argv) {
 
   // Draw keyframes
   opencv_drawing.drawPoints(path, black, 5);
-  // show the plot
-  opencv_drawing.show(file_name);
-  // save the plot
-  opencv_drawing.save(file_name + ".jpg");
 
+  if(OPENCV_WINDOW) {
+    // show the plot
+    opencv_drawing.show(file_name);
+  } else {
+    // save the plot
+    opencv_drawing.save(file_name + ".jpg");
+  }
 
   return 0;
 }
