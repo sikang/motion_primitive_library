@@ -107,7 +107,7 @@ class Primitive1D {
     else if (control == Control::JRK || control == Control::JRKxYAW)
       return c(0) * c(0) / 20 * power(t, 5) + c(0) * c(1) / 4 * power(t, 4) +
         (c(1) * c(1) + c(0) * c(2)) / 3 * power(t, 3) +
-        c(2) * c(2) * t * t + c(2) * c(2) * t;
+        c(1) * c(2) * t * t + c(2) * c(2) * t;
     // i = 4, return integration of square of snap
     else if (control == Control::SNP || control == Control::SNPxYAW)
       return c(0) * c(0) / 3 * power(t, 3) + c(0) * c(1) * t * t +
