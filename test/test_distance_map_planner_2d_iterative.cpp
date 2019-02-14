@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
   bool valid_dist = planner->iterativePlan(start, goal, traj, 10); // Plan from start to goal
   double dt_dist = time_dist.Elapsed().count();
   printf("MPL Distance Planner iterative plan takes: %f ms\n", dt_dist);
-	const auto traj_dist = planner->getTraj();
+  const auto traj_dist = planner->getTraj();
 
   // Plotting
   std::string file_name("test_distance_map_planner_2d_iterative");
@@ -113,6 +113,7 @@ int main(int argc, char **argv) {
   } else {
     // save the plot
     opencv_drawing.save(file_name + ".jpg");
+    printf("Saved results to %s.jpg. \n", file_name.c_str());
   }
 
   return 0;

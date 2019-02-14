@@ -65,17 +65,17 @@ int main(int argc, char **argv) {
   bool valid = planner->plan(start, goal); // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
-	printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
-	const auto traj = planner->getTraj();
+  printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
+  const auto traj = planner->getTraj();
 
 
   // Create a path from planned traj
-	const auto ws = traj.getWaypoints();
-	vec_Vec2f path;
-	for(const auto& w: ws)
-		path.push_back(w.pos);
+  const auto ws = traj.getWaypoints();
+  vec_Vec2f path;
+  for(const auto& w: ws)
+    path.push_back(w.pos);
   // Initiaize planner as a distance map planner
-	planner.reset(new MPL::OccMapPlanner(true));
+  planner.reset(new MPL::OccMapPlanner(true));
   planner->setMapUtil(map_util); // Set collision checking function
   planner->setVmax(1.0);         // Set max velocity
   planner->setAmax(1.0);         // Set max acceleration
@@ -83,9 +83,9 @@ int main(int argc, char **argv) {
   planner->setU(U);              // Set control input
   planner->setEpsilon(1.0);           // Set heursitic to zero
 
-	planner->setSearchRadius(Vec2f(0.5, 0.5)); // Set search region radius
-	planner->setSearchRegion(path); // Set search region around path
-	planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
+  planner->setSearchRadius(Vec2f(0.5, 0.5)); // Set search region radius
+  planner->setSearchRegion(path); // Set search region around path
+  planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
   planner->setPotentialWeight(0.5); // Set potential weight
   planner->setGradientWeight(0); // Set gradient weight
   planner->updatePotentialMap(start.pos); // Update potential map
@@ -96,7 +96,7 @@ int main(int argc, char **argv) {
   double dt_dist = time_dist.Elapsed().count();
   printf("MPL Distance Planner takes: %f ms\n", dt_dist);
   printf("MPL Distance Planner expanded states: %zu\n", planner->getCloseSet().size());
-	const auto traj_dist = planner->getTraj();
+  const auto traj_dist = planner->getTraj();
 
   // Plotting
   std::string file_name("test_distance_map_planner_2d");
@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
   } else {
     // save the plot
     opencv_drawing.save(file_name + ".jpg");
+    printf("Saved results to %s.jpg. \n", file_name.c_str());
   }
 
   return 0;

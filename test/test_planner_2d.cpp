@@ -88,6 +88,7 @@ int main(int argc, char **argv) {
   } else {
     // save the plot
     opencv_drawing.save(file_name + ".jpg");
+    printf("Saved results to %s.jpg. \n", file_name.c_str());
   }
 
   return 0;

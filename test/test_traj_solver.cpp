@@ -13,8 +13,8 @@ int main(int argc, char **argv) {
   map_util->setMap(origin, dim, map, res);
 
   // Draw path and trajectories
-	vec_Vec2f path;
-	path.push_back(Vec2f(0, 0));
+  vec_Vec2f path;
+  path.push_back(Vec2f(0, 0));
   path.push_back(Vec2f(1, 0));
   path.push_back(Vec2f(2, 1));
   path.push_back(Vec2f(5, 1));
@@ -48,7 +48,6 @@ int main(int argc, char **argv) {
     opencv_drawing.drawText("min jerk trajectory", dim - Vec2i(350, 20), 0.7, blue);
   }
 
-
   // Draw keyframes
   opencv_drawing.drawPoints(path, black, 5);
 
@@ -58,6 +57,7 @@ int main(int argc, char **argv) {
   } else {
     // save the plot
     opencv_drawing.save(file_name + ".jpg");
+    printf("Saved results to %s.jpg. \n", file_name.c_str());
   }
 
   return 0;
