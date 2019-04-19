@@ -66,7 +66,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">state_space.h File Reference</div>  </div>
@@ -75,8 +74,8 @@ $(function() {
 
 <p>state space class for graph search  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;boost/heap/d_ary_heap.hpp&gt;</code><br />
-<code>#include &lt;<a class="el" href="env__base_8h_source.html">mpl_planner/common/env_base.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="env__base_8h_source.html">mpl_planner/common/env_base.h</a>&gt;</code><br />
+<code>#include &lt;boost/heap/d_ary_heap.hpp&gt;</code><br />
 <code>#include &lt;boost/unordered_map.hpp&gt;</code><br />
 </div>
 <p><a href="state__space_8h_source.html">Go to the source code of this file.</a></p>
@@ -93,27 +92,21 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structMPL_1_1State.html" title="Lattice of the graph in graph search. ">State</a> space.  <a href="structMPL_1_1StateSpace.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceMPL"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMPL.html">MPL</a></td></tr>
-<tr class="memdesc:namespaceMPL"><td class="mdescLeft">&#160;</td><td class="mdescRight">Motion planning base util class. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:aeb417a270d20a7a87a1b93de846f0a12"><td class="memTemplParams" colspan="2"><a id="aeb417a270d20a7a87a1b93de846f0a12"></a>
 template&lt;typename state &gt; </td></tr>
-<tr class="memitem:aeb417a270d20a7a87a1b93de846f0a12"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#aeb417a270d20a7a87a1b93de846f0a12">MPL::priorityQueue</a> = boost::heap::d_ary_heap&lt; std::pair&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>, std::shared_ptr&lt; state &gt; &gt;, boost::heap::mutable_&lt; true &gt;, boost::heap::arity&lt; 2 &gt;, boost::heap::compare&lt; compare_pair&lt; state &gt; &gt;&gt;</td></tr>
+<tr class="memitem:aeb417a270d20a7a87a1b93de846f0a12"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="state__space_8h.html#aeb417a270d20a7a87a1b93de846f0a12">MPL::priorityQueue</a> = boost::heap::d_ary_heap&lt; std::pair&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>, std::shared_ptr&lt; state &gt; &gt;, boost::heap::mutable_&lt; true &gt;, boost::heap::arity&lt; 2 &gt;, boost::heap::compare&lt; compare_pair&lt; state &gt; &gt;&gt;</td></tr>
 <tr class="memdesc:aeb417a270d20a7a87a1b93de846f0a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define priority queue. <br /></td></tr>
 <tr class="separator:aeb417a270d20a7a87a1b93de846f0a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8a4429fb2330f70b28008a41190f55"><td class="memTemplParams" colspan="2"><a id="a4b8a4429fb2330f70b28008a41190f55"></a>
 template&lt;typename Coord &gt; </td></tr>
-<tr class="memitem:a4b8a4429fb2330f70b28008a41190f55"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a4b8a4429fb2330f70b28008a41190f55">MPL::StatePtr</a> = std::shared_ptr&lt; State&lt; Coord &gt; &gt;</td></tr>
+<tr class="memitem:a4b8a4429fb2330f70b28008a41190f55"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="state__space_8h.html#a4b8a4429fb2330f70b28008a41190f55">MPL::StatePtr</a> = std::shared_ptr&lt; State&lt; Coord &gt; &gt;</td></tr>
 <tr class="memdesc:a4b8a4429fb2330f70b28008a41190f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare StatePtr. <br /></td></tr>
 <tr class="separator:a4b8a4429fb2330f70b28008a41190f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b38effa14036ef219eb8ac726a45bc7"><td class="memTemplParams" colspan="2"><a id="a6b38effa14036ef219eb8ac726a45bc7"></a>
 template&lt;typename Coord &gt; </td></tr>
-<tr class="memitem:a6b38effa14036ef219eb8ac726a45bc7"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceMPL.html#a6b38effa14036ef219eb8ac726a45bc7">MPL::hashMap</a> = boost::unordered_map&lt; Coord, StatePtr&lt; Coord &gt;, boost::hash&lt; Coord &gt; &gt;</td></tr>
+<tr class="memitem:a6b38effa14036ef219eb8ac726a45bc7"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="state__space_8h.html#a6b38effa14036ef219eb8ac726a45bc7">MPL::hashMap</a> = boost::unordered_map&lt; Coord, StatePtr&lt; Coord &gt;, boost::hash&lt; Coord &gt; &gt;</td></tr>
 <tr class="memdesc:a6b38effa14036ef219eb8ac726a45bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hashmap type. <br /></td></tr>
 <tr class="separator:a6b38effa14036ef219eb8ac726a45bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

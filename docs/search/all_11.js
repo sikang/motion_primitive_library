@@ -64,7 +64,7 @@ var searchData=
   ['start_5ft_5f',['start_t_',['../structMPL_1_1StateSpace.html#a8881e96e1659f47e74f612e8255a732d',1,'MPL::StateSpace']]],
   ['state',['State',['../structMPL_1_1State.html',1,'MPL::State&lt; Coord &gt;'],['../structMPL_1_1State.html#a269bd50c7a4b6c4b961b4025a95e0aa6',1,'MPL::State::State()']]],
   ['state_5fspace_2eh',['state_space.h',['../state__space_8h.html',1,'']]],
-  ['stateptr',['StatePtr',['../namespaceMPL.html#a4b8a4429fb2330f70b28008a41190f55',1,'MPL']]],
+  ['stateptr',['StatePtr',['../state__space_8h.html#a4b8a4429fb2330f70b28008a41190f55',1,'MPL']]],
   ['statespace',['StateSpace',['../structMPL_1_1StateSpace.html',1,'MPL::StateSpace&lt; Dim, Coord &gt;'],['../structMPL_1_1StateSpace.html#a548885dbc846414404b7fa58a83468bc',1,'MPL::StateSpace::StateSpace()']]],
   ['succ_5faction_5fcost',['succ_action_cost',['../structMPL_1_1State.html#a338ab4fc8cfa8baa511811db81689148',1,'MPL::State']]],
   ['succ_5faction_5fid',['succ_action_id',['../structMPL_1_1State.html#a6f52a1541ea0e52d514deffdea70b8ca',1,'MPL::State']]],

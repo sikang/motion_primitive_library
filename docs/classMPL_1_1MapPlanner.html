@@ -60,7 +60,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceMPL.html">MPL</a></li><li class="navelem"><a class="el" href="classMPL_1_1MapPlanner.html">MapPlanner</a></li>  </ul>
+<li class="navelem"><b>MPL</b></li><li class="navelem"><a class="el" href="classMPL_1_1MapPlanner.html">MapPlanner</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -293,9 +293,7 @@ Protected Attributes</h2></td></tr>
 std::shared_ptr&lt; <a class="el" href="classMPL_1_1MapUtil.html">MapUtil</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#a86188fa89468079b0bff5907ed3a2447">map_util_</a></td></tr>
 <tr class="memdesc:a86188fa89468079b0bff5907ed3a2447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map util. <br /></td></tr>
 <tr class="separator:a86188fa89468079b0bff5907ed3a2447"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd5ca72cd6fe9dca7f57bbeeef489168"><td class="memItemLeft" align="right" valign="top"><a id="abd5ca72cd6fe9dca7f57bbeeef489168"></a>
-linkedHashMap&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#abd5ca72cd6fe9dca7f57bbeeef489168">lhm_</a></td></tr>
-<tr class="memdesc:abd5ca72cd6fe9dca7f57bbeeef489168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linked table that records voxel and corresponding primitives passed through. <br /></td></tr>
+<tr class="memitem:abd5ca72cd6fe9dca7f57bbeeef489168"><td class="memItemLeft" align="right" valign="top">linkedHashMap&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#abd5ca72cd6fe9dca7f57bbeeef489168">lhm_</a></td></tr>
 <tr class="separator:abd5ca72cd6fe9dca7f57bbeeef489168"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3df9c4896d164c368c5473322914d480"><td class="memItemLeft" align="right" valign="top"><a id="a3df9c4896d164c368c5473322914d480"></a>
 int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#a3df9c4896d164c368c5473322914d480">H_MAX</a> {100}</td></tr>
@@ -314,8 +312,8 @@ int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memdesc:a57edfafe70fb80930b97e5c27601966e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask for generating potential field around obstacle. <br /></td></tr>
 <tr class="separator:a57edfafe70fb80930b97e5c27601966e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8d57f43e3c67b23534b22e35f089978"><td class="memItemLeft" align="right" valign="top"><a id="ad8d57f43e3c67b23534b22e35f089978"></a>
-<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#ad8d57f43e3c67b23534b22e35f089978">pow_</a> {1}</td></tr>
-<tr class="memdesc:ad8d57f43e3c67b23534b22e35f089978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Potential value power. <br /></td></tr>
+<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#ad8d57f43e3c67b23534b22e35f089978">pow_</a> {1.0}</td></tr>
+<tr class="memdesc:ad8d57f43e3c67b23534b22e35f089978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power of potential value. <br /></td></tr>
 <tr class="separator:ad8d57f43e3c67b23534b22e35f089978"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42b34c4864622ddf25f274baf27c7891"><td class="memItemLeft" align="right" valign="top"><a id="a42b34c4864622ddf25f274baf27c7891"></a>
 <a class="el" href="data__type_8h.html#a6b9210d48a0a541940af71827aad1b41">vec_E</a>&lt; <a class="el" href="data__type_8h.html#a3a0c45655a5e009e56634ccde0c5c575">Vecf</a>&lt; Dim &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPL_1_1MapPlanner.html#a42b34c4864622ddf25f274baf27c7891">gradient_map_</a></td></tr>
@@ -570,6 +568,32 @@ template&lt;int Dim&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abd5ca72cd6fe9dca7f57bbeeef489168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd5ca72cd6fe9dca7f57bbeeef489168">&#9670;&nbsp;</a></span>lhm_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">linkedHashMap&lt;Dim&gt; <a class="el" href="classMPL_1_1MapPlanner.html">MPL::MapPlanner</a>&lt; Dim &gt;::lhm_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Linked table that records voxel and corresponding primitives passed through </p>
 
 </div>
 </div>

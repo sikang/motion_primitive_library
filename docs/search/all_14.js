@@ -29,5 +29,5 @@ var searchData=
   ['velxyaw',['VELxYAW',['../control_8h.html#af3600af994b25be7c568791eefdadf2eac5da965932ce198aa4b40a8e3def3852',1,'Control']]],
   ['verbose_5f',['verbose_',['../classMPL_1_1GraphSearch.html#a1963f5a261a5f83f52e5e64ea41d65ff',1,'MPL::GraphSearch']]],
   ['virtualpoint',['VirtualPoint',['../structVirtualPoint.html',1,'']]],
-  ['voxelmapplanner',['VoxelMapPlanner',['../namespaceMPL.html#ac02de4f028b372f4f0396ae3d67eac55',1,'MPL']]]
+  ['voxelmapplanner',['VoxelMapPlanner',['../map__planner_8h.html#ac02de4f028b372f4f0396ae3d67eac55',1,'MPL']]]
 ];

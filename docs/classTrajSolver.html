@@ -88,13 +88,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#ac19cb6eed090945ebd4d847631434819">setV</a> (<a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> v)</td></tr>
 <tr class="memdesc:ac19cb6eed090945ebd4d847631434819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set velocity used for internal time allocation. <br /></td></tr>
 <tr class="separator:ac19cb6eed090945ebd4d847631434819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a18b04911e00ad28da5fe5070a73430"><td class="memItemLeft" align="right" valign="top"><a id="a6a18b04911e00ad28da5fe5070a73430"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a6a18b04911e00ad28da5fe5070a73430">setDts</a> (const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
-<tr class="memdesc:a6a18b04911e00ad28da5fe5070a73430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time allocation (optional), overwrite global dts, if not set, we will set a time allocation using L-inf. <br /></td></tr>
+<tr class="memitem:a6a18b04911e00ad28da5fe5070a73430"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a6a18b04911e00ad28da5fe5070a73430">setDts</a> (const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;dts)</td></tr>
 <tr class="separator:a6a18b04911e00ad28da5fe5070a73430"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad69444b555306f3825f3fff3aec463f5"><td class="memItemLeft" align="right" valign="top"><a id="ad69444b555306f3825f3fff3aec463f5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#ad69444b555306f3825f3fff3aec463f5">setPath</a> (const <a class="el" href="data__type_8h.html#a0a3b37beb40c06edc02cb4b7339f2b96">vec_Vecf</a>&lt; Dim &gt; &amp;path)</td></tr>
-<tr class="memdesc:ad69444b555306f3825f3fff3aec463f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> array from path, overwrite global vars, in this mode, the intermediate <a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> are with <code>Control::VEL</code> <br /></td></tr>
+<tr class="memitem:ad69444b555306f3825f3fff3aec463f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#ad69444b555306f3825f3fff3aec463f5">setPath</a> (const <a class="el" href="data__type_8h.html#a0a3b37beb40c06edc02cb4b7339f2b96">vec_Vecf</a>&lt; Dim &gt; &amp;path)</td></tr>
 <tr class="separator:ad69444b555306f3825f3fff3aec463f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b874da171422147e61b2b8f7ecb20dd"><td class="memItemLeft" align="right" valign="top"><a id="a9b874da171422147e61b2b8f7ecb20dd"></a>
 <a class="el" href="classTrajectory.html">Trajectory</a>&lt; Dim &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrajSolver.html#a9b874da171422147e61b2b8f7ecb20dd">solve</a> (bool verbose=false)</td></tr>
@@ -211,6 +207,65 @@ template&lt;int Dim&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6a18b04911e00ad28da5fe5070a73430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a18b04911e00ad28da5fe5070a73430">&#9670;&nbsp;</a></span>setDts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classTrajSolver.html">TrajSolver</a>&lt; Dim &gt;::setDts </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="data__type_8h.html#a7c99d9360fc6cac2762b786e2fb52266">decimal_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dts</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set time allocation (optional), overwrite global dts, if not set, we will set a time allocation using L-inf </p>
+
+</div>
+</div>
+<a id="ad69444b555306f3825f3fff3aec463f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad69444b555306f3825f3fff3aec463f5">&#9670;&nbsp;</a></span>setPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int Dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classTrajSolver.html">TrajSolver</a>&lt; Dim &gt;::setPath </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="data__type_8h.html#a0a3b37beb40c06edc02cb4b7339f2b96">vec_Vecf</a>&lt; Dim &gt; &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set <a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> array from path, overwrite global vars, in this mode, the intermediate <a class="el" href="structWaypoint.html" title="Waypoint base class. ">Waypoint</a> are with <code>Control::VEL</code> </p>
 
 </div>
 </div>

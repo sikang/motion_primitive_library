@@ -19,6 +19,5 @@ var searchData=
   ['max_5facc',['max_acc',['../classPrimitive.html#abc3547fefaf5d3ea5421c7a4e8f9364c',1,'Primitive']]],
   ['max_5fjrk',['max_jrk',['../classPrimitive.html#a0a5a1461298a7f3ebd653faedd6866e2',1,'Primitive']]],
   ['max_5fnum_5f',['max_num_',['../classMPL_1_1PlannerBase.html#a3453917453091eacf0806d08a65d2766',1,'MPL::PlannerBase']]],
-  ['max_5fvel',['max_vel',['../classPrimitive.html#a6c369ebe499544a832c88b6fc4ada0e4',1,'Primitive']]],
-  ['mpl',['MPL',['../namespaceMPL.html',1,'']]]
+  ['max_5fvel',['max_vel',['../classPrimitive.html#a6c369ebe499544a832c88b6fc4ada0e4',1,'Primitive']]]
 ];

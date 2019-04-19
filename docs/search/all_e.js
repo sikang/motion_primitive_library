@@ -39,7 +39,7 @@ var searchData=
   ['print',['print',['../structWaypoint.html#ae6cb1a0e7b8c7081c3d5ee84c22fe3ad',1,'Waypoint::print()'],['../primitive_8h.html#aa3b71ca47e8823183e68290084939a66',1,'print():&#160;primitive.h']]],
   ['print_5fmax',['print_max',['../primitive_8h.html#ae4c0498c7f499c8ad1157e4b7ad63c13',1,'primitive.h']]],
   ['prior_5ftraj_5f',['prior_traj_',['../classMPL_1_1env__base.html#ad12eb1d6268bebc2542a875a3278551a',1,'MPL::env_base']]],
-  ['priorityqueue',['priorityQueue',['../namespaceMPL.html#aeb417a270d20a7a87a1b93de846f0a12',1,'MPL']]],
+  ['priorityqueue',['priorityQueue',['../state__space_8h.html#aeb417a270d20a7a87a1b93de846f0a12',1,'MPL']]],
   ['prs_5f',['prs_',['../classPrimitive.html#ada7fb3a9bbce1f574d3b9e49ac6631cd',1,'Primitive']]],
   ['ptraj_5f',['ptraj_',['../classPolySolver.html#a18b1d7df17bc4c1d97c98448e1cc44bd',1,'PolySolver']]]
 ];
