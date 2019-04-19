@@ -5,16 +5,18 @@
 #ifndef MPL_STATE_SPACE_H
 #define MPL_STATE_SPACE_H
 
-#include <boost/heap/d_ary_heap.hpp> // boost::heap::d_ary_heap
 #include <mpl_planner/common/env_base.h>
-#include <boost/unordered_map.hpp> // std::unordered_map
+
+#include <boost/heap/d_ary_heap.hpp>  // boost::heap::d_ary_heap
+#include <boost/unordered_map.hpp>    // std::unordered_map
 
 namespace MPL {
 /// Heap element comparison
-template <typename state> struct compare_pair {
-  bool
-  operator()(const std::pair<decimal_t, std::shared_ptr<state>> &p1,
-             const std::pair<decimal_t, std::shared_ptr<state>> &p2) const {
+template <typename state>
+struct compare_pair {
+  bool operator()(
+      const std::pair<decimal_t, std::shared_ptr<state>> &p1,
+      const std::pair<decimal_t, std::shared_ptr<state>> &p2) const {
     if (p1.first == p2.first) {
       // if equal compare gvals
       return std::min(p1.second->g, p1.second->rhs) >
@@ -31,7 +33,8 @@ using priorityQueue =
                             boost::heap::mutable_<true>, boost::heap::arity<2>,
                             boost::heap::compare<compare_pair<state>>>;
 /// Lattice of the graph in graph search
-template <typename Coord> struct State {
+template <typename Coord>
+struct State {
   /// state
   Coord coord;
   /// coordinates of successors
@@ -63,17 +66,21 @@ template <typename Coord> struct State {
   bool iterationclosed = false;
 
   /// Simple constructor
-  State(const Coord& coord) : coord(coord) {}
+  State(const Coord &coord) : coord(coord) {}
 };
 
 /// Declare StatePtr
-template <typename Coord> using StatePtr = std::shared_ptr<State<Coord>>;
+template <typename Coord>
+using StatePtr = std::shared_ptr<State<Coord>>;
 
 /// Define hashmap type
-template <typename Coord> using hashMap = boost::unordered_map<Coord, StatePtr<Coord>, boost::hash<Coord>>;
+template <typename Coord>
+using hashMap =
+    boost::unordered_map<Coord, StatePtr<Coord>, boost::hash<Coord>>;
 
 /// State space
-template <int Dim, typename Coord> struct StateSpace {
+template <int Dim, typename Coord>
+struct StateSpace {
   /// Priority queue, open set
   priorityQueue<State<Coord>> pq_;
   /// Hashmap, stores all the nodes
@@ -97,7 +104,7 @@ template <int Dim, typename Coord> struct StateSpace {
   StateSpace(decimal_t eps = 1) : eps_(eps) {}
 
   decimal_t getInitTime() const {
-    if(best_child_.empty())
+    if (best_child_.empty())
       return 0;
     else
       return best_child_.front()->coord.t;
@@ -105,10 +112,9 @@ template <int Dim, typename Coord> struct StateSpace {
   /**
    * @brief Get the subtree
    * @param time_step indicates the root of the subtree (best_child_[time_step])
-  */
+   */
   void getSubStateSpace(int time_step) {
-    if (best_child_.empty())
-      return;
+    if (best_child_.empty()) return;
 
     StatePtr<Coord> currNode_ptr = best_child_[time_step];
     start_g_ = currNode_ptr->g;
@@ -127,7 +133,7 @@ template <int Dim, typename Coord> struct StateSpace {
       it.second->pred_coord.clear();
     }
 
-    //printf("getSubstatespace hm: %zu\n", hm_.size());
+    // printf("getSubstatespace hm: %zu\n", hm_.size());
 
     currNode_ptr->g = start_g_;
     currNode_ptr->rhs = start_rhs_;
@@ -146,8 +152,7 @@ template <int Dim, typename Coord> struct StateSpace {
         Coord succ_coord = currNode_ptr->succ_coord[i];
 
         StatePtr<Coord> &succNode_ptr = new_hm[succ_coord];
-        if (!succNode_ptr)
-          succNode_ptr = hm_[succ_coord];
+        if (!succNode_ptr) succNode_ptr = hm_[succ_coord];
         if (!succNode_ptr) {
           printf("critical bug!!!!\n\n");
           succ_coord.print("Does not exist!");
@@ -163,19 +168,20 @@ template <int Dim, typename Coord> struct StateSpace {
         if (id == -1) {
           succNode_ptr->pred_coord.push_back(currNode_ptr->coord);
           succNode_ptr->pred_action_cost.push_back(
-            currNode_ptr->succ_action_cost[i]);
-          succNode_ptr->pred_action_id.push_back(currNode_ptr->succ_action_id[i]);
+              currNode_ptr->succ_action_cost[i]);
+          succNode_ptr->pred_action_id.push_back(
+              currNode_ptr->succ_action_id[i]);
         }
 
         decimal_t tentative_rhs =
-          currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
+            currNode_ptr->rhs + currNode_ptr->succ_action_cost[i];
 
         if (tentative_rhs < succNode_ptr->rhs) {
-            succNode_ptr->rhs = tentative_rhs;
+          succNode_ptr->rhs = tentative_rhs;
           if (succNode_ptr->iterationclosed) {
-            succNode_ptr->g = succNode_ptr->rhs; // set g == rhs
+            succNode_ptr->g = succNode_ptr->rhs;  // set g == rhs
             succNode_ptr->heapkey =
-              epq.push(std::make_pair(succNode_ptr->rhs, succNode_ptr));
+                epq.push(std::make_pair(succNode_ptr->rhs, succNode_ptr));
           }
         }
       }
@@ -185,15 +191,16 @@ template <int Dim, typename Coord> struct StateSpace {
     pq_.clear();
     for (auto &it : new_hm) {
       if (it.second->iterationopened && !it.second->iterationclosed) {
-       // state->succ_coord.clear();
-       // state->succ_action_cost.clear();
-       // state->succ_action_id.clear();
+        // state->succ_coord.clear();
+        // state->succ_action_cost.clear();
+        // state->succ_action_id.clear();
         it.second->heapkey =
-          pq_.push(std::make_pair(calculateKey(it.second), it.second));
+            pq_.push(std::make_pair(calculateKey(it.second), it.second));
       }
     }
 
-    //printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(), hm_.size());
+    // printf("getSubstatespace new_hm: %zu, hm_: %zu\n", new_hm.size(),
+    // hm_.size());
   }
 
   /// Increase the cost of actions
@@ -201,10 +208,10 @@ template <int Dim, typename Coord> struct StateSpace {
     for (const auto &affected_node : states) {
       // update edge
       StatePtr<Coord> &succNode_ptr = hm_[affected_node.first];
-      const int i = affected_node.second; // i-th pred
+      const int i = affected_node.second;  // i-th pred
       if (!std::isinf(succNode_ptr->pred_action_cost[i])) {
         succNode_ptr->pred_action_cost[i] =
-          std::numeric_limits<decimal_t>::infinity();
+            std::numeric_limits<decimal_t>::infinity();
         updateNode(succNode_ptr);
 
         Coord parent_key = succNode_ptr->pred_coord[i];
@@ -212,7 +219,7 @@ template <int Dim, typename Coord> struct StateSpace {
         for (size_t j = 0; j < hm_[parent_key]->succ_action_id.size(); j++) {
           if (succ_act_id == hm_[parent_key]->succ_action_id[j]) {
             hm_[parent_key]->succ_action_cost[j] =
-              std::numeric_limits<decimal_t>::infinity();
+                std::numeric_limits<decimal_t>::infinity();
             break;
           }
         }
@@ -236,7 +243,7 @@ template <int Dim, typename Coord> struct StateSpace {
           for (size_t j = 0; j < hm_[parent_key]->succ_action_id.size(); j++) {
             if (succ_act_id == hm_[parent_key]->succ_action_id[j]) {
               hm_[parent_key]->succ_action_cost[j] =
-                succNode_ptr->pred_action_cost[i];
+                  succNode_ptr->pred_action_cost[i];
               break;
             }
           }
@@ -252,7 +259,8 @@ template <int Dim, typename Coord> struct StateSpace {
       currNode_ptr->rhs = std::numeric_limits<decimal_t>::infinity();
       for (size_t i = 0; i < currNode_ptr->pred_coord.size(); i++) {
         Coord pred_key = currNode_ptr->pred_coord[i];
-        if (currNode_ptr->rhs > hm_[pred_key]->g + currNode_ptr->pred_action_cost[i])
+        if (currNode_ptr->rhs >
+            hm_[pred_key]->g + currNode_ptr->pred_action_cost[i])
           currNode_ptr->rhs =
               hm_[pred_key]->g + currNode_ptr->pred_action_cost[i];
       }
@@ -273,7 +281,6 @@ template <int Dim, typename Coord> struct StateSpace {
     }
   }
 
-
   /// Calculate the fval as min(rhs, g) + h
   decimal_t calculateKey(const StatePtr<Coord> &node) {
     return std::min(node->g, node->rhs) + eps_ * node->h;
@@ -286,23 +293,21 @@ template <int Dim, typename Coord> struct StateSpace {
       if (!it.second) {
         std::cout << "error!!! detect null element!" << std::endl;
         it.first.print("Not exist!");
-      }
-      else {
+      } else {
         bool null_succ = false;
-        for(size_t i = 0; i < it.second->succ_coord.size(); i++) {
-          if(hm.find(it.second->succ_coord[i]) == hm.end()) {
+        for (size_t i = 0; i < it.second->succ_coord.size(); i++) {
+          if (hm.find(it.second->succ_coord[i]) == hm.end()) {
             std::cout << "error!!! detect null succ !" << std::endl;
-            //it.second->succ_coord[i].print("Not exist!");
+            // it.second->succ_coord[i].print("Not exist!");
             null_succ = true;
           }
         }
-        if(null_succ) {
+        if (null_succ) {
           it.first.print("From this pred:");
-          printf("rhs: %f, g: %f, open: %d, closed: %d\n\n\n",
-                 it.second->rhs, it.second->g,
-                 it.second->iterationopened, it.second->iterationclosed);
+          printf("rhs: %f, g: %f, open: %d, closed: %d\n\n\n", it.second->rhs,
+                 it.second->g, it.second->iterationopened,
+                 it.second->iterationclosed);
         }
-
       }
     }
     return;
@@ -340,8 +345,8 @@ template <int Dim, typename Coord> struct StateSpace {
     printf("hm: [%zu], open: [%d], closed: [%d], null: [%d]\n", hm_.size(),
            open_cnt, close_cnt, null_cnt);
   }
-
 };
-}
+
+}  // namespace MPL
 
 #endif

@@ -3,11 +3,13 @@
 template <int Dim>
 PolySolver<Dim>::PolySolver(unsigned int smooth_derivative_order,
                             unsigned int minimize_derivative, bool debug)
-    : N_(2 * (smooth_derivative_order + 1)), R_(minimize_derivative),
+    : N_(2 * (smooth_derivative_order + 1)),
+      R_(minimize_derivative),
       debug_(debug) {
   ptraj_ = std::make_shared<PolyTraj<Dim>>();
-  if(debug_) {
-    std::cout << "smooth_derivative_order: " << smooth_derivative_order << std::endl;
+  if (debug_) {
+    std::cout << "smooth_derivative_order: " << smooth_derivative_order
+              << std::endl;
     std::cout << "minimize_derivative: " << minimize_derivative << std::endl;
   }
 }
@@ -26,8 +28,7 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
 
   const unsigned int num_waypoints = waypoints.size();
   const unsigned int num_segments = num_waypoints - 1;
-  if (num_waypoints < 2)
-    return false;
+  if (num_waypoints < 2) return false;
   if (debug_) {
     for (unsigned int i = 0; i < num_waypoints; i++)
       waypoints[i].print("waypoint" + std::to_string(i) + ":");
@@ -42,16 +43,14 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
       // A_0
       if (n < N_ / 2) {
         int val = 1;
-        for (unsigned int m = 0; m < n; m++)
-          val *= (n - m);
+        for (unsigned int m = 0; m < n; m++) val *= (n - m);
         A(i * N_ + n, i * N_ + n) = val;
       }
       // A_T
       for (unsigned int r = 0; r < N_ / 2; r++) {
         if (r <= n) {
           int val = 1;
-          for (unsigned int m = 0; m < r; m++)
-            val *= (n - m);
+          for (unsigned int m = 0; m < r; m++) val *= (n - m);
           A(i * N_ + N_ / 2 + r, i * N_ + n) = val * power(seg_time, n - r);
         }
       }
@@ -59,8 +58,7 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
       for (unsigned int r = 0; r < N_; r++) {
         if (r >= R_ && n >= R_) {
           int val = 1;
-          for (unsigned int m = 0; m < R_; m++)
-            val *= (r - m) * (n - m);
+          for (unsigned int m = 0; m < R_; m++) val *= (r - m) * (n - m);
           Q(i * N_ + r, i * N_ + n) =
               val * power(seg_time, r + n - 2 * R_ + 1) / (r + n - 2 * R_ + 1);
         }
@@ -75,14 +73,10 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
   const unsigned int num_total_derivatives = num_waypoints * N_ / 2;
   unsigned int num_fixed_derivatives = 0;
   for (const auto &it : waypoints) {
-    if (it.use_pos && smooth_derivative_order >= 0)
-      num_fixed_derivatives++;
-    if (it.use_vel && smooth_derivative_order >= 1)
-      num_fixed_derivatives++;
-    if (it.use_acc && smooth_derivative_order >= 2)
-      num_fixed_derivatives++;
-    if (it.use_jrk && smooth_derivative_order >= 3)
-      num_fixed_derivatives++;
+    if (it.use_pos && smooth_derivative_order >= 0) num_fixed_derivatives++;
+    if (it.use_vel && smooth_derivative_order >= 1) num_fixed_derivatives++;
+    if (it.use_acc && smooth_derivative_order >= 2) num_fixed_derivatives++;
+    if (it.use_jrk && smooth_derivative_order >= 3) num_fixed_derivatives++;
   }
   const unsigned int num_free_derivatives =
       num_total_derivatives - num_fixed_derivatives;
@@ -157,8 +151,7 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
       free_cnt++;
     }
 
-    if (id > 0 && id < num_waypoints - 1)
-      raw_cnt += N_ / 2;
+    if (id > 0 && id < num_waypoints - 1) raw_cnt += N_ / 2;
     id++;
   }
 
@@ -171,8 +164,7 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
 
   // M
   MatDf M = MatDf::Zero(num_segments * N_, num_waypoints * N_ / 2);
-  for (const auto &it : permutation_table)
-    M(it.first, it.second) = 1;
+  for (const auto &it : permutation_table) M(it.first, it.second) = 1;
 
   // Eigen::MatrixXf A_inv = A.inverse();
   MatDf A_inv_M = A.partialPivLu().solve(M);
@@ -206,27 +198,23 @@ bool PolySolver<Dim>::solve(const vec_E<Waypoint<Dim>> &waypoints,
     }
   }
 
-  if (debug_)
-    std::cout << "Df:\n" << Df << std::endl;
+  if (debug_) std::cout << "Df:\n" << Df << std::endl;
   MatDNf<Dim> D = MatDNf<Dim>(num_waypoints * N_ / 2, Dim);
   D.topRows(num_fixed_derivatives) = Df;
 
   if (num_waypoints > 2 && num_free_derivatives > 0) {
     MatDNf<Dim> Dp = -Rpp.partialPivLu().solve(Rpf * Df);
-    if (debug_)
-      std::cout << "Dp:\n" << Dp << std::endl;
+    if (debug_) std::cout << "Dp:\n" << Dp << std::endl;
     D.bottomRows(num_free_derivatives) = Dp;
   }
 
   MatDNf<Dim> d = M * D;
-  if (debug_)
-    std::cout << "d:\n" << d << std::endl;
+  if (debug_) std::cout << "d:\n" << d << std::endl;
   for (unsigned int i = 0; i < num_segments; i++) {
     const MatDNf<Dim> p = A.block(i * N_, i * N_, N_, N_)
                               .partialPivLu()
                               .solve(d.block(i * N_, 0, N_, Dim));
-    if (debug_)
-      std::cout << "p:\n" << p << std::endl;
+    if (debug_) std::cout << "p:\n" << p << std::endl;
     ptraj_->addCoeff(p);
   }
   return true;

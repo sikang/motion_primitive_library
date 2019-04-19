@@ -6,8 +6,8 @@
 #ifndef MPL_MAP_PLANNER_H
 #define MPL_MAP_PLANNER_H
 
-#include <mpl_planner/env/env_map.h>
 #include <mpl_planner/common/planner_base.h>
+#include <mpl_planner/env/env_map.h>
 
 namespace MPL {
 
@@ -17,15 +17,16 @@ using linkedHashMap =
 /**
  * @brief Motion primitive planner in voxel map
  */
-template <int Dim> class MapPlanner: public PlannerBase<Dim, Waypoint<Dim>> {
-public:
+template <int Dim>
+class MapPlanner : public PlannerBase<Dim, Waypoint<Dim>> {
+ public:
   /**
    * @brief Simple constructor
    * @param verbose enable debug messages
    */
   MapPlanner(bool verbose);
   /// Set map util
-  virtual void setMapUtil(const std::shared_ptr<MapUtil<Dim>> &map_util);
+  virtual void setMapUtil(const std::shared_ptr<MapUtil<Dim>>& map_util);
   /**
    * @brief Set search region
    * @param path a sequence of waypoints from a path or trajectory
@@ -49,8 +50,6 @@ public:
   /// Get the gradient cloud, works for 2D
   vec_Vec3f getGradientCloud(decimal_t h_max = 1.0, int i = 0);
 
-
-
   /// Get search region
   vec_Vecf<Dim> getSearchRegion() const;
   /// Get linked voxels
@@ -61,14 +60,14 @@ public:
    *
    * The function returns affected primitives for debug purpose
    */
-  void updateBlockedNodes(const vec_Veci<Dim> &pns);
+  void updateBlockedNodes(const vec_Veci<Dim>& pns);
   /**
    * @brief Update edge costs according to the new cleared nodes
    * @param pns the new cleared voxels
    *
    * The function returns affected primitives for debug purpose
    */
-  void updateClearedNodes(const vec_Veci<Dim> &pns);
+  void updateClearedNodes(const vec_Veci<Dim>& pns);
 
   /**
    * @brief Generate potential map
@@ -84,10 +83,10 @@ public:
    * @param raw_traj the trajectory to be perturbed
    * @param max_iter_num number of max iterations, default value is 3
    */
-  bool iterativePlan(const Waypoint<Dim> &start, const Waypoint<Dim> &goal,
-                     const Trajectory<Dim> &raw_traj, int max_iter_num = 3);
+  bool iterativePlan(const Waypoint<Dim>& start, const Waypoint<Dim>& goal,
+                     const Trajectory<Dim>& raw_traj, int max_iter_num = 3);
 
-protected:
+ protected:
   /// Create mask for potential
   void createMask();
 
@@ -97,7 +96,8 @@ protected:
   /// Map util
   std::shared_ptr<MapUtil<Dim>> map_util_;
 
-  /// Linked table that records voxel and corresponding primitives passed through
+  /// Linked table that records voxel and corresponding primitives passed
+  /// through
   mutable linkedHashMap<Dim> lhm_;
 
   /// Max value for potential
@@ -109,8 +109,8 @@ protected:
   Vecf<Dim> potential_map_range_{Vecf<Dim>::Zero()};
   /// Mask for generating potential field around obstacle
   vec_E<std::pair<Veci<Dim>, int8_t>> potential_mask_;
-  /// Potential value power
-  decimal_t pow_{1};
+  /// Power of potential value
+  decimal_t pow_{1.0};
   /// Gradient map
   vec_E<Vecf<Dim>> gradient_map_;
 
@@ -123,6 +123,6 @@ typedef MapPlanner<2> OccMapPlanner;
 
 /// Planner for 3D VoxelMap
 typedef MapPlanner<3> VoxelMapPlanner;
-}
+}  // namespace MPL
 
 #endif

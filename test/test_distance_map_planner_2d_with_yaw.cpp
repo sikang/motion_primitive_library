@@ -1,9 +1,10 @@
-#include "read_map.hpp"
-#include "timer.hpp"
-#include "opencv_drawing.hpp"
 #include <mpl_planner/planner/map_planner.h>
 
-int main(int argc, char **argv) {
+#include "opencv_drawing.hpp"
+#include "read_map.hpp"
+#include "timer.hpp"
+
+int main(int argc, char** argv) {
   if (argc != 2) {
     printf(ANSI_COLOR_RED "Input yaml required!\n" ANSI_COLOR_RESET);
     return -1;
@@ -18,7 +19,8 @@ int main(int argc, char **argv) {
   }
 
   // Pass the data into a VoxelMapUtil class for collision checking
-  std::shared_ptr<MPL::OccMapUtil> map_util = std::make_shared<MPL::OccMapUtil>();
+  std::shared_ptr<MPL::OccMapUtil> map_util =
+      std::make_shared<MPL::OccMapUtil>();
   map_util->setMap(reader.origin(), reader.dim(), reader.data(),
                    reader.resolution());
   map_util->freeUnknown();
@@ -48,21 +50,20 @@ int main(int argc, char **argv) {
   decimal_t du = u;
   vec_E<VecDf> U;
   for (decimal_t dx = -u; dx <= u; dx += du)
-    for (decimal_t dy = -u; dy <= u; dy += du)
-      U.push_back(Vec2f(dx, dy));
+    for (decimal_t dy = -u; dy <= u; dy += du) U.push_back(Vec2f(dx, dy));
 
   // Initialize planner
   std::unique_ptr<MPL::OccMapPlanner> planner(
-      new MPL::OccMapPlanner(false));    // Declare a mp planner using voxel map
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
+      new MPL::OccMapPlanner(false));  // Declare a mp planner using voxel map
+  planner->setMapUtil(map_util);       // Set collision checking function
+  planner->setVmax(1.0);               // Set max velocity
+  planner->setAmax(1.0);               // Set max acceleration
+  planner->setDt(1.0);                 // Set dt for each primitive
+  planner->setU(U);                    // Set control input
 
   // Planning
   Timer time(true);
-  bool valid = planner->plan(start, goal); // Plan from start to goal
+  bool valid = planner->plan(start, goal);  // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
   printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
@@ -78,29 +79,31 @@ int main(int argc, char **argv) {
 
   // Initiaize planner as a distance map planner
   planner.reset(new MPL::OccMapPlanner(true));
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U_yaw);              // Set control input
-  planner->setEpsilon(1.0);           // Set heursitic to zero
+  planner->setMapUtil(map_util);  // Set collision checking function
+  planner->setVmax(1.0);          // Set max velocity
+  planner->setAmax(1.0);          // Set max acceleration
+  planner->setDt(1.0);            // Set dt for each primitive
+  planner->setU(U_yaw);           // Set control input
+  planner->setEpsilon(1.0);       // Set heursitic to zero
 
-  planner->setSearchRadius(Vec2f(0.5, 0.5)); // Set search region radius
-  planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
-  planner->setPotentialWeight(0.5); // Set potential weight
-  planner->setGradientWeight(0); // Set gradient weight
-  planner->updatePotentialMap(start.pos); // Update potential map
+  planner->setSearchRadius(Vec2f(0.5, 0.5));     // Set search region radius
+  planner->setPotentialRadius(Vec2f(1.0, 1.0));  // Set potential distance
+  planner->setPotentialWeight(0.5);              // Set potential weight
+  planner->setGradientWeight(0);                 // Set gradient weight
+  planner->updatePotentialMap(start.pos);        // Update potential map
 
-  decimal_t yaw_max = 0.5; // Set yaw max
-  start.use_yaw = true; // enable yaw
-  planner->setYawmax(yaw_max);       // Set yaw threshold
+  decimal_t yaw_max = 0.5;      // Set yaw max
+  start.use_yaw = true;         // enable yaw
+  planner->setYawmax(yaw_max);  // Set yaw threshold
 
   // Planning
   Timer time_dist(true);
-  bool valid_dist = planner->iterativePlan(start, goal, traj, 10); // Plan from start to goal
+  bool valid_dist =
+      planner->iterativePlan(start, goal, traj, 10);  // Plan from start to goal
   double dt_dist = time_dist.Elapsed().count();
   printf("MPL Distance Planner takes: %f ms\n", dt_dist);
-  printf("MPL Distance Planner expanded states: %zu\n", planner->getCloseSet().size());
+  printf("MPL Distance Planner expanded states: %zu\n",
+         planner->getCloseSet().size());
   const auto traj_dist = planner->getTraj();
 
   // Plotting
@@ -123,7 +126,7 @@ int main(int argc, char **argv) {
     vec_E<vec_Vec2f> trias;
     const auto ws_yaw = traj_dist.sample(20);
     Vec2f d(0.7, 0);
-    for (const auto& w: ws_yaw) {
+    for (const auto& w : ws_yaw) {
       decimal_t yaw = w.yaw;
       decimal_t yaw1 = yaw + yaw_max;
       decimal_t yaw2 = yaw - yaw_max;
@@ -131,9 +134,9 @@ int main(int argc, char **argv) {
       Ryaw1 << cos(yaw1), -sin(yaw1), sin(yaw1), cos(yaw1);
       Ryaw2 << cos(yaw2), -sin(yaw2), sin(yaw2), cos(yaw2);
       Vec2f p1 = w.pos;
-      Vec2f p2 = w.pos + Ryaw1*d;
-      Vec2f p3 = w.pos + Ryaw2*d;
-      Vec2f p4 = (p2+p3)/2;
+      Vec2f p2 = w.pos + Ryaw1 * d;
+      Vec2f p3 = w.pos + Ryaw2 * d;
+      Vec2f p4 = (p2 + p3) / 2;
 
       vec_Vec2f tria;
       tria.push_back(p1);
@@ -148,7 +151,7 @@ int main(int argc, char **argv) {
     opencv_drawing.drawLineStrip(trias, blue, 1);
   }
 
-  if(OPENCV_WINDOW) {
+  if (OPENCV_WINDOW) {
     // show the plot
     opencv_drawing.show(file_name);
   } else {

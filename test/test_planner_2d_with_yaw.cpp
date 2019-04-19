@@ -1,9 +1,10 @@
-#include "read_map.hpp"
-#include "timer.hpp"
-#include "opencv_drawing.hpp"
 #include <mpl_planner/planner/map_planner.h>
 
-int main(int argc, char **argv) {
+#include "opencv_drawing.hpp"
+#include "read_map.hpp"
+#include "timer.hpp"
+
+int main(int argc, char** argv) {
   if (argc != 2) {
     printf(ANSI_COLOR_RED "Input yaml required!\n" ANSI_COLOR_RESET);
     return -1;
@@ -30,7 +31,7 @@ int main(int argc, char **argv) {
   start.vel = Vec2f::Zero();
   start.acc = Vec2f::Zero();
   start.jrk = Vec2f::Zero();
-  start.yaw = M_PI/2;
+  start.yaw = M_PI / 2;
   start.use_pos = true;
   start.use_vel = true;
   start.use_acc = false;
@@ -57,17 +58,17 @@ int main(int argc, char **argv) {
   // Initialize planner
   decimal_t yaw_max = 0.7;
   std::unique_ptr<MPL::OccMapPlanner> planner(
-      new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setYawmax(yaw_max);       // Set yaw threshold
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
+      new MPL::OccMapPlanner(true));  // Declare a mp planner using voxel map
+  planner->setMapUtil(map_util);      // Set collision checking function
+  planner->setVmax(1.0);              // Set max velocity
+  planner->setAmax(1.0);              // Set max acceleration
+  planner->setYawmax(yaw_max);        // Set yaw threshold
+  planner->setDt(1.0);                // Set dt for each primitive
+  planner->setU(U);                   // Set control input
 
   // Planning
   Timer time(true);
-  bool valid = planner->plan(start, goal); // Plan from start to goal
+  bool valid = planner->plan(start, goal);  // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
   printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
@@ -91,7 +92,7 @@ int main(int argc, char **argv) {
     vec_E<vec_Vec2f> trias;
     const auto ws_yaw = traj.sample(20);
     Vec2f d(0.7, 0);
-    for (const auto& w: ws_yaw) {
+    for (const auto& w : ws_yaw) {
       decimal_t yaw = w.yaw;
       decimal_t yaw1 = yaw + yaw_max;
       decimal_t yaw2 = yaw - yaw_max;
@@ -99,9 +100,9 @@ int main(int argc, char **argv) {
       Ryaw1 << cos(yaw1), -sin(yaw1), sin(yaw1), cos(yaw1);
       Ryaw2 << cos(yaw2), -sin(yaw2), sin(yaw2), cos(yaw2);
       Vec2f p1 = w.pos;
-      Vec2f p2 = w.pos + Ryaw1*d;
-      Vec2f p3 = w.pos + Ryaw2*d;
-      Vec2f p4 = (p2+p3)/2;
+      Vec2f p2 = w.pos + Ryaw1 * d;
+      Vec2f p3 = w.pos + Ryaw2 * d;
+      Vec2f p4 = (p2 + p3) / 2;
 
       vec_Vec2f tria;
       tria.push_back(p1);
@@ -116,7 +117,7 @@ int main(int argc, char **argv) {
     opencv_drawing.drawLineStrip(trias, blue, 1);
   }
 
-  if(OPENCV_WINDOW) {
+  if (OPENCV_WINDOW) {
     // show the plot
     opencv_drawing.show(file_name);
   } else {

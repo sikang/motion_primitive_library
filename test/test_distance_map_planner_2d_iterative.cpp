@@ -1,7 +1,8 @@
+#include <mpl_planner/planner/map_planner.h>
+
+#include "opencv_drawing.hpp"
 #include "read_map.hpp"
 #include "timer.hpp"
-#include "opencv_drawing.hpp"
-#include <mpl_planner/planner/map_planner.h>
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -18,7 +19,8 @@ int main(int argc, char **argv) {
   }
 
   // Pass the data into a VoxelMapUtil class for collision checking
-  std::shared_ptr<MPL::OccMapUtil> map_util = std::make_shared<MPL::OccMapUtil>();
+  std::shared_ptr<MPL::OccMapUtil> map_util =
+      std::make_shared<MPL::OccMapUtil>();
   map_util->setMap(reader.origin(), reader.dim(), reader.data(),
                    reader.resolution());
   map_util->freeUnknown();
@@ -48,43 +50,43 @@ int main(int argc, char **argv) {
   decimal_t du = u;
   vec_E<VecDf> U;
   for (decimal_t dx = -u; dx <= u; dx += du)
-    for (decimal_t dy = -u; dy <= u; dy += du)
-      U.push_back(Vec2f(dx, dy));
+    for (decimal_t dy = -u; dy <= u; dy += du) U.push_back(Vec2f(dx, dy));
 
   // Initialize planner
   std::unique_ptr<MPL::OccMapPlanner> planner(
-      new MPL::OccMapPlanner(false)); // Declare a 2D planner
-  planner->setMapUtil(map_util);      // Set collision checking function
-  planner->setVmax(1.0);              // Set max velocity
-  planner->setAmax(1.0);              // Set max acceleration
-  planner->setDt(1.0);                // Set dt for each primitive
-  planner->setU(U);                   // Set control input
+      new MPL::OccMapPlanner(false));  // Declare a 2D planner
+  planner->setMapUtil(map_util);       // Set collision checking function
+  planner->setVmax(1.0);               // Set max velocity
+  planner->setAmax(1.0);               // Set max acceleration
+  planner->setDt(1.0);                 // Set dt for each primitive
+  planner->setU(U);                    // Set control input
 
   // Planning
   Timer time(true);
-  bool valid = planner->plan(start, goal); // Plan from start to goal
+  bool valid = planner->plan(start, goal);  // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
   const auto traj = planner->getTraj();
 
   // Initiaize planner as a distance map planner
   planner.reset(new MPL::OccMapPlanner(true));
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
-  planner->setEpsilon(1.0);      // Set heursitic to zero
+  planner->setMapUtil(map_util);  // Set collision checking function
+  planner->setVmax(1.0);          // Set max velocity
+  planner->setAmax(1.0);          // Set max acceleration
+  planner->setDt(1.0);            // Set dt for each primitive
+  planner->setU(U);               // Set control input
+  planner->setEpsilon(1.0);       // Set heursitic to zero
 
-  planner->setSearchRadius(Vec2f(0.5, 0.5));    // Set search region radius
-  planner->setPotentialRadius(Vec2f(1.0, 1.0)); // Set potential distance
-  planner->setPotentialWeight(0.5);             // Set potential weight
-  planner->setGradientWeight(0);                // Set gradient weight
-  planner->updatePotentialMap(start.pos);       // Update potential map
+  planner->setSearchRadius(Vec2f(0.5, 0.5));     // Set search region radius
+  planner->setPotentialRadius(Vec2f(1.0, 1.0));  // Set potential distance
+  planner->setPotentialWeight(0.5);              // Set potential weight
+  planner->setGradientWeight(0);                 // Set gradient weight
+  planner->updatePotentialMap(start.pos);        // Update potential map
 
   // Planning
   Timer time_dist(true);
-  bool valid_dist = planner->iterativePlan(start, goal, traj, 10); // Plan from start to goal
+  bool valid_dist =
+      planner->iterativePlan(start, goal, traj, 10);  // Plan from start to goal
   double dt_dist = time_dist.Elapsed().count();
   printf("MPL Distance Planner iterative plan takes: %f ms\n", dt_dist);
   const auto traj_dist = planner->getTraj();
@@ -102,12 +104,12 @@ int main(int argc, char **argv) {
   opencv_drawing.drawCircle(goal.pos, cyan, 5, 2);
 
   // draw trajectory
-  if(valid) {
+  if (valid) {
     opencv_drawing.drawTraj(traj, red, 2);
     opencv_drawing.drawTraj(traj_dist, blue, 2);
   }
 
-  if(OPENCV_WINDOW) {
+  if (OPENCV_WINDOW) {
     // show the plot
     opencv_drawing.show(file_name);
   } else {

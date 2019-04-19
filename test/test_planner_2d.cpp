@@ -1,7 +1,8 @@
+#include <mpl_planner/planner/map_planner.h>
+
+#include "opencv_drawing.hpp"
 #include "read_map.hpp"
 #include "timer.hpp"
-#include "opencv_drawing.hpp"
-#include <mpl_planner/planner/map_planner.h>
 
 int main(int argc, char **argv) {
   if (argc != 2) {
@@ -49,21 +50,20 @@ int main(int argc, char **argv) {
   decimal_t du = u;
   vec_E<VecDf> U;
   for (decimal_t dx = -u; dx <= u; dx += du)
-    for (decimal_t dy = -u; dy <= u; dy += du)
-      U.push_back(Vec2f(dx, dy));
+    for (decimal_t dy = -u; dy <= u; dy += du) U.push_back(Vec2f(dx, dy));
 
   // Initialize planner
   std::unique_ptr<MPL::OccMapPlanner> planner(
-      new MPL::OccMapPlanner(true));    // Declare a mp planner using voxel map
-  planner->setMapUtil(map_util); // Set collision checking function
-  planner->setVmax(1.0);         // Set max velocity
-  planner->setAmax(1.0);         // Set max acceleration
-  planner->setDt(1.0);           // Set dt for each primitive
-  planner->setU(U);              // Set control input
+      new MPL::OccMapPlanner(true));  // Declare a mp planner using voxel map
+  planner->setMapUtil(map_util);      // Set collision checking function
+  planner->setVmax(1.0);              // Set max velocity
+  planner->setAmax(1.0);              // Set max acceleration
+  planner->setDt(1.0);                // Set dt for each primitive
+  planner->setU(U);                   // Set control input
 
   // Planning
   Timer time(true);
-  bool valid = planner->plan(start, goal); // Plan from start to goal
+  bool valid = planner->plan(start, goal);  // Plan from start to goal
   double dt = time.Elapsed().count();
   printf("MPL Planner takes: %f ms\n", dt);
   printf("MPL Planner expanded states: %zu\n", planner->getCloseSet().size());
@@ -79,10 +79,9 @@ int main(int argc, char **argv) {
   opencv_drawing.drawCircle(start.pos, blue, 5, 2);
   opencv_drawing.drawCircle(goal.pos, cyan, 5, 2);
   // draw trajectory
-  if(valid)
-    opencv_drawing.drawTraj(planner->getTraj(), red, 2);
+  if (valid) opencv_drawing.drawTraj(planner->getTraj(), red, 2);
 
-  if(OPENCV_WINDOW) {
+  if (OPENCV_WINDOW) {
     // show the plot
     opencv_drawing.show(file_name);
   } else {

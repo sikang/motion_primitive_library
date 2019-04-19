@@ -1,8 +1,10 @@
 #include <mpl_traj_solver/poly_traj.h>
 
-template <int Dim> PolyTraj<Dim>::PolyTraj() {}
+template <int Dim>
+PolyTraj<Dim>::PolyTraj() {}
 
-template <int Dim> Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
+template <int Dim>
+Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
   if (time < 0)
     time = 0;
   else if (time > waypoint_times_.back())
@@ -23,8 +25,7 @@ template <int Dim> Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
     Vecf<Dim> vec = Vecf<Dim>::Zero();
     for (unsigned int i = derr; i < p.rows(); i++) {
       unsigned int c = 1;
-      for (int j = 0; j < derr; j++)
-        c *= (i - j);
+      for (int j = 0; j < derr; j++) c *= (i - j);
       vec += p.row(i).transpose() * (c * std::pow(t_traj, i - derr));
     }
     if (derr == 0)
@@ -38,20 +39,24 @@ template <int Dim> Waypoint<Dim> PolyTraj<Dim>::evaluate(decimal_t time) const {
   return waypoint;
 }
 
-template <int Dim> decimal_t PolyTraj<Dim>::getTotalTime() const {
+template <int Dim>
+decimal_t PolyTraj<Dim>::getTotalTime() const {
   return waypoint_times_.back();
 }
 
-template <int Dim> void PolyTraj<Dim>::clear() {
+template <int Dim>
+void PolyTraj<Dim>::clear() {
   waypoint_times_.clear();
   coefficients_.clear();
 }
 
-template <int Dim> void PolyTraj<Dim>::addCoeff(const MatDNf<Dim> &coeff) {
+template <int Dim>
+void PolyTraj<Dim>::addCoeff(const MatDNf<Dim> &coeff) {
   coefficients_.push_back(coeff);
 }
 
-template <int Dim> void PolyTraj<Dim>::setWaypoints(const vec_E<Waypoint<Dim>> &ws) {
+template <int Dim>
+void PolyTraj<Dim>::setWaypoints(const vec_E<Waypoint<Dim>> &ws) {
   waypoints_ = ws;
 }
 
@@ -59,12 +64,12 @@ template <int Dim>
 void PolyTraj<Dim>::setTime(const std::vector<decimal_t> &dts) {
   waypoint_times_.clear();
   waypoint_times_.push_back(0);
-  for (auto t : dts)
-    waypoint_times_.push_back(waypoint_times_.back() + t);
+  for (auto t : dts) waypoint_times_.push_back(waypoint_times_.back() + t);
   dts_ = dts;
 }
 
-template <int Dim> vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
+template <int Dim>
+vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
   vec_E<Primitive<Dim>> trajs;
   trajs.resize(coefficients_.size());
   for (unsigned int i = 0; i < coefficients_.size(); i++) {
@@ -82,10 +87,10 @@ template <int Dim> vec_E<Primitive<Dim>> PolyTraj<Dim>::toPrimitives() const {
   return trajs;
 }
 
-template <int Dim> MatDNf<Dim> PolyTraj<Dim>::p() {
+template <int Dim>
+MatDNf<Dim> PolyTraj<Dim>::p() {
   MatDNf<Dim> p;
-  if (coefficients_.empty())
-    return p;
+  if (coefficients_.empty()) return p;
   unsigned int N = coefficients_.front().rows();
   p = MatDNf<Dim>(N * coefficients_.size(), Dim);
   int i = 0;

@@ -1,9 +1,11 @@
-#include <fstream>
-#include <iostream>
 #include <yaml-cpp/yaml.h>
 
-template <class Ti, class Tf> class MapReader {
-public:
+#include <fstream>
+#include <iostream>
+
+template <class Ti, class Tf>
+class MapReader {
+ public:
   MapReader(const std::string &file, bool verbose = false) {
     try {
       YAML::Node config = YAML::LoadFile(file);
@@ -16,34 +18,26 @@ public:
 
       const std::vector<double> &start =
           config[0]["start"].as<std::vector<double>>();
-      for (unsigned int i = 0; i < start.size(); i++)
-        start_(i) = start[i];
-      if (verbose)
-        std::cout << "start: " << start_.transpose() << std::endl;
+      for (unsigned int i = 0; i < start.size(); i++) start_(i) = start[i];
+      if (verbose) std::cout << "start: " << start_.transpose() << std::endl;
 
       const std::vector<double> &goal =
           config[1]["goal"].as<std::vector<double>>();
-      for (unsigned int i = 0; i < goal.size(); i++)
-        goal_(i) = goal[i];
-      if (verbose)
-        std::cout << "goal: " << goal_.transpose() << std::endl;
+      for (unsigned int i = 0; i < goal.size(); i++) goal_(i) = goal[i];
+      if (verbose) std::cout << "goal: " << goal_.transpose() << std::endl;
 
       const std::vector<double> &origin_vec =
           config[2]["origin"].as<std::vector<double>>();
       for (unsigned int i = 0; i < origin_vec.size(); i++)
         origin_(i) = origin_vec[i];
-      if (verbose)
-        std::cout << "origin: " << origin_.transpose() << std::endl;
+      if (verbose) std::cout << "origin: " << origin_.transpose() << std::endl;
 
       const std::vector<int> &dim_vec = config[3]["dim"].as<std::vector<int>>();
-      for (unsigned int i = 0; i < dim_vec.size(); i++)
-        dim_(i) = dim_vec[i];
-      if (verbose)
-        std::cout << "dim: " << dim_.transpose() << std::endl;
+      for (unsigned int i = 0; i < dim_vec.size(); i++) dim_(i) = dim_vec[i];
+      if (verbose) std::cout << "dim: " << dim_.transpose() << std::endl;
 
       resolution_ = config[4]["resolution"].as<double>();
-      if (verbose)
-        std::cout << "resolution: " << resolution_ << std::endl;
+      if (verbose) std::cout << "resolution: " << resolution_ << std::endl;
 
       const std::vector<int> &data = config[5]["data"].as<std::vector<int>>();
       data_.resize(data.size());
@@ -65,7 +59,7 @@ public:
   double resolution() { return resolution_; }
   std::vector<signed char> data() { return data_; }
 
-private:
+ private:
   Tf start_;
   Tf goal_;
   Tf origin_;

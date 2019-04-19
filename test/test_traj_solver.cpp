@@ -1,4 +1,5 @@
 #include <mpl_traj_solver/traj_solver.h>
+
 #include "opencv_drawing.hpp"
 
 int main(int argc, char **argv) {
@@ -6,7 +7,7 @@ int main(int argc, char **argv) {
   const Vec2f origin(-1, -1);
   const Vec2i dim(800, 400);
   const double res = 0.01;
-  std::vector<signed char> map(dim(0)*dim(1), 0);
+  std::vector<signed char> map(dim(0) * dim(1), 0);
 
   std::shared_ptr<MPL::OccMapUtil> map_util;
   map_util.reset(new MPL::OccMapUtil);
@@ -27,31 +28,34 @@ int main(int argc, char **argv) {
   {
     TrajSolver2D traj_solver(Control::VEL);
     traj_solver.setPath(path);
-    traj_solver.setV(1); // set velocity for time allocation
+    traj_solver.setV(1);  // set velocity for time allocation
     opencv_drawing.drawTraj(traj_solver.solve(), red, 2);
-    opencv_drawing.drawText("min velocity trajectory", dim - Vec2i(350, 80), 0.7, red);
+    opencv_drawing.drawText("min velocity trajectory", dim - Vec2i(350, 80),
+                            0.7, red);
   }
   // Min Acc Traj
   {
     TrajSolver2D traj_solver(Control::ACC);
     traj_solver.setPath(path);
-    traj_solver.setV(1); // set velocity for time allocation
+    traj_solver.setV(1);  // set velocity for time allocation
     opencv_drawing.drawTraj(traj_solver.solve(), green, 2);
-    opencv_drawing.drawText("min acceleration trajectory", dim - Vec2i(350, 50), 0.7, green);
+    opencv_drawing.drawText("min acceleration trajectory", dim - Vec2i(350, 50),
+                            0.7, green);
   }
   // Min Jrk Traj
   {
     TrajSolver2D traj_solver(Control::JRK);
     traj_solver.setPath(path);
-    traj_solver.setV(1); // set velocity for time allocation
+    traj_solver.setV(1);  // set velocity for time allocation
     opencv_drawing.drawTraj(traj_solver.solve(), blue, 2);
-    opencv_drawing.drawText("min jerk trajectory", dim - Vec2i(350, 20), 0.7, blue);
+    opencv_drawing.drawText("min jerk trajectory", dim - Vec2i(350, 20), 0.7,
+                            blue);
   }
 
   // Draw keyframes
   opencv_drawing.drawPoints(path, black, 5);
 
-  if(OPENCV_WINDOW) {
+  if (OPENCV_WINDOW) {
     // show the plot
     opencv_drawing.show(file_name);
   } else {
