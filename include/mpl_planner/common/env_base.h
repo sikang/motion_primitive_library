@@ -1,6 +1,7 @@
 /**
  * @file env_base.h
  * @brief environment base class
+ * get_succ, is_free functions are defined in respective planners' env headers
  */
 
 #ifndef MPL_ENV_BASE_H
@@ -45,7 +46,7 @@ class env_base {
    */
   virtual decimal_t get_heur(const Waypoint<Dim>& state) const {
     if (goal_node_ == state) return 0;
-    size_t id = state.t / dt_;
+    size_t id = state.t / dt_; //state.t is the time when reaching this waypoint ("state") in graph search
     if (!prior_traj_.empty() && id < prior_traj_.size())
       return cal_heur(state, prior_traj_[id].first) + prior_traj_[id].second;
     else

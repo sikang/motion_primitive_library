@@ -34,7 +34,7 @@ using priorityQueue =
                             boost::heap::compare<compare_pair<state>>>;
 /// Lattice of the graph in graph search
 template <typename Coord>
-struct State {
+struct State { //State is a structure defined for each node
   /// state
   Coord coord;
   /// coordinates of successors
@@ -78,7 +78,7 @@ template <typename Coord>
 using hashMap =
     boost::unordered_map<Coord, StatePtr<Coord>, boost::hash<Coord>>;
 
-/// State space
+/// State space, consists of all the open set states that are stored in priority queue, a hashmap that stores all the nodes
 template <int Dim, typename Coord>
 struct StateSpace {
   /// Priority queue, open set

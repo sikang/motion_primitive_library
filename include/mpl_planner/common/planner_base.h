@@ -277,9 +277,10 @@ class PlannerBase {
       start.print("Start:");
       goal.print("Goal:");
 
-      ENV_->info();
+      ENV_->info(); //print out information in the ENV class env_base.h
     }
 
+    // check if the start point is free, always assume it is free
     if (!ENV_->is_free(start.pos)) {
       printf(ANSI_COLOR_RED "[PlannerBase] start is not free!" ANSI_COLOR_RESET
                             "\n");
@@ -312,7 +313,7 @@ class PlannerBase {
     if (use_lpastar_)
       traj_cost_ = planner_ptr->LPAstar(start, ENV_, ss_ptr_, traj_, max_num_);
     else
-      traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_);
+      traj_cost_ = planner_ptr->Astar(start, ENV_, ss_ptr_, traj_, max_num_); //bulk of searching takes place here. pass in arguments: start_waypt, env_state_space, lattice-graph, traj_ (motion_primitive_library/include/mpl_basis/trajectory.h), max_num exploration
 
     if (std::isinf(traj_cost_)) {
       if (planner_verbose_)

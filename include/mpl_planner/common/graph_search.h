@@ -44,8 +44,8 @@ class GraphSearch {
     if (ENV->is_goal(start_coord)) return 0;
 
     // Initialize start node
-    StatePtr<Coord> currNode_ptr = ss_ptr->hm_[start_coord];
-    if (ss_ptr->pq_.empty()) {
+    StatePtr<Coord> currNode_ptr = ss_ptr->hm_[start_coord]; //hm_ is the hashmap to store all nodes
+    if (ss_ptr->pq_.empty()) {                               //pq_ is the priority queue open set
       if (verbose_)
         printf(ANSI_COLOR_GREEN "Start from new node!\n" ANSI_COLOR_RESET);
       currNode_ptr = std::make_shared<State<Coord>>(start_coord);
@@ -63,8 +63,8 @@ class GraphSearch {
     while (true) {
       expand_iteration++;
       // get element with smallest cost
-      currNode_ptr = ss_ptr->pq_.top().second;
-      ss_ptr->pq_.pop();
+      currNode_ptr = ss_ptr->pq_.top().second; // assign current node to the coordinate of the node at the top of the pq_
+      ss_ptr->pq_.pop();                       // remove the node from the pq_
       currNode_ptr->iterationclosed = true;  // Add to closed list
 
       // Get successors
